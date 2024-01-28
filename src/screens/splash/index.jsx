@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const SplashPage = () => {
+const SplashScreen = () => {
   const handleRegisterPress = () => {
     // Add navigation logic for registration
     console.log('Navigate to registration page');
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SplashPage;
+export default SplashScreen;

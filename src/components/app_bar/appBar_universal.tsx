@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {Height} from '../../utils/responsive';
-import { arrow, search_icon } from '../../contants';
+import { arrow, search_icon } from '../../contants/icons';
 
 const AppBarUniversal = ({title}) => {
   return (

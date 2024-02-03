@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import { arrow } from '../../contants';
+import { arrow } from '../../contants/icons';
 
 const EditProductAppBar = ({navigation}) => {
     return (

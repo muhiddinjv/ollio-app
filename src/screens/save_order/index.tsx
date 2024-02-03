@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, Image } from 'react-native';
 import { Appbar, Button,  Text } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
-import { arrow, cancel } from '../../contants';
+import { arrow, cancel } from '../../contants/icons';
 
 const SaveItemScreen = () => {
   const [selectedItem, setSelectedItem] = useState('');

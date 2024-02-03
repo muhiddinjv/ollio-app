@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Text, View, Image } from 'react-native'
-import { sales } from '../contants';
+import { sales } from '../contants/icons';
 
-const DrawerItem = ({title, icon}:{title:string, icon:any}) => {
+interface IDrawerItem {title:string, icon:any}
+
+const DrawerItem = ({title, icon}:IDrawerItem) => {
     return (
       <View style={{height: 48, width: '100%', flexDirection: 'row', paddingHorizontal: 8, alignItems: 'center', marginVertical: 8, marginHorizontal: 8 }}>
         <Image source={icon}  style={{

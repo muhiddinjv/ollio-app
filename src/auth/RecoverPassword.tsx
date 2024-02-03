@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Button, Text, Image, Alert } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { DefaultTheme } from '@react-navigation/native';
-import { LOGIN_LOGO } from '../contants';
+import { LOGIN_LOGO } from '../contants/icons';
 import { Link } from '@react-navigation/native';
 import axios from '../utils/axios';
 import { useDispatch } from 'react-redux';

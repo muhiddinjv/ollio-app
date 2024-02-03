@@ -6,7 +6,7 @@ import {
   more,
   search_icon,
   user_plus,
-} from "../../contants";
+} from "../../contants/icons";
 
 const AppBarHome = ({ title }) => {
   return (

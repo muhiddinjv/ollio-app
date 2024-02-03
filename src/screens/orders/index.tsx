@@ -1,32 +1,57 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Dimensions,
-  StyleSheet,
-  Image,
-  SafeAreaView,
-} from "react-native";
+import { View, Text, Dimensions, StyleSheet, Image } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import { arrow, more_1, search_icon } from "../contants/icons";
+import { clock, down, more_1 } from "../../contants/icons";
 import { Picker } from "@react-native-picker/picker";
-import ProductItem from "../components/app_bar/product_item";
+import ProductItem from "../../components/app_bar/product_item";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import AddToPrivate from "../components/add_to_private";
-import ListProduct from "../components/list_product";
+import AddToPrivate from "../../components/add_to_private";
+import ListProduct from "../../components/list_product";
+import MyBottomSheet from "../../components/bottomsheet";
 
 const FirstRoute = () => (
   <View>
     <ScrollView
       style={{
-        height: "87%",
+        height: "100%",
       }}
     >
       <View style={[styles.scene, { backgroundColor: "#fff" }]}>
-        <ListProduct />
+        <Text
+          style={{
+            marginHorizontal: 16,
+            marginVertical: 8,
+            fontWeight: "700",
+            color: "#4CB050",
+          }}
+        >
+          Wednesday, December 13, 2023
+        </Text>
+        <ListProduct
+          price={"UZS 3000"}
+          time={"21:12"}
+          productNumber={"21:12"}
+          state={"Refund #2-1000"}
+        />
+        <Text
+          style={{
+            marginHorizontal: 16,
+            marginVertical: 8,
+            fontWeight: "700",
+            color: "#4CB050",
+          }}
+        >
+          Wednesday, December 13, 2023
+        </Text>
+
+        <ListProduct
+          price={"UZS 3000"}
+          time={"21:12"}
+          productNumber={"21:12"}
+          state={"Refund #2-1000"}
+        />
       </View>
     </ScrollView>
-    <AddToPrivate />
   </View>
 );
 const data = [
@@ -37,22 +62,50 @@ const data = [
 const SecondRoute = () => (
   <ScrollView>
     <View style={[styles.scene, { backgroundColor: "#fff" }]}>
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
+      <View
+        style={{
+          flexDirection: "row",
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text
+          style={{
+            marginHorizontal: 16,
+            marginVertical: 16,
+            fontWeight: "700",
+            color: "#4CB050",
+          }}
+        >
+          Wednesday, December 13, 2023
+        </Text>
+        <MyBottomSheet />
+      </View>
+
+      <ListProduct
+        price={"UZS 3000"}
+        time={"21:12"}
+        productNumber={"21:12"}
+        state={"Pending"}
+      />
+      <Text
+        style={{
+          marginHorizontal: 16,
+          marginVertical: 8,
+          fontWeight: "700",
+          color: "#4CB050",
+        }}
+      >
+        Wednesday, December 13, 2023
+      </Text>
+
+      <ListProduct
+        price={"UZS 3000"}
+        time={"21:12"}
+        productNumber={"21:12"}
+        state={"Accepted"}
+      />
     </View>
   </ScrollView>
 );
@@ -80,7 +133,7 @@ const ThirdRoute = () => (
 
 const initialLayout = { width: Dimensions.get("window").width };
 
-const OrdersScreen = ({ navigation }:any) => {
+const ZakaziScreen = ({ navigation }) => {
   const [selectedValue, setSelectedValue] = useState(null);
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -95,7 +148,7 @@ const OrdersScreen = ({ navigation }:any) => {
     third: ThirdRoute,
   });
 
-  const renderTabBar = (props:any) => (
+  const renderTabBar = (props) => (
     <TabBar
       {...props}
       indicatorStyle={styles.indicator}
@@ -116,11 +169,16 @@ const OrdersScreen = ({ navigation }:any) => {
               tintColor: "#FFF",
             }}
           />
-          {selectedValue && (
-            <Text style={styles.selectedValue}>
-              Selected Option: {selectedValue}
-            </Text>
-          )}
+          <Text
+            style={{
+              marginHorizontal: 16,
+              fontSize: 24,
+              fontWeight: "700",
+              color: "white",
+            }}
+          >
+            Zakazi
+          </Text>
         </View>
       </View>
       <TabView
@@ -162,7 +220,6 @@ const styles = StyleSheet.create({
   },
   scene: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
   },
   tabBar: {
@@ -182,4 +239,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
-export default OrdersScreen;
+export default ZakaziScreen;

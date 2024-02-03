@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Text, View, SafeAreaView, StyleSheet, Image, TouchableOpacity } from "react-native";
 import AppBarItem from "../../components/app_bar/item_app_bar";
-import { burger_icon, category, discount_icon } from "../../contants";
+import { burger_icon, category, discount_icon } from "../../contants/icons";
 
 export class AllItems extends Component {
   render() {

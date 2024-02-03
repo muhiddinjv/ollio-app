@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Checkbox } from "react-native-paper";
-import { done_circle, done_green } from "../../contants";
+import { done_circle, done_green } from "../../contants/icons";
 
 const ProductItem = ({}) => {
   const [isChecked, setChecked] = useState(false);
@@ -18,11 +18,11 @@ const ProductItem = ({}) => {
         <Text style={styles.productValue}>ishonavering</Text>
       </View>
       {isChecked ? (
-        <TouchableOpacity onPress={console.log('wdidw8hdw')}>
+        <TouchableOpacity onPress={()=>console.log('wdidw8hdw')}>
           <Image source={done_circle} style={{ height: 36, width: 36 }} />
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity onPress={console.log('wdidw8hdw')}>
+        <TouchableOpacity onPress={()=>console.log('wdidw8hdw')}>
           <Image source={done_green} style={{ height: 36, width: 36 }} />
         </TouchableOpacity>
       )}

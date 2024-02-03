@@ -1,6 +1,5 @@
 import {Platform, StyleSheet, Text, ScrollView} from 'react-native';
 
-
 export const generateBoxShadowStyle = (
   xOffset,
   yOffset,

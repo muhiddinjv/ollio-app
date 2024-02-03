@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, Image } from "react-native";
-import { more_ho, right_arrow } from "../contants";
+import { more_ho, right_arrow } from "../contants/icons";
 
 export class AddToPrivate extends Component {
   render() {
@@ -10,7 +10,7 @@ export class AddToPrivate extends Component {
           height: 100,
           width: "100%",
           flexDirection: "row",
-          backgroundColor: "#fff",
+          backgroundColor: "transparent",
         }}
       >
         <View

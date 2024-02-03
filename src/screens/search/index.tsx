@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Dimensions, StyleSheet, Image } from "react-native";
-import { arrow, cancel, search_icon } from "../../contants";
+import { arrow, cancel, search_icon } from "../../contants/icons";
 import { Appbar, TextInput, Button } from "react-native-paper";
 import ProductItem2 from "../../components/app_bar/product_item2";
 import { TouchableOpacity } from "react-native-gesture-handler";

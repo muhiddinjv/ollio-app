@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import { TextInput, Button, Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import { remove } from '../../contants';
+import { remove } from '../../contants/icons';
 
 const SaveTicketScreen = () => {
   const navigation = useNavigation();

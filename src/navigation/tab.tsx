@@ -12,7 +12,7 @@ import {
   email_select,
   share_select,
   pdf_select,
-} from '../contants';
+} from '../contants/icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Tab = createBottomTabNavigator();
 

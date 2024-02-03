@@ -18,7 +18,7 @@ import {
   search_icon,
   setting,
   transfers_icon,
-} from "../../contants";
+} from "../../contants/icons";
 import { Picker } from "@react-native-picker/picker";
 import ProductItem2 from "../../components/app_bar/product_item2";
 import ProductItem3 from "../../components/app_bar/product_item_3";
@@ -109,7 +109,7 @@ const SideBarOrders = ({ navigation }:any) => {
         </View>
         <View>
           <DrawerItem title={"Sales"} icon={sales} />
-          <DrawerItem title={"Zakazi"} icon={receipt} />
+          <DrawerItem title={"Orders"} icon={receipt} />
           <DrawerItem title={"Transfers"} icon={transfers_icon} />
           <DrawerItem title={"Items"} icon={burger_icon} />
           <DrawerItem title={"Settings"} icon={setting} />

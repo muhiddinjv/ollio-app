@@ -24,7 +24,6 @@ export const getAllBanks = async () => axios.get("banks").then(res => res.data).
 // Client lead history
 export const getAllHistories = async () => axios.get("/leads/history").then(res => res.data).catch(err => err)
 
-
 export const editUser = async ({ user, id }: any) => axios.put(`users/${id}`, user).then(res => res.data).catch(err => err)
 
 // Edit user
@@ -32,12 +31,9 @@ export const editStatus = async (user : any) => axios.put(`statuses/${user?.id}`
 
 export const editClient = async ({user, id}: any) => axios.put(`clients/${id}`, user).then(res => res.data).catch(err => err)
 
-
 export const editBank = async ({user, id}: any) => axios.put(`banks/${id}`, user).then(res => res.data).catch(err => err)
 
-
 export const editLeads = async ({user, id}: any) => axios.put(`leads/${id}`, user).then(res => res.data).catch(err => err)
-
 
 export const deleteUser = async (id: string) => axios.delete(`users/${id}`).then(res => res.data).catch(err => err)
 
@@ -49,7 +45,6 @@ export const deleteClient = async (id: string) => axios.delete(`clients/${id}`).
 export const deleteLeads = async (id: string) => axios.delete(`leads/${id}`).then(res => res.data).catch(err => err)
 
 export const createUser = async (user: any) => axios.post(`users`, user).then(res => res.data).catch(err => err)
-
 
 //statuses
 export const createStatus = async (user: any) => axios.post(`statuses`, user).then(res => res.data).catch(err => err)

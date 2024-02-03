@@ -1,8 +1,8 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {Height} from '../../utils/responsive';
-import { arrow, burger_icon, more, search_icon } from '../../contants';
+import { arrow, burger_icon, more, more_1, search_icon } from '../../contants/icons';
 
-const AppBarItem = ({title}) => {
+const AppBarItem = ({title}:any) => {
   return (
     <View
       style={{
@@ -14,7 +14,7 @@ const AppBarItem = ({title}) => {
         elevation: 5,
         paddingHorizontal: 16,
       }}>
-        <Image source={burger_icon} style={{
+        <Image source={more_1} style={{
           height: 32, 
           width: 32,
           tintColor: '#FFFFFF'

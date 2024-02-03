@@ -3,9 +3,5 @@
   "compilerOptions": {
     "strict": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "metro.config.js"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "metro.config.js"]
 }

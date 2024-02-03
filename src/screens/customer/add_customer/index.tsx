@@ -5,11 +5,11 @@ import { TextInput } from "react-native-gesture-handler";
 
 const AddCustomerScreen = () => {
   return (
-    <View style={styles.container}>
+    <View className="flex-1">
       {/* App Bar */}
-      <View style={styles.appBar}>
+      <View className="flex-row items-center justify-start border-b border-gray-200 py-4">
         <TouchableOpacity onPress={() => console.log("Close icon pressed")}>
-          <Image source={close} style={styles.icon} />
+          <Image source={close} className="w-5 h-4 text-gray-400 mr-4 mx-4" />
         </TouchableOpacity>
         <Text style={styles.appBarTitle}>Add Customer to Ticket</Text>
         <View></View>

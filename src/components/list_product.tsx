@@ -4,7 +4,7 @@ import { Checkbox } from "react-native-paper";
 import { dollar } from "../contants/icons";
 
 interface IListProduct {
-  price?: number;
+  price?: number | string;
   time?: string;
   productNumber?: string;
   state?: string;

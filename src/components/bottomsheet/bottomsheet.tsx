@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import Modal from "react-native-modal";
-import { clock, clock_1, dollar_1, down, remove } from "../contants/icons";
+import { clock, clock_1, dollar_1, down, remove } from "../../contants/icons";
 import BottomItem from "./bottomItem";
 const MyBottomSheet = () => {
   const [isModalVisible, setModalVisible] = useState(false);

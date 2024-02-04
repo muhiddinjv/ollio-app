@@ -9,7 +9,6 @@ import {
 } from "../../contants/icons";
 import { Appbar, TextInput, Button } from "react-native-paper";
 import ProductItem2 from "../../components/app_bar/product_item2";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import RefundItem from "../../components/refund_item";
 

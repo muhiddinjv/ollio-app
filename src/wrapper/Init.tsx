@@ -20,6 +20,11 @@ import SideBarOrders from '../screens/sidebar_orders';
 import OrdersScreen from '../screens/orders';
 import RefundScreen from '../screens/refund';
 import AddCustomerScreen from '../screens/customer/add_customer';
+import EditCustomerInformationScreen from '../screens/customer/edit_customer';
+import CustomerProfileScreen from '../screens/customer/customer_profile';
+import QuantityScreen from '../screens/payment/count';
+import PaymentScreen from '../screens/payment/payment';
+import PaymentDoneScreen from '../screens/payment/payment_done';
 
 onlineManager.setEventListener(setOnline => {
   return NetInfo.addEventListener(state => {
@@ -31,7 +36,7 @@ const Stack = createStackNavigator();
 
 export const InitApp = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"AddCustomerScreen"}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"SaveItemScreen"}>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="SignIn" component={SignInScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
@@ -50,8 +55,11 @@ export const InitApp = () => {
       <Stack.Screen name="OrdersScreen" component={OrdersScreen} />
       <Stack.Screen name="RefundScreen" component={RefundScreen} />
       <Stack.Screen name="AddCustomerScreen" component={AddCustomerScreen} />
-
-
+      <Stack.Screen name="EditCustomerInformationScreen" component={EditCustomerInformationScreen} />
+      <Stack.Screen name="CustomerProfileScreen" component={CustomerProfileScreen} />
+      <Stack.Screen name="QuantityScreen" component={QuantityScreen} />
+      <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
+      <Stack.Screen name="PaymentDoneScreen" component={PaymentDoneScreen} />
     </Stack.Navigator>
   );
 };

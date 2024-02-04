@@ -10,16 +10,18 @@ import {
 import {
   arrow,
   barcode,
+  calendar,
   location,
   mail,
+  map,
   membership,
   star,
   telephone,
   user_1,
 } from "../../../contants/icons";
-import UserInfoItem from "../../../components/user_info_item";
+import UserInfo from "../../../components/user_info";
 import { ScrollView } from "react-native-gesture-handler";
-
+import UserInfo2 from "../../../components/user_info_2";
 const CustomerProfileScreen = () => {
   const [customerName, setCustomerName] = useState("");
 
@@ -42,7 +44,7 @@ const CustomerProfileScreen = () => {
       </View>
 
       <ScrollView>
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
           <Image
             source={user_1}
             style={{
@@ -50,22 +52,56 @@ const CustomerProfileScreen = () => {
               width: 80,
             }}
           />
-          <Text style={{
-            fontSize: 24,
-            color: 'black',
-            marginVertical: 8,
-          }}>Stive Jobs</Text>
+          <Text
+            style={{
+              fontSize: 24,
+              color: "black",
+              marginVertical: 8,
+            }}
+          >
+            Stive Jobs
+          </Text>
         </View>
 
-        <UserInfoItem title={"ogabekabdijabborov@gmail.com"} icon={mail} />
-        <UserInfoItem title={"+998334130333"} icon={telephone} />
-        <UserInfoItem title={"Toshkent shahri yunusobod tumani eski yunusobod ko'chasi 23"} icon={location} />
-        <UserInfoItem title={"112233"} icon={barcode} />
-        <UserInfoItem title={"Vip customer"} icon={membership} />
-        <UserInfoItem title={"Name"} icon={star} />
-        <UserInfoItem title={"Name"} icon={mail} />
-        <UserInfoItem title={"Name"} icon={mail} />
-
+        <UserInfo title={"ogabekabdijabborov@gmail.com"} icon={mail} />
+        <UserInfo title={"+998334130333"} icon={telephone} />
+        <UserInfo
+          title={"Toshkent shahri yunusobod tumani eski yunusobod ko'chasi 23"}
+          icon={location}
+        />
+        <UserInfo title={"112233"} icon={barcode} />
+        <UserInfo title={"Vip customer"} icon={membership} />
+        <UserInfo title={"Name"} icon={star} />
+        <UserInfo title={"Name"} icon={mail} />
+        <UserInfo title={"Name"} icon={mail} />
+        <UserInfo title={"ogabekabdijabborov@gmail.com"} icon={mail} />
+        <UserInfo title={"+998334130333"} icon={telephone} />
+        <UserInfo
+          title={"Toshkent shahri yunusobod tumani eski yunusobod ko'chasi 23"}
+          icon={location}
+        />
+        <UserInfo title={"112233"} icon={barcode} />
+        <UserInfo title={"Vip customer"} icon={membership} />
+        <UserInfo2 title={"0"} icon={star} subtitle={"Points"} />
+        <UserInfo2 title={"1"} icon={map} subtitle={"Visits"} />
+        <UserInfo2
+          title={"08.10.2002"}
+          icon={calendar}
+          subtitle={"Last visit"}
+        />
+        <TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 20,
+              marginHorizontal: 16,
+              marginVertical: 16,
+              color: "green",
+              fontWeight: "700",
+            }}
+          >
+            EDIT PROFILE
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );

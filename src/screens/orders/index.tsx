@@ -7,7 +7,7 @@ import ProductItem from "../../components/app_bar/product_item";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import AddToPrivate from "../../components/add_to_private";
 import ListProduct from "../../components/list_product";
-import MyBottomSheet from "../../components/bottomsheet";
+import MyBottomSheet from "../../components/bottomsheet/bottomsheet";
 
 const FirstRoute = () => (
   <View>
@@ -133,7 +133,7 @@ const ThirdRoute = () => (
 
 const initialLayout = { width: Dimensions.get("window").width };
 
-const ZakaziScreen = ({ navigation }) => {
+const OrdersScreen = ({ navigation }: any) => {
   const [selectedValue, setSelectedValue] = useState(null);
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -148,7 +148,7 @@ const ZakaziScreen = ({ navigation }) => {
     third: ThirdRoute,
   });
 
-  const renderTabBar = (props) => (
+  const renderTabBar = (props: any) => (
     <TabBar
       {...props}
       indicatorStyle={styles.indicator}
@@ -177,7 +177,7 @@ const ZakaziScreen = ({ navigation }) => {
               color: "white",
             }}
           >
-            Zakazi
+            Orders
           </Text>
         </View>
       </View>
@@ -239,4 +239,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
-export default ZakaziScreen;
+export default OrdersScreen;

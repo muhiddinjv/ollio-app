@@ -35,8 +35,20 @@ export const location = require("../../assets/icons/location.png");
 export const mail = require("../../assets/icons/mail.png");
 export const membership = require("../../assets/icons/membership.png");
 export const telephone = require("../../assets/icons/telephone.png");
+export const star = require("../../assets/icons/star.png");
+export const map = require("../../assets/icons/map.png");
+export const calendar = require("../../assets/icons/calendar.png");
+export const delete1 = require("../../assets/icons/delete1.png");
+export const card_icon = require("../../assets/icons/card_icon.png");
+export const done = require("../../assets/icons/done.png");
 
 export default {
+  done,
+  card_icon,
+  delete1,
+  calendar,
+  map,
+  star,
   barcode,
   location,
   mail,

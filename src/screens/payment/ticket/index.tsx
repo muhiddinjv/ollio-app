@@ -9,15 +9,20 @@ import {
   more,
   more_1,
   search_icon,
+  user_done,
   user_plus,
 } from "../../../contants/icons";
 import SaveChargeButton from "../../../components/save_charge_button";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import ProductInfo from "../../tabs/product_info";
+import ProductItem from "../../../components/app_bar/product_item";
+import ProductItem2 from "../../../components/app_bar/product_item2";
+import ProductItem3 from "../../../components/app_bar/product_item_3";
+import RefundItem from "../../../components/refund_item";
 
-const AddCustomerScreen = ({ navigation }:any) => {
+const TicketScreen = ({ navigation }) => {
   const [selectedItem, setSelectedItem] = useState("");
   const [productItems, setProductItems] = useState([
-    { id: 1, name: "Narxlar o'zgarishi mumkin", price: 0 },
     { id: 2, name: "Product 2", price: 29.99 },
     { id: 3, name: "Product 2", price: 29.99 },
     { id: 4, name: "Product 2", price: 29.99 },
@@ -26,16 +31,15 @@ const AddCustomerScreen = ({ navigation }:any) => {
     { id: 7, name: "Product 2", price: 29.99 },
     { id: 8, name: "Product 2", price: 29.99 },
     { id: 9, name: "Product 2", price: 29.99 },
-    // Add more product items as needed
   ]);
 
   return (
     <View style={styles.container}>
       <View style={styles.appBar}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
-              source={more_1}
+              source={arrow}
               style={{
                 height: 24,
                 width: 24,
@@ -85,65 +89,69 @@ const AddCustomerScreen = ({ navigation }:any) => {
       </View>
 
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View style={{ width: "100%", alignItems: "center" }}>
-          <SaveChargeButton />
-        </View>
+        <RefundItem
+          title={"0282 Niso gaz falga qalin"}
+          productAmount={"1 x UZS 1,000"}
+          productPrice={"UZS 1,000"}
+        />
+        <RefundItem
+          title={"0282 Niso gaz falga qalin"}
+          productAmount={"1 x UZS 1,000"}
+          productPrice={"UZS 1,000"}
+        />
+        <RefundItem
+          title={"0282 Niso gaz falga qalin"}
+          productAmount={"1 x UZS 1,000"}
+          productPrice={"UZS 1,000"}
+        />
         <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            borderColor: "black",
-            height: 48,
-            marginVertical: 16,
-          }}
-        >
-          <Picker
-            selectedValue={selectedItem}
-            onValueChange={(itemValue) => setSelectedItem(itemValue)}
-            style={styles.picker}
-          >
-            <Picker.Item label="Select an Item" value="" />
-            <Picker.Item label="Item 1" value="item1" />
-          </Picker>
-          <TouchableOpacity
+          style={{ height: 1, backgroundColor: "grey", marginVertical: 16 }}
+        ></View>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 360, }}>
+          <Text style={styles.total}>Total</Text>
+          <Text style={styles.total}>UZS 98,000</Text>
+        </View>
+        <View style={{ width: "100%", alignItems: "center" }}>
+          <View
             style={{
-              width: "20%",
-              borderLeftWidth: 1,
-              height: "100%",
-              justifyContent: "center",
+              height: 80,
+              width: "94%",
+              backgroundColor: "#4CAF50",
+              flexDirection: "row",
+              justifyContent: "space-around",
+              alignItems: "center",
             }}
           >
-            <Image
-              source={search_icon}
-              style={{
-                height: 20,
-                width: 20,
-                marginLeft: 16,
-              }}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.productItem}>
-          <View style={styles.circleIndicator} />
-          <View style={styles.productDetails}>
-            <Text style={styles.productName}>Narxlar o'zgarishi </Text>
-            <Text style={styles.productPrice}>-</Text>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 20,
+                  textAlign: "center",
+                  marginLeft: 36,
+                }}
+              >
+                SAVE
+              </Text>
+            </TouchableOpacity>
+            <View
+              style={{ width: 1, backgroundColor: "black", height: "100%" }}
+            ></View>
+            <TouchableOpacity onPress={()=> navigation.navigate('PaymentScreen')}
+              style={{ alignItems: "center", justifyContent: "center" }}
+            >
+              <Text
+                style={{ color: "white", fontSize: 20, textAlign: "center" }}
+              >
+                CHARGE
+              </Text>
+              <Text
+                style={{ color: "white", fontSize: 20, textAlign: "center" }}
+              >
+                UZS 98,000
+              </Text>
+            </TouchableOpacity>
           </View>
-        </View>
-        <View style={styles.productItemsContainer}>
-          {productItems.map((item) => (
-            <View style={styles.productItem} key={item.id}>
-              <View style={styles.circleIndicator} />
-              <View style={styles.productDetails}>
-                <Text style={styles.productName}>{item.name}</Text>
-                <Text style={styles.productPrice}>{`$${item.price.toFixed(
-                  2
-                )}`}</Text>
-              </View>
-            </View>
-          ))}
         </View>
       </ScrollView>
     </View>
@@ -151,11 +159,14 @@ const AddCustomerScreen = ({ navigation }:any) => {
 };
 
 const styles = StyleSheet.create({
+  total: {
+    color: "#000",
+    fontWeight: "bold",
+    fontSize: 24,
+    marginVertical:  16,
+  },
   container: {
     flex: 1,
-  },
-  productItemsContainer: {
-    padding: 0  
   },
   contentContainer: {
     padding: 16,
@@ -211,4 +222,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddCustomerScreen;
+export default TicketScreen;

@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import Modal from "react-native-modal";
-import { clock, clock_1, dollar_1, down, remove } from "../../contants/icons";
+import {
+  clock,
+  clock_1,
+  delete1,
+  delete_2,
+  dollar_1,
+  down,
+  edit,
+  receipt,
+  remove,
+} from "../../contants/icons";
 import BottomItem from "./bottomItem";
 import BottomItem2 from "./bottomItem2";
 const GetOrderBottomSheet = () => {
@@ -15,7 +25,7 @@ const GetOrderBottomSheet = () => {
     <View>
       <TouchableOpacity onPress={toggleModal} style={{ flexDirection: "row" }}>
         <Image
-          source={clock}
+          source={receipt}
           style={{
             height: 22,
             width: 22,
@@ -51,34 +61,29 @@ const GetOrderBottomSheet = () => {
             }}
           >
             <Text style={{ fontSize: 20, color: "black", fontWeight: "700" }}>
-              Select a status
+              Order options
             </Text>
             <TouchableOpacity>
               <Image source={remove} style={{ height: 36, width: 36 }} />
             </TouchableOpacity>
           </View>
-          <Text
-            style={{
-              marginVertical: 8,
-              color: "grey",
-            }}
-          >
-            Your customers will be notified of each status change
-          </Text>
-          <BottomItem2 title={"Pending"} icon={clock} iconColor={"black"} />
+
+          <BottomItem2
+            title={"Select All"}
+            icon={receipt}
+            iconColor={"black"}
+          />
           <BottomItem
-            title={"Confirmed"}
-            icon={clock_1}
-            iconColor={"#4CAF50"}
+            title={"Edit this order"}
+            icon={edit}
+            iconColor={"grey"}
           />
 
           <BottomItem
-            title={"Ready for pick up"}
-            icon={clock_1}
-            iconColor={"#4CAF50"}
+            title={"Cancel this order"}
+            icon={delete_2}
+            iconColor={"grey"}
           />
-
-       
         </View>
       </Modal>
     </View>

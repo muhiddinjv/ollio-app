@@ -9,15 +9,15 @@ import {
   more,
   more_1,
   search_icon,
+  user_done,
   user_plus,
 } from "../../../contants/icons";
 import SaveChargeButton from "../../../components/save_charge_button";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const AddCustomerScreen = ({ navigation }:any) => {
+const PreTicketScreen = ({ navigation }:any) => {
   const [selectedItem, setSelectedItem] = useState("");
   const [productItems, setProductItems] = useState([
-    { id: 1, name: "Narxlar o'zgarishi mumkin", price: 0 },
     { id: 2, name: "Product 2", price: 29.99 },
     { id: 3, name: "Product 2", price: 29.99 },
     { id: 4, name: "Product 2", price: 29.99 },
@@ -26,6 +26,7 @@ const AddCustomerScreen = ({ navigation }:any) => {
     { id: 7, name: "Product 2", price: 29.99 },
     { id: 8, name: "Product 2", price: 29.99 },
     { id: 9, name: "Product 2", price: 29.99 },
+
     // Add more product items as needed
   ]);
 
@@ -57,9 +58,7 @@ const AddCustomerScreen = ({ navigation }:any) => {
         </View>
 
         <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("CustomerListScreen")}
-          >
+          <TouchableOpacity onPress={()=> navigation.navigate('CustomerListScreen')}>
             <Image
               source={user_plus}
               style={{
@@ -86,7 +85,46 @@ const AddCustomerScreen = ({ navigation }:any) => {
 
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={{ width: "100%", alignItems: "center" }}>
-          <SaveChargeButton />
+          <View
+            style={{
+              height: 80,
+              width: "94%",
+              backgroundColor: "#4CAF50",
+              flexDirection: "row",
+              justifyContent: "space-around",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity onPress={()=> navigation.navigate('SaveTicketScreen')}>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 20,
+                  textAlign: "center",
+                  marginLeft: 36,
+                }}
+              >
+                SAVE
+              </Text>
+            </TouchableOpacity>
+            <View
+              style={{ width: 1, backgroundColor: "black", height: "100%" }}
+            ></View>
+            <TouchableOpacity
+              style={{ alignItems: "center", justifyContent: "center" }}
+            >
+              <Text
+                style={{ color: "white", fontSize: 20, textAlign: "center" }}
+              >
+                CHARGE
+              </Text>
+              <Text
+                style={{ color: "white", fontSize: 20, textAlign: "center" }}
+              >
+                UZS 98,000
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View
           style={{
@@ -134,15 +172,19 @@ const AddCustomerScreen = ({ navigation }:any) => {
         </View>
         <View style={styles.productItemsContainer}>
           {productItems.map((item) => (
-            <View style={styles.productItem} key={item.id}>
-              <View style={styles.circleIndicator} />
-              <View style={styles.productDetails}>
-                <Text style={styles.productName}>{item.name}</Text>
-                <Text style={styles.productPrice}>{`$${item.price.toFixed(
-                  2
-                )}`}</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("QuantityScreen")}
+            >
+              <View style={styles.productItem} key={item.id}>
+                <View style={styles.circleIndicator} />
+                <View style={styles.productDetails}>
+                  <Text style={styles.productName}>{item.name}</Text>
+                  <Text style={styles.productPrice}>{`$${item.price.toFixed(
+                    2
+                  )}`}</Text>
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
@@ -154,8 +196,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  productItemsContainer: {
-    padding: 0  
+  productItemsContainer:{
+    padding: 0
   },
   contentContainer: {
     padding: 16,
@@ -174,7 +216,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
   },
-
   productItem: {
     flexDirection: "row",
     alignItems: "center",
@@ -211,4 +252,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddCustomerScreen;
+export default PreTicketScreen;

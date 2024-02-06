@@ -13,7 +13,6 @@ import { Picker } from "@react-native-picker/picker";
 import ProductItem from "../components/app_bar/product_item";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import AddToPrivate from "../components/add_to_private";
-import ListProduct from "../components/list_product";
 
 const FirstRoute = () => (
   <View>
@@ -23,7 +22,18 @@ const FirstRoute = () => (
       }}
     >
       <View style={[styles.scene, { backgroundColor: "#fff" }]}>
-        <ListProduct />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
+        <ProductItem />
       </View>
     </ScrollView>
     <AddToPrivate />
@@ -58,34 +68,39 @@ const SecondRoute = () => (
 );
 
 const ThirdRoute = () => (
-  <View style={[styles.scene, { backgroundColor: "#fff" }]}>
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-    <ProductItem />
-  </View>
+  <ScrollView>
+    <View style={[styles.scene, { backgroundColor: "#fff" }]}>
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+      <ProductItem />
+    </View>
+  </ScrollView>
 );
 
 const initialLayout = { width: Dimensions.get("window").width };
 
-const OrdersScreen = ({ navigation }:any) => {
+const OrdersScreen = ({ navigation }: any) => {
+  const handlePickerChange = (value:any) => {
+    setSelectedValue(value);
+  };
   const [selectedValue, setSelectedValue] = useState(null);
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: "first", title: "List" },
-    { key: "second", title: "Transfer" },
+    { key: "first", title: "Public" },
+    { key: "second", title: "Private" },
     { key: "third", title: "Tab" },
   ]);
 
@@ -95,7 +110,7 @@ const OrdersScreen = ({ navigation }:any) => {
     third: ThirdRoute,
   });
 
-  const renderTabBar = (props:any) => (
+  const renderTabBar = (props: any) => (
     <TabBar
       {...props}
       indicatorStyle={styles.indicator}
@@ -116,12 +131,27 @@ const OrdersScreen = ({ navigation }:any) => {
               tintColor: "#FFF",
             }}
           />
-          {selectedValue && (
-            <Text style={styles.selectedValue}>
-              Selected Option: {selectedValue}
-            </Text>
-          )}
+          <Picker
+            selectedValue={selectedValue}
+            onValueChange={handlePickerChange}
+            style={styles.picker}
+          >
+            <Picker.Item label="All items" value="option1" />
+            <Picker.Item label="Option 2" value="option2" />
+            <Picker.Item label="Option 2" value="option2" />
+            <Picker.Item label="Option 2" value="option2" />
+            <Picker.Item label="Option 2" value="option2" />
+            <Picker.Item label="Option 2" value="option2" />
+          </Picker>
         </View>
+        <Image
+          source={search_icon}
+          style={{
+            height: 24,
+            width: 24,
+            tintColor: "white",
+          }}
+        />
       </View>
       <TabView
         navigationState={{ index, routes }}

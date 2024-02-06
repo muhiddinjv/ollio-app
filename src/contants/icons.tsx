@@ -29,7 +29,7 @@ export const down = require("../../assets/icons/down.png");
 export const clock_1 = require("../../assets/icons/clock_1.png");
 export const dollar_1 = require("../../assets/icons/dollar_1.png");
 export const close = require("../../assets/icons/close.png");
-export const user_1 = require("../../assets/icons/user_1.png");
+export const user = require("../../assets/icons/user.png");
 export const barcode = require("../../assets/icons/barcode.png");
 export const location = require("../../assets/icons/location.png");
 export const mail = require("../../assets/icons/mail.png");
@@ -41,8 +41,17 @@ export const calendar = require("../../assets/icons/calendar.png");
 export const delete1 = require("../../assets/icons/delete1.png");
 export const card_icon = require("../../assets/icons/card_icon.png");
 export const done = require("../../assets/icons/done.png");
+export const edit = require("../../assets/icons/edit.png");
+export const delete_2 = require("../../assets/icons/delete_2.png");
+export const user_1 = require("../../assets/icons/user_1.png");
+export const user_done = require("../../assets/icons/user_done.png");
+export const forward_user = require("../../assets/icons/forward_user.png");
 
 export default {
+  user_done,
+  user_1,
+  delete_2,
+  edit,
   done,
   card_icon,
   delete1,
@@ -54,7 +63,7 @@ export default {
   mail,
   membership,
   telephone,
-  user_1,
+  user,
   close,
   dollar_1,
   clock_1,

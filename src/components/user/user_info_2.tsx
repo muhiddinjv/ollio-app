@@ -1,14 +1,8 @@
 import React, { Component, useState } from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
-import { user_1 } from "../contants/icons";
+import { user_1 } from "../../contants/icons";
 
-interface IUserInfo2 {
-  title: string,
-  icon: any,
-  subtitle: string
-}
-
-const UserInfo2 = ({ title, icon, subtitle }:IUserInfo2) => {
+const UserInfo2 = ({ title, icon, subtitle }) => {
   const [customerName, setCustomerName] = useState("");
 
   return (

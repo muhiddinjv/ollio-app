@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import { close, delete1 } from "../../contants/icons";
+import { close, delete1 } from "../../../contants/icons";
 
 const QuantityScreen = ({ navigation }) => {
   const [quantity, setQuantity] = useState("");
@@ -36,7 +36,7 @@ const QuantityScreen = ({ navigation }) => {
           keyboardType="numeric"
           onChangeText={(text) => setQuantity(text.replace(/[^0-9]/g, ""))}
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=> navigation.navigate('TicketScreen')}>
           <Image
             source={delete1}
             style={{

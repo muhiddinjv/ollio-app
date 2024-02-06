@@ -14,12 +14,12 @@ import {
   mail,
   membership,
   telephone,
-  user_1,
+  user,
 } from "../../../contants/icons";
-import UserItem from "../../../components/user_item";
+import UserItem from "../../../components/user/user_item";
 import { ScrollView } from "react-native-gesture-handler";
 
-const EditCustomerInformationScreen = () => {
+const EditCustomerInformationScreen = ({ navigation }:any) => {
   const [customerName, setCustomerName] = useState("");
 
   const handleSave = () => {
@@ -31,28 +31,45 @@ const EditCustomerInformationScreen = () => {
     <View style={styles.container}>
       {/* AppBar */}
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={() => console.log("Back arrow pressed")}>
-          <Image source={arrow} style={styles.icon} />
-        </TouchableOpacity>
-        <Text style={styles.appBarTitle}>Edit Customer</Text>
-        <TouchableOpacity onPress={handleSave}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image
+              source={arrow}
+              style={{ height: 22, width: 22, tintColor: "grey" }}
+            />
+          </TouchableOpacity>
+          <Text style={styles.appBarTitle}>Edit customer</Text>
+        </View>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("CustomerProfileScreen")}
+        >
           <Text style={styles.saveButton}>Save</Text>
         </TouchableOpacity>
       </View>
 
-      <ScrollView>
-        <UserItem title={"Name"} icon={user_1} />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      >
+        <UserItem title={"Name"} icon={user} />
         <UserItem title={"Email"} icon={mail} />
         <UserItem title={"Phone"} icon={telephone} />
         <UserItem title={"Address"} icon={location} />
-        <UserItem title={"City"} icon={user_1} />
-        <UserItem title={"State"} icon={user_1} />
-        <UserItem title={"Zipcode"} icon={user_1} />
-        <UserItem title={"Country"} icon={user_1} />
+        <UserItem title={"City"} icon={user} />
+        <UserItem title={"State"} icon={user} />
+        <UserItem title={"Zipcode"} icon={user} />
+        <UserItem title={"Country"} icon={user} />
         <UserItem title={"Costumer code"} icon={barcode} />
         <UserItem title={"Vip customer"} icon={membership} />
-        <UserItem title={"name"} icon={user_1} />
-        <UserItem title={"name"} icon={user_1} />
+        <UserItem title={"name"} icon={user} />
+        <UserItem title={"name"} icon={user} />
       </ScrollView>
     </View>
   );
@@ -70,14 +87,14 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   appBarTitle: {
-    fontSize: 18,
+    fontSize: 22,
+    color: "black",
+    fontWeight: "700",
+    marginLeft: 48,
   },
-  icon: {
-    width: 24,
-    height: 24,
-  },
+
   saveButton: {
-    color: "blue",
+    color: "green",
     fontSize: 16,
   },
   userTab: {

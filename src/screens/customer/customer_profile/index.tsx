@@ -19,10 +19,10 @@ import {
   telephone,
   user_1,
 } from "../../../contants/icons";
-import UserInfo from "../../../components/user_info";
+import UserInfo from "../../../components/user/user_info";
 import { ScrollView } from "react-native-gesture-handler";
-import UserInfo2 from "../../../components/user_info_2";
-const CustomerProfileScreen = () => {
+import UserInfo2 from "../../../components/user/user_info_2";
+const CustomerProfileScreen = ({navigation}:any) => {
   const [customerName, setCustomerName] = useState("");
 
   const handleSave = () => {
@@ -34,11 +34,14 @@ const CustomerProfileScreen = () => {
     <View style={styles.container}>
       {/* AppBar */}
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={() => console.log("Back arrow pressed")}>
-          <Image source={arrow} style={styles.icon} />
-        </TouchableOpacity>
-        <Text style={styles.appBarTitle}>Customer profile</Text>
-        <TouchableOpacity onPress={handleSave}>
+        <View style={{ flexDirection: "row", justifyContent: 'center', alignItems: 'center' }}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image source={arrow} style={styles.icon} />
+          </TouchableOpacity>
+          <Text style={styles.appBarTitle}>Customer profile</Text>
+        </View>
+
+        <TouchableOpacity onPress={()=>navigation.navigate('AddToCartScreen')}>
           <Text style={styles.saveButton}>ADD TO TICKET</Text>
         </TouchableOpacity>
       </View>
@@ -119,15 +122,18 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   appBarTitle: {
-    fontSize: 18,
+    fontSize: 22,
     color: "black",
+    fontWeight: "700",
+    marginLeft: 24,
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: 22,
+    height: 22,
+    tintColor: 'grey'
   },
   saveButton: {
-    color: "green",
+    color: "#4CAF50",
     fontSize: 16,
   },
   userTab: {

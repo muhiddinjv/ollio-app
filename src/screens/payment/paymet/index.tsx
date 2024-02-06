@@ -7,12 +7,12 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import AppBarHome from "../../components/app_bar/app_bar_ticket";
-import PaymentAppBar from "../../components/app_bar/payment_appbar";
-import { card_icon, dollar } from "../../contants/icons";
+import AppBarHome from "../../../components/app_bar/app_bar_ticket";
+import PaymentAppBar from "../../../components/app_bar/payment_appbar";
+import { card_icon, dollar } from "../../../contants/icons";
 import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 
-const PaymentScreen = () => {
+const PaymentScreen = ({navigation}) => {
   const [cashReceived, setCashReceived] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash"); // Default to Cash
 
@@ -31,7 +31,7 @@ const PaymentScreen = () => {
   return (
     <View style={styles.container}>
       <View style={{}}>
-        <PaymentAppBar />
+        <PaymentAppBar navigation={navigation}/>
       </View>
 
       <View

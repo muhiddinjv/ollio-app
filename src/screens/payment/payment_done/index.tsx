@@ -7,11 +7,11 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import AppBarHome from "../../components/app_bar/app_bar_ticket";
-import PaymentAppBar from "../../components/app_bar/payment_appbar";
-import { card_icon, dollar, done, receipt } from "../../contants/icons";
+import AppBarHome from "../../../components/app_bar/app_bar_ticket";
+import PaymentAppBar from "../../../components/app_bar/payment_appbar";
+import { card_icon, dollar, done, receipt } from "../../../contants/icons";
 import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
-import GetOrderBottomSheet from "../../components/bottomsheet/get_order_bottom";
+import GetOrderBottomSheet from "../../../components/bottomsheet/get_order_bottom";
 
 const PaymentDoneScreen = () => {
   const [cashReceived, setCashReceived] = useState("");
@@ -122,7 +122,6 @@ const PaymentDoneScreen = () => {
         />
         <Text style={{ marginHorizontal: 8, color: "white" }}>NEW SALE</Text>
       </TouchableOpacity>
-      <GetOrderBottomSheet/>
     </View>
   );
 };

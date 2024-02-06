@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
-import { user_1 } from "../contants/icons";
+import { user_1 } from "../../contants/icons";
 
 const UserInfo = ({ title, icon }:{ title:string, icon:any }) => {
   const [customerName, setCustomerName] = useState("");
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     marginRight: 24,
-    tintColor: 'black'
+    tintColor: 'grey'
 
   },
 });

@@ -106,7 +106,6 @@ function BuilderIo(props:any) {
         </View>
       </View>
       <View className="flex flex-col items-start pt-12 mt-4 w-full rounded-lg bg-zinc-100 max-w-[343px]">
-
       </View>
     </View>
   );

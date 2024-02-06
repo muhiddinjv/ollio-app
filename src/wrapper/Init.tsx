@@ -25,6 +25,7 @@ import CustomerProfileScreen from '../screens/customer/customer_profile';
 import QuantityScreen from '../screens/payment/count';
 import PaymentScreen from '../screens/payment/payment';
 import PaymentDoneScreen from '../screens/payment/payment_done';
+import BuilderIo from '../screens/builderio';
 
 onlineManager.setEventListener(setOnline => {
   return NetInfo.addEventListener(state => {
@@ -36,7 +37,8 @@ const Stack = createStackNavigator();
 
 export const InitApp = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"SaveItemScreen"}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"BuilderIo"}>
+      <Stack.Screen name="Builderio" component={BuilderIo} />
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="SignIn" component={SignInScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />

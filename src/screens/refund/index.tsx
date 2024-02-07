@@ -14,7 +14,7 @@ import RefundItem from "../../components/refund_item";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
-const RefundScreen = ({ navigation }:any) => {
+const RefundScreen = ({ navigation }:INavigation) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const onChangeSearch = (query:string) => {

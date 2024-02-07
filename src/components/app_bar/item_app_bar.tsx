@@ -1,8 +1,9 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {Height} from '../../utils/responsive';
 import { arrow, burger_icon, more, more_1, search_icon } from '../../contants/icons';
+import { IBase } from '../../utils/interfaces';
 
-const AppBarItem = ({title}:any) => {
+const AppBarItem = ({title}:IBase) => {
   return (
     <View
       style={{

@@ -15,7 +15,7 @@ import {
 import SaveChargeButton from "../../../components/save_charge_button";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const PreTicketScreen = ({ navigation }:any) => {
+const PreTicketScreen = ({ navigation }:INavigation) => {
   const [selectedItem, setSelectedItem] = useState("");
   const [productItems, setProductItems] = useState([
     { id: 2, name: "Product 2", price: 29.99 },

@@ -22,7 +22,9 @@ import {
 import UserInfo from "../../../components/user/user_info";
 import { ScrollView } from "react-native-gesture-handler";
 import UserInfo2 from "../../../components/user/user_info_2";
-const CustomerProfileScreen = ({navigation}:any) => {
+import { INavigation } from "../../../utils/interfaces";
+
+const CustomerProfileScreen = ({navigation}:INavigation) => {
   const [customerName, setCustomerName] = useState("");
 
   const handleSave = () => {

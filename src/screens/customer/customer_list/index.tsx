@@ -2,8 +2,9 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { close, search_icon, user_1, user_plus } from "../../../contants/icons";
 import { TextInput } from "react-native-gesture-handler";
+import { INavigation } from "../../../utils/interfaces";
 
-const CustomerListScreen = ({navigation}:any) => {
+const CustomerListScreen = ({navigation}:INavigation) => {
   return (
     <View style={styles.container}>
       <View style={styles.appBar}>

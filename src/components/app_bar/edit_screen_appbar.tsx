@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { arrow } from '../../contants/icons';
+import { INavigation } from '../../utils/interfaces';
 
-const EditProductAppBar = ({navigation}) => {
+const EditProductAppBar = ({navigation}:INavigation) => {
     return (
         <View style={styles.appBar}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>

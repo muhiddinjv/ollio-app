@@ -2,18 +2,10 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Checkbox } from "react-native-paper";
 import { dollar } from "../contants/icons";
+import { IProduct } from "../utils/interfaces";
 
-interface IListProduct {
-  price?: number | string;
-  time?: string;
-  productNumber?: string;
-  state?: string;
-}
-
-const ListProduct = ({ price, time, productNumber, state}: IListProduct) => {
+const ListProduct = ({ price, time, productNumber, state}: IProduct) => {
   const [isChecked, setChecked] = useState(false);
-
-
 
   return (
     <View style={styles.container}>

@@ -28,10 +28,12 @@ const EditProductScreen = () => {
   const [isTrackStock, setIsTrackStock] = useState(false);
   const [isVariantAvailable, setIsVariantAvailable] = useState(false);
   const [selectedStores, setSelectedStores] = useState([]);
+  
   const [modifiers, setModifiers] = useState([
     { title: "", subtitle: "", isEnabled: false },
     { title: "", subtitle: "", isEnabled: false },
   ]);
+
   const [representation, setRepresentation] = useState({
     color: "",
     shape: "",

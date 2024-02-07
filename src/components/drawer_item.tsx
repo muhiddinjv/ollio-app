@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { Text, View, Image } from 'react-native'
 import { sales } from '../contants/icons';
+import { IBase } from '../utils/interfaces';
 
-interface IDrawerItem {title:string, icon:any}
-
-const DrawerItem = ({title, icon}:IDrawerItem) => {
+const DrawerItem = ({title, icon}:IBase) => {
     return (
       <View style={{height: 48, width: '100%', flexDirection: 'row', paddingHorizontal: 8, alignItems: 'center', marginVertical: 8, marginHorizontal: 8 }}>
         <Image source={icon}  style={{

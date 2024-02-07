@@ -18,8 +18,9 @@ import AppBarItem from "../../components/app_bar/item_app_bar";
 import DrawerItem from "../../components/drawer_item";
 import { apps, back_office, burger_icon, category, discount_icon, information, receipt, sales, setting } from "../../contants/icons";
 import ProductItem from "../../components/app_bar/product_item";
+import { INavigation } from "../../utils/interfaces";
 
-const HomeScreen = ({navigation}:any) => {
+const HomeScreen = ({navigation}:INavigation) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const drawerWidth = 300;
   const animatedValue = new Animated.Value(0);

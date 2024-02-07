@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, SafeAreaView } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
 
-const SignupScreen = ({ navigation }:any) => {
+const SignupScreen = ({ navigation }:INavigation) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState("");

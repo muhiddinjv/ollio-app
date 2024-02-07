@@ -1,8 +1,9 @@
 import React, { Component, useState } from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { user } from "../../contants/icons";
+import { IBase } from "../../utils/interfaces";
 
-const UserItem = ({title, icon}:{title:string, icon:any}) => {
+const UserItem = ({title, icon}:IBase) => {
   const [customerName, setCustomerName] = useState("");
 
   return (
@@ -12,7 +13,6 @@ const UserItem = ({title, icon}:{title:string, icon:any}) => {
         style={{
           height: "100%",
           width: "90%",
-         
           borderBottomWidth: 1,
         }}
       >

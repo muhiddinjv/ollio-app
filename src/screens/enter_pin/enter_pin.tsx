@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';  
 import { TextInput } from 'react-native-gesture-handler';
+import { INavigation } from '../../utils/interfaces';
 
-
-const Confirmation = ({navigation}:any) => {
+const Confirmation = ({navigation}:INavigation) => {
   const [value, setValue] = useState('');
 
   return (

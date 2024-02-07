@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { IBase } from '../../utils/interfaces';
 
-const ProductItem3 = ({ title, subtitle, price }) => {
+const ProductItem3 = ({ title, subtitle, price }:IBase) => {
   return (
     <View style={styles.container}>
       <View style={styles.circle} />

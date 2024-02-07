@@ -14,6 +14,7 @@ import {
   pdf_select,
 } from '../contants/icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { INavigation } from '../utils/interfaces';
 const Tab = createBottomTabNavigator();
 
 const tabOptions = {
@@ -24,7 +25,7 @@ const tabOptions = {
   },
 };
 
-const Tabs = ({navigation, route}:{navigation:any, route:any}) => {
+const Tabs = ({navigation, route}:INavigation) => {
   const [name, setName] = useState('');
   const [refresh, setRefresh] = useState('');
   const [userToken, setUserToken] = useState<string | null>(null);

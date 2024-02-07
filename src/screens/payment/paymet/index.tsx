@@ -11,8 +11,9 @@ import AppBarHome from "../../../components/app_bar/app_bar_ticket";
 import PaymentAppBar from "../../../components/app_bar/payment_appbar";
 import { card_icon, dollar } from "../../../contants/icons";
 import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
+import { INavigation } from "../../../utils/interfaces";
 
-const PaymentScreen = ({navigation}) => {
+const PaymentScreen = ({navigation}:INavigation) => {
   const [cashReceived, setCashReceived] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash"); // Default to Cash
 

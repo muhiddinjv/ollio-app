@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import AppBarUniversal from '../../components/app_bar/appBar_universal';
 
-const SplashScreen = ({ navigation }:any) => {
+const SplashScreen = ({ navigation }:INavigation) => {
   const handleRegisterPress = () => {
     // Add navigation logic for registration
     console.log('Navigate to registration page');

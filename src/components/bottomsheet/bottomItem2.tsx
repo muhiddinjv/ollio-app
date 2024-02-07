@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { Text, View, Image } from 'react-native'
 import { sales } from '../../contants/icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { IBase } from '../../utils/interfaces';
 
-interface IBottomItem { title: string; icon: any; iconColor?: string }
-
-const BottomItem2 = ({title, icon, iconColor}:IBottomItem) => {
+const BottomItem2 = ({title, icon, iconColor}:IBase) => {
     return (
       <TouchableOpacity style={{height: 48, width: '100%', flexDirection: 'row', paddingHorizontal: 8, alignItems: 'center', marginVertical: 8, marginHorizontal: 8 }}>
         <Image source={icon}  style={{

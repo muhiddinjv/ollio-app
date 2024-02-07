@@ -1,14 +1,14 @@
 import React, { Component, useState } from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { user_1 } from "../../contants/icons";
+import { IBase } from "../../utils/interfaces";
 
-const UserInfo = ({ title, icon }:{ title:string, icon:any }) => {
+const UserInfo = ({ title, icon }:IBase) => {
   const [customerName, setCustomerName] = useState("");
 
   return (
     <View style={styles.userTab}>
       <Image source={icon} style={styles.userIcon} />
-
       <Text>{title}</Text>
     </View>
   );

@@ -4,7 +4,9 @@ import { Picker } from '@react-native-picker/picker';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useShops } from '../../api/data.service';
 import { getShops } from '../../api/data.fn';
-const SelectScreen = ({navigation}: any) => {
+import { INavigation } from '../../utils/interfaces';
+
+const SelectScreen = ({navigation}: INavigation) => {
   const [selectedValue, setSelectedValue] = useState(null);
   const shops = useShops() || []
   console.log(shops, 'shops')

@@ -29,6 +29,8 @@ import AddToCartScreen from '../screens/customer/add_to_cart/index'
 import TicketScreen from '../screens/payment/ticket';
 import PreTicketScreen from '../screens/save_order/pre_ticket';
 import OpenTicketScreen from '../screens/save_order/open_tickets';
+import TestAi from '../screens/aigenerated/test';
+import { ButtonPrimary } from '../screens/aigenerated/ButtonPrimary';
 
 onlineManager.setEventListener(setOnline => {
   return NetInfo.addEventListener(state => {
@@ -39,8 +41,8 @@ const Stack = createStackNavigator();
 
 export const InitApp = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"OpenTicketScreen"}>
-      <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"EditItem"}>
+      <Stack.Screen name="AiGenerated" component={TestAi} />
       <Stack.Screen name="SignIn" component={SignInScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Splash" component={SplashScreen} />

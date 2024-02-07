@@ -13,8 +13,9 @@ import {
 } from "../../../contants/icons";
 import SaveChargeButton from "../../../components/save_charge_button";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { INavigation } from "../../../utils/interfaces";
 
-const AddCustomerScreen = ({ navigation }:any) => {
+const AddCustomerScreen = ({ navigation }:INavigation) => {
   const [selectedItem, setSelectedItem] = useState("");
   const [productItems, setProductItems] = useState([
     { id: 1, name: "Narxlar o'zgarishi mumkin", price: 0 },

@@ -1,8 +1,9 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {Height} from '../../utils/responsive';
 import { arrow, search_icon } from '../../contants/icons';
+import { IBase } from '../../utils/interfaces';
 
-const AppBarUniversal = ({title}) => {
+const AppBarUniversal = ({title}:IBase) => {
   return (
     <View
       style={{

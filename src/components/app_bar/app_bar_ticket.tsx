@@ -7,8 +7,9 @@ import {
   search_icon,
   user_plus,
 } from "../../contants/icons";
+import { IBase } from "../../utils/interfaces";
 
-const AppBarHome = ({ title }) => {
+const AppBarHome = ({ title }:IBase) => {
   return (
     <View
       style={{

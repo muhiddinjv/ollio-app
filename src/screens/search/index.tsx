@@ -7,7 +7,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
-const SearchScreen = ({ navigation }:any) => {
+const SearchScreen = ({ navigation }:INavigation) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const onChangeSearch = (query:any) => {

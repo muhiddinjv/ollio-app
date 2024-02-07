@@ -1,8 +1,9 @@
 // DrawerContent.js
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { INavigation } from '../../utils/interfaces';
 
-const DrawerContent = ({ navigation }:any) => {
+const DrawerContent = ({ navigation }:INavigation) => {
   return (
     <View>
       <TouchableOpacity onPress={() => navigation.navigate('Splash')}>

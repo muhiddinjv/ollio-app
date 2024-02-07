@@ -22,7 +22,7 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import ProductItem2 from "../../components/app_bar/product_item2";
 import ProductItem3 from "../../components/app_bar/product_item_3";
-const SideBarOrders = ({ navigation }:any) => {
+const SideBarOrders = ({ navigation }:INavigation) => {
     const [selectedValue, setSelectedValue] = useState('option1');
 
     const handlePickerChange = (value:any) => {

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
 import { INavigation } from "../../utils/interfaces";
 
-const SignupScreen = ({ navigation }:INavigation) => {
+const SignupScreen = ({ navigation }: INavigation) => {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
 
   const handleSignup = () => {
@@ -13,50 +13,36 @@ const SignupScreen = ({ navigation }:INavigation) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
+    <SafeAreaView className="flex-grow justify-center p-4">
+      <View className="flex-grow justify-center p-4">
         <TextInput
+          className="my-2"
           label="Username"
           value={username}
           onChangeText={(text) => setUsername(text)}
           mode="outlined"
-          style={styles.input}
         />
         <TextInput
+          className="my-2"
           label="Phone number"
           value={phone}
           onChangeText={(phone) => setPhone(phone)}
           mode="outlined"
-          style={styles.input}
         />
         <TextInput
+          className="my-2"
           label="Password"
           value={password}
           onChangeText={(text) => setPassword(text)}
           secureTextEntry
           mode="outlined"
-          style={styles.input}
         />
-        <Button mode="contained" onPress={handleSignup} style={styles.button}>
+        <Button mode="contained" onPress={handleSignup} className="my-4">
           Signup
         </Button>
       </View>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 16,
-  },
-  input: {
-    marginVertical: 8,
-  },
-  button: {
-    marginVertical: 16,
-  },
-});
 
 export default SignupScreen;

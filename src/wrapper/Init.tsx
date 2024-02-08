@@ -41,9 +41,9 @@ const Stack = createStackNavigator();
 
 export const InitApp = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"Signup"}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"Splash"}>
       <Stack.Screen name="AiGenerated" component={TestAi} />
-      <Stack.Screen name="SignIn" component={SignInScreen} />
+      <Stack.Screen name="Signin" component={SignInScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="SelectStore" component={SelectScreen} />

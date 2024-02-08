@@ -6,7 +6,9 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { useMe } from '../../api/data.service';
 import { getMe, login } from '../../api/data.fn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const SignInScreen =({ navigation }: any) => {
+import { INavigation } from '../../utils/interfaces';
+
+const SignInScreen =({ navigation }: INavigation) => {
   const user = useMe()
   // const notifyOnChangeProps = useFocusNotifyOnChangeProps();
   // const { dataUpdatedAt } = useQuery({

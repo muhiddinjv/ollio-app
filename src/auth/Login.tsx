@@ -13,8 +13,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import instance from '../utils/axios';
 import { ActivityIndicator } from 'react-native'
 import { Height, Width } from '../utils/responsive';
+import { INavigation } from '../utils/interfaces';
 
-export const LoginPage = ({ navigation, route }: any) => {
+export const LoginPage = ({ navigation, route }: INavigation) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [isDisable, setIsDisable] = useState(false);

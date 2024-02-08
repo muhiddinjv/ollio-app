@@ -8,6 +8,7 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import AddToPrivate from "../../components/add_to_private";
 import ListProduct from "../../components/list_product";
 import MyBottomSheet from "../../components/bottomsheet/bottomsheet";
+import { INavigation } from "../../utils/interfaces";
 
 const FirstRoute = () => (
   <View>
@@ -133,7 +134,7 @@ const ThirdRoute = () => (
 
 const initialLayout = { width: Dimensions.get("window").width };
 
-const OrdersScreen = ({ navigation }: any) => {
+const OrdersScreen = ({ navigation }: INavigation) => {
   const [selectedValue, setSelectedValue] = useState(null);
   const [index, setIndex] = useState(0);
   const [routes] = useState([

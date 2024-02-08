@@ -10,8 +10,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LOGIN } from '../app/slices/authentication';
 import { TextInput } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { INavigation } from '../utils/interfaces';
 
-const RecoverPassowrd = ({ navigation, route }: any) => {
+const RecoverPassowrd = ({ navigation, route }: INavigation) => {
   const [password, setPassword] = useState('');
   const [isDisable, setIsDisable] = useState(false);
   const dispatch = useDispatch()

@@ -13,6 +13,7 @@ import { Picker } from "@react-native-picker/picker";
 import ProductItem from "../components/app_bar/product_item";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import AddToPrivate from "../components/add_to_private";
+import { INavigation } from "../utils/interfaces";
 
 const FirstRoute = () => (
   <View>
@@ -92,7 +93,7 @@ const ThirdRoute = () => (
 
 const initialLayout = { width: Dimensions.get("window").width };
 
-const OrdersScreen = ({ navigation }: any) => {
+const OrdersScreen = ({ navigation }: INavigation) => {
   const handlePickerChange = (value:any) => {
     setSelectedValue(value);
   };

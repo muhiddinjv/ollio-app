@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet, SafeAreaView } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
+import { INavigation } from "../../utils/interfaces";
 
 const SignupScreen = ({ navigation }:INavigation) => {
   const [username, setUsername] = useState("");

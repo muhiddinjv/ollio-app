@@ -3,13 +3,16 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
+  Switch,
   SafeAreaView,
 } from "react-native";
 import AppBarUniversal from "../../components/app_bar/appBar_universal";
 import { INavigation } from "../../utils/interfaces";
+import { useColorScheme } from 'nativewind';
 
 const SplashScreen = ({ navigation }: INavigation) => {
+  const {colorScheme, toggleColorScheme} = useColorScheme();
+
   const handleRegisterPress = () => {
     // Add navigation logic for registration
     console.log("Navigate to registration page");
@@ -21,57 +24,28 @@ const SplashScreen = ({ navigation }: INavigation) => {
   };
 
   return (
-    <SafeAreaView className="flex-grow items-center bg-gray-200">
-      <AppBarUniversal title={"hello guys"} />
-      <View className="flex-grow items-center content-center">
-        <Text style={styles.title}>Welcome to My App</Text>
+    <SafeAreaView className="flex-grow bg-gray-200 dark:bg-slate-800">
+      <AppBarUniversal title="hello guys" />
+      <View className="flex-grow items-center justify-center">
+      <Switch value={colorScheme === 'dark'} onChange={toggleColorScheme} />
+        <Text className="text-2xl mb-4 font-medium text-gray-900 dark:text-white">Welcome to My App</Text>
         <TouchableOpacity
-          style={[styles.button, styles.registerButton]}
+          style={{ width: '70%' }}
+          className="py-4 px-6 rounded-md mb-4 bg-green-600"
           onPress={() => navigation.navigate("Signup")}
         >
-          <Text style={styles.buttonText}>Sign Up</Text>
+          <Text className="text-white text-lg font-bold text-center">Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, styles.loginButton]}
+          style={{ width: '70%' }}
+          className="py-4 px-6 rounded-md mb-4 bg-blue-500"
           onPress={() => navigation.navigate("Signin")}
         >
-          <Text style={styles.buttonText}>Sign In</Text>
+          <Text className="text-white text-lg font-bold text-center">Sign In</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "#f4f4f4",
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 30,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  button: {
-    width: "70%",
-    paddingVertical: 15,
-    borderRadius: 8,
-    marginBottom: 20,
-    alignItems: "center",
-  },
-  registerButton: {
-    backgroundColor: "#4CAF50",
-  },
-  loginButton: {
-    backgroundColor: "#3498db",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-});
 
 export default SplashScreen;

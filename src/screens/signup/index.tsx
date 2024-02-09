@@ -9,7 +9,7 @@ const SignupScreen = ({ navigation }: INavigation) => {
   const [phone, setPhone] = useState("");
 
   const handleSignup = () => {
-    console.log("Login pressed");
+    console.log("Signup pressed");
   };
 
   return (
@@ -37,7 +37,7 @@ const SignupScreen = ({ navigation }: INavigation) => {
           secureTextEntry
           mode="outlined"
         />
-        <Button mode="contained" onPress={handleSignup} className="my-4">
+        <Button mode="contained" onPress={handleSignup} className="my-4 p-1">
           Signup
         </Button>
       </View>

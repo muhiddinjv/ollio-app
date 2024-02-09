@@ -7,7 +7,8 @@ const AppBarUniversal = ({title}:IBase) => {
   return (
     <View
       style={{
-        height: Height(56),
+        paddingTop: 16,
+        height: Height(60),
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#4CAF50',

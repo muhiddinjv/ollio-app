@@ -25,7 +25,7 @@ const tabOptions = {
   },
 };
 
-const Tabs = ({navigation, route}:INavigation) => {
+const Tabs = ({ navigation, route }: INavigation) => {
   const [name, setName] = useState('');
   const [refresh, setRefresh] = useState('');
   const [userToken, setUserToken] = useState<string | null>(null);
@@ -35,315 +35,126 @@ const Tabs = ({navigation, route}:INavigation) => {
     setRefresh(refresh!);
   }, []);
 
+  const tabOptions = {
+    tabBarActiveTintColor: '#0066CC',
+    tabBarInactiveTintColor: '#FFFFFF',
+    tabBarActiveBackgroundColor: '#FFBF00',
+    tabBarInactiveBackgroundColor: '#333333',
+    headerShown: false,
+  };
+
   return (
     <Tab.Navigator
-      tabBarOptions={tabOptions}
+      // tabBarOptions={tabOptions}
       initialRouteName="Home"
-      tabBarIcon=""
-      screenOptions={({route}) => ({
-        tabBarActiveTintColor: '#0066CC',
-        tabBarInactiveTintColor: '#FFFFFF',
-        tabBarActiveBackgroundColor: '#FFBF00',
-        tabBarInactiveBackgroundColor: '#333333',
-        headerShown: false,
-        tabBarIcon: ({focused}) => {
+      // tabBarIcon=""
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused }) => {
           switch (route.name) {
             case 'Home':
               return (
-                <>
-                  <View
-                    style={{
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={print_select}
-                      style={{
-                        width: 24,
-                        height: 24,
-                        objectFit: 'contain',
-                      }}
-                    />
-                    {/* <Text
-                      style={{
-                        color: 'black',
-                        fontSize: 16,
-                      }}>
-                      {I18n.t('home')}
-                    </Text> */}
-                  </View>
-                </>
+                <View className="flex-col items-center">
+                  <Image source={print_select} className="w-24 h-24 object-contain" />
+                  {/* <Text>{I18n.t('home')}</Text> */}
+                </View>
               );
             case 'Catalog':
               return (
-                <>
-                  <View
-                    style={{
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={pdf_select}
-                      style={{
-                        width: 24,
-                        height: 24,
-                        objectFit: 'contain',
-                      }}
-                    />
-                    {/* <Text>{I18n.t('catalog')}</Text> */}
-                  </View>
-                </>
+                <View className="flex-col items-center">
+                  <Image source={pdf_select} className="w-24 h-24 object-contain" />
+                  {/* <Text>{I18n.t('catalog')}</Text> */}
+                </View>
               );
             case 'Cart':
               return (
-                <>
-                  <View
-                    style={{
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={cart_unselect}
-                      style={{
-                        width: 24,
-                        height: 24,
-                        objectFit: 'contain',
-                      }}
-                    />
-                    {/* <Text>{I18n.t('cart')}</Text> */}
-                  </View>
-                </>
+                <View className="flex-col items-center">
+                  {/* <Image source={cart_unselect} className="w-24 h-24 object-contain" /> */}
+                  {/* <Text>{I18n.t('cart')}</Text> */}
+                </View>
               );
             case 'HistoryOrders':
               return (
-                <>
-                  <View
-                    style={{
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={dostavka}
-                      style={{
-                        width: 24,
-                        height: 24,
-                        objectFit: 'contain',
-                      }}
-                    />
-                    <Text>Favorite</Text>
-                  </View>
-                </>
+                <View className="flex-col items-center">
+                  {/* <Image source={dostavka} className="w-24 h-24 object-contain" /> */}
+                  <Text>Favorite</Text>
+                </View>
               );
             case 'Account':
               return (
-                <>
-                  <View
-                    style={{
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={share_select}
-                      style={{
-                        width: 24,
-                        height: 24,
-                        objectFit: 'contain',
-                      }}
-                    />
-                    <Text>Account</Text>
-                  </View>
-                </>
+                <View className="flex-col items-center">
+                  <Image source={share_select} className="w-24 h-24 object-contain" />
+                  <Text>Account</Text>
+                </View>
               );
           }
         },
-      })}>
+      })}
+    >
       <Tab.Screen
-        options={{
-          headerShown: false,
-          tabBarIcon: ({focused}) =>
-            focused ? (
-              <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                <Image
-                  source={pdf_select}
-                  style={{
-                    width: 24,
-                    height: 24,
-                    objectFit: 'contain',
-                  }}
-                />
-                {/* <Text style={{color: 'black'}}>{I18n.t('catalog')}</Text> */}
-              </View>
-            ) : (
-              <View
-                style={{
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  source={pdf_select}
-                  style={{
-                    width: 24,
-                    height: 24,
-                    objectFit: 'contain',
-                  }}
-                />
-                {/* <Text>{I18n.t('catalog')}</Text> */}
-              </View>
-            ),
-        }}
         name="Catalog"
         component={CatalogScreen}
-      />
-      <Tab.Screen
         options={{
           headerShown: false,
-          tabBarIcon: ({focused}) =>
-            focused ? (
-              <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                <Image
-                  source={email_select}
-                  style={{
-                    width: 24,
-                    height: 24,
-                    objectFit: 'contain',
-                  }}
-                />
-                {/* <Text style={{color: 'black'}}>{I18n.t('cart')}</Text> */}
-              </View>
-            ) : (
-              <View
-                style={{
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  source={email_select}
-                  style={{
-                    width: 24,
-                    height: 24,
-                    objectFit: 'contain',
-                  }}
-                />
-                {/* <Text>{I18n.t('cart')}</Text> */}
-              </View>
-            ),
+          tabBarIcon: ({ focused }) => (
+            <View className="flex-col items-center">
+              <Image source={pdf_select} className="w-24 h-24 object-contain" />
+              {/* <Text>{I18n.t('catalog')}</Text> */}
+            </View>
+          ),
         }}
+      />
+      <Tab.Screen
         name="Cart"
         component={CartScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <View className="flex-col items-center">
+              <Image source={email_select} className="w-24 h-24 object-contain" />
+              {/* <Text>{I18n.t('cart')}</Text> */}
+            </View>
+          ),
+        }}
       />
       <Tab.Screen
         name="Home"
+        component={PrintScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({focused}) =>
-            focused ? (
-              <View
-                style={{
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  source={print_select}
-                  style={{
-                    width: 24,
-                    height: 24,
-                    objectFit: 'contain',
-                  }}
-                />
-                {/* <Text style={{color: 'black'}}>{I18n.t('home')} </Text> */}
-              </View>
-            ) : (
-              <View
-                style={{
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  source={print_select}
-                  style={{
-                    width: 24,
-                    height: 24,
-                    objectFit: 'contain',
-                  }}
-                />
-                {/* <Text>{I18n.t('home')}</Text> */}
-              </View>
-            ),
+          tabBarIcon: ({ focused }) => (
+            <View className="flex-col items-center">
+              <Image source={print_select} className="w-24 h-24 object-contain" />
+              {/* <Text>{I18n.t('home')}</Text> */}
+            </View>
+          ),
         }}
-        component={PrintScreen}
       />
       {userToken ? (
         <Tab.Screen
-          options={{
-            headerShown: false,
-            tabBarIcon: ({ focused }) =>
-              focused ? (
-                <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-                  <Image
-                    source={dostavka}
-                    style={{
-                      width: 24,
-                      height: 24,
-                      objectFit: 'contain',
-                    }}
-                  />
-                </View>
-              ) : (
-                <View
-                  style={{
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    source={dostavka}
-                    style={{
-                      width: 24,
-                      height: 24,
-                      objectFit: 'contain',
-                    }}
-                  />
-                </View>
-              ),
-          }}
           name="HistoryOrders"
           component={HistoryOrders}
-        />) : (null)}
-        
-      <Tab.Screen
-        options={{
-          headerShown: false,
-          tabBarIcon: ({focused}) =>
-            focused ? (
-              <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                <Image
-                  source={share_select}
-                  style={{
-                    width: 24,
-                    height: 24,
-                    objectFit: 'contain',
-                  }}
-                />
-                {/* <Text style={{color: 'black'}}>{I18n.t('profile')}</Text> */}
-              </View>
-            ) : (
-              <View
-                style={{
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}>
-                <Image
-                  source={share_select}
-                  style={{
-                    width: 24,
-                    height: 24,
-                  }}
-                />
-                {/* <Text>{I18n.t('profile')}</Text> */}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ focused }) => (
+              <View className="flex-col items-center">
+                {/* <Image source={dostavka} className="w-24 h-24 object-contain" /> */}
               </View>
             ),
-        }}
+          }}
+        />
+      ) : null}
+      <Tab.Screen
         name="Account"
         component={ProfileScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <View className="flex-col items-center">
+              <Image source={share_select} className="w-24 h-24" />
+              {/* <Text>{I18n.t('profile')}</Text> */}
+            </View>
+          ),
+        }}
       />
     </Tab.Navigator>
   );

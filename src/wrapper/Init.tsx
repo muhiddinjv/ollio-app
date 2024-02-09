@@ -1,12 +1,12 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/home';
-import SignInScreen from '../screens/signIn';
+import SignInScreen from '../screens/signin';
 import SignupScreen from '../screens/signup';
 import SplashScreen from '../screens/splash';
 import SelectScreen from '../screens/select_store';
 import Tab from '../navigation/tab'
-import AllItems from '../screens/items/allItems';
+import Items from '../screens/items';
 import TabView from '../screens/tabview';
 import SearchScreen from '../screens/search';
 import EditItem from '../screens/edit_item';
@@ -30,7 +30,6 @@ import TicketScreen from '../screens/payment/ticket';
 import PreTicketScreen from '../screens/save_order/pre_ticket';
 import OpenTicketScreen from '../screens/save_order/open_tickets';
 import TestAi from '../screens/aigenerated/test';
-import { ButtonPrimary } from '../screens/aigenerated/ButtonPrimary';
 
 onlineManager.setEventListener(setOnline => {
   return NetInfo.addEventListener(state => {
@@ -41,14 +40,15 @@ const Stack = createStackNavigator();
 
 export const InitApp = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"Splash"}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"Main"}>
       <Stack.Screen name="AiGenerated" component={TestAi} />
+      {/* <Stack.Screen name="Home" component={HomeScreen} /> //TODO: FIX IT */}
       <Stack.Screen name="Signin" component={SignInScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="SelectStore" component={SelectScreen} />
       <Stack.Screen name="Main" component={Tab} />
-      <Stack.Screen name="AllItems" component={AllItems} />
+      <Stack.Screen name="Items" component={Items} />
       <Stack.Screen name="TabView" component={TabView} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="EditItem" component={EditItem} />
@@ -69,14 +69,6 @@ export const InitApp = () => {
       <Stack.Screen name="TicketScreen" component={TicketScreen} />
       <Stack.Screen name="PreTicketScreen" component={PreTicketScreen} />
       <Stack.Screen name="OpenTicketScreen" component={OpenTicketScreen} />
-
-
-
-
-
-      
-
-
     </Stack.Navigator>
   );
 };

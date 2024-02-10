@@ -23,7 +23,7 @@ const CustomerListScreen = ({ navigation }: INavigation) => {
       </View>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate("EditCustomerInformationScreen")}
+        onPress={() => navigation.navigate("EditCustomerScreen")}
         className="p-3 rounded-lg items-center mt-4"
       >
         <Text className="text-green-600 text-lg font-semibold">

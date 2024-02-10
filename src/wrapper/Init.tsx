@@ -20,7 +20,7 @@ import SideBarOrders from '../screens/sidebar_orders';
 import OrdersScreen from '../screens/orders';
 import RefundScreen from '../screens/refund';
 import CustomerListScreen from '../screens/customer/customer_list';
-import EditCustomerInformationScreen from '../screens/customer/edit_customer';
+import EditCustomerScreen from '../screens/customer/edit_customer';
 import CustomerProfileScreen from '../screens/customer/customer_profile';
 import QuantityScreen from '../screens/payment/quantity';
 import PaymentScreen from '../screens/payment/paymet';
@@ -40,7 +40,7 @@ const Stack = createStackNavigator();
 
 export const InitApp = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"CustomerListScreen"}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"EditCustomerScreen"}>
       <Stack.Screen name="AiGenerated" component={TestAi} />
       {/* <Stack.Screen name="Home" component={HomeScreen} /> FIX ERRORS */}
       <Stack.Screen name="Signin" component={SignInScreen} />
@@ -61,8 +61,8 @@ export const InitApp = () => {
       <Stack.Screen name="OrdersScreen" component={OrdersScreen} />
       <Stack.Screen name="RefundScreen" component={RefundScreen} />
       <Stack.Screen name="CustomerListScreen" component={CustomerListScreen} />
+      <Stack.Screen name="EditCustomerScreen" component={EditCustomerScreen} />
 
-      <Stack.Screen name="EditCustomerInformationScreen" component={EditCustomerInformationScreen} />
       <Stack.Screen name="CustomerProfileScreen" component={CustomerProfileScreen} />
       <Stack.Screen name="QuantityScreen" component={QuantityScreen} />
       <Stack.Screen name="PaymentScreen" component={PaymentScreen} />

@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  TextInput,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import {
   arrow,
   barcode,
@@ -20,38 +13,32 @@ import UserItem from "../../../components/user/user_item";
 import { ScrollView } from "react-native-gesture-handler";
 import { INavigation } from "../../../utils/interfaces";
 
-const EditCustomerInformationScreen = ({ navigation }:INavigation) => {
-  const [customerName, setCustomerName] = useState("");
+const userData = [
+  { title: "Name", icon: user },
+  { title: "Email", icon: mail },
+  { title: "Phone", icon: telephone },
+  { title: "Address", icon: location },
+  { title: "City", icon: user },
+  { title: "State", icon: user },
+  { title: "Zipcode", icon: user },
+  { title: "Country", icon: user },
+  { title: "Costumer code", icon: barcode },
+  { title: "Vip customer", icon: membership },
+];
 
-  const handleSave = () => {
-    // Implement save functionality here
-    console.log("Customer information saved:", customerName);
-  };
-
+const EditCustomerScreen = ({ navigation }: INavigation) => {
   return (
-    <View style={styles.container}>
+    <View className="flex-1">
       {/* AppBar */}
-      <View style={styles.appBar}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-              source={arrow}
-              style={{ height: 22, width: 22, tintColor: "grey" }}
-            />
-          </TouchableOpacity>
-          <Text style={styles.appBarTitle}>Edit customer</Text>
-        </View>
-
+      <View className="flex-row justify-between items-center border-b border-gray-500 p-4 mt-4">
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image source={arrow} className="h-6 w-6 text-gray-600" />
+        </TouchableOpacity>
+        <Text className="text-lg font-semibold">Edit customer</Text>
         <TouchableOpacity
           onPress={() => navigation.navigate("CustomerProfileScreen")}
         >
-          <Text style={styles.saveButton}>Save</Text>
+          <Text className="text-green-600 font-semibold text-lg">Save</Text>
         </TouchableOpacity>
       </View>
 
@@ -59,22 +46,15 @@ const EditCustomerInformationScreen = ({ navigation }:INavigation) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-        <UserItem title={"Name"} icon={user} />
-        <UserItem title={"Email"} icon={mail} />
-        <UserItem title={"Phone"} icon={telephone} />
-        <UserItem title={"Address"} icon={location} />
-        <UserItem title={"City"} icon={user} />
-        <UserItem title={"State"} icon={user} />
-        <UserItem title={"Zipcode"} icon={user} />
-        <UserItem title={"Country"} icon={user} />
-        <UserItem title={"Costumer code"} icon={barcode} />
-        <UserItem title={"Vip customer"} icon={membership} />
-        <UserItem title={"name"} icon={user} />
-        <UserItem title={"name"} icon={user} />
+        {userData.map(({ title, icon }, index) => (
+          <UserItem key={index} title={title} icon={icon} />
+        ))}
       </ScrollView>
     </View>
   );
 };
+
+export default EditCustomerScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -120,5 +100,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-export default EditCustomerInformationScreen;

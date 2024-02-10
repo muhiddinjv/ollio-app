@@ -32,7 +32,22 @@ const SideBarOrders = ({ navigation }: INavigation) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const animatedValue = new Animated.Value(0);
   const drawerWidth = 240;
-  const tempItems = ["coca-cola", "fanta", "sprite", "chocolate", "pop-corn", "huggies", "nuts", "paper", "utencils", "dairy products", "snickers", "mars"];
+  const tempItems = [
+    "coca-cola",
+    "fanta",
+    "sprite",
+    "chocolate",
+    "pop-corn",
+    "huggies",
+    "nuts",
+    "paper",
+    "utencils",
+    "dairy products",
+    "snickers",
+    "mars",
+    "cookies",
+    "marshmallow",
+  ];
 
   const toggleDrawer = () => {
     const toValue = isDrawerOpen ? 0 : 1;
@@ -59,7 +74,10 @@ const SideBarOrders = ({ navigation }: INavigation) => {
   return (
     <View className="relative flex-grow flex-row bg-white">
       {isDrawerOpen && (
-        <Animated.View className="absolute inset-0 bg-black" style={{ opacity: animatedValue }} />
+        <Animated.View
+          className="absolute inset-0 bg-black"
+          style={{ opacity: animatedValue }}
+        />
       )}
       <Animated.View
         className="absolute top-0 left-0 bg-white border-r border-gray-300 z-10"
@@ -85,29 +103,38 @@ const SideBarOrders = ({ navigation }: INavigation) => {
         </View>
       </Animated.View>
 
-      <TouchableOpacity onPress={toggleDrawer} className="absolute top-4 left-4 z-10">
-        <Text className="text-lg font-semibold">{isDrawerOpen ? "Close" : "Open"}</Text>
+      <TouchableOpacity
+        onPress={toggleDrawer}
+        className="absolute top-4 left-4 z-10"
+      >
+        <Text className="text-lg font-semibold">
+          {isDrawerOpen ? "Close" : "Open"}
+        </Text>
       </TouchableOpacity>
 
-      <ScrollView>
       <Animated.View
         className="flex-1 ml-0 transition-all"
         style={{ marginLeft: isDrawerOpen ? drawerWidth : 0 }}
       >
         <View className="flex-1 w-full">
           <AppBarHome title="Ticket 6" />
-          <View className="p-4 bg-white flex-row items-center justify-around">
-            <TouchableOpacity onPress={() => navigation.navigate("SaveTicketScreen")} className="w-48 h-20 bg-green-500 flex items-center justify-center border-r border-green-900 mr-1">
-              <Text className="text-white font-semibold text-xl">SAVE</Text>
+          <View className="p-2 bg-white flex-row items-center justify-around">
+            <TouchableOpacity
+              onPress={() => navigation.navigate("SaveTicketScreen")}
+              className="w-48 p-4 bg-green-500"
+            >
+              <Text className="text-white font-semibold text-center text-xl">SAVE</Text>
             </TouchableOpacity>
-            <View className="w-48 h-20 bg-green-500 flex items-center justify-center">
-              <Text className="text-white font-semibold text-xl">CHARGE 98 000</Text>
+            <View className="w-48 p-4 bg-green-500 flex items-center justify-center">
+              <Text className="text-white font-semibold text-xl">
+                CHARGE 98 000
+              </Text>
             </View>
           </View>
           <View className="flex-row items-center pl-4 h-16 border border-gray-400">
             <StyledPicker
               selectedValue={selectedValue}
-              onValueChange={(itemValue:any) => setSelectedValue(itemValue)}
+              onValueChange={(itemValue: any) => setSelectedValue(itemValue)}
               className="w-4/5 text-base text-black"
             >
               <Picker.Item label="All items" value="option0" />
@@ -117,23 +144,21 @@ const SideBarOrders = ({ navigation }: INavigation) => {
               {/* Add more Picker items as needed */}
             </StyledPicker>
             <View className="w-1/5 h-full flex items-center justify-center border border-gray-400">
-              <Image
-                source={search_icon}
-                className="h-7 w-7 text-slate-500"
-              />
+              <Image source={search_icon} className="h-7 w-7 text-slate-500" />
             </View>
           </View>
-          {tempItems.map((value, index) => (
-            <ProductItem3
-              key={index}
-              title={value}
-              subtitle={"mahsulot"}
-              price={'5600 so"m'}
-            />
-          ))}
+          <ScrollView>
+            {tempItems.map((value, index) => (
+              <ProductItem3
+                key={index}
+                title={value}
+                subtitle={"mahsuloti"}
+                price={'5600 so"m'}
+              />
+            ))}
+          </ScrollView>
         </View>
       </Animated.View>
-      </ScrollView>
     </View>
   );
 };

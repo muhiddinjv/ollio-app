@@ -58,8 +58,8 @@ export const InitApp = () => {
       <Stack.Screen name="SaveTicketScreen" component={SaveTicketScreen} />
       <Stack.Screen name="Confirmation" component={Confirmation} />
       <Stack.Screen name="SideBarOrders" component={SideBarOrders} />
-
       <Stack.Screen name="OrdersScreen" component={OrdersScreen} />
+
       <Stack.Screen name="RefundScreen" component={RefundScreen} />
       <Stack.Screen name="CustomerListScreen" component={CustomerListScreen} />
       <Stack.Screen name="EditCustomerInformationScreen" component={EditCustomerInformationScreen} />

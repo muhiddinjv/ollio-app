@@ -11,7 +11,6 @@ import {
   Image,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { Icon } from "react-native-paper";
 import EditProductAppBar from "../../components/app_bar/edit_screen_appbar";
 import { done_green } from "../../contants/icons";
 

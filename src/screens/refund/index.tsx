@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import { View, Text, Dimensions, StyleSheet, Image } from "react-native";
-import {
-  arrow,
-  cancel,
-  more,
-  more_ho,
-  search_icon,
-} from "../../contants/icons";
-import { Appbar, TextInput, Button } from "react-native-paper";
-import ProductItem2 from "../../components/app_bar/product_item2";
+import { arrow, more } from "../../contants/icons";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import RefundItem from "../../components/refund_item";
+import { INavigation } from "../../utils/interfaces";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
-const RefundScreen = ({ navigation }:INavigation) => {
+const RefundScreen = ({ navigation }: INavigation) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const onChangeSearch = (query:string) => {
+  const onChangeSearch = (query: string) => {
     setSearchQuery(query);
   };
 
@@ -27,182 +20,51 @@ const RefundScreen = ({ navigation }:INavigation) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.appBar}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <View className="flex-grow">
+      <View className="bg-green-600 p-4 justify-between flex-row items-center">
+        <View className="flex-row items-center">
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-              source={arrow}
-              style={{
-                height: 28,
-                width: 28,
-                tintColor: "#FFF",
-              }}
-            />
+            <Image source={arrow} className="h-6 w-6" style={{tintColor:'white'}}/>
           </TouchableOpacity>
-          <Text
-            style={{
-              marginHorizontal: 20,
-              fontSize: 18,
-              color: "white",
-              fontWeight: "600",
-            }}
-          >
-            #2-1001
-          </Text>
+          <Text className="text-white text-xl font-semibold ml-4">#2-1001</Text>
         </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text
-            style={{
-              marginHorizontal: 20,
-              fontSize: 18,
-              color: "white",
-              fontWeight: "600",
-            }}
-          >
-            REFUND
-          </Text>
-          <Image
-            source={more}
-            style={{
-              height: 20,
-              width: 20,
-              tintColor: "#FFF",
-            }}
-          />
+        <View className="flex-row items-center">
+          <Text className="text-white text-xl font-semibold mr-4">REFUND</Text>
+          <Image source={more} className="h-6 w-6" style={{tintColor:'white'}} />
         </View>
       </View>
       <ScrollView>
-        <View
-          style={{
-            height: 120,
-            justifyContent: "flex-start",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ fontSize: 32, marginTop: 32, color: "black" }}>
-            UZS 150,000
-          </Text>
-          <Text style={{ fontSize: 18 }}>Total</Text>
+        <View className="justify-start items-center">
+          <Text className="text-4xl mt-10 text-black">UZS 150,000</Text>
+          <Text className="text-lg">Total</Text>
         </View>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: "grey",
-            width: "96%",
-            marginVertical: 16,
-            marginLeft: 8,
-
-            backgroundColor: "black",
-          }}
-        ></View>
-        <View
-          style={{
-            paddingHorizontal: 16,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.title}>Employee: </Text>
-            <Text style={styles.subTitle}>ogashblog@gmail.com</Text>
+        <View className="border-b border-gray-500 w-full my-5" />
+        <View className="px-4">
+          <View className="flex-row">
+            <Text className="font-semibold text-lg text-black">Employee: </Text>
+            <Text className="text-lg text-black">ogashblog@gmail.com</Text>
           </View>
-
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.title}>POS: </Text>
-            <Text style={styles.subTitle}>mega planet pos</Text>
+          <View className="flex-row">
+            <Text className="font-semibold text-lg text-black">POS: </Text>
+            <Text className="text-lg text-black">mega planet pos</Text>
           </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.title}>Customer: </Text>
-            <Text style={styles.subTitle}>Stive Jobs</Text>
+          <View className="flex-row">
+            <Text className="font-semibold text-lg text-black">Customer: </Text>
+            <Text className="text-lg text-black">Stive Jobs</Text>
           </View>
         </View>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: "grey",
-            width: "96%",
-            marginVertical: 16,
-            backgroundColor: "black",
-            marginLeft: 8,
-          }}
-        ></View>
-        <RefundItem
-          title={"0282 Niso gaz falga qalin"}
-          productAmount={"1 x UZS 1,000"}
-          productPrice={"UZS 1,000"}
-        />
-        <RefundItem
-          title={"0282 Niso gaz falga qalin"}
-          productAmount={"1 x UZS 1,000"}
-          productPrice={"UZS 1,000"}
-        />
-        <RefundItem
-          title={"0282 Niso gaz falga qalin"}
-          productAmount={"1 x UZS 1,000"}
-          productPrice={"UZS 1,000"}
-        />
-        <RefundItem
-          title={"0282 Niso gaz falga qalin"}
-          productAmount={"1 x UZS 1,000"}
-          productPrice={"UZS 1,000"}
-        />
-        <RefundItem
-          title={"0282 Niso gaz falga qalin"}
-          productAmount={"1 x UZS 1,000"}
-          productPrice={"UZS 1,000"}
-        />
-        <RefundItem
-          title={"0282 Niso gaz falga qalin"}
-          productAmount={"1 x UZS 1,000"}
-          productPrice={"UZS 1,000"}
-        />
-        <RefundItem
-          title={"0282 Niso gaz falga qalin"}
-          productAmount={"1 x UZS 1,000"}
-          productPrice={"UZS 1,000"}
-        />
-        <RefundItem
-          title={"0282 Niso gaz falga qalin"}
-          productAmount={"1 x UZS 1,000"}
-          productPrice={"UZS 1,000"}
-        />
-        <RefundItem
-          title={"0282 Niso gaz falga qalin"}
-          productAmount={"1 x UZS 1,000"}
-          productPrice={"UZS 1,000"}
-        />
+        <View className="border-b border-gray-500 w-full my-5" />
+        {[...Array(20)].map((_, index) => (
+          <RefundItem
+            key={index}
+            title="0282 Niso gaz falga qalin"
+            productAmount="1 x UZS 1,000"
+            productPrice="UZS 1,000"
+          />
+        ))}
       </ScrollView>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  title: {
-    justifyContent: "flex-start",
-    textAlign: "left",
-    fontSize: 18,
-    color: "black",
-  },
-  subTitle: {
-    justifyContent: "flex-start",
-    textAlign: "left",
-    fontSize: 18,
-    color: "black",
-  },
-  input: {
-    backgroundColor: "transparent",
-    marginRight: 10,
-    width: 280,
-  },
 
-  container: {
-    flex: 1,
-  },
-  appBar: {
-    backgroundColor: "#4CB050",
-    padding: 15,
-    alignItems: "center",
-    justifyContent: "space-between",
-    elevation: 4,
-    flexDirection: "row",
-  },
-});
 export default RefundScreen;

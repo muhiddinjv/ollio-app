@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Animated } from "react-native";
+import { View, Text, TouchableOpacity, Animated, Image } from "react-native";
 import { INavigation } from "../../utils/interfaces";
+import { apps, back_office, burger_icon, category, discount_icon, information, lock, receipt, sales, setting } from "../../contants/icons";
+import AppBarItem from "../../components/app_bar/item_app_bar";
+import DrawerItem from "../../components/drawer_item";
 
 //TODO: FIX HOME PAGE. ITS NOT WORKING
 const HomeScreen = ({ navigation }: INavigation) => {
@@ -30,48 +33,71 @@ const HomeScreen = ({ navigation }: INavigation) => {
   });
 
   return (
-    <View className="flex-row flex-1 bg-white">
+    <View className="flex-row bg-white">
       {isDrawerOpen && (
-        <Animated.View
-          className="absolute inset-0 bg-black opacity-50"
-          style={{ opacity: contentOpacity }}
-        />
+        <Animated.View className="absolute inset-0 bg-black opacity-50" style={{ opacity: animatedValue }} />
       )}
       <Animated.View
-        // className="absolute top-0 left-0 bg-white border-r border-gray-300 shadow-2xl"
-        style={{
-          transform: `translateX(${translateX}px)`,
-          width: drawerWidth,
-          display: isDrawerOpen ? "flex" : "none",
-        }}
+        className={`absolute h-full bg-white border-r border-gray-300 shadow-xl z-10 transition-transform transform ${
+          isDrawerOpen ? 'translate-x-0' : `-translate-x-${drawerWidth}`
+        }`}
       >
-        <View className="h-220 bg-green-500 p-4">
-          <Text className="text-white text-lg" numberOfLines={1}>
-            ogabekabdijabborov@gmail.com
-          </Text>
-          <Text className="text-white text-lg" numberOfLines={1}>
-            ogabekabdijabborov@gmail.com
-          </Text>
+        <View className="h-100 bg-green-500 flex flex-col px-6">
+          <Text className="mt-52 text-xl overflow-hidden">user1@gmail.com</Text>
+          <Text className="mt-2 text-base overflow-hidden">user2@gmail.com</Text>
         </View>
-        <View>{/* Drawer Items */}</View>
+        <View>
+          <DrawerItem title="Sales" icon={sales} />
+          <DrawerItem title="Receipt" icon={receipt} />
+          <DrawerItem title="Items" icon={burger_icon} />
+          <DrawerItem title="Settings" icon={setting} />
+          <DrawerItem title="Back Office" icon={back_office} />
+          <DrawerItem title="Apps" icon={apps} />
+          <DrawerItem title="Support" icon={information} />
+        </View>
       </Animated.View>
 
-      <TouchableOpacity
-        onPress={toggleDrawer}
-        className="absolute top-4 left-4 z-10"
-      >
-        <Text className="text-lg font-bold">
-          {isDrawerOpen ? "Close" : "Open"}
-        </Text>
+      <TouchableOpacity onPress={toggleDrawer} className="absolute top-4 left-4 z-20">
+        {isDrawerOpen ? (
+          <View className="w-9 h-9 bg-white rounded-full flex items-center justify-center">
+            <Image source={lock} className="w-6 h-6" />
+          </View>
+        ) : (
+          <Text className="font-semibold text-transparent text-lg">Open</Text>
+        )}
       </TouchableOpacity>
+
       <Animated.View
-        className="flex-1"
-        style={{ marginLeft: isDrawerOpen ? drawerWidth : 0 }}
+        className={`flex-1 ml-${isDrawerOpen ? '0' : `${drawerWidth}`} transition-margin`}
       >
-        <View>{/* Main Content */}</View>
+        <View>
+          <AppBarItem title="Items" />
+          <TouchableOpacity
+            className="flex-row items-center py-4 px-6"
+            onPress={() => navigation.navigate("TabView")}
+          >
+            <Image source={burger_icon} className="w-6 h-6" />
+            <View className="pl-4 flex-1 border-b border-black">
+              <Text className="text-lg text-black font-semibold">Items</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity className="flex-row items-center py-4 px-6">
+            <Image source={category} className="w-6 h-6" />
+            <View className="pl-4 flex-1 border-b border-black">
+              <Text className="text-lg text-black font-semibold">Categories</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity className="flex-row items-center py-4 px-6">
+            <Image source={discount_icon} className="w-6 h-6" />
+            <View className="pl-4 flex-1 border-b border-black">
+              <Text className="text-lg text-black font-semibold">Discounts</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </Animated.View>
     </View>
   );
 };
+
 
 export default HomeScreen;

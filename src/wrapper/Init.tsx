@@ -40,7 +40,7 @@ const Stack = createStackNavigator();
 
 export const InitApp = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"SideBarOrders"}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"OrdersScreen"}>
       <Stack.Screen name="AiGenerated" component={TestAi} />
       {/* <Stack.Screen name="Home" component={HomeScreen} /> FIX ERRORS */}
       <Stack.Screen name="Signin" component={SignInScreen} />

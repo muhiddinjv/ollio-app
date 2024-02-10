@@ -1,7 +1,7 @@
 export interface IBase {
   title: string;
   subtitle?: string;
-  price?: number;
+  price?: number|string;
   iconColor?: string;
   icon?: any;
 }

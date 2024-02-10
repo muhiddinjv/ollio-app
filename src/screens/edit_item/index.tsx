@@ -28,12 +28,10 @@ const EditProductScreen = () => {
   const [isTrackStock, setIsTrackStock] = useState(false);
   const [isVariantAvailable, setIsVariantAvailable] = useState(false);
   const [selectedStores, setSelectedStores] = useState([]);
-  
   const [modifiers, setModifiers] = useState([
     { title: "", subtitle: "", isEnabled: false },
     { title: "", subtitle: "", isEnabled: false },
   ]);
-
   const [representation, setRepresentation] = useState({
     color: "",
     shape: "",
@@ -44,11 +42,11 @@ const EditProductScreen = () => {
     // Implement logic to add a new variant
   };
 
-  const handleToggleStore = (store:any) => {
+  const handleToggleStore = (store: any) => {
     // Implement logic to toggle the store selection
   };
 
-  const handleToggleModifier = (index:number) => {
+  const handleToggleModifier = (index: number) => {
     // Implement logic to toggle the modifier selection
   };
 
@@ -57,240 +55,158 @@ const EditProductScreen = () => {
   };
 
   return (
-    <SafeAreaView>
-      <EditProductAppBar navigation={undefined} />
-      <ScrollView style={{ padding: 16 }}>
-        {/* Text Input for Product Name */}
-        <TextInput
-          style={styles.inputContainer}
-          placeholder="Product Name"
-          value={productName}
-          onChangeText={(text) => setProductName(text)}
-        />
-
-        {/* Picker for Category */}
-        <Picker
-          selectedValue={category}
-          onValueChange={(itemValue) => setCategory(itemValue)}
-        >
-          {/* Populate categories dynamically */}
-          <Picker.Item label="Category 1" value="Category 1" />
-          <Picker.Item label="Category 2" value="Category 2" />
-          {/* ... */}
-        </Picker>
-
-        {/* Text Input for Sold By */}
-        <TextInput
-          style={styles.inputContainer}
-          placeholder="Sold By"
-          value={soldBy}
-          onChangeText={(text) => setSoldBy(text)}
-        />
-
-        {/* Text Input for Weight */}
-        <TextInput
-          style={styles.inputContainer}
-          placeholder="Weight"
-          value={weight}
-          onChangeText={(text) => setWeight(text)}
-          keyboardType="numeric"
-        />
-
-        {/* Text Input for Price */}
-        <TextInput
-          style={styles.inputContainer}
-          placeholder="Price"
-          value={price}
-          onChangeText={(text) => setPrice(text)}
-          keyboardType="numeric"
-        />
-
-        {/* Text Input for Cost */}
-        <TextInput
-          style={styles.inputContainer}
-          placeholder="Cost"
-          value={cost}
-          onChangeText={(text) => setCost(text)}
-          keyboardType="numeric"
-        />
-
-        {/* Text Input for SKU */}
-        <TextInput
-          style={styles.inputContainer}
-          placeholder="SKU"
-          value={sku}
-          onChangeText={(text) => setSku(text)}
-        />
-
-        {/* Text Input for Barcode */}
-        <TextInput
-          style={styles.inputContainer}
-          placeholder="Barcode"
-          value={barcode}
-          onChangeText={(text) => setBarcode(text)}
-        />
-
-        <Text style={styles.title}>Inventory</Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text>Composite Item</Text>
-          <Switch
-            value={isCompositeItem}
-            onValueChange={() => setIsCompositeItem(!isCompositeItem)}
+    <SafeAreaView className="flex-1">
+      <ScrollView>
+        <EditProductAppBar navigation={undefined} />
+        <View className="p-4">
+          <TextInput
+            style={styles.inputContainer}
+            placeholder="Product Name"
+            value={productName}
+            onChangeText={(text) => setProductName(text)}
           />
-        </View>
 
-        {/* Switch for Track Stock */}
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text>Track Stock</Text>
-          <Switch
-            value={isTrackStock}
-            onValueChange={() => setIsTrackStock(!isTrackStock)}
+          {/* Picker for Category */}
+          <Picker
+            selectedValue={category}
+            onValueChange={(itemValue) => setCategory(itemValue)}
+            style={styles.inputContainer}
+          >
+            {/* Populate categories dynamically */}
+            <Picker.Item label="Category 1" value="Category 1" />
+            <Picker.Item label="Category 2" value="Category 2" />
+            {/* ... */}
+          </Picker>
+
+          <TextInput
+            style={styles.inputContainer}
+            placeholder="Sold By"
+            value={soldBy}
+            onChangeText={(text) => setSoldBy(text)}
           />
-        </View>
 
-        <Text style={styles.title}>Variants</Text>
-        <Text style={styles.subtitle}>
-          Use variant if an item has different sizes, colors or other options
-        </Text>
-        <TouchableOpacity style={styles.buttonContainer} onPress={()=>alert('buttonContainer')}>
-          <Icon source="add" size={24} color="white" />
-          <Text style={styles.buttonText}>Add</Text>
-        </TouchableOpacity>
+          <TextInput
+            style={styles.inputContainer}
+            placeholder="Weight"
+            value={weight}
+            onChangeText={(text) => setWeight(text)}
+            keyboardType="numeric"
+          />
 
-        {/* Store Selection */}
-        <Text style={styles.title}>Select Stores:</Text>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginVertical: 16
-          }}
-        >
-          <Image source={done_green} style={{ height: 24, width: 24 }} />
+          <TextInput
+            style={styles.inputContainer}
+            placeholder="Price"
+            value={price}
+            onChangeText={(text) => setPrice(text)}
+            keyboardType="numeric"
+          />
 
-          <Text style={{}}>ewueueun</Text>
-          <Text style={styles.price}>5600</Text>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Image source={done_green} style={{ height: 24, width: 24 }} />
+          <TextInput
+            style={styles.inputContainer}
+            placeholder="Cost"
+            value={cost}
+            onChangeText={(text) => setCost(text)}
+            keyboardType="numeric"
+          />
 
-          <Text style={{}}>ewueueun</Text>
-          <Text style={styles.price}>5600</Text>
-        </View>
-        {selectedStores.map((store) => (
+          <TextInput
+            style={styles.inputContainer}
+            placeholder="SKU"
+            value={sku}
+            onChangeText={(text) => setSku(text)}
+          />
+
+          <TextInput
+            style={styles.inputContainer}
+            placeholder="Barcode"
+            value={barcode}
+            onChangeText={(text) => setBarcode(text)}
+          />
+
+          <Text className="text-lg font-bold mt-4 mb-2">Inventory</Text>
+          <View className="flex-row items-center mb-4">
+            <Text>Composite Item</Text>
+            <Switch
+              value={isCompositeItem}
+              onValueChange={() => setIsCompositeItem(!isCompositeItem)}
+            />
+          </View>
+
+          <View className="flex-row items-center mb-4">
+            <Text>Track Stock</Text>
+            <Switch
+              value={isTrackStock}
+              onValueChange={() => setIsTrackStock(!isTrackStock)}
+            />
+          </View>
+
+          <Text className="text-lg font-bold mt-4 mb-2">Variants</Text>
+          <Text className="text-base mb-4">
+            Use variant if an item has different sizes, colors or other options
+          </Text>
           <TouchableOpacity
-            key={store}
-            onPress={() => handleToggleStore(store)}
+            className="buttonContainer mb-4"
+            onPress={() => handleAddVariant()}
           >
-            <Text>{store}</Text>
+            {/* <Icon source="add" size={24} color="white" /> */}
+            <Text className="buttonText">Add</Text>
           </TouchableOpacity>
-        ))}
 
-        
-        <Text style={styles.title}>Modifiers:</Text>
-        {modifiers.map((modifier, index) => (
-          <View
-            key={index}
-            style={{ flexDirection: "row", alignItems: "center", marginVertical: 8 }}
-          >
-            <Text>{`Modifier ${index + 1}`}</Text>
-            <Switch
-              value={modifier.isEnabled}
-              onValueChange={() => handleToggleModifier(index)}
-            />
+          <Text className="text-lg font-bold mt-4 mb-2">Select Stores:</Text>
+          <View className="flex-row justify-between mb-4">
+            <Image source={done_green} className="w-6 h-6" />
+
+            <Text className="">ewueueun</Text>
+            <Text className="text-base">5600</Text>
           </View>
-          
-        ))}
+
+          {/* Rendering selected stores */}
+          {selectedStores.map((store, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => handleToggleStore(store)}
+              className="mb-2"
+            >
+              <Text className="text-base">{store}</Text>
+            </TouchableOpacity>
+          ))}
+
+          <Text className="text-lg font-bold mt-4 mb-2">Modifiers:</Text>
+          {/* Rendering modifiers */}
           {modifiers.map((modifier, index) => (
-          <View
-            key={index}
-            style={{ flexDirection: "row", alignItems: "center", marginVertical: 8, }}
-          >
-            <Text>{`Modifier ${index + 1}`}</Text>
+            <View key={index} className="flex-row items-center mb-2">
+              <Text>{`Modifier ${index + 1}`}</Text>
+              <Switch
+                value={modifier.isEnabled}
+                onValueChange={() => handleToggleModifier(index)}
+              />
+            </View>
+          ))}
+
+          <Text className="text-lg font-bold mt-4 mb-2">
+            Representation on POS
+          </Text>
+          <View className="flex-row items-center mb-4">
+            <Text className="">Representation on POS</Text>
             <Switch
-              value={modifier.isEnabled}
-              onValueChange={() => handleToggleModifier(index)}
+              value={representation.isSelected}
+              onValueChange={handleToggleRepresentation}
             />
           </View>
-          
-        ))}
 
-        {/* Representation on POS */}
-        <View style={{ flexDirection: "row", alignItems: "center", marginVertical: 8, }}>
-          <Text >Representation on POS</Text>
-          <Switch
-            value={representation.isSelected}
-            onValueChange={handleToggleRepresentation}
-          />
+          <TouchableOpacity
+            className="flex-row items-center justify-center bg-green-500 rounded-lg py-3 px-6 shadow-md mb-16"
+            onPress={() => console.log("Save button pressed")}
+          >
+            <Text className="text-white">Save</Text>
+          </TouchableOpacity>
         </View>
-
-   
-        <TouchableOpacity style={{
-          marginBottom: 200,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#4CAF50',
-          borderRadius: 10,
-          paddingVertical: 12,
-          paddingHorizontal: 20,
-          elevation: 3, // for Android shadow
-          shadowColor: 'black', // for iOS shadow
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.2,
-          shadowRadius: 2,
-        }} onPress={() => console.log("Save button pressed")}>
-          <Text>Save</Text>
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    paddingVertical: 10,
-  },
-  icon: {
-    marginRight: 10,
-    marginLeft: 10,
-  },
-  textContainer: {
-    flex: 1,
-  },
-  price: {
-    fontSize: 14,
-    color: "#666",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#4CAF50",
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    elevation: 3, // for Android shadow
-    shadowColor: "black", // for iOS shadow
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-  },
-  buttonText: {
-    color: "white",
-    marginLeft: 10,
-    fontSize: 18,
-  },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -306,30 +222,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
     marginVertical: 16,
-  },
-  input: {
-    flex: 1,
-    fontSize: 16,
-    color: "#333",
-  },
-
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#333",
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: "#666",
-    textAlign: "center",
-    fontStyle: "italic",
-    letterSpacing: 0.5,
   },
 });
 export default EditProductScreen;

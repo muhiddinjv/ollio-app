@@ -2,52 +2,18 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { IBase } from '../../utils/interfaces';
 
-const ProductItem2 = ({ title, subtitle, price }:IBase) => {
+const ProductItem2 = ({ title, subtitle, price }: IBase) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.circle} />
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subtitle}>{subtitle}</Text>
+    <View className="flex-row items-center p-4 border-b border-gray-300">
+      <View className="w-5 h-5 rounded-full bg-red-500 mr-4" />
+      <View className="flex-1 pr-4">
+        <Text className="text-base font-bold text-gray-700">{title}</Text>
+        <Text className="text-sm text-gray-500">{subtitle}</Text>
       </View>
-      <Text style={styles.price}>{price}</Text>
+      <Text className="text-base font-bold text-green-600">{price}</Text>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  circle: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: 'red',
-    marginRight: 10,
-  },
-  textContainer: {
-    flex: 1,
-    paddingRight: 10,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#666',
-  },
-  price: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'green',
-  },
-});
-
 export default ProductItem2;
+

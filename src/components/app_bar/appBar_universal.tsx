@@ -1,46 +1,15 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
-import {Height} from '../../utils/responsive';
-import { arrow, search_icon } from '../../contants/icons';
-import { IBase } from '../../utils/interfaces';
+import { Text, View, Image } from "react-native";
+import { arrow, search_icon } from "../../contants/icons";
+import { IBase } from "../../utils/interfaces";
 
-const AppBarUniversal = ({title}:IBase) => {
+const AppBarUniversal = ({ title }: IBase) => {
   return (
-    <View
-      style={{
-        paddingTop: 16,
-        height: Height(60),
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#4CAF50',
-        justifyContent: 'space-between',
-        elevation: 5,
-        width: '100%',
-        paddingHorizontal: 8,
-      }}>
-        <Image source={arrow} style={{
-          height: 36, 
-          width: 36,
-          tintColor: '#FFFFFF'
-
-        }}/>
-      <Text
-        style={{
-          fontSize: Height(24),
-          fontWeight: '600',
-          color: '#FFF',
-        }}>
-        {title}
-      </Text>
-      <Image source={search_icon} style={{
-          height: 36, 
-          width: 36,
-          tintColor: '#FFFFFF'
-
-        }}/>
+    <View className="pt-4 h-14 flex-row items-center bg-green-500 justify-between shadow-md w-full px-2">
+      <Image source={arrow} className="h-9 w-9 text-white" />
+      <Text className="text-lg font-semibold text-white">{title}</Text>
+      <Image source={search_icon} className="h-9 w-9 text-white" />
     </View>
   );
 };
 
 export default AppBarUniversal;
-
-const styles = StyleSheet.create({});

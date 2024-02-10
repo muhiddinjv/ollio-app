@@ -40,14 +40,15 @@ const Stack = createStackNavigator();
 
 export const InitApp = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"Main"}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"SideBarOrders"}>
       <Stack.Screen name="AiGenerated" component={TestAi} />
-      {/* <Stack.Screen name="Home" component={HomeScreen} /> //TODO: FIX IT */}
+      {/* <Stack.Screen name="Home" component={HomeScreen} /> FIX ERRORS */}
       <Stack.Screen name="Signin" component={SignInScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="SelectStore" component={SelectScreen} />
-      <Stack.Screen name="Main" component={Tab} />
+      {/* FIX THE STYLE OF TAB */}
+      <Stack.Screen name="Tab" component={Tab} /> 
       <Stack.Screen name="Items" component={Items} />
       <Stack.Screen name="TabView" component={TabView} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
@@ -57,6 +58,7 @@ export const InitApp = () => {
       <Stack.Screen name="SaveTicketScreen" component={SaveTicketScreen} />
       <Stack.Screen name="Confirmation" component={Confirmation} />
       <Stack.Screen name="SideBarOrders" component={SideBarOrders} />
+
       <Stack.Screen name="OrdersScreen" component={OrdersScreen} />
       <Stack.Screen name="RefundScreen" component={RefundScreen} />
       <Stack.Screen name="CustomerListScreen" component={CustomerListScreen} />

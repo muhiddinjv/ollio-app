@@ -20,17 +20,19 @@ import {
   transfers_icon,
 } from "../../contants/icons";
 import { Picker } from "@react-native-picker/picker";
-import ProductItem2 from "../../components/app_bar/product_item2";
 import ProductItem3 from "../../components/app_bar/product_item_3";
-const SideBarOrders = ({ navigation }:INavigation) => {
-    const [selectedValue, setSelectedValue] = useState('option1');
+import { INavigation } from "../../utils/interfaces";
+import { styled } from "nativewind";
+import { ScrollView } from "react-native-gesture-handler";
 
-    const handlePickerChange = (value:any) => {
-      setSelectedValue(value);
-    };
+const StyledPicker = styled(Picker);
+
+const SideBarOrders = ({ navigation }: INavigation) => {
+  const [selectedValue, setSelectedValue] = useState("option1");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const drawerWidth = 300;
   const animatedValue = new Animated.Value(0);
+  const drawerWidth = 240;
+  const tempItems = ["coca-cola", "fanta", "sprite", "chocolate", "pop-corn", "huggies", "nuts", "paper", "utencils", "dairy products", "snickers", "mars"];
 
   const toggleDrawer = () => {
     const toValue = isDrawerOpen ? 0 : 1;
@@ -48,163 +50,103 @@ const SideBarOrders = ({ navigation }:INavigation) => {
     inputRange: [0, 1],
     outputRange: [-drawerWidth, 0],
   });
+
   const contentOpacity = animatedValue.interpolate({
     inputRange: [0, 0.5, 1],
     outputRange: [1, 0.5, 0],
   });
+
   return (
-    <View style={styles.container}>
+    <View className="relative flex-grow flex-row bg-white">
       {isDrawerOpen && (
-        <Animated.View style={[styles.overlay, { opacity: animatedValue }]} />
+        <Animated.View className="absolute inset-0 bg-black" style={{ opacity: animatedValue }} />
       )}
       <Animated.View
-        style={[
-          styles.drawer,
-          { transform: [{ translateX: translateX }] },
-          { display: isDrawerOpen ? "flex" : "none" },
-        ]}
+        className="absolute top-0 left-0 bg-white border-r border-gray-300 z-10"
+        style={{
+          width: drawerWidth,
+          transform: [{ translateX }],
+          display: isDrawerOpen ? "flex" : "none",
+        }}
       >
-        <View
-          style={{
-            height: 220,
-            backgroundColor: "#4CB050",
-            flexDirection: "column",
-            paddingHorizontal: 24,
-          }}
-        >
-          <Text
-            numberOfLines={1}
-            style={{
-              marginTop: 52,
-              fontSize: 20,
-              overflow: "hidden",
-              color: "#fff",
-            }}
-          >
-            Owner
-          </Text>
-
-          <Text
-            numberOfLines={1}
-            style={{
-              marginTop: 8,
-              fontSize: 16,
-              overflow: "hidden",
-              color: "#fff",
-            }}
-          >
-            POS 1
-          </Text>
-          <Text
-            numberOfLines={1}
-            style={{
-              marginTop: 4,
-              fontSize: 16,
-              overflow: "hidden",
-              color: "#fff",
-            }}
-          >
-            MAXENGLISH
-          </Text>
+        <View className="h-fit bg-green-500 p-6">
+          <Text className="text-white text-lg font-semibold mt-10">Owner</Text>
+          <Text className="text-white text-base mt-1">POS 1</Text>
+          <Text className="text-white text-base mt-1">MY SHOP</Text>
         </View>
         <View>
-          <DrawerItem title={"Sales"} icon={sales} />
-          <DrawerItem title={"Orders"} icon={receipt} />
-          <DrawerItem title={"Transfers"} icon={transfers_icon} />
-          <DrawerItem title={"Items"} icon={burger_icon} />
-          <DrawerItem title={"Settings"} icon={setting} />
-          <DrawerItem title={"Back Offiice"} icon={back_office} />
-          <DrawerItem title={"Support"} icon={information} />
+          <DrawerItem title="Sales" icon={sales} />
+          <DrawerItem title="Orders" icon={receipt} />
+          <DrawerItem title="Transfers" icon={transfers_icon} />
+          <DrawerItem title="Items" icon={burger_icon} />
+          <DrawerItem title="Settings" icon={setting} />
+          <DrawerItem title="Back Offiice" icon={back_office} />
+          <DrawerItem title="Support" icon={information} />
         </View>
       </Animated.View>
 
-      <TouchableOpacity onPress={toggleDrawer} style={styles.menuIcon}>
-        <Text style={styles.menuText}>{isDrawerOpen ? "Close" : "Open"}</Text>
+      <TouchableOpacity onPress={toggleDrawer} className="absolute top-4 left-4 z-10">
+        <Text className="text-lg font-semibold">{isDrawerOpen ? "Close" : "Open"}</Text>
       </TouchableOpacity>
 
+      <ScrollView>
       <Animated.View
-        style={[
-          styles.mainContent,
-          { marginLeft: isDrawerOpen ? drawerWidth : 0 },
-        ]}
+        className="flex-1 ml-0 transition-all"
+        style={{ marginLeft: isDrawerOpen ? drawerWidth : 0 }}
       >
-        <View style={{ flex: 1, width: "100%" }}>
-          <AppBarHome title={'Ticket 6'}/>
-          <View
-            style={{
-              margin: 16,
-              backgroundColor: "#008000",
-              height: 86,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-around",
-            }}
-          >
-            <TouchableOpacity onPress={()=> navigation.navigate('SaveTicketScreen')}
-              style={styles.buttonStyle}
-            >
-
-              <Text style={styles.titleStyle}>Save</Text>
+        <View className="flex-1 w-full">
+          <AppBarHome title="Ticket 6" />
+          <View className="p-4 bg-white flex-row items-center justify-around">
+            <TouchableOpacity onPress={() => navigation.navigate("SaveTicketScreen")} className="w-48 h-20 bg-green-500 flex items-center justify-center border-r border-green-900 mr-1">
+              <Text className="text-white font-semibold text-xl">SAVE</Text>
             </TouchableOpacity>
-            <View style={styles.buttonStyle}>
-              <Text style={styles.titleStyle}>CHARGE UZS 98 000</Text>
+            <View className="w-48 h-20 bg-green-500 flex items-center justify-center">
+              <Text className="text-white font-semibold text-xl">CHARGE 98 000</Text>
             </View>
           </View>
-          <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft: 16, height: 60,
-        borderWidth: 1,
-        borderBlockColor: 'grey'
-        }}>
-      
-      <Picker
-        selectedValue={selectedValue}
-        onValueChange={handlePickerChange}
-        style={styles.picker}
-      >
-        <Picker.Item label="All items" value="option1" />
-        <Picker.Item label="Option 2" value="option2" />
-        {/* Add more Picker items as needed */}
-      </Picker>
-      <View style={{
-        borderWidth: 1,
-        height: '100%', 
-        width: '14%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderBlockColor: 'grey'
-      }}>
-      <Image source={search_icon} style={{height: 28, width: 28, tintColor: 'grey'}}/>
-      </View>
-
-    </View>
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-    <ProductItem3 title={'0333'} subtitle={'paypoq'} price={'5600 so"m'} />
-
+          <View className="flex-row items-center pl-4 h-16 border border-gray-400">
+            <StyledPicker
+              selectedValue={selectedValue}
+              onValueChange={(itemValue:any) => setSelectedValue(itemValue)}
+              className="w-4/5 text-base text-black"
+            >
+              <Picker.Item label="All items" value="option0" />
+              <Picker.Item label="Option 1" value="option1" />
+              <Picker.Item label="Option 2" value="option2" />
+              <Picker.Item label="Option 3" value="option3" />
+              {/* Add more Picker items as needed */}
+            </StyledPicker>
+            <View className="w-1/5 h-full flex items-center justify-center border border-gray-400">
+              <Image
+                source={search_icon}
+                className="h-7 w-7 text-slate-500"
+              />
+            </View>
+          </View>
+          {tempItems.map((value, index) => (
+            <ProductItem3
+              key={index}
+              title={value}
+              subtitle={"mahsulot"}
+              price={'5600 so"m'}
+            />
+          ))}
         </View>
       </Animated.View>
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-      icon: {
-        marginRight: 10,
-      },
-      picker: {
-        flex: 1,
-        color: '#333',
-      },
-    
+  icon: {
+    marginRight: 10,
+  },
+  picker: {
+    flex: 1,
+    color: "#333",
+  },
+
   buttonStyle: {
     justifyContent: "center",
     alignItems: "center",

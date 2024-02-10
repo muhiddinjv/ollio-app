@@ -1,24 +1,13 @@
-import React, { Component } from 'react'
-import { Text, View, Image } from 'react-native'
-import { sales } from '../contants/icons';
-import { IBase } from '../utils/interfaces';
+import { Text, View, Image } from "react-native";
+import { IBase } from "../utils/interfaces";
 
-const DrawerItem = ({title, icon}:IBase) => {
-    return (
-      <View style={{height: 48, width: '100%', flexDirection: 'row', paddingHorizontal: 8, alignItems: 'center', marginVertical: 8, marginHorizontal: 8 }}>
-        <Image source={icon}  style={{
-            height: 36,
-            width: 36,
-        }}/>
-        <Text style={{
-            fontSize: 24,
-            marginHorizontal: 16,
-            fontWeight: '600',
-            color: 'black'
-        }}> {title} </Text>
-      </View>
-    )
-  
-}
+const DrawerItem = ({ title, icon }: IBase) => {
+  return (
+    <View className="h-8 flex-row items-center my-2 mx-6">
+      <Image source={icon} className="h-6 w-6" />
+      <Text className="text-xl mx-4 font-semibold text-slate-900">{title}</Text>
+    </View>
+  );
+};
 
 export default DrawerItem;

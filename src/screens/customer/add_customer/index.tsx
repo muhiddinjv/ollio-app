@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { View, StyleSheet, ScrollView, Image } from "react-native";
-import { Appbar, Button, Text } from "react-native-paper";
+import {  Text } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import {
-  arrow,
-  burger_icon,
-  cancel,
   more,
   more_1,
   search_icon,
@@ -14,6 +11,10 @@ import {
 import SaveChargeButton from "../../../components/save_charge_button";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { INavigation } from "../../../utils/interfaces";
+
+import { styled } from "nativewind";
+
+const StyledPicker = styled(Picker)
 
 const AddCustomerScreen = ({ navigation }:INavigation) => {
   const [selectedItem, setSelectedItem] = useState("");
@@ -27,121 +28,80 @@ const AddCustomerScreen = ({ navigation }:INavigation) => {
     { id: 7, name: "Product 2", price: 29.99 },
     { id: 8, name: "Product 2", price: 29.99 },
     { id: 9, name: "Product 2", price: 29.99 },
-    // Add more product items as needed
+    { id: 10, name: "Product 2", price: 29.99 },
+    { id: 11, name: "Product 2", price: 29.99 },
+    { id: 12, name: "Product 2", price: 29.99 },
+    { id: 13, name: "Product 2", price: 29.99 },
+    // Add1 more product items as needed
   ]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.appBar}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <View className="flex-1">
+      <View className="p-4 bg-green-500 flex-row justify-between items-center shadow-md">
+        <View className="flex-row items-center">
           <TouchableOpacity>
             <Image
               source={more_1}
-              style={{
-                height: 24,
-                width: 24,
-                tintColor: "#FFF",
-              }}
+              className="h-6 w-6 text-white"
             />
           </TouchableOpacity>
-          <Text
-            style={{
-              color: "white",
-              fontSize: 20,
-              textAlign: "center",
-              marginLeft: 36,
-              fontWeight: "700",
-            }}
-          >
-            Ticket
-          </Text>
+          <Text className="text-white text-lg font-bold ml-8">Ticket</Text>
         </View>
 
-        <View style={{ flexDirection: "row" }}>
+        <View className="flex-row">
           <TouchableOpacity
             onPress={() => navigation.navigate("CustomerListScreen")}
           >
             <Image
               source={user_plus}
-              style={{
-                height: 24,
-                width: 24,
-                tintColor: "#FFF",
-                marginHorizontal: 8,
-              }}
+              className="h-6 w-6 text-white mx-2"
             />
           </TouchableOpacity>
           <TouchableOpacity>
             <Image
               source={more}
-              style={{
-                height: 20,
-                width: 20,
-                tintColor: "#FFF",
-                marginLeft: 16,
-              }}
+              className="h-5 w-5 text-white ml-4"
             />
           </TouchableOpacity>
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View style={{ width: "100%", alignItems: "center" }}>
+      <ScrollView className="p-4">
+        <View className="w-full items-center">
           <SaveChargeButton />
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            borderColor: "black",
-            height: 48,
-            marginVertical: 16,
-          }}
-        >
-          <Picker
+        <View className="flex-row justify-center items-center border border-black h-12 my-4">
+          <StyledPicker
             selectedValue={selectedItem}
-            onValueChange={(itemValue) => setSelectedItem(itemValue)}
-            style={styles.picker}
+            onValueChange={(itemValue:any) => setSelectedItem(itemValue)}
+            className="w-5/6"
           >
             <Picker.Item label="Select an Item" value="" />
             <Picker.Item label="Item 1" value="item1" />
-          </Picker>
+          </StyledPicker>
           <TouchableOpacity
-            style={{
-              width: "20%",
-              borderLeftWidth: 1,
-              height: "100%",
-              justifyContent: "center",
-            }}
+            className="w-1/6 border-l border-black h-full justify-center"
           >
             <Image
               source={search_icon}
-              style={{
-                height: 20,
-                width: 20,
-                marginLeft: 16,
-              }}
+              className="h-5 w-5 ml-2"
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.productItem}>
-          <View style={styles.circleIndicator} />
-          <View style={styles.productDetails}>
-            <Text style={styles.productName}>Narxlar o'zgarishi </Text>
-            <Text style={styles.productPrice}>-</Text>
+        <View className="flex-row items-center p-2 border-b border-gray-300">
+          <View className="w-10 h-10 bg-gray-500 mr-2" />
+          <View className="flex-row justify-between w-full">
+            <Text className="text-base font-semibold">Narxlar o'zgarishi</Text>
+            <Text className="text-base font-semibold">-</Text>
           </View>
         </View>
-        <View style={styles.productItemsContainer}>
+        <View className="p-2">
           {productItems.map((item) => (
-            <View style={styles.productItem} key={item.id}>
-              <View style={styles.circleIndicator} />
-              <View style={styles.productDetails}>
-                <Text style={styles.productName}>{item.name}</Text>
-                <Text style={styles.productPrice}>{`$${item.price.toFixed(
-                  2
-                )}`}</Text>
+            <View className="flex-row items-center p-2 border-b border-gray-300" key={item.id}>
+              <View className="w-10 h-10 bg-gray-500 mr-2" />
+              <View className="flex-row justify-between w-full">
+                <Text className="text-base font-semibold">{item.name}</Text>
+                <Text className="text-base font-semibold">{`$${item.price.toFixed(2)}`}</Text>
               </View>
             </View>
           ))}
@@ -150,66 +110,5 @@ const AddCustomerScreen = ({ navigation }:INavigation) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  productItemsContainer: {
-    padding: 0  
-  },
-  contentContainer: {
-    padding: 16,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  button: {
-    flex: 1,
-    marginRight: 10,
-  },
-  picker: {
-    width: "80%",
-    borderWidth: 1,
-    borderColor: "black",
-  },
-
-  productItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-  },
-  circleIndicator: {
-    width: 40,
-    height: 40,
-    backgroundColor: "grey",
-    marginRight: 10,
-  },
-  productDetails: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  productName: {
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  productPrice: {
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  appBar: {
-    backgroundColor: "#4CB050",
-    padding: 15,
-    alignItems: "center",
-    justifyContent: "space-between",
-    elevation: 4,
-    flexDirection: "row",
-  },
-});
 
 export default AddCustomerScreen;

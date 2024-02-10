@@ -1,20 +1,19 @@
-import {Image, View, Text} from 'react-native';
-import {useState, useEffect, useMemo} from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import PrintScreen from '../screens/tabs/print';
-import CartScreen from '../screens/tabs/all_products';
-import ProfileScreen from '../screens/tabs/change_language';
-import CatalogScreen from '../screens/tabs/email';
-import HistoryOrders from '../screens/tabs/history_orders';
+import { Image, View, Text } from "react-native";
+import { useState, useEffect, useMemo } from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import PrintScreen from "../screens/tabs/print";
+import CartScreen from "../screens/tabs/all_products";
+import ProfileScreen from "../screens/tabs/change_language";
+import CatalogScreen from "../screens/tabs/email";
+import HistoryOrders from "../screens/tabs/history_orders";
 
 import {
   print_select,
   email_select,
   share_select,
   pdf_select,
-} from '../contants/icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { INavigation } from '../utils/interfaces';
+} from "../contants/icons";
+import { INavigation } from "../utils/interfaces";
 const Tab = createBottomTabNavigator();
 
 const tabOptions = {
@@ -26,20 +25,20 @@ const tabOptions = {
 };
 
 const Tabs = ({ navigation, route }: INavigation) => {
-  const [name, setName] = useState('');
-  const [refresh, setRefresh] = useState('');
+  const [name, setName] = useState("");
+  const [refresh, setRefresh] = useState("");
   const [userToken, setUserToken] = useState<string | null>(null);
 
   useEffect(() => {
-    setName('Home');
+    setName("Home");
     setRefresh(refresh!);
   }, []);
 
   const tabOptions = {
-    tabBarActiveTintColor: '#0066CC',
-    tabBarInactiveTintColor: '#FFFFFF',
-    tabBarActiveBackgroundColor: '#FFBF00',
-    tabBarInactiveBackgroundColor: '#333333',
+    tabBarActiveTintColor: "#0066CC",
+    tabBarInactiveTintColor: "#FFFFFF",
+    tabBarActiveBackgroundColor: "#FFBF00",
+    tabBarInactiveBackgroundColor: "#333333",
     headerShown: false,
   };
 
@@ -51,38 +50,47 @@ const Tabs = ({ navigation, route }: INavigation) => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
           switch (route.name) {
-            case 'Home':
+            case "Home":
               return (
                 <View className="flex-col items-center">
-                  <Image source={print_select} className="w-24 h-24 object-contain" />
+                  <Image
+                    source={print_select}
+                    className="w-24 h-24 object-contain"
+                  />
                   {/* <Text>{I18n.t('home')}</Text> */}
                 </View>
               );
-            case 'Catalog':
+            case "Catalog":
               return (
                 <View className="flex-col items-center">
-                  <Image source={pdf_select} className="w-24 h-24 object-contain" />
+                  <Image
+                    source={pdf_select}
+                    className="w-24 h-24 object-contain"
+                  />
                   {/* <Text>{I18n.t('catalog')}</Text> */}
                 </View>
               );
-            case 'Cart':
+            case "Cart":
               return (
                 <View className="flex-col items-center">
                   {/* <Image source={cart_unselect} className="w-24 h-24 object-contain" /> */}
                   {/* <Text>{I18n.t('cart')}</Text> */}
                 </View>
               );
-            case 'HistoryOrders':
+            case "HistoryOrders":
               return (
                 <View className="flex-col items-center">
                   {/* <Image source={dostavka} className="w-24 h-24 object-contain" /> */}
                   <Text>Favorite</Text>
                 </View>
               );
-            case 'Account':
+            case "Account":
               return (
                 <View className="flex-col items-center">
-                  <Image source={share_select} className="w-24 h-24 object-contain" />
+                  <Image
+                    source={share_select}
+                    className="w-24 h-24 object-contain"
+                  />
                   <Text>Account</Text>
                 </View>
               );
@@ -110,7 +118,10 @@ const Tabs = ({ navigation, route }: INavigation) => {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <View className="flex-col items-center">
-              <Image source={email_select} className="w-24 h-24 object-contain" />
+              <Image
+                source={email_select}
+                className="w-24 h-24 object-contain"
+              />
               {/* <Text>{I18n.t('cart')}</Text> */}
             </View>
           ),
@@ -123,7 +134,10 @@ const Tabs = ({ navigation, route }: INavigation) => {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <View className="flex-col items-center">
-              <Image source={print_select} className="w-24 h-24 object-contain" />
+              <Image
+                source={print_select}
+                className="w-24 h-24 object-contain"
+              />
               {/* <Text>{I18n.t('home')}</Text> */}
             </View>
           ),

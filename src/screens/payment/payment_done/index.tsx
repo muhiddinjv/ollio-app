@@ -1,17 +1,6 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-} from "react-native";
-import AppBarHome from "../../../components/app_bar/app_bar_ticket";
-import PaymentAppBar from "../../../components/app_bar/payment_appbar";
-import { card_icon, dollar, done, receipt } from "../../../contants/icons";
-import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
-import GetOrderBottomSheet from "../../../components/bottomsheet/get_order_bottom";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { done, receipt } from "../../../contants/icons";
 
 const PaymentDoneScreen = () => {
   const [cashReceived, setCashReceived] = useState("");

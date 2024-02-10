@@ -1,26 +1,12 @@
 import React, { useState } from "react";
 import { View, StyleSheet, ScrollView, Image } from "react-native";
-import { Appbar, Button, Text } from "react-native-paper";
-import { Picker } from "@react-native-picker/picker";
-import {
-  arrow,
-  burger_icon,
-  cancel,
-  more,
-  more_1,
-  search_icon,
-  user_done,
-  user_plus,
-} from "../../../contants/icons";
-import SaveChargeButton from "../../../components/save_charge_button";
+import { Text } from "react-native-paper";
+import { arrow, more, user_plus } from "../../../contants/icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import ProductInfo from "../../tabs/product_info";
-import ProductItem from "../../../components/app_bar/product_item";
-import ProductItem2 from "../../../components/app_bar/product_item2";
-import ProductItem3 from "../../../components/app_bar/product_item_3";
 import RefundItem from "../../../components/refund_item";
+import { INavigation } from "../../../utils/interfaces";
 
-const TicketScreen = ({ navigation }) => {
+const TicketScreen = ({ navigation }: INavigation) => {
   const [selectedItem, setSelectedItem] = useState("");
   const [productItems, setProductItems] = useState([
     { id: 2, name: "Product 2", price: 29.99 },
@@ -107,7 +93,13 @@ const TicketScreen = ({ navigation }) => {
         <View
           style={{ height: 1, backgroundColor: "grey", marginVertical: 16 }}
         ></View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 360, }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginBottom: 360,
+          }}
+        >
           <Text style={styles.total}>Total</Text>
           <Text style={styles.total}>UZS 98,000</Text>
         </View>
@@ -137,7 +129,8 @@ const TicketScreen = ({ navigation }) => {
             <View
               style={{ width: 1, backgroundColor: "black", height: "100%" }}
             ></View>
-            <TouchableOpacity onPress={()=> navigation.navigate('PaymentScreen')}
+            <TouchableOpacity
+              onPress={() => navigation.navigate("PaymentScreen")}
               style={{ alignItems: "center", justifyContent: "center" }}
             >
               <Text
@@ -163,7 +156,7 @@ const styles = StyleSheet.create({
     color: "#000",
     fontWeight: "bold",
     fontSize: 24,
-    marginVertical:  16,
+    marginVertical: 16,
   },
   container: {
     flex: 1,

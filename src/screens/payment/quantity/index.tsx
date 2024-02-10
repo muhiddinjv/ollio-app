@@ -8,8 +8,9 @@ import {
   Image,
 } from "react-native";
 import { close, delete1 } from "../../../contants/icons";
+import { INavigation } from "../../../utils/interfaces";
 
-const QuantityScreen = ({ navigation }) => {
+const QuantityScreen = ({ navigation }:INavigation) => {
   const [quantity, setQuantity] = useState("");
 
   const handleSave = () => {

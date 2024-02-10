@@ -46,8 +46,19 @@ export const delete_2 = require("../../assets/icons/delete_2.png");
 export const user_1 = require("../../assets/icons/user_1.png");
 export const user_done = require("../../assets/icons/user_done.png");
 export const forward_user = require("../../assets/icons/forward_user.png");
+export const sort_icon = require("../../assets/icons/sort_icon.png");
+export const unselect_icon = require("../../assets/icons/unselect_icon.png");
+export const join = require("../../assets/icons/join.png");
+export const green_circle = require("../../assets/icons/green_circle.png");
+export const lock = require("../../assets/icons/lock.png");
+export const add = require("../../assets/icons/add.png");
 
 export default {
+  add,
+  lock,
+  green_circle,
+  join,
+  unselect_icon,
   user_done,
   user_1,
   delete_2,

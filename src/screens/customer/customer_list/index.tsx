@@ -1,143 +1,54 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import { close, search_icon, user_1, user_plus } from "../../../contants/icons";
-import { TextInput } from "react-native-gesture-handler";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import { close, search_icon, user_1 } from "../../../contants/icons";
+import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { INavigation } from "../../../utils/interfaces";
 
-const CustomerListScreen = ({navigation}:INavigation) => {
+const CustomerListScreen = ({ navigation }: INavigation) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.appBar}>
+    <View className="flex-1">
+      <View className="flex-row items-center justify-between border-b border-gray-500 p-4">
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image source={close} style={styles.icon} />
+          <Image source={close} className="h-6 w-6" />
         </TouchableOpacity>
-        <Text style={styles.appBarTitle}>Add Customer to Ticket</Text>
+        <Text className="text-lg font-semibold">Add Customer to Ticket</Text>
         <View></View>
       </View>
 
-      <View style={styles.tab}>
+      <View className="flex-row items-center border-b border-gray-500 p-2">
         <TouchableOpacity onPress={() => console.log("Search icon pressed")}>
-          <Image source={search_icon} style={styles.icon} />
+          <Image source={search_icon} className="h-5 w-5 text-gray-600 mr-2" />
         </TouchableOpacity>
-        <TextInput placeholder="Search" style={{ width: 340 }} />
+        <TextInput placeholder="Search" className="w-52" />
       </View>
 
-      {/* Add Customer Button */}
       <TouchableOpacity
-        onPress={() => navigation.navigate('EditCustomerInformationScreen')}
+        onPress={() => navigation.navigate("EditCustomerInformationScreen")}
+        className="p-3 rounded-lg items-center mt-4"
       >
-        <Text style={styles.addButtonLabel}>ADD NEW CUSTOMER</Text>
+        <Text className="text-green-600 text-lg font-semibold">
+          ADD NEW CUSTOMER
+        </Text>
       </TouchableOpacity>
-      <View style={{ height: 0.5, backgroundColor: "grey" }}></View>
-      {/* Recent Customers Title */}
-      <Text style={styles.recentCustomersTitle}>Recent customers</Text>
-
-      {/* User Tab */}
-      <View style={styles.userTab}>
-        <Image source={user_1} style={styles.userIcon} />
-        <View style={styles.userInfo}>
-          <Text style={styles.userName}>John Doe</Text>
-          <Text style={styles.userEmail}>
-            john.doe@example.com , 123-456-7890
-          </Text>
+      <View className="border-b border-gray-500 h-0.5"></View>
+      <Text className="text-lg font-semibold mt-4 ml-2">Recent customers</Text>
+      <ScrollView>
+        <View className="flex items-center p-2">
+          {[...Array(20)].map((_, index) => (
+            <View key={index} className="flex-row items-center w-full">
+              <Image source={user_1} className="h-10 w-10 rounded-full m-3" />
+              <View className="flex-col w-full">
+                <Text className="text-lg font-semibold">John Doe</Text>
+                <Text className="text-gray-600 text-sm">
+                  john.doe@example.com , 123-456-7890
+                </Text>
+              </View>
+            </View>
+          ))}
         </View>
-      </View>
-      <View style={styles.userTab}>
-        <Image source={user_1} style={styles.userIcon} />
-        <View style={styles.userInfo}>
-          <Text style={styles.userName}>John Doe</Text>
-          <Text style={styles.userEmail}>
-            john.doe@example.com , 123-456-7890
-          </Text>
-        </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  appBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    borderBottomWidth: 0.5,
-    paddingVertical: 16,
-    borderColor: "grey",
-  },
-  appBarTitle: {
-    fontSize: 18,
-    marginLeft: 8,
-    color: "black",
-    fontWeight: "700",
-  },
-  tab: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderBottomWidth: 0.5,
-    borderColor: "grey",
-  },
-  tabText: {
-    marginLeft: 8,
-    fontSize: 16,
-  },
-  icon: {
-    width: 20,
-    height: 20,
-    tintColor: "grey",
-    marginRight: 16,
-    marginHorizontal: 16,
-  },
-  addButton: {
-    backgroundColor: "blue",
-    padding: 12,
-    borderRadius: 8,
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  addButtonLabel: {
-    color: "#4CAF50",
-    fontSize: 20,
-    textAlign: "center",
-    fontWeight: "700",
-    marginVertical: 16,
-  },
-  recentCustomersTitle: {
-    fontSize: 16,
-    marginVertical: 16,
-    marginHorizontal: 16,
-  },
-  userTab: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: 16,
-    marginTop: 8,
-  },
-  userIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 16,
-  },
-  userInfo: {
-    flexDirection: "column",
-    borderBottomWidth: 0.5,
-    width: '100%',
-  },
-  userName: {
-    fontSize: 16,
-  },
-  userEmail: {
-    fontSize: 14,
-    color: "gray",
-    marginBottom: 8,
-  },
-  userNumber: {
-    fontSize: 14,
-    color: "gray",
-  },
-});
 
 export default CustomerListScreen;

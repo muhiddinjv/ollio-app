@@ -41,14 +41,15 @@ const Stack = createStackNavigator();
 
 export const InitApp = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"Home"}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"TicketScreen"}>
       <Stack.Screen name="AiGenerated" component={TestAi} />
+      {/* FIX HOME STYLE */}
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Signin" component={SignInScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="SelectStore" component={SelectScreen} />
-      {/* FIX THE STYLE OF TAB */}
+      {/* FIX TAB STYLE */}
       <Stack.Screen name="Tab" component={Tab} /> 
       <Stack.Screen name="Items" component={Items} />
       <Stack.Screen name="TabView" component={TabView} />
@@ -65,11 +66,11 @@ export const InitApp = () => {
       <Stack.Screen name="EditCustomerScreen" component={EditCustomerScreen} />
       <Stack.Screen name="CustomerProfileScreen" component={CustomerProfileScreen} />
       <Stack.Screen name="QuantityScreen" component={QuantityScreen} />
-
       <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
       <Stack.Screen name="PaymentDoneScreen" component={PaymentDoneScreen} />
       <Stack.Screen name="AddToCartScreen" component={AddToCartScreen} />
       <Stack.Screen name="TicketScreen" component={TicketScreen} />
+
       <Stack.Screen name="PreTicketScreen" component={PreTicketScreen} />
       <Stack.Screen name="OpenTicketScreen" component={OpenTicketScreen} />
       <Stack.Screen name="AssignTicketTo" component={AssignTicketTo} />

@@ -7,130 +7,33 @@ const PaymentDoneScreen = () => {
   const [paymentMethod, setPaymentMethod] = useState("Cash"); // Default to Cash
 
   return (
-    <View style={{}}>
-      <View
-        style={{
-          height: 56,
-          flexDirection: "row",
-          alignItems: "center",
-          backgroundColor: "#4CAF50",
-          justifyContent: "space-between",
-          elevation: 5,
-          paddingHorizontal: 16,
-        }}
-      ></View>
+    <View className="flex">
+      <View className="h-14 flex-row items-center bg-green-500 justify-between shadow-md px-4"></View>
 
-      <View
-        style={{
-          height: 120,
-          justifyContent: "space-around",
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "column",
-            alignItems: "flex-end",
-            width: 180,
-          }}
-        >
-          <Text style={{ fontSize: 32, marginTop: 32, color: "black" }}>
-            UZS 98,000
-          </Text>
-          <Text style={{ fontSize: 18, marginVertical: 16 }}>Total Paid</Text>
+      <View className="h-36 flex-row items-center justify-around">
+        <View className="flex-col items-end w-48">
+          <Text className="text-2xl mt-8 text-center">UZS 98,000</Text>
+          <Text className="text-lg my-4">Total Paid</Text>
         </View>
-        <View
-          style={{ height: "80%", width: 1, backgroundColor: "black" }}
-        ></View>
-        <View
-          style={{
-            flexDirection: "column",
-            width: 180,
-          }}
-        >
-          <Text style={{ fontSize: 32, marginTop: 32, color: "black" }}>
-            UZS 0
-          </Text>
-          <Text style={{ fontSize: 18, marginVertical: 16 }}>Change</Text>
+
+        <View className="w-px h-36"></View>
+        <View className="flex-col w-48">
+          <Text className="text-2xl mt-8">UZS 0</Text>
+          <Text className="text-lg my-4">Change</Text>
         </View>
       </View>
-      <Image
-        source={done}
-        style={{
-          height: 200,
-          width: 200,
-          alignSelf: "center",
-          marginVertical: 100,
-        }}
-      />
-      <TouchableOpacity
-        style={{
-          borderWidth: 1,
-          margin: 16,
-          backgroundColor: "#FAFAFA",
-          height: 48,
-          borderColor: "grey",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-          marginTop: 100,
-        }}
-      >
-        <Image
-          source={receipt}
-          style={{
-            height: 24,
-            width: 24,
-            marginHorizontal: 8,
-            tintColor: "black",
-          }}
-        />
-        <Text style={{ marginHorizontal: 8, color: "black" }}>Receipt</Text>
+      <Image source={done} className="h-24 w-24 self-center my-48" />
+      <TouchableOpacity className="border-2 border-slate-500 m-4 bg-gray-100 h-12 flex-row items-center justify-center">
+        <Image source={receipt} className="h-6 w-6 mx-2" />
+        <Text className="mx-2 font-bold">Receipt</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          borderWidth: 1,
-          margin: 16,
-          backgroundColor: "#4CAF50",
-          height: 48,
-          borderColor: "#4CAF50",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-      >
-        <Image
-          source={done}
-          style={{
-            height: 24,
-            width: 24,
-            marginHorizontal: 8,
-            tintColor: "white",
-          }}
-        />
-        <Text style={{ marginHorizontal: 8, color: "white" }}>NEW SALE</Text>
+
+      <TouchableOpacity className="m-4 bg-green-500 h-12 flex-row items-center justify-center">
+        <Image source={done} className="h-6 w-6 mx-2" style={{tintColor:'white'}} />
+        <Text className="mx-2 text-white font-bold">NEW SALE</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-
-  content: {
-    flex: 1,
-    paddingHorizontal: 16,
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
-  },
-});
 
 export default PaymentDoneScreen;

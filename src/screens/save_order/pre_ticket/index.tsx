@@ -14,6 +14,7 @@ import {
 } from "../../../contants/icons";
 import SaveChargeButton from "../../../components/save_charge_button";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { INavigation } from "../../../utils/interfaces";
 
 const PreTicketScreen = ({ navigation }:INavigation) => {
   const [selectedItem, setSelectedItem] = useState("");

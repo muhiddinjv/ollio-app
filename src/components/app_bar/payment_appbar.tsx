@@ -1,51 +1,23 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-import { Height } from "../../utils/responsive";
-import {
-  arrow,
-  burger_icon,
-  more,
-  search_icon,
-  user_plus,
-} from "../../contants/icons";
+import { Text, View, Image } from "react-native";
+import { arrow } from "../../contants/icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { INavigation } from "../../utils/interfaces";
 
-const PaymentAppBar = () => {
+const PaymentAppBar = ({ navigation, route }: INavigation) => {
   return (
-    <View
-      style={{
-        height: Height(56),
-        flexDirection: "row",
-        alignItems: "center",
-        backgroundColor: "#4CAF50",
-        justifyContent: "space-between",
-        elevation: 5,
-        paddingHorizontal: 16,
-      }}
-    >
-      <View style={{ flexDirection: "row" }}>
+    <View className="h-14 flex-row items-center bg-green-500 justify-between shadow-md px-4">
+      <View className="flex-row">
         <Image
           source={arrow}
-          style={{
-            height: 32,
-            width: 32,
-            tintColor: "#FFFFFF",
-          }}
+          style={{ tintColor: "white" }}
+          className="h-7 w-7"
         />
       </View>
-
-      <TouchableOpacity>
-        <Text
-          style={{
-            color: "white",
-          }}
-        >
-          SPLIT
-        </Text>
+      <TouchableOpacity onPress={() => navigation.navigate(route)}>
+        <Text className="text-white text-lg">SPLIT</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 export default PaymentAppBar;
-
-const styles = StyleSheet.create({});

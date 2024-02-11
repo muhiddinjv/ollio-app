@@ -1,102 +1,40 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  StyleSheet,
-  Image,
-} from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
 import { close, delete1 } from "../../../contants/icons";
 import { INavigation } from "../../../utils/interfaces";
 
-const QuantityScreen = ({ navigation }:INavigation) => {
+const QuantityScreen = ({ navigation }: INavigation) => {
   const [quantity, setQuantity] = useState("");
 
   const handleSave = () => {
     console.log("Quantity saved:", quantity);
     navigation.goBack();
   };
-
+  
   return (
-    <View style={styles.container}>
+    <View className="flex-1 p-4">
       {/* App Bar */}
-      <View style={styles.appBar}>
+      <View className="flex-row items-center mb-4">
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image source={close} style={styles.icon} />
+          <Image source={close} className="w-5 h-5 text-gray-500" />
         </TouchableOpacity>
-        <Text style={styles.appBarTitle}>A74 cola 1.5 sunny gold</Text>
+        <Text className="text-lg text-black ml-4">A74 cola 1.5 sunny gold</Text>
       </View>
-      <Text style={styles.quantityLabel}>Quantity:</Text>
+      <Text className="text-base font-semibold mb-2">Quantity:</Text>
 
       {/* Quantity Section */}
-      <View style={styles.quantitySection}>
+      <View className="flex-row items-center mb-4">
         <TextInput
-          style={styles.quantityInput}
+          className="flex-1 p-2 text-lg border border-gray-400 rounded"
           value={quantity}
           keyboardType="numeric"
           onChangeText={(text) => setQuantity(text.replace(/[^0-9]/g, ""))}
         />
-        <TouchableOpacity onPress={()=> navigation.navigate('TicketScreen')}>
-          <Image
-            source={delete1}
-            style={{
-              height: 36,
-              width: 36,
-            }}
-          />
+        <TouchableOpacity onPress={() => navigation.navigate("TicketScreen")}>
+          <Image source={delete1} style={{ width: 36, height: 36 }} />
         </TouchableOpacity>
       </View>
-   
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  appBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  appBarTitle: {
-    fontSize: 20,
-    marginLeft: 16,
-    color: 'black'
-  },
-  icon: {
-    width: 20,
-    height: 20,
-    tintColor: 'grey',
-  },
-  quantitySection: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  quantityLabel: {
-    fontSize: 16,
-    marginRight: 8,
-  },
-  quantityInput: {
-    flex: 1,
-    height: 60,
-    padding: 8,
-    fontSize: 32,
-  },
-  saveButton: {
-    backgroundColor: "blue",
-    padding: 12,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  saveButtonText: {
-    color: "white",
-    fontSize: 16,
-  },
-});
-
 export default QuantityScreen;

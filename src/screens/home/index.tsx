@@ -5,7 +5,7 @@ import { apps, back_office, burger_icon, category, discount_icon, information, l
 import AppBarItem from "../../components/app_bar/item_app_bar";
 import DrawerItem from "../../components/drawer_item";
 
-//TODO: FIX HOME PAGE. ITS NOT WORKING
+//TODO: FIX HOME PAGE STYLE
 const HomeScreen = ({ navigation }: INavigation) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const drawerWidth = 300;

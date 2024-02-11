@@ -15,180 +15,102 @@ import {
 import SaveChargeButton from "../../../components/save_charge_button";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { INavigation } from "../../../utils/interfaces";
+import { styled } from "nativewind";
 
-const AddToCartScreen = ({ navigation }:INavigation) => {
+const StyledPicker = styled(Picker);
+
+const products = [
+  { id: 2, name: "Product 2", price: 29.99 },
+  { id: 3, name: "Product 2", price: 29.99 },
+  { id: 4, name: "Product 2", price: 29.99 },
+  { id: 5, name: "Product 2", price: 29.99 },
+  { id: 6, name: "Product 2", price: 29.99 },
+  { id: 7, name: "Product 2", price: 29.99 },
+  { id: 8, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+  { id: 9, name: "Product 2", price: 29.99 },
+];
+
+const AddToCartScreen = ({ navigation }: INavigation) => {
   const [selectedItem, setSelectedItem] = useState("");
-  const [productItems, setProductItems] = useState([
-    { id: 2, name: "Product 2", price: 29.99 },
-    { id: 3, name: "Product 2", price: 29.99 },
-    { id: 4, name: "Product 2", price: 29.99 },
-    { id: 5, name: "Product 2", price: 29.99 },
-    { id: 6, name: "Product 2", price: 29.99 },
-    { id: 7, name: "Product 2", price: 29.99 },
-    { id: 8, name: "Product 2", price: 29.99 },
-    { id: 9, name: "Product 2", price: 29.99 },
-
-    // Add more product items as needed
-  ]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.appBar}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <View className="flex">
+      <View className="bg-green-500 px-4 py-3 flex-row items-center justify-between shadow-md">
+        <View className="flex-row items-center">
           <TouchableOpacity>
-            <Image
-              source={more_1}
-              style={{
-                height: 24,
-                width: 24,
-                tintColor: "#FFF",
-              }}
-            />
+            <Image source={more_1} className="h-6 w-6" style={{tintColor:'white'}} />
           </TouchableOpacity>
-          <Text
-            style={{
-              color: "white",
-              fontSize: 20,
-              textAlign: "center",
-              marginLeft: 36,
-              fontWeight: "700",
-            }}
-          >
-            Ticket
-          </Text>
+          <Text className="text-white text-lg ml-9 font-semibold">Ticket</Text>
         </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity onPress={()=>console.log("iojw8djiow")}>
-            <Image
-              source={user_done}
-              style={{
-                height: 24,
-                width: 24,
-                tintColor: "#FFF",
-                marginHorizontal: 8,
-              }}
-            />
+        <View className="flex-row">
+          <TouchableOpacity onPress={() => console.log("iojw8djiow")}>
+            <Image source={user_done} className="h-6 w-6 mx-2" style={{tintColor:'white'}} />
           </TouchableOpacity>
           <TouchableOpacity>
-            <Image
-              source={more}
-              style={{
-                height: 20,
-                width: 20,
-                tintColor: "#FFF",
-                marginLeft: 16,
-              }}
-            />
+            <Image source={more} className="h-5 w-5 ml-4" style={{tintColor:'white'}} />
           </TouchableOpacity>
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View style={{ width: "100%", alignItems: "center" }}>
-          <View
-            style={{
-              height: 80,
-              width: "94%",
-              backgroundColor: "#4CAF50",
-              flexDirection: "row",
-              justifyContent: "space-around",
-              alignItems: "center",
-            }}
-          >
+      <View className="px-4 py-2">
+        <View className="w-full">
+          <View className="w-full h-20 bg-green-500 flex-row justify-around items-center">
             <TouchableOpacity>
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 20,
-                  textAlign: "center",
-                  marginLeft: 36,
-                }}
-              >
-                SAVE
-              </Text>
+              <Text className="text-white text-lg">SAVE</Text>
             </TouchableOpacity>
-            <View
-              style={{ width: 1, backgroundColor: "black", height: "100%" }}
-            ></View>
-            <TouchableOpacity
-              style={{ alignItems: "center", justifyContent: "center" }}
-            >
-              <Text
-                style={{ color: "white", fontSize: 20, textAlign: "center" }}
-              >
-                CHARGE
-              </Text>
-              <Text
-                style={{ color: "white", fontSize: 20, textAlign: "center" }}
-              >
-                UZS 98,000
-              </Text>
+            <View className="w-0.5 h-full bg-slate-600"></View>
+            <TouchableOpacity className="flex items-center">
+              <Text className="text-white text-lg">CHARGE</Text>
+              <Text className="text-white text-lg">98,000</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            borderWidth: 1,
-            borderColor: "black",
-            height: 48,
-            marginVertical: 16,
-          }}
-        >
-          <Picker
+        <View className="flex-row justify-center items-center border border-black my-4 h-14">
+          <StyledPicker
             selectedValue={selectedItem}
-            onValueChange={(itemValue) => setSelectedItem(itemValue)}
-            style={styles.picker}
+            onValueChange={(itemValue: any) => setSelectedItem(itemValue)}
+            className="w-5/6"
           >
             <Picker.Item label="Select an Item" value="" />
             <Picker.Item label="Item 1" value="item1" />
-          </Picker>
-          <TouchableOpacity
-            style={{
-              width: "20%",
-              borderLeftWidth: 1,
-              height: "100%",
-              justifyContent: "center",
-            }}
-          >
-            <Image
-              source={search_icon}
-              style={{
-                height: 20,
-                width: 20,
-                marginLeft: 16,
-              }}
-            />
+          </StyledPicker>
+          <TouchableOpacity className="border-l border-black items-center justify-center p-4">
+            <Image source={search_icon} className="h-5 w-5 ml-2" />
           </TouchableOpacity>
         </View>
-        <View style={styles.productItem}>
-          <View style={styles.circleIndicator} />
-          <View style={styles.productDetails}>
-            <Text style={styles.productName}>Narxlar o'zgarishi </Text>
-            <Text style={styles.productPrice}>-</Text>
-          </View>
-        </View>
-        <View style={styles.productItemsContainer}>
-          {productItems.map((item) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("QuantityScreen")}
-            >
-              <View style={styles.productItem} key={item.id}>
-                <View style={styles.circleIndicator} />
-                <View style={styles.productDetails}>
-                  <Text style={styles.productName}>{item.name}</Text>
-                  <Text style={styles.productPrice}>{`$${item.price.toFixed(
+        <ScrollView>
+          <View className="border-b border-gray-300">
+            {products.map((item) => (
+              <TouchableOpacity
+                // onPress={() => navigation.navigate("QuantityScreen")}
+                key={item.id}
+                className="flex-row items-center px-2 py-3 border-b border-gray-300"
+              >
+                <View className="w-10 h-10 bg-gray-500 mr-2"></View>
+                <View className="flex-row flex-1 justify-between">
+                  <Text className="text-base font-semibold">{item.name}</Text>
+                  <Text className="text-base font-semibold">{`$${item.price.toFixed(
                     2
                   )}`}</Text>
                 </View>
-              </View>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -197,8 +119,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  productItemsContainer:{
-    padding: 0
+  productItemsContainer: {
+    padding: 0,
   },
   contentContainer: {
     padding: 16,

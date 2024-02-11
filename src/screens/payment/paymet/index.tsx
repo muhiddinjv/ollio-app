@@ -7,18 +7,16 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import AppBarHome from "../../../components/app_bar/app_bar_ticket";
 import PaymentAppBar from "../../../components/app_bar/payment_appbar";
 import { card_icon, dollar } from "../../../contants/icons";
-import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 import { INavigation } from "../../../utils/interfaces";
 
-const PaymentScreen = ({navigation}:INavigation) => {
-  const [cashReceived, setCashReceived] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("Cash"); // Default to Cash
+const PaymentScreen = ({ navigation }: INavigation) => {
+  const [cashReceived, setCashReceived] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('Cash'); // Default to Cash
 
   const handlePaymentMethodChange = () => {
-    setPaymentMethod((prevMethod) => (prevMethod === "Cash" ? "Card" : "Cash"));
+    setPaymentMethod((prevMethod) => (prevMethod === 'Cash' ? 'Card' : 'Cash'));
   };
 
   const handleBackPress = () => {
@@ -30,77 +28,42 @@ const PaymentScreen = ({navigation}:INavigation) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={{}}>
-        <PaymentAppBar navigation={navigation}/>
+    <View className="flex-1 bg-white">
+      <View>
+        <PaymentAppBar navigation={navigation} route="Home" />
       </View>
 
-      <View
-        style={{
-          height: 120,
-          justifyContent: "flex-start",
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ fontSize: 32, marginTop: 32, color: "black" }}>
-          UZS 150,000
-        </Text>
-        <Text style={{ fontSize: 18 }}>Total</Text>
+      <View className="h-120 justify-start items-center">
+        <Text className="text-2xl mt-8 text-black">UZS 150,000</Text>
+        <Text className="text-lg">Total</Text>
 
         <TextInput
-          style={styles.input}
+          className="border-b border-gray-400 w-full h-10 mb-4 px-2"
           placeholder="Cash Received"
           keyboardType="numeric"
           value={cashReceived}
           onChangeText={(text) => setCashReceived(text)}
         />
-        <View style={styles.buttonContainer}>
+        <View className="flex-col w-full">
           <TouchableOpacity
-            style={{
-              borderWidth: 1,
-              margin: 16,
-              backgroundColor: "#FAFAFA",
-              height: 48,
-              borderColor: "grey",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "row",
-            }}
+            className="border border-gray-400 my-4 bg-white h-12 justify-center items-center flex-row"
+            onPress={handlePaymentMethodChange}
           >
             <Image
               source={dollar}
-              style={{
-                height: 24,
-                width: 24,
-                marginHorizontal: 8,
-                tintColor: "black",
-              }}
+              className="w-6 h-6 mx-2"
             />
-
-            <Text style={{ marginHorizontal: 8,  color: 'black' }}>Cash</Text>
+            <Text className="mx-2 text-black">Cash</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{
-              borderWidth: 1,
-              margin: 16,
-              backgroundColor: "#FAFAFA",
-              height: 48,
-              borderColor: "grey",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "row",
-            }}
+            className="border border-gray-400 my-4 bg-white h-12 justify-center items-center flex-row"
+            onPress={handlePaymentMethodChange}
           >
             <Image
               source={card_icon}
-              style={{
-                height: 24,
-                width: 24,
-                marginHorizontal: 8,
-                tintColor: "black",
-              }}
+              className="w-6 h-6 mx-2"
             />
-            <Text style={{ marginHorizontal: 8, color: 'black' }}>Card</Text>
+            <Text className="mx-2 text-black">Card</Text>
           </TouchableOpacity>
         </View>
       </View>

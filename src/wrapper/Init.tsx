@@ -27,8 +27,6 @@ import PaymentScreen from '../screens/payment/paymet';
 import PaymentDoneScreen from '../screens/payment/payment_done';
 import AddToCartScreen from '../screens/customer/add_to_cart/index'
 import TicketScreen from '../screens/payment/ticket';
-import PreTicketScreen from '../screens/save_order/pre_ticket';
-import OpenTicketScreen from '../screens/save_order/open_tickets';
 import AssignTicketTo from '../screens/save_order/assign_ticket_to';
 import TestAi from '../screens/aigenerated/test';
 
@@ -41,7 +39,7 @@ const Stack = createStackNavigator();
 
 export const InitApp = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"TicketScreen"}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"AssignTicketTo"}>
       <Stack.Screen name="AiGenerated" component={TestAi} />
       {/* FIX HOME STYLE */}
       <Stack.Screen name="Home" component={HomeScreen} />
@@ -70,9 +68,6 @@ export const InitApp = () => {
       <Stack.Screen name="PaymentDoneScreen" component={PaymentDoneScreen} />
       <Stack.Screen name="AddToCartScreen" component={AddToCartScreen} />
       <Stack.Screen name="TicketScreen" component={TicketScreen} />
-
-      <Stack.Screen name="PreTicketScreen" component={PreTicketScreen} />
-      <Stack.Screen name="OpenTicketScreen" component={OpenTicketScreen} />
       <Stack.Screen name="AssignTicketTo" component={AssignTicketTo} />
     </Stack.Navigator>
   );

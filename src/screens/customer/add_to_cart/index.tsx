@@ -19,30 +19,6 @@ import { styled } from "nativewind";
 
 const StyledPicker = styled(Picker);
 
-const products = [
-  { id: 2, name: "Product 2", price: 29.99 },
-  { id: 3, name: "Product 2", price: 29.99 },
-  { id: 4, name: "Product 2", price: 29.99 },
-  { id: 5, name: "Product 2", price: 29.99 },
-  { id: 6, name: "Product 2", price: 29.99 },
-  { id: 7, name: "Product 2", price: 29.99 },
-  { id: 8, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-  { id: 9, name: "Product 2", price: 29.99 },
-];
-
 const AddToCartScreen = ({ navigation }: INavigation) => {
   const [selectedItem, setSelectedItem] = useState("");
 
@@ -57,7 +33,7 @@ const AddToCartScreen = ({ navigation }: INavigation) => {
         </View>
         <View className="flex-row">
           <TouchableOpacity onPress={() => console.log("iojw8djiow")}>
-            <Image source={user_done} className="h-6 w-6 mx-2" style={{tintColor:'white'}} />
+            <Image source={user_done || user_plus} className="h-6 w-6 mx-2" style={{tintColor:'white'}} />
           </TouchableOpacity>
           <TouchableOpacity>
             <Image source={more} className="h-5 w-5 ml-4" style={{tintColor:'white'}} />
@@ -93,18 +69,16 @@ const AddToCartScreen = ({ navigation }: INavigation) => {
         </View>
         <ScrollView>
           <View className="border-b border-gray-300">
-            {products.map((item) => (
+            {[...Array(20)].map((_, index) => (
               <TouchableOpacity
                 // onPress={() => navigation.navigate("QuantityScreen")}
-                key={item.id}
+                key={index}
                 className="flex-row items-center px-2 py-3 border-b border-gray-300"
               >
                 <View className="w-10 h-10 bg-gray-500 mr-2"></View>
                 <View className="flex-row flex-1 justify-between">
-                  <Text className="text-base font-semibold">{item.name}</Text>
-                  <Text className="text-base font-semibold">{`$${item.price.toFixed(
-                    2
-                  )}`}</Text>
+                  <Text className="text-base font-semibold">Product 2</Text>
+                  <Text className="text-base font-semibold">$22.99</Text>
                 </View>
               </TouchableOpacity>
             ))}

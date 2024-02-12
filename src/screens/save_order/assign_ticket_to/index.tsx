@@ -17,135 +17,50 @@ const AssignTicketTo = ({ navigation }: INavigation) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.appBar}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+    <View className="flex-1 bg-white">
+      <View className="flex-row justify-between items-center p-4 md:p-8 border-b border-gray-300">
+        <View className="flex-row items-center">
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
               source={arrow}
-              style={{ height: 22, width: 22, tintColor: "grey" }}
+              className="h-6 w-6 md:h-10 md:w-10 t-gray-600"
             />
           </TouchableOpacity>
-          <Text style={styles.appBarTitle}>Assign ticket to...</Text>
+          <Text className="text-lg md:text-xl t-black font-bold ml-2 md:ml-4">
+            Assign ticket to...
+          </Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('PreTicketScreen')}>
-          <Text style={styles.saveButton}>TRANSFER</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("PreTicketScreen")}
+        >
+          <Text className="text-base md:text-lg text-green-700 font-bold">
+            TRANSFER
+          </Text>
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          paddingHorizontal: 16,
-          borderBottomWidth: 1,
-          borderBottomColor: "grey",
-          height: 64,
-        }}
-      >
+      <View className="flex-row items-center px-4 md:px-8 border-b border-gray-300 h-12 md:h-16">
         <Image
           source={search_icon}
-          style={{
-            height: 24,
-            width: 24,
-            tintColor: "grey",
-          }}
+          className="h-6 w-6 md:h-8 md:w-8 t-gray-600"
         />
         <TextInput
           placeholder="Search employee"
-          style={{
-            backgroundColor: "transparent",
-          }}
+          className="bg-transparent flex-1 text-base md:text-lg"
           underlineColor="transparent"
           activeUnderlineColor="transparent"
         />
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          width: "100%",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          paddingHorizontal: 16,
-          borderBottomWidth: 1,
-          borderBottomColor: "grey",
-          height: 64,
-        }}
-      >
-        <TouchableOpacity
-          style={{
-            height: 24,
-            width: 24,
-            borderWidth: 3,
-            borderRadius: 16,
-            justifyContent: "center",
-            alignItems: "center",
-            borderColor: "#4CAF50",
-          }}
-        >
+      <View className="flex-row items-center px-4 md:px-8 border-b border-gray-300 h-12 md:h-16">
+        <TouchableOpacity className="h-6 w-6 md:h-8 md:w-8 border-2 rounded-full justify-center items-center border-green-500">
           <Image
             source={green_circle}
-            style={{
-              height: 18,
-              width: 18,
-              tintColor: "#4CAF50",
-            }}
+            className="h-5 w-5 md:h-7 md:w-7 t-green-500"
           />
         </TouchableOpacity>
-        <Text style={{ marginHorizontal: 16, color: "black", fontSize: 18 }}>
-          Owner
-        </Text>
+        <Text className="text-base md:text-lg t-black ml-2 md:ml-4">Owner</Text>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  appBar: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 16,
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-  },
-  saveTicketText: {
-    fontSize: 16,
-    color: "#333",
-    marginLeft: 10,
-  },
-
-  container: {
-    flex: 1,
-    backgroundColor: "#ffffff", // Background color
-  },
-  input: {
-    marginBottom: 16,
-    backgroundColor: "#ffffff",
-    marginLeft: 24,
-
-    // Input background color
-  },
-  button: {
-    marginTop: 16,
-  },
-  appBarTitle: {
-    fontSize: 22,
-    color: "black",
-    fontWeight: "700",
-    marginLeft: 24,
-  },
-
-  saveButton: {
-    color: "green",
-    fontSize: 16,
-  },
-});
 
 export default AssignTicketTo;

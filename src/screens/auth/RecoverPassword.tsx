@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { View, Button, Text, Image, Alert } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { DefaultTheme } from '@react-navigation/native';
-import { LOGIN_LOGO } from '../constants/icons';
+import { LOGIN_LOGO } from '../../constants/icons';
 import { Link } from '@react-navigation/native';
-import axios from '../utils/axios';
+import axios from '../../utils/axios';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LOGIN } from '../app/slices/authentication';
+import { LOGIN } from '../../app/slices/authentication';
 import { TextInput } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { INavigation } from '../utils/interfaces';
+import { INavigation } from '../../utils/interfaces';
 
 const RecoverPassowrd = ({ navigation, route }: INavigation) => {
   const [password, setPassword] = useState('');

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Loader from '../components/loader';
-import axios from '../utils/axios';
+import Loader from '../../components/loader';
+import axios from '../../utils/axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOGIN } from '../app/slices/authentication';
+import { LOGIN } from '../../app/slices/authentication';
 import { LoginPage } from './Login';
 
 const Stack = createStackNavigator();

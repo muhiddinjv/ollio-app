@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   Animated,
   Image,
 } from "react-native";
-import AppBarHome from "../../components/app_bar/app_bar_ticket";
-import DrawerItem from "../../components/drawer_item";
+import DrawerItem from "../../../components/drawer_item";
 import {
   back_office,
   burger_icon,
@@ -18,12 +16,13 @@ import {
   search_icon,
   setting,
   transfers_icon,
-} from "../../constants/icons";
+} from "../../../constants/icons";
 import { Picker } from "@react-native-picker/picker";
-import ProductItem3 from "../../components/app_bar/product_item_3";
-import { INavigation } from "../../utils/interfaces";
+import ProductItem3 from "../../../components/app_bar/product_item_3";
+import { INavigation } from "../../../utils/interfaces";
 import { styled } from "nativewind";
 import { ScrollView } from "react-native-gesture-handler";
+import AppBar from "../../../components/appbar";
 
 const StyledPicker = styled(Picker);
 
@@ -117,7 +116,7 @@ const SideBarOrders = ({ navigation }: INavigation) => {
         style={{ marginLeft: isDrawerOpen ? drawerWidth : 0 }}
       >
         <View className="flex-1 w-full">
-          <AppBarHome title="Ticket 6" />
+          <AppBar title="Items" hamburgerIcon={{ onPress: ()=> alert('hamburger button was clicked!') }}/>
           <View className="p-2 bg-white flex-row items-center justify-around">
             <TouchableOpacity
               onPress={() => navigation.navigate("SaveTicketScreen")}

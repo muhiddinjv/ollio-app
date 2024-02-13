@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, ScrollView, Image } from "react-native";
+import { View, ScrollView, Image } from "react-native";
 import {  Text } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import {

@@ -6,7 +6,6 @@ import {
   Switch,
   SafeAreaView,
 } from "react-native";
-import AppBarUniversal from "../../components/app_bar/appBar_universal";
 import { INavigation } from "../../utils/interfaces";
 import { useColorScheme } from 'nativewind';
 
@@ -25,10 +24,9 @@ const SplashScreen = ({ navigation }: INavigation) => {
 
   return (
     <SafeAreaView className="flex-grow bg-gray-200 dark:bg-slate-800">
-      <AppBarUniversal title="hello guys" />
       <View className="flex-grow items-center justify-center">
       <Switch value={colorScheme === 'dark'} onChange={toggleColorScheme} />
-        <Text className="text-2xl mb-4 font-medium text-gray-900 dark:text-white">Welcome to My App</Text>
+        <Text className="text-2xl mb-4 font-medium text-gray-900 dark:text-white">Welcome to Ollio</Text>
         <TouchableOpacity
           style={{ width: '70%' }}
           className="py-4 px-6 rounded-md mb-4 bg-green-600"

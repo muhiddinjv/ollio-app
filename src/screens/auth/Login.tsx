@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { View, Text, Image, Button, Alert, ImageBackground, KeyboardAvoidingView, Linking } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { DefaultTheme } from '@react-navigation/native';
-import { AUTH_BACKGROUND, LOGIN_LOGO, LOG_IN, SITE_LOGO } from '../constants/icons';
+import { AUTH_BACKGROUND, LOGIN_LOGO, LOG_IN, SITE_LOGO } from '../../constants/icons';
 import { Link } from '@react-navigation/native';
-import axios from '../utils/axios';
+import axios from '../../utils/axios';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { INITIAL, LOGIN } from '../app/slices/authentication';
+import { INITIAL, LOGIN } from '../../app/slices/authentication';
 import { TextInput } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import instance from '../utils/axios';
+import instance from '../../utils/axios';
 import { ActivityIndicator } from 'react-native'
-import { Height, Width } from '../utils/responsive';
-import { INavigation } from '../utils/interfaces';
+import { Height, Width } from '../../utils/responsive';
+import { INavigation } from '../../utils/interfaces';
 
 export const LoginPage = ({ navigation, route }: INavigation) => {
   const [userName, setUserName] = useState('');

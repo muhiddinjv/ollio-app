@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import { done, receipt } from "../../../constants/icons";
+import { done, receipt } from "../../constants/icons";
 
-const PaymentDoneScreen = () => {
+const PaidScreen = () => {
   const [cashReceived, setCashReceived] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash"); // Default to Cash
 
@@ -36,4 +36,4 @@ const PaymentDoneScreen = () => {
   );
 };
 
-export default PaymentDoneScreen;
+export default PaidScreen;

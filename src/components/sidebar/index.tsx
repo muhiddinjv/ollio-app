@@ -26,8 +26,8 @@ const Sidebar = ({
           </TouchableOpacity>
         </View>
         <View className="h-full bg-white border-r border-slate-400 py-4">
-          {sidebarItems?.map((el: any) => (
-            <DrawerItem title={el.name} icon={el.icon} />
+          {sidebarItems?.map((el: any, index) => (
+            <DrawerItem key={index} title={el.name} icon={el.icon} />
           ))}
         </View>
       </View>

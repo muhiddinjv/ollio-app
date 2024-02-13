@@ -1,11 +1,11 @@
 import { Image, View, Text } from "react-native";
 import { useState, useEffect, useMemo } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import PrintScreen from "../screens/tabs/print";
-import CartScreen from "../screens/tabs/all_products";
-import ProfileScreen from "../screens/tabs/change_language";
-import CatalogScreen from "../screens/tabs/email";
-import HistoryOrders from "../screens/tabs/history_orders";
+import PrintScreen from "./tabs/print";
+import CartScreen from "./tabs/all_products";
+import ProfileScreen from "./tabs/change_language";
+import CatalogScreen from "./tabs/email";
+import HistoryOrders from "./tabs/history_orders";
 
 import {
   print_select,

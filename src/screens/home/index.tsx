@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Animated, Image } from "react-native";
 import { INavigation } from "../../utils/interfaces";
-import AppBarItem from "../../components/app_bar/item_app_bar";
-import Sidebar from "../../components/sidebar";
 import { homePages } from "../../data/static.data";
+import Sidebar from "../../components/sidebar";
+import AppBar from "../../components/appbar";
 
 const HomeScreen = ({ navigation }: INavigation) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const drawerWidth = 300;
   const animatedValue = new Animated.Value(0);
 
-  const toggleDrawer = () => setIsDrawerOpen(prev => !prev)
+  const toggleDrawer = () => setIsDrawerOpen((prev) => !prev);
 
   return (
-    <View className="">
+    <View className="h-full bg-white">
       {isDrawerOpen && <Animated.View style={{ opacity: animatedValue }} />}
-      <AppBarItem title="Items" toggleDrawer={toggleDrawer} />
+      <AppBar title="Items" hamburgerIcon={{ onPress: toggleDrawer }} />
       <Sidebar
         navigation={navigation}
         isDrawerOpen={isDrawerOpen}
@@ -23,15 +23,15 @@ const HomeScreen = ({ navigation }: INavigation) => {
         drawerWidth={drawerWidth}
         toggleDrawer={toggleDrawer}
       />
-      {homePages?.map((el: any) => (
+      {homePages?.map((el: any, index) => (
         <TouchableOpacity
-          className="h-16 bg-white justify-center px-4 flex-row items-center"
+          key={index}
+          className="ml-2 h-16 flex-row items-center p-4"
           onPress={() => navigation.navigate(el.navigation)}
         >
-          <Image source={el.icon} className="h-8 w-8 m-2" tintColor="black" />
-          <View className="flex-1 ml-2">
-            <Text className="text-lg font-medium m-2">{el.name}</Text>
-            <View className="h-0.5 bg-slate-800 w-full" />
+          <Image source={el.icon} className="h-6 w-6 mr-4" tintColor='black' />
+          <View className="flex-grow border-b border-slate-800">
+            <Text className="text-slate-800 text-lg">{el.name}</Text>
           </View>
         </TouchableOpacity>
       ))}

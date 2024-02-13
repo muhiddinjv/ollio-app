@@ -1,7 +1,7 @@
 // AppNavigator.js
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import HomeScreen from "../splash/index";
+import HomeScreen from "../../screens/splash/index";
 import DrawerContent from "./drawerContent";
 
 const Drawer = createDrawerNavigator();

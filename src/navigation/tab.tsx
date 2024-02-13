@@ -12,7 +12,7 @@ import {
   email_select,
   share_select,
   pdf_select,
-} from "../contants/icons";
+} from "../constants/icons";
 import { INavigation } from "../utils/interfaces";
 const Tab = createBottomTabNavigator();
 

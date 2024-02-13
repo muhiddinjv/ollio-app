@@ -8,7 +8,7 @@ import {
   membership,
   telephone,
   user,
-} from "../../../contants/icons";
+} from "../../../constants/icons";
 import UserItem from "../../../components/user/user_item";
 import { ScrollView } from "react-native-gesture-handler";
 import { INavigation } from "../../../utils/interfaces";

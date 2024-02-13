@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Dimensions, StyleSheet, Image } from "react-native";
-import { arrow, more } from "../../contants/icons";
+import { arrow, more } from "../../constants/icons";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import RefundItem from "../../components/refund_item";
 import { INavigation } from "../../utils/interfaces";

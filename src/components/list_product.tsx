@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Checkbox } from "react-native-paper";
-import { dollar } from "../contants/icons";
+import { dollar } from "../constants/icons";
 import { IProduct } from "../utils/interfaces";
 
 const ListProduct = ({ price, time, productNumber, state}: IProduct) => {

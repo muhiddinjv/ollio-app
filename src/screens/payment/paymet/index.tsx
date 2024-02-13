@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import PaymentAppBar from "../../../components/app_bar/payment_appbar";
-import { card_icon, dollar } from "../../../contants/icons";
+import { card_icon, dollar } from "../../../constants/icons";
 import { INavigation } from "../../../utils/interfaces";
 
 const PaymentScreen = ({ navigation }: INavigation) => {

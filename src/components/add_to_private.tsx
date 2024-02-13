@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, Image } from "react-native";
-import { more_ho, right_arrow } from "../contants/icons";
+import { more_ho, right_arrow } from "../constants/icons";
 
 export class AddToPrivate extends Component {
   render() {

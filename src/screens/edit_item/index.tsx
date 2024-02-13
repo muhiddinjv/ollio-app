@@ -11,13 +11,13 @@ import {
   Image,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import EditProductAppBar from "../../components/app_bar/edit_screen_appbar";
+import EditItemAppBar from "../../components/app_bar/edit_screen_appbar";
 import {
   add,
   delete_2,
   green_circle,
   unselect_icon,
-} from "../../contants/icons";
+} from "../../constants/icons";
 import { INavigation } from "../../utils/interfaces";
 
 const renderInput = (
@@ -37,7 +37,7 @@ const renderInput = (
   );
 };
 
-const EditProductScreen = ({ navigation }: INavigation) => {
+const EditItemScreen = ({ navigation }: INavigation) => {
   const [productName, setProductName] = useState("");
   const [category, setCategory] = useState("");
   const [soldBy, setSoldBy] = useState("");
@@ -79,7 +79,7 @@ const EditProductScreen = ({ navigation }: INavigation) => {
   return (
     <SafeAreaView className=" flex-1">
       <ScrollView>
-        <EditProductAppBar navigation={navigation} />
+        <EditItemAppBar navigation={navigation} />
         <View className="p-4">
           {renderInput("Product Name", productName, setProductName, "text")}
 
@@ -263,4 +263,4 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
 });
-export default EditProductScreen;
+export default EditItemScreen;

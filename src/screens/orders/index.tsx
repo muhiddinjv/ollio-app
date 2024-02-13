@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Dimensions, Image } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import { more_1 } from "../../contants/icons";
+import { more_1 } from "../../constants/icons";
 import ProductItem from "../../components/app_bar/product_item";
 import { ScrollView } from "react-native-gesture-handler";
 import ListProduct from "../../components/list_product";

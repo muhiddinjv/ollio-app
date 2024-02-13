@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, Image } from 'react-native'
-import { sales } from '../../contants/icons';
+import { sales } from '../../constants/icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { IBase } from '../../utils/interfaces';
 

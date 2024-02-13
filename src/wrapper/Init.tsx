@@ -38,10 +38,10 @@ onlineManager.setEventListener(setOnline => {
 const Stack = createStackNavigator();
 
 export const InitApp = () => {
+  
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"AssignTicketTo"}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"Home"}>
       <Stack.Screen name="AiGenerated" component={TestAi} />
-      {/* FIX HOME STYLE */}
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Signin" component={SignInScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />

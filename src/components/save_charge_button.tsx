@@ -1,43 +1,20 @@
-import React, { Component } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { INavigation } from "../utils/interfaces";
 
-const SaveChargeButton = () => {
-  return (
-    <View
-      style={{
-        height: 80,
-        width: "94%",
-        backgroundColor: "#4CAF50",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center",
-      }}
-    >
-      <TouchableOpacity>
-        <Text
-          style={{
-            color: "white",
-            fontSize: 20,
-            textAlign: "center",
-          }}
-        >
-          OPEN TICKETS
-        </Text>
-      </TouchableOpacity>
-      <View
-        style={{ width: 1, backgroundColor: "black", height: "100%" }}
-      ></View>
-      <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center'}}>
-        <Text style={{ color: "white", fontSize: 20, textAlign: "center", marginRight: 56, }}>
-          CHARGE
-        </Text>
-        <Text style={{ color: "white", fontSize: 20, textAlign: "center", marginRight: 56, }}>
-          UZS 0
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
+const SaveChargeButton = ({ navigation }:INavigation) => {
+    return (
+        <View className="flex-row items-center justify-around h-20 w-full bg-green-600 rounded-lg">
+            <TouchableOpacity onPress={() => navigation.navigate("SaveTicketScreen")}>
+                <Text className="text-white text-lg text-center">OPEN TICKETS</Text>
+            </TouchableOpacity>
+            <View className="w-0.5 h-full bg-slate-900" />
+            <TouchableOpacity onPress={() => navigation.navigate("OpenTicketScreen")} className="flex items-center justify-center">
+                <Text className="text-white text-lg text-center mr-12">CHARGE</Text>
+                <Text className="text-white text-lg text-center mr-12">UZS 0</Text>
+            </TouchableOpacity>
+        </View>
+    );
 };
-const styles = StyleSheet.create({});
+
 export default SaveChargeButton;

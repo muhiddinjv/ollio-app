@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, ScrollView, Image } from "react-native";
 import { Text } from "react-native-paper";
-import { arrow, more, user_plus } from "../../../contants/icons";
+import { arrow, more, user_plus } from "../../../constants/icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import RefundItem from "../../../components/refund_item";
 import { INavigation } from "../../../utils/interfaces";
@@ -14,7 +14,7 @@ const TicketScreen = ({ navigation }: INavigation) => {
       <View className="bg-green-500 px-4 py-3 flex-row items-center justify-between shadow-md">
         <View className="flex-row items-center">
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image source={arrow} className="h-6 w-6" style={{tintColor: 'white'}} />
+            <Image source={arrow} className="h-6 w-6" tintColor='white' />
           </TouchableOpacity>
           <Text className="text-white text-lg ml-9 font-semibold">Ticket</Text>
         </View>
@@ -22,10 +22,10 @@ const TicketScreen = ({ navigation }: INavigation) => {
           <TouchableOpacity
             onPress={() => navigation.navigate("CustomerListScreen")}
           >
-            <Image source={user_plus} className="h-6 w-6 mx-2" style={{tintColor: 'white'}}/>
+            <Image source={user_plus} className="h-6 w-6 mx-2" tintColor='white'/>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Image source={more} className="h-5 w-5 ml-4" style={{tintColor: 'white'}}/>
+            <Image source={more} className="h-5 w-5 ml-4" tintColor='white'/>
           </TouchableOpacity>
         </View>
       </View>

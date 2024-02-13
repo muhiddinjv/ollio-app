@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, Image } from "react-native";
-import { unselect_icon } from "../contants/icons";
+import { unselect_icon } from "../constants/icons";
 
 const TicketItem = () => {
   return (

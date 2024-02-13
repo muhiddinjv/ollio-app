@@ -1,19 +1,7 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React, { useEffect, useMemo, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import {
-  useColorScheme,
-  View,
-} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Loader from '../components/Loader';
+import Loader from '../components/loader';
 import axios from '../utils/axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN } from '../app/slices/authentication';

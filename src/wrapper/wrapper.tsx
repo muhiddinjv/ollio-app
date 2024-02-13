@@ -6,7 +6,7 @@ import { InitApp } from './Init';
 import { AuthApp } from '../auth';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Loader from '../components/Loader';
+import Loader from '../components/loader';
 import axios from '../utils/axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN } from '../app/slices/authentication';

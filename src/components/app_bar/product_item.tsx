@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { Checkbox } from "react-native-paper";
-import { done_circle, done_green } from "../../contants/icons";
+import { done_circle, done_green } from "../../constants/icons";
 
 const ProductItem = ({}) => {
   const [isChecked, setChecked] = useState(false);

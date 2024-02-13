@@ -18,7 +18,7 @@ import {
   search_icon,
   setting,
   transfers_icon,
-} from "../../contants/icons";
+} from "../../constants/icons";
 import { Picker } from "@react-native-picker/picker";
 import ProductItem3 from "../../components/app_bar/product_item_3";
 import { INavigation } from "../../utils/interfaces";
@@ -162,96 +162,5 @@ const SideBarOrders = ({ navigation }: INavigation) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  icon: {
-    marginRight: 10,
-  },
-  picker: {
-    flex: 1,
-    color: "#333",
-  },
-
-  buttonStyle: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: 188,
-    backgroundColor: "#4CAF50",
-    height: 84,
-    paddingHorizontal: 32,
-  },
-  itemStyle: {
-    height: 64,
-    backgroundColor: "#fff",
-    justifyContent: "flex-start",
-    paddingHorizontal: 16,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  itemChildStyle: {
-    backgroundColor: "#fff",
-    justifyContent: "space-between",
-    paddingLeft: 32,
-    height: "100%",
-    width: "100%",
-    flexDirection: "column",
-    alignItems: "flex-start",
-  },
-  iconStyle: {
-    height: 24,
-    width: 24,
-    tintColor: "black",
-  },
-  titleStyle: {
-    fontSize: 20,
-    color: "#fff",
-    fontWeight: "700",
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    zIndex: 1,
-  },
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "#fff",
-  },
-  drawer: {
-    width: 300,
-    backgroundColor: "#fff",
-    borderRightWidth: 1,
-    borderRightColor: "#ddd",
-    elevation: 16,
-    zIndex: 2,
-  },
-  menuIcon: {
-    position: "absolute",
-    top: 16,
-    left: 16,
-    zIndex: 2,
-  },
-  menuText: {
-    color: "transparent",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  mainContent: {
-    flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 16,
-  },
-  contentText: {
-    fontSize: 18,
-    color: "#555",
-    textAlign: "center",
-  },
-});
 
 export default SideBarOrders;

@@ -5,7 +5,7 @@ import { TextInput } from "react-native-paper";
 
 import ProductItem2 from "../../components/app_bar/product_item2";
 import { INavigation } from "../../utils/interfaces";
-import { arrow, cancel } from "../../contants/icons";
+import { arrow, cancel } from "../../constants/icons";
 
 const initialLayout = { width: Dimensions.get("window").width };
 

@@ -7,7 +7,7 @@ import {
   more_1,
   search_icon,
   user_plus,
-} from "../../../contants/icons";
+} from "../../../constants/icons";
 import SaveChargeButton from "../../../components/save_charge_button";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { INavigation } from "../../../utils/interfaces";

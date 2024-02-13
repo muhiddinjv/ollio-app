@@ -1,5 +1,5 @@
 import { Text, View, Image } from "react-native";
-import { arrow } from "../../contants/icons";
+import { arrow } from "../../constants/icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { INavigation } from "../../utils/interfaces";
 
@@ -9,7 +9,7 @@ const PaymentAppBar = ({ navigation, route }: INavigation) => {
       <View className="flex-row">
         <Image
           source={arrow}
-          style={{ tintColor: "white" }}
+          tintColor='white'
           className="h-7 w-7"
         />
       </View>

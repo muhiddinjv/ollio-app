@@ -1,57 +1,20 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { IBase } from '../../utils/interfaces';
+import React from "react";
+import { View, Text } from "react-native";
+import { IBase } from "../../utils/interfaces";
 
-const ProductItem3 = ({ title, subtitle, price }:IBase) => {
+const ProductItem3 = ({ title, subtitle, price }: IBase) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.circle} />
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.title}>{subtitle}</Text>
+    <View className="flex-row items-center p-4 border-b border-gray-300">
+      <View className="w-5 h-5 bg-red-500 mr-4" />
+      <View className="flex-1 flex-row items-center pr-4">
+        <Text className="text-lg font-semibold text-gray-700 mr-2">
+          {title}
+        </Text>
+        <Text className="text-lg text-gray-700">{subtitle}</Text>
       </View>
-      <Text style={styles.price}>{price}</Text>
+      <Text className="text-xl font-bold text-green-600">{price}</Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    height: 60,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  circle: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: 'red',
-    marginRight: 10,
-  },
-  textContainer: {
-    flex: 1,
-    paddingRight: 10,
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: '500',
-    color: '#333',
-    marginHorizontal: 4
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#666',
-  },
-  price: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'green',
-  },
-});
 
 export default ProductItem3;

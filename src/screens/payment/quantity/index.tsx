@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
-import { close, delete1 } from "../../../contants/icons";
+import { close, delete1 } from "../../../constants/icons";
 import { INavigation } from "../../../utils/interfaces";
 
 const QuantityScreen = ({ navigation }: INavigation) => {

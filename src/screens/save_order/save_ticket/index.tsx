@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { View, Image, TouchableOpacity, Text } from "react-native";
 import { TextInput } from "react-native-paper";
-import { cancel } from "../../../contants/icons";
+import { cancel } from "../../../constants/icons";
 import { INavigation } from "../../../utils/interfaces";
 
 const SaveTicketScreen = ({ navigation }: INavigation) => {

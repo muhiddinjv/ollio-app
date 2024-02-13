@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Dimensions, Image } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import { more_1, search_icon } from "../contants/icons";
+import { more_1, search_icon } from "../constants/icons";
 import { Picker } from "@react-native-picker/picker";
 import ProductItem from "../components/app_bar/product_item";
 import { ScrollView } from "react-native-gesture-handler";

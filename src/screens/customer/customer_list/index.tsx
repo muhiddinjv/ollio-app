@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { close, search_icon, user_1 } from "../../../contants/icons";
+import { close, search_icon, user_1 } from "../../../constants/icons";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { INavigation } from "../../../utils/interfaces";
 

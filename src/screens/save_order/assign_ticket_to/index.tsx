@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
 import { TextInput } from "react-native-paper";
-import { arrow, green_circle, search_icon } from "../../../contants/icons";
+import { arrow, green_circle, search_icon } from "../../../constants/icons";
 import { INavigation } from "../../../utils/interfaces";
 
 const AssignTicketTo = ({ navigation }: INavigation) => {

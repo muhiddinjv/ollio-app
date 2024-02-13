@@ -1,5 +1,5 @@
 import { Text, View, Image } from "react-native";
-import { arrow, search_icon } from "../../contants/icons";
+import { arrow, search_icon } from "../../constants/icons";
 import { IBase } from "../../utils/interfaces";
 
 const AppBarUniversal = ({ title }: IBase) => {

@@ -11,7 +11,7 @@ import {
   star,
   telephone,
   user_1,
-} from "../../../contants/icons";
+} from "../../../constants/icons";
 import UserInfo from "../../../components/user/user_info";
 import { ScrollView } from "react-native-gesture-handler";
 import UserInfo2 from "../../../components/user/user_info_2";

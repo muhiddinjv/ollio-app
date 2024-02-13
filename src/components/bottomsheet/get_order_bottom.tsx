@@ -11,7 +11,7 @@ import {
   edit,
   receipt,
   remove,
-} from "../../contants/icons";
+} from "../../constants/icons";
 import BottomItem from "./bottomItem";
 import BottomItem2 from "./bottomItem2";
 

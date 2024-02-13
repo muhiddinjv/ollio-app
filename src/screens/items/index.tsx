@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AppBarItem from "../../components/app_bar/item_app_bar";
-import { burger_icon, category, discount_icon } from "../../contants/icons";
+import { burger_icon, category, discount_icon } from "../../constants/icons";
 import { INavigation } from "../../utils/interfaces";
 
 const Items = ({ navigation }: INavigation) => {

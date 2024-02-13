@@ -13,7 +13,7 @@ const Sidebar = ({
         isDrawerOpen ? "translate-x-0" : "translate-x-full"
       } ${isDrawerOpen ? "flex" : "hidden"} `}
     >
-      <TouchableOpacity onPress={toggleDrawer} className="w-full h-full absolute bg-slate-600 opacity-50"/>
+      <TouchableOpacity onPress={toggleDrawer} className="w-full h-full absolute bg-slate-800 opacity-50"/>
       <View className="w-72">
         <View className="flex-row items-center justify-between p-4 py-10 bg-green-500 border-r border-slate-400">
           <View>

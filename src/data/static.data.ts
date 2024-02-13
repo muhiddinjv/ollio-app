@@ -51,7 +51,7 @@ export const sidebarItems = [
   },
   {
     naviation: "",
-    name: "Back Office",
+    name: "Back office",
     icon: back_office,
   },
   {

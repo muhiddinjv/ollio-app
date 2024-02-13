@@ -24,7 +24,7 @@ const tabOptions = {
   },
 };
 
-const Tabs = ({ navigation, route }: INavigation) => {
+const BottomTabs = ({ navigation, route }: INavigation) => {
   const [name, setName] = useState("");
   const [refresh, setRefresh] = useState("");
   const [userToken, setUserToken] = useState<string | null>(null);
@@ -174,4 +174,4 @@ const Tabs = ({ navigation, route }: INavigation) => {
   );
 };
 
-export default Tabs;
+export default BottomTabs;

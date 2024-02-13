@@ -1,11 +1,14 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { onlineManager } from '@tanstack/react-query';
+import NetInfo from '@react-native-community/netinfo';
+
 import HomeScreen from '../screens/home';
 import SignInScreen from '../screens/signin';
 import SignupScreen from '../screens/signup';
 import SplashScreen from '../screens/splash';
 import SelectScreen from '../screens/select_store';
-import Tab from '../navigation/tab'
+import BottomTabs from '../components/bottom_tabs'
 import Items from '../screens/items';
 import TabView from '../screens/tabview';
 import SearchScreen from '../screens/search';
@@ -14,8 +17,6 @@ import AddCustomerScreen from '../screens/customer/add_customer';
 import PinCodeScreen from '../screens/enter_pin/enter_pin';
 import SaveTicketScreen from '../screens/save_order/save_ticket';
 import Confirmation from '../screens/enter_pin/enter_pin';
-import NetInfo from '@react-native-community/netinfo';
-import { onlineManager } from '@tanstack/react-query';
 import SideBarOrders from '../screens/sidebar_orders';
 import OrdersScreen from '../screens/orders';
 import RefundScreen from '../screens/refund';
@@ -47,8 +48,6 @@ export const InitApp = () => {
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="SelectStore" component={SelectScreen} />
-      {/* FIX TAB STYLE */}
-      <Stack.Screen name="Tab" component={Tab} /> 
       <Stack.Screen name="Items" component={Items} />
       <Stack.Screen name="TabView" component={TabView} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
@@ -69,6 +68,8 @@ export const InitApp = () => {
       <Stack.Screen name="AddToCartScreen" component={AddToCartScreen} />
       <Stack.Screen name="TicketScreen" component={TicketScreen} />
       <Stack.Screen name="AssignTicketTo" component={AssignTicketTo} />
+      {/* FIX BottomTabs STYLE */}
+      <Stack.Screen name="BottomTabs" component={BottomTabs} /> 
     </Stack.Navigator>
   );
 };

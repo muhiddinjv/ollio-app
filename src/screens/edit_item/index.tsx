@@ -11,7 +11,6 @@ import {
   Image,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import EditItemAppBar from "../../components/app_bar/edit_screen_appbar";
 import {
   add,
   delete_2,
@@ -19,6 +18,7 @@ import {
   unselect_icon,
 } from "../../constants/icons";
 import { INavigation } from "../../utils/interfaces";
+import AppBar from "../../components/appbar";
 
 const renderInput = (
   placeholder: string,
@@ -78,8 +78,9 @@ const EditItemScreen = ({ navigation }: INavigation) => {
 
   return (
     <SafeAreaView className=" flex-1">
+        <AppBar title="Edit Items" backButton={{ onPress: ()=> alert('back button was clicked!') }} saveButton={{ onPress: ()=> alert('save button was clicked!'), label: 'save' }}/>
       <ScrollView>
-        <EditItemAppBar navigation={navigation} />
+
         <View className="p-4">
           {renderInput("Product Name", productName, setProductName, "text")}
 

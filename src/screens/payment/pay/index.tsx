@@ -7,9 +7,9 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import PaymentAppBar from "../../../components/app_bar/payment_appbar";
 import { card_icon, dollar } from "../../../constants/icons";
 import { INavigation } from "../../../utils/interfaces";
+import AppBar from "../../../components/appbar";
 
 const PaymentScreen = ({ navigation }: INavigation) => {
   const [cashReceived, setCashReceived] = useState('');
@@ -29,10 +29,7 @@ const PaymentScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex-1 bg-white">
-      <View>
-        <PaymentAppBar navigation={navigation} route="Home" />
-      </View>
-
+      <AppBar backButton={{ onPress: ()=> alert('back button was clicked!') }} saveButton={{ onPress: ()=> alert('save button was clicked!'), label: 'split' }}/>
       <View className="h-120 justify-start items-center">
         <Text className="text-2xl mt-8 text-black">UZS 150,000</Text>
         <Text className="text-lg">Total</Text>

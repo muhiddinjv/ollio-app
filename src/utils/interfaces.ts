@@ -28,9 +28,12 @@ interface IconProps {
 }
 
 interface InputProps {
-  onChangeText: () => void;
   label: string;
+  icon: string;
+  color: string;
   value: string;
+  onChangeText: (text:string) => void;
+  onIconPress: () => void;
 }
 
 export interface AppBarProps {
@@ -38,7 +41,6 @@ export interface AppBarProps {
   backButton?: IconProps;
   hamburgerIcon?: IconProps;
   dropdown?: IconProps;
-  searchIcon?: IconProps;
   searchInput?: InputProps;
   clearButton?: IconProps;
   saveButton?: ButtonProps;

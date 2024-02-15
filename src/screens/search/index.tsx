@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { View, Dimensions, Image } from "react-native";
-import { TextInput } from "react-native-paper";
+import { View, Dimensions, TouchableOpacity, ScrollView } from "react-native";
 
 import ProductItem2 from "../../components/app_bar/product_item2";
 import { INavigation } from "../../utils/interfaces";
-import { arrow, cancel } from "../../constants/icons";
 import AppBar from "../../components/appbar";
 
 const initialLayout = { width: Dimensions.get("window").width };
@@ -14,6 +11,7 @@ const SearchScreen = ({ navigation }: INavigation) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const onChangeSearch = (query: any) => {
+    console.log(query);
     setSearchQuery(query);
   };
 
@@ -23,41 +21,30 @@ const SearchScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex-1">
-      {/* <View className="flex-row items-center justify-between bg-green-500 p-4">
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image source={arrow} className="h-8 w-8" />
-        </TouchableOpacity>
-        <TextInput
-          className="input-field bg-transparent w-72"
-          placeholder="Search"
-          value={searchQuery}
-          onChangeText={onChangeSearch}
-          underlineColor="transparent"
-        />
-        <Image source={cancel} className="h-6 w-6" />
-      </View> */}
       <AppBar
         searchInput={{
+          icon: "close",
+          color: "white",
           label: "Search",
           value: searchQuery,
-          onChangeText: () => console.log(searchQuery),
+          onChangeText: (text) => onChangeSearch(text),
+          onIconPress: () => setSearchQuery(""),
         }}
         backButton={{ onPress: () => alert("back button was clicked!") }}
-        closeButton={{ onPress: () => alert("X button was clicked!") }}
       />
-      <TouchableOpacity onPress={() => navigation.navigate("EditItem")}>
-        <ProductItem2 title={"Olma"} subtitle={"1 tonna"} price={"100 000"} />
-      </TouchableOpacity>
-      <ProductItem2 title={"Olma"} subtitle={"1 tonna"} price={"100 000"} />
-      <ProductItem2 title={"Olma"} subtitle={"1 tonna"} price={"100 000"} />
-      <ProductItem2 title={"Olma"} subtitle={"1 tonna"} price={"100 000"} />
-      <ProductItem2 title={"Olma"} subtitle={"1 tonna"} price={"100 000"} />
-      <ProductItem2 title={"Olma"} subtitle={"1 tonna"} price={"100 000"} />
-      <ProductItem2 title={"Olma"} subtitle={"1 tonna"} price={"100 000"} />
-      <ProductItem2 title={"Olma"} subtitle={"1 tonna"} price={"100 000"} />
-      <ProductItem2 title={"Olma"} subtitle={"1 tonna"} price={"100 000"} />
-      <ProductItem2 title={"Olma"} subtitle={"1 tonna"} price={"100 000"} />
-      <ProductItem2 title={"Olma"} subtitle={"1 tonna"} price={"100 000"} />
+      <ScrollView>
+        <TouchableOpacity onPress={() => navigation.navigate("EditItem")}>
+          <ProductItem2 title={"Click"} subtitle={"1 tonna"} price={"200 000"} />
+        </TouchableOpacity>
+        {[...Array(20)].map((_, index) => (
+          <ProductItem2
+            key={index}
+            title={"Olma"}
+            subtitle={"1 tonna"}
+            price={"100 000"}
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 };

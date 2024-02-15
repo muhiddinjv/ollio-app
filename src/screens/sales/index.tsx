@@ -6,7 +6,7 @@ import {
   Animated,
   Image,
 } from "react-native";
-import DrawerItem from "../../../components/drawer_item";
+import DrawerItem from "../../components/drawer_item";
 import {
   back_office,
   burger_icon,
@@ -16,17 +16,17 @@ import {
   search_icon,
   setting,
   transfers_icon,
-} from "../../../constants/icons";
+} from "../../constants/icons";
 import { Picker } from "@react-native-picker/picker";
-import ProductItem3 from "../../../components/app_bar/product_item_3";
-import { INavigation } from "../../../utils/interfaces";
+import ProductItem3 from "../../components/app_bar/product_item_3";
+import { INavigation } from "../../utils/interfaces";
 import { styled } from "nativewind";
 import { ScrollView } from "react-native-gesture-handler";
-import AppBar from "../../../components/appbar";
+import AppBar from "../../components/appbar";
 
 const StyledPicker = styled(Picker);
 
-const SideBarOrders = ({ navigation }: INavigation) => {
+const SalesScreen = ({ navigation }: INavigation) => {
   const [selectedValue, setSelectedValue] = useState("option1");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const animatedValue = new Animated.Value(0);
@@ -162,4 +162,4 @@ const SideBarOrders = ({ navigation }: INavigation) => {
   );
 };
 
-export default SideBarOrders;
+export default SalesScreen;

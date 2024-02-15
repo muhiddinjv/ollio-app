@@ -1,7 +1,7 @@
 // AppNavigator.js
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import HomeScreen from "../../screens/splash/index";
+import ItemsScreen from "../../screens/splash/index";
 import DrawerContent from "./drawerContent";
 
 const Drawer = createDrawerNavigator();
@@ -9,7 +9,7 @@ const Drawer = createDrawerNavigator();
 const AppNavigator = () => {
   return (
     <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
-      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Home" component={ItemsScreen} />
       {/* Add more screens as needed */}
     </Drawer.Navigator>
   );

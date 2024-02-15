@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { onlineManager } from '@tanstack/react-query';
 import NetInfo from '@react-native-community/netinfo';
 
-import HomeScreen from '../screens/home';
+import ItemsScreen from '../screens/items';
 import SignInScreen from '../screens/signin';
 import SignupScreen from '../screens/signup';
 import SplashScreen from '../screens/splash';
@@ -16,7 +16,7 @@ import AddCustomerScreen from '../screens/customer/add_customer';
 import PinCodeScreen from '../screens/enter_pin';
 import SaveTicketScreen from '../screens/orders/save_ticket';
 import Confirmation from '../screens/enter_pin';
-import SideBarOrders from '../screens/orders/sidebar_orders';
+import SalesScreen from '../screens/sales';
 import OrdersScreen from '../screens/orders';
 import RefundScreen from '../screens/refund';
 import CustomerListScreen from '../screens/customer/customer_list';
@@ -40,9 +40,10 @@ const Stack = createStackNavigator();
 export const InitApp = () => {
   
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"SearchScreen"}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"Items"}>
       <Stack.Screen name="AiGen" component={TestAi} />
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Sales" component={SalesScreen} />
+      <Stack.Screen name="Items" component={ItemsScreen} />
       <Stack.Screen name="Signin" component={SignInScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Splash" component={SplashScreen} />
@@ -54,7 +55,6 @@ export const InitApp = () => {
       <Stack.Screen name="PinCodeScreen" component={PinCodeScreen} />
       <Stack.Screen name="Confirmation" component={Confirmation} />
       <Stack.Screen name="SaveTicketScreen" component={SaveTicketScreen} />
-      <Stack.Screen name="SideBarOrders" component={SideBarOrders} />
       <Stack.Screen name="OrdersScreen" component={OrdersScreen} />
       <Stack.Screen name="RefundScreen" component={RefundScreen} />
       <Stack.Screen name="CustomerListScreen" component={CustomerListScreen} />

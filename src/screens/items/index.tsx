@@ -5,7 +5,7 @@ import { homePages } from "../../data/static.data";
 import Sidebar from "../../components/sidebar";
 import AppBar from "../../components/appbar";
 
-const HomeScreen = ({ navigation }: INavigation) => {
+const ItemsScreen = ({ navigation }: INavigation) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const drawerWidth = 300;
   const animatedValue = new Animated.Value(0);
@@ -14,7 +14,6 @@ const HomeScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="h-full bg-white">
-      {isDrawerOpen && <Animated.View style={{ opacity: animatedValue }} />}
       <AppBar title="Items" hamburgerIcon={{ onPress: toggleDrawer }} />
       <Sidebar
         navigation={navigation}
@@ -39,4 +38,4 @@ const HomeScreen = ({ navigation }: INavigation) => {
   );
 };
 
-export default HomeScreen;
+export default ItemsScreen;

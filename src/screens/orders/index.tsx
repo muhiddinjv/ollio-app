@@ -7,6 +7,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import ListProduct from "../../components/list_product";
 import MyBottomSheet from "../../components/bottomsheet/bottomsheet";
 import { INavigation } from "../../utils/interfaces";
+import AppBar from "../../components/appbar";
 
 const FirstRoute = () => (
   <View>
@@ -67,14 +68,10 @@ const SecondRoute = () => (
 );
 
 const ThirdRoute = () => {
-  const productItems = Array.from({ length: 20 }, (_, index) => (
-    <ProductItem key={index} />
-  ));
-
   return (
     <ScrollView>
       <View className="flex-1 justify-center scene bg-white">
-        {productItems}
+        {[...Array(20)].map((_, index) => <ProductItem key={index} />)}
       </View>
     </ScrollView>
   );
@@ -103,14 +100,7 @@ const OrdersScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex-1">
-      <View className="bg-green-600 p-4 flex-row items-center">
-        <Image
-          source={more_1}
-          className="w-6 h-6 text-red-800"
-          style={{ tintColor: "#FFF" }}
-        />
-        <Text className="mx-4 text-2xl font-bold text-white">Orders</Text>
-      </View>
+      <AppBar title="Orders" hamburgerIcon={{onPress: ()=>alert('hamburger icon pressed')}} />
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}

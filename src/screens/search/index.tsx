@@ -34,7 +34,7 @@ const SearchScreen = ({ navigation }: INavigation) => {
       />
       <ScrollView>
         <TouchableOpacity onPress={() => navigation.navigate("EditItem")}>
-          <ProductItem2 title={"Click"} subtitle={"1 tonna"} price={"200 000"} />
+          <ProductItem2 title={"Click this"} subtitle={"1 tonna"} price={"200 000"} />
         </TouchableOpacity>
         {[...Array(20)].map((_, index) => (
           <ProductItem2

@@ -32,36 +32,36 @@ export const sidebarItems = [
   {
     naviation: "",
     name: "Sales",
-    icon: sales,
+    icon: "shopping",
   },
   {
     naviation: "",
     name: "Receipt",
-    icon: receipt,
+    icon: "receipt",
   },
   {
     naviation: "",
     name: "Items",
-    icon: burger_icon,
+    icon: "format-list-bulleted",
   },
   {
     naviation: "",
     name: "Settings",
-    icon: setting,
+    icon: "cog",
   },
   {
     naviation: "",
     name: "Back office",
-    icon: back_office,
+    icon: "office-building-cog",
   },
   {
     naviation: "",
     name: "Apps",
-    icon: apps,
+    icon: "apps",
   },
   {
     naviation: "",
     name: "Support",
-    icon: information,
+    icon: "chat",
   },
 ];

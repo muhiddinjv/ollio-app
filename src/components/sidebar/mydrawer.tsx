@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity } from "react-native";
-import { Appbar, Text, Button, Drawer } from "react-native-paper";
+import { View } from "react-native";
+import { Appbar, Text, Drawer } from "react-native-paper";
 
 const CollapseableDrawer = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [active, setActive] = React.useState(0);
 
   return (
@@ -11,7 +11,7 @@ const CollapseableDrawer = () => {
       <Appbar.Header>
         <Appbar.Action
           icon="menu"
-          onPress={() => setIsDrawerOpen(!isDrawerOpen)}
+          onPress={() => setOpenDrawer(!openDrawer)}
         />
         <Appbar.Content title="App Title" />
       </Appbar.Header>
@@ -19,7 +19,7 @@ const CollapseableDrawer = () => {
         <Text>Main Content</Text>
       </View>
 
-      {isDrawerOpen && (
+      {openDrawer && (
         <Drawer.Section
           style={{ position: "absolute", width: "100%", height: "100%" }}
         >

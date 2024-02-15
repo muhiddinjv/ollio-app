@@ -8,7 +8,7 @@ const UserInfo = ({ title, icon }:IBase) => {
 
   return (
     <View style={styles.userTab}>
-      <Image source={icon} style={styles.userIcon} />
+      <Image source={icon} style={styles.userPlusIcon} />
       <Text>{title}</Text>
     </View>
   );
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
   },
-  userIcon: {
+  userPlusIcon: {
     width: 32,
     height: 32,
     marginRight: 24,

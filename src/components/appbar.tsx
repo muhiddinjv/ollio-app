@@ -13,13 +13,14 @@ const AppBar = ({
   title,
   backButton,
   hamburgerIcon,
-  dropdown,
+  threeDots,
   searchInput,
   clearButton,
   saveButton,
   closeButton,
   trashIcon,
-  userIcon,
+  userPlusIcon,
+  userCheckIcon,
   transferButton,
 }: AppBarProps) => {
   return (
@@ -59,23 +60,24 @@ const AppBar = ({
           }
         />
       )}
-      {clearButton && <IconButton icon="close" onPress={clearButton.onPress} />}
+      {clearButton && <IconButton iconColor="white" icon="close" onPress={clearButton.onPress} />}
       {saveButton && (
         <Button textColor="white" uppercase={true} onPress={saveButton.onPress}>
           {saveButton.label}
         </Button>
       )}
-      {closeButton && <IconButton icon="close" onPress={closeButton.onPress} />}
-      {trashIcon && <IconButton icon="delete" onPress={trashIcon.onPress} />}
-      {userIcon && <IconButton icon="account" onPress={userIcon.onPress} />}
+      {closeButton && <IconButton iconColor="white" icon="close" onPress={closeButton.onPress} />}
+      {trashIcon && <IconButton iconColor="white" icon="delete" onPress={trashIcon.onPress} />}
+      {userPlusIcon && <IconButton iconColor="white" icon="account-plus" onPress={userPlusIcon.onPress} />}
+      {userCheckIcon && <IconButton iconColor="white" icon="account-check" onPress={userCheckIcon.onPress} />}
       {transferButton && (
         <Button onPress={transferButton.onPress}>{transferButton.label}</Button>
       )}
-      {dropdown && (
+      {threeDots && (
         <IconButton
           iconColor="white"
           icon="dots-vertical"
-          onPress={dropdown.onPress}
+          onPress={threeDots.onPress}
         />
       )}
     </Appbar.Header>

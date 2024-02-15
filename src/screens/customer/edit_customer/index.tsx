@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  userIcon: {
+  userPlusIcon: {
     width: 32,
     height: 32,
     marginRight: 24,

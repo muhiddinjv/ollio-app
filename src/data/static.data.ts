@@ -2,27 +2,21 @@ import {
   burger_icon,
   category,
   discount_icon,
-  sales,
-  receipt,
-  setting,
-  back_office,
-  apps,
-  information,
 } from "../constants/icons";
 
 export const homePages = [
   {
-    naviation: "TabView",
+    screen: "ItemsScreen",
     name: "Items",
     icon: burger_icon,
   },
   {
-    naviation: "",
+    screen: "CategoriesScreen",
     name: "Categories",
     icon: category,
   },
   {
-    naviation: "",
+    screen: "",
     name: "Discounts",
     icon: discount_icon,
   },
@@ -30,37 +24,37 @@ export const homePages = [
 
 export const sidebarItems = [
   {
-    naviation: "",
+    screen: "SalesScreen",
     name: "Sales",
     icon: "shopping",
   },
   {
-    naviation: "",
-    name: "Receipt",
+    screen: "SalesScreen",
+    name: "Check",
     icon: "receipt",
   },
   {
-    naviation: "",
+    screen: "ItemsScreen",
     name: "Items",
     icon: "format-list-bulleted",
   },
   {
-    naviation: "",
+    screen: "ItemsScreen",
     name: "Settings",
     icon: "cog",
   },
   {
-    naviation: "",
+    screen: "ItemsScreen",
     name: "Back office",
     icon: "office-building-cog",
   },
   {
-    naviation: "",
+    screen: "ItemsScreen",
     name: "Apps",
     icon: "apps",
   },
   {
-    naviation: "",
+    screen: "ItemsScreen",
     name: "Support",
     icon: "chat",
   },

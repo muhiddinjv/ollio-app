@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { onlineManager } from '@tanstack/react-query';
 import NetInfo from '@react-native-community/netinfo';
@@ -29,31 +29,37 @@ import AddToCartScreen from '../screens/customer/add_to_cart/index'
 import TicketScreen from '../screens/payment/ticket';
 import AssignTicketTo from '../screens/orders/assign_ticket_to';
 import TestAi from '../screens/aigen/test';
+import { AppContext } from '../utils/interfaces';
 
 onlineManager.setEventListener(setOnline => {
   return NetInfo.addEventListener(state => {
     setOnline(!!state.isConnected)
   })
 })
+
 const Stack = createStackNavigator();
 
 export const InitApp = () => {
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"Items"}>
+   <AppContext.Provider value={{openDrawer,setOpenDrawer}}>
+     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"Sales"}>
       <Stack.Screen name="AiGen" component={TestAi} />
+      <Stack.Group>
+        <Stack.Screen name="Splash" component={SplashScreen} />
+        <Stack.Screen name="Signin" component={SignInScreen} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen name="SelectStore" component={SelectScreen} />
+        <Stack.Screen name="Confirmation" component={Confirmation} />
+      </Stack.Group>
       <Stack.Screen name="Sales" component={SalesScreen} />
       <Stack.Screen name="Items" component={ItemsScreen} />
-      <Stack.Screen name="Signin" component={SignInScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
-      <Stack.Screen name="Splash" component={SplashScreen} />
-      <Stack.Screen name="SelectStore" component={SelectScreen} />
       <Stack.Screen name="EditItem" component={EditItem} />
       <Stack.Screen name="TabView" component={TabView} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="AddCustomerScreen" component={AddCustomerScreen} />
       <Stack.Screen name="PinCodeScreen" component={PinCodeScreen} />
-      <Stack.Screen name="Confirmation" component={Confirmation} />
       <Stack.Screen name="SaveTicketScreen" component={SaveTicketScreen} />
       <Stack.Screen name="OrdersScreen" component={OrdersScreen} />
       <Stack.Screen name="RefundScreen" component={RefundScreen} />
@@ -69,5 +75,6 @@ export const InitApp = () => {
       {/* FIX BottomTabs STYLE */}
       <Stack.Screen name="BottomTabs" component={BottomTabs} /> 
     </Stack.Navigator>
+   </AppContext.Provider>
   );
 };

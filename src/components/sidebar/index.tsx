@@ -1,24 +1,25 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Animated, Image } from "react-native";
+import { useState } from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { sidebarItems } from "../../data/static.data";
 import { lock } from "../../constants/icons";
 import { Drawer } from "react-native-paper";
 
-const Sidebar = ({ isDrawerOpen, toggleDrawer }: any) => {
+const Sidebar = ({ openDrawer, toggleDrawer, navigation }: any) => {
   const [active, setActive] = useState(0);
 
   return (
     <Drawer.Section
       style={{
-        position: "absolute",
-        zIndex: 10,
+        zIndex: 40,
         width: "100%",
         height: "100%",
-        display: isDrawerOpen ? "flex" : "none",
+        position: "absolute",
+        display: openDrawer ? "flex" : "none",
       }}
     >
-      <View className="w-72">
-        <View className="flex-row items-center justify-between p-4 py-10 bg-green-500 border-r border-slate-400">
+      <TouchableOpacity onPress={toggleDrawer} className="absolute w-full h-full bg-black opacity-50" />
+      <View className="w-3/5">
+        <View className="flex-row items-center justify-between p-4 py-10 bg-green-500">
           <View>
             <Text className="mt-2 text-2xl text-white font-bold">Owner</Text>
             <Text className="mt-2 text-lg text-white">POS 1</Text>
@@ -32,10 +33,10 @@ const Sidebar = ({ isDrawerOpen, toggleDrawer }: any) => {
           </TouchableOpacity>
         </View>
 
-        <View className="h-full bg-white border-r border-slate-400 py-4">
+        <View className="h-full bg-white py-4">
           {sidebarItems?.map((el: any, index) => (
             <Drawer.Item
-              onPress={() => setActive(index)}
+              onPress={() => {setActive(index),navigation.navigate(el.screen)}}
               key={index}
               active={active === index}
               label={el.name}

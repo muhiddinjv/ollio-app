@@ -8,7 +8,7 @@ const UserInfo2 = ({ title, subtitle, icon }:IBase) => {
 
   return (
     <View style={styles.userTab}>
-      <Image source={icon} style={styles.userIcon} />
+      <Image source={icon} style={styles.userPlusIcon} />
       <View>
         <Text style={{ color: "black", fontSize: 18 }}>{title}</Text>
         <Text style={{ color: "grey", fontSize: 16 }}>{subtitle}</Text>
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
   },
-  userIcon: {
+  userPlusIcon: {
     width: 32,
     height: 32,
     marginRight: 24,

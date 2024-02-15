@@ -1,25 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, TouchableOpacity, Animated, Image } from "react-native";
-import { INavigation } from "../../utils/interfaces";
+import { AppContext, INavigation } from "../../utils/interfaces";
 import { homePages } from "../../data/static.data";
 import Sidebar from "../../components/sidebar";
 import AppBar from "../../components/appbar";
 
 const ItemsScreen = ({ navigation }: INavigation) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const {openDrawer, setOpenDrawer} = useContext(AppContext);
   const drawerWidth = 300;
   const animatedValue = new Animated.Value(0);
 
-  const toggleDrawer = () => setIsDrawerOpen((prev) => !prev);
+  const toggleDrawer = () => setOpenDrawer(!openDrawer);
 
   return (
     <View className="h-full bg-white">
       <AppBar title="Items" hamburgerIcon={{ onPress: toggleDrawer }} />
       <Sidebar
         navigation={navigation}
-        isDrawerOpen={isDrawerOpen}
-        animatedValue={animatedValue}
-        drawerWidth={drawerWidth}
+        openDrawer={openDrawer}
         toggleDrawer={toggleDrawer}
       />
       {homePages?.map((el: any, index) => (

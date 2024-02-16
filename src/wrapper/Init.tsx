@@ -19,7 +19,7 @@ import Confirmation from '../screens/enter_pin';
 import SalesScreen from '../screens/sales';
 import OrdersScreen from '../screens/orders';
 import RefundScreen from '../screens/refund';
-import CustomerListScreen from '../screens/customer/customer_list';
+import CustomersScreen from '../screens/customer/customer_list';
 import EditCustomerScreen from '../screens/customer/edit_customer';
 import CustomerProfileScreen from '../screens/customer/customer_profile';
 import QuantityScreen from '../screens/payment/quantity';
@@ -30,6 +30,7 @@ import TicketScreen from '../screens/payment/ticket';
 import AssignTicketTo from '../screens/orders/assign_ticket_to';
 import TestAi from '../screens/aigen/test';
 import { AppContext } from '../utils/interfaces';
+import Sidebar from '../components/sidebar';
 
 onlineManager.setEventListener(setOnline => {
   return NetInfo.addEventListener(state => {
@@ -39,41 +40,52 @@ onlineManager.setEventListener(setOnline => {
 
 const Stack = createStackNavigator();
 
+// function Root() {
+//   return (
+//     <Drawer.Navigator>
+//       <Drawer.Screen name="Home" component={Home} />
+//       <Drawer.Screen name="Profile" component={Profile} />
+//       <Stack.Screen name="Settings" component={Settings} />
+//     </Drawer.Navigator>
+//   );
+// }
+
 export const InitApp = () => {
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   
   return (
    <AppContext.Provider value={{openDrawer,setOpenDrawer}}>
-     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={"Sales"}>
+     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Sales">
       <Stack.Screen name="AiGen" component={TestAi} />
-      <Stack.Group>
-        <Stack.Screen name="Splash" component={SplashScreen} />
-        <Stack.Screen name="Signin" component={SignInScreen} />
-        <Stack.Screen name="Signup" component={SignupScreen} />
-        <Stack.Screen name="SelectStore" component={SelectScreen} />
-        <Stack.Screen name="Confirmation" component={Confirmation} />
-      </Stack.Group>
+      <Stack.Screen name="Splash" component={SplashScreen} />
+      <Stack.Screen name="Signin" component={SignInScreen} />
+      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen name="SelectStore" component={SelectScreen} />
+      <Stack.Screen name="Confirmation" component={Confirmation} />
+      
       <Stack.Screen name="Sales" component={SalesScreen} />
       <Stack.Screen name="Items" component={ItemsScreen} />
+      <Stack.Screen name="Orders" component={OrdersScreen} />
+
       <Stack.Screen name="EditItem" component={EditItem} />
       <Stack.Screen name="TabView" component={TabView} />
-      <Stack.Screen name="SearchScreen" component={SearchScreen} />
-      <Stack.Screen name="AddCustomerScreen" component={AddCustomerScreen} />
-      <Stack.Screen name="PinCodeScreen" component={PinCodeScreen} />
-      <Stack.Screen name="SaveTicketScreen" component={SaveTicketScreen} />
-      <Stack.Screen name="OrdersScreen" component={OrdersScreen} />
-      <Stack.Screen name="RefundScreen" component={RefundScreen} />
-      <Stack.Screen name="CustomerListScreen" component={CustomerListScreen} />
-      <Stack.Screen name="EditCustomerScreen" component={EditCustomerScreen} />
-      <Stack.Screen name="CustomerProfileScreen" component={CustomerProfileScreen} />
-      <Stack.Screen name="QuantityScreen" component={QuantityScreen} />
-      <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
-      <Stack.Screen name="PaidScreen" component={PaidScreen} />
-      <Stack.Screen name="AddToCartScreen" component={AddToCartScreen} />
-      <Stack.Screen name="TicketScreen" component={TicketScreen} />
+      <Stack.Screen name="Search" component={SearchScreen} />
+      <Stack.Screen name="AddCustomer" component={AddCustomerScreen} />
+      <Stack.Screen name="PinCode" component={PinCodeScreen} />
+      <Stack.Screen name="SaveTicket" component={SaveTicketScreen} />
+      <Stack.Screen name="Refund" component={RefundScreen} />
+      <Stack.Screen name="Customers" component={CustomersScreen} />
+      <Stack.Screen name="EditCustomer" component={EditCustomerScreen} />
+      <Stack.Screen name="CustomerProfile" component={CustomerProfileScreen} />
+      <Stack.Screen name="Quantity" component={QuantityScreen} />
+      <Stack.Screen name="Payment" component={PaymentScreen} />
+      <Stack.Screen name="Paid" component={PaidScreen} />
+      <Stack.Screen name="AddToCart" component={AddToCartScreen} />
+      <Stack.Screen name="Ticket" component={TicketScreen} />
       <Stack.Screen name="AssignTicketTo" component={AssignTicketTo} />
       {/* FIX BottomTabs STYLE */}
       <Stack.Screen name="BottomTabs" component={BottomTabs} /> 
+      <Stack.Screen name="Sidebar" component={Sidebar} />
     </Stack.Navigator>
    </AppContext.Provider>
   );

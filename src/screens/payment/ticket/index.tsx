@@ -20,7 +20,7 @@ const TicketScreen = ({ navigation }: INavigation) => {
         </View>
         <View className="flex-row">
           <TouchableOpacity
-            onPress={() => navigation.navigate("CustomerListScreen")}
+            onPress={() => navigation.navigate("CustomersScreen")}
           >
             <Image source={user_plus} className="h-6 w-6 mx-2" tintColor='white'/>
           </TouchableOpacity>

@@ -50,7 +50,7 @@ const AddCustomerScreen = ({ navigation }:INavigation) => {
 
         <View className="flex-row">
           <TouchableOpacity
-            onPress={() => navigation.navigate("CustomerListScreen")}
+            onPress={() => navigation.navigate("CustomersScreen")}
           >
             <Image
               source={user_plus}

@@ -38,7 +38,7 @@ const Sidebar = ({ openDrawer, toggleDrawer, navigation }: any) => {
             <Drawer.Item
               onPress={() => {
                 setActive(index)
-                // ,navigation.navigate(el.screen)
+                ,navigation.navigate(el.screen)
               }}
               key={index}
               active={active === index}

@@ -4,7 +4,7 @@ import { close, search_icon, user_1 } from "../../../constants/icons";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { INavigation } from "../../../utils/interfaces";
 
-const CustomerListScreen = ({ navigation }: INavigation) => {
+const CustomersScreen = ({ navigation }: INavigation) => {
   return (
     <View className="flex-1">
       <View className="flex-row items-center justify-between border-b border-gray-500 p-4">
@@ -51,4 +51,4 @@ const CustomerListScreen = ({ navigation }: INavigation) => {
   );
 };
 
-export default CustomerListScreen;
+export default CustomersScreen;

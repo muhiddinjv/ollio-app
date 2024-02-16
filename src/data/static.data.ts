@@ -23,7 +23,7 @@ export const sidebarItems = [
     icon: "shopping",
   },
   {
-    screen: "SalesScreen",
+    screen: "OrdersScreen",
     name: "Orders",
     icon: "receipt",
   },
@@ -33,17 +33,17 @@ export const sidebarItems = [
     icon: "format-list-bulleted",
   },
   {
-    screen: "ItemsScreen",
+    screen: "SearchScreen",
     name: "Settings",
     icon: "cog",
   },
   {
-    screen: "ItemsScreen",
+    screen: "CustomersScreen",
     name: "Admin",
     icon: "alpha-a-box",
   },
   {
-    screen: "ItemsScreen",
+    screen: "PaymentScreen",
     name: "Apps",
     icon: "apps",
   },

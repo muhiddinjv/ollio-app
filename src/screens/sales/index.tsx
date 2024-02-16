@@ -33,24 +33,22 @@ const SalesScreen = ({ navigation }: INavigation) => {
     "marshmallow",
   ];
 
-  const toggleDrawer = () => setOpenDrawer(!openDrawer);
-
   return (
     <View className="flex-1 w-full">
       <AppBar
         title="Items"
-        hamburgerIcon={{ onPress: toggleDrawer }}
+        hamburgerIcon={{ onPress: () => setOpenDrawer(!openDrawer) }}
         userPlusIcon={{ onPress: () => alert("add customer") }}
         threeDots={{ onPress: () => alert("threedots") }}
       />
       <Sidebar
         navigation={navigation}
         openDrawer={openDrawer}
-        toggleDrawer={toggleDrawer}
+        toggleDrawer={() => setOpenDrawer(!openDrawer)}
       />
       <View className="p-2 bg-white flex-row items-center justify-around">
         <TouchableOpacity
-          onPress={() => navigation.navigate("SaveTicketScreen")}
+          onPress={() => navigation.navigate("SaveTicket")}
           className="w-48 p-4 bg-green-500"
         >
           <Text className="text-white font-semibold text-center text-xl">

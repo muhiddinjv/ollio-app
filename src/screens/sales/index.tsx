@@ -1,13 +1,6 @@
 import React, { useContext, useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Animated,
-  Image,
-} from "react-native";
-import {
-  search_icon,} from "../../constants/icons";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import { search_icon } from "../../constants/icons";
 import { Picker } from "@react-native-picker/picker";
 import ProductItem3 from "../../components/app_bar/product_item_3";
 import { AppContext, INavigation } from "../../utils/interfaces";
@@ -15,12 +8,13 @@ import { styled } from "nativewind";
 import { ScrollView } from "react-native-gesture-handler";
 import AppBar from "../../components/appbar";
 import Sidebar from "../../components/sidebar";
+import { IconButton } from "react-native-paper";
 
 const StyledPicker = styled(Picker);
 
 const SalesScreen = ({ navigation }: INavigation) => {
   const [selectedValue, setSelectedValue] = useState("option1");
-  const {openDrawer, setOpenDrawer} = useContext(AppContext);
+  const { openDrawer, setOpenDrawer } = useContext(AppContext);
 
   const tempItems = [
     "coca-cola",
@@ -43,7 +37,12 @@ const SalesScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex-1 w-full">
-      <AppBar title="Items" hamburgerIcon={{ onPress: toggleDrawer }} userPlusIcon={{onPress:()=>alert('user')}} threeDots={{onPress: ()=>alert('threedots')}}/>
+      <AppBar
+        title="Items"
+        hamburgerIcon={{ onPress: toggleDrawer }}
+        userPlusIcon={{ onPress: () => alert("add customer") }}
+        threeDots={{ onPress: () => alert("threedots") }}
+      />
       <Sidebar
         navigation={navigation}
         openDrawer={openDrawer}
@@ -54,7 +53,9 @@ const SalesScreen = ({ navigation }: INavigation) => {
           onPress={() => navigation.navigate("SaveTicketScreen")}
           className="w-48 p-4 bg-green-500"
         >
-          <Text className="text-white font-semibold text-center text-xl">SAVE</Text>
+          <Text className="text-white font-semibold text-center text-xl">
+            SAVE
+          </Text>
         </TouchableOpacity>
         <View className="w-48 p-4 bg-green-500 flex items-center justify-center">
           <Text className="text-white font-semibold text-xl">
@@ -74,7 +75,7 @@ const SalesScreen = ({ navigation }: INavigation) => {
           <Picker.Item label="Option 3" value="option3" />
         </StyledPicker>
         <View className="w-1/5 h-full flex items-center justify-center border border-gray-400">
-          <Image source={search_icon} className="h-7 w-7 text-slate-500" />
+          <IconButton size={35} icon="magnify" onPress={()=>alert('magnify clicked')} />
         </View>
       </View>
       <ScrollView>

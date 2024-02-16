@@ -17,8 +17,8 @@ const Sidebar = ({ openDrawer, toggleDrawer, navigation }: any) => {
         display: openDrawer ? "flex" : "none",
       }}
     >
-      <TouchableOpacity onPress={toggleDrawer} className="absolute w-full h-full bg-black opacity-50" />
-      <View className="w-3/5">
+      <TouchableOpacity onPress={toggleDrawer} className="absolute w-full h-full bg-black opacity-60" />
+      <View className="w-4/6">
         <View className="flex-row items-center justify-between p-4 py-10 bg-green-500">
           <View>
             <Text className="mt-2 text-2xl text-white font-bold">Owner</Text>
@@ -36,7 +36,10 @@ const Sidebar = ({ openDrawer, toggleDrawer, navigation }: any) => {
         <View className="h-full bg-white py-4">
           {sidebarItems?.map((el: any, index) => (
             <Drawer.Item
-              onPress={() => {setActive(index),navigation.navigate(el.screen)}}
+              onPress={() => {
+                setActive(index)
+                // ,navigation.navigate(el.screen)
+              }}
               key={index}
               active={active === index}
               label={el.name}

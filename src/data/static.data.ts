@@ -1,24 +1,18 @@
-import {
-  burger_icon,
-  category,
-  discount_icon,
-} from "../constants/icons";
-
 export const homePages = [
   {
     screen: "ItemsScreen",
     name: "Items",
-    icon: burger_icon,
+    icon: "format-list-bulleted",
   },
   {
     screen: "CategoriesScreen",
     name: "Categories",
-    icon: category,
+    icon: "content-copy",
   },
   {
-    screen: "",
+    screen: "DiscountsScreen",
     name: "Discounts",
-    icon: discount_icon,
+    icon: "percent",
   },
 ];
 
@@ -30,7 +24,7 @@ export const sidebarItems = [
   },
   {
     screen: "SalesScreen",
-    name: "Check",
+    name: "Orders",
     icon: "receipt",
   },
   {
@@ -45,8 +39,8 @@ export const sidebarItems = [
   },
   {
     screen: "ItemsScreen",
-    name: "Back office",
-    icon: "office-building-cog",
+    name: "Admin",
+    icon: "alpha-a-box",
   },
   {
     screen: "ItemsScreen",

@@ -1,5 +1,5 @@
 import ItemsScreen from "../screens/items";
-import SignInScreen from "../screens/signin";
+import SignInScreen from "../screens/signIn";
 import SignupScreen from "../screens/signup";
 import SplashScreen from "../screens/splash";
 import SelectScreen from "../screens/select_store";

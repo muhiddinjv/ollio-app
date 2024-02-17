@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { InitApp } from './Init';
 import 'react-native-gesture-handler';
-import Loader from '../components/loader';
+import Loader from '../components/Loader/index';
 import { AuthApp } from '../screens/auth';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';

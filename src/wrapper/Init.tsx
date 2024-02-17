@@ -22,7 +22,7 @@ export const InitApp = () => {
   return (
     // <AppContext.Provider value={{ openDrawer, setOpenDrawer }}>
     <Drawer.Navigator
-      initialRouteName="Sales"
+      initialRouteName="Orders"
       drawerContent={(props) => <Sidebar {...props} />}
       screenOptions={{
         headerStyle: {

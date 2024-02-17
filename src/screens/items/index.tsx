@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { View, Text, TouchableOpacity, Animated, Image } from "react-native";
 import { AppContext, INavigation } from "../../utils/interfaces";
-import { homePages } from "../../data/static.data";
+import { homePages } from "../../data";
 import Sidebar from "../../components/sidebar";
 import AppBar from "../../components/appbar";
 

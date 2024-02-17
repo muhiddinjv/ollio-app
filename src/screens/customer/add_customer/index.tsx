@@ -37,7 +37,7 @@ const AddCustomerScreen = ({ navigation }:INavigation) => {
 
   return (
     <View className="flex-1">
-      <View className="p-4 bg-green-500 flex-row justify-between items-center shadow-md">
+      {/* <View className="p-4 bg-green-500 flex-row justify-between items-center shadow-md">
         <View className="flex-row items-center">
           <TouchableOpacity>
             <Image
@@ -64,7 +64,7 @@ const AddCustomerScreen = ({ navigation }:INavigation) => {
             />
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
 
       <ScrollView className="p-4">
         <View className="w-full items-center">

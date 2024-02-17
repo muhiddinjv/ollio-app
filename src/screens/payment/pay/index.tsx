@@ -29,7 +29,7 @@ const PaymentScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex-1 bg-white">
-      <AppBar backButton={{ onPress: ()=> alert('back button was clicked!') }} saveButton={{ onPress: ()=> alert('save button was clicked!'), label: 'split' }}/>
+      {/* <AppBar backButton={{ onPress: ()=> alert('back button was clicked!') }} saveButton={{ onPress: ()=> alert('save button was clicked!'), label: 'split' }}/> */}
       <View className="h-120 justify-start items-center">
         <Text className="text-2xl mt-8 text-black">UZS 150,000</Text>
         <Text className="text-lg">Total</Text>

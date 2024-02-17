@@ -17,7 +17,7 @@ const SaveTicketScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex-1 bg-white p-4">
-      <View className="flex-row justify-between items-center pb-4 border-b border-gray-300">
+      {/* <View className="flex-row justify-between items-center pb-4 border-b border-gray-300">
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={cancel} className="h-6 w-6 text-gray-600" />
         </TouchableOpacity>
@@ -27,7 +27,7 @@ const SaveTicketScreen = ({ navigation }: INavigation) => {
         >
           <Text className="text-green-500">Save</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       <TextInput
         label="Product Name"

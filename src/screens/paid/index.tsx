@@ -8,7 +8,7 @@ const PaidScreen = () => {
 
   return (
     <View className="flex">
-      <View className="h-14 flex-row items-center bg-green-500 justify-between shadow-md px-4"></View>
+      {/* <View className="h-14 flex-row items-center bg-green-500 justify-between shadow-md px-4"></View> */}
 
       <View className="h-36 flex-row items-center justify-around">
         <View className="flex-col items-end w-48">

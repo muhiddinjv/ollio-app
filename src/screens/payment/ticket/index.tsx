@@ -11,7 +11,7 @@ const TicketScreen = ({ navigation }: INavigation) => {
 
   return (
     <View>
-      <View className="bg-green-500 px-4 py-3 flex-row items-center justify-between shadow-md">
+      {/* <View className="bg-green-500 px-4 py-3 flex-row items-center justify-between shadow-md">
         <View className="flex-row items-center">
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image source={arrow} className="h-6 w-6" tintColor='white' />
@@ -28,7 +28,7 @@ const TicketScreen = ({ navigation }: INavigation) => {
             <Image source={more} className="h-5 w-5 ml-4" tintColor='white'/>
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
 
       <ScrollView className="px-2">
         {[...Array(10)].map((_, index) => (

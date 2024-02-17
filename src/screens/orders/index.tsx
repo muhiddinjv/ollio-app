@@ -102,12 +102,12 @@ const OrdersScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex-1">
-      <AppBar title="Orders" hamburgerIcon={{onPress: ()=>setOpenDrawer(!openDrawer)}} />
+      {/* <AppBar title="Orders" hamburgerIcon={{onPress: ()=>setOpenDrawer(!openDrawer)}} />
       <Sidebar
         navigation={navigation}
         openDrawer={openDrawer}
         toggleDrawer={()=>setOpenDrawer(!openDrawer)}
-      />
+      /> */}
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}

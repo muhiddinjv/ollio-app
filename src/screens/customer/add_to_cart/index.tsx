@@ -24,7 +24,7 @@ const AddToCartScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex">
-      <View className="bg-green-500 px-4 py-3 flex-row items-center justify-between shadow-md">
+      {/* <View className="bg-green-500 px-4 py-3 flex-row items-center justify-between shadow-md">
         <View className="flex-row items-center">
           <TouchableOpacity>
             <Image source={more_1} className="h-6 w-6" style={{tintColor:'white'}} />
@@ -39,7 +39,7 @@ const AddToCartScreen = ({ navigation }: INavigation) => {
             <Image source={more} className="h-5 w-5 ml-4" style={{tintColor:'white'}} />
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
 
       <View className="px-4 py-2">
         <View className="w-full">

@@ -21,7 +21,7 @@ const SearchScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex-1">
-      <AppBar
+      {/* <AppBar
         searchInput={{
           icon: "close",
           color: "white",
@@ -31,7 +31,7 @@ const SearchScreen = ({ navigation }: INavigation) => {
           onIconPress: () => setSearchQuery(""),
         }}
         backButton={{ onPress: () => alert("back button was clicked!") }}
-      />
+      /> */}
       <ScrollView>
         <TouchableOpacity onPress={() => navigation.navigate("EditItem")}>
           <ProductItem2 title={"Click this"} subtitle={"1 tonna"} price={"200 000"} />

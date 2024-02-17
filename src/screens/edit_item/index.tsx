@@ -78,7 +78,7 @@ const EditItemScreen = ({ navigation }: INavigation) => {
 
   return (
     <SafeAreaView className=" flex-1">
-        <AppBar title="Edit Items" backButton={{ onPress: ()=> alert('back button was clicked!') }} saveButton={{ onPress: ()=> alert('save button was clicked!'), label: 'save' }}/>
+        {/* <AppBar title="Edit Items" backButton={{ onPress: ()=> alert('back button was clicked!') }} saveButton={{ onPress: ()=> alert('save button was clicked!'), label: 'save' }}/> */}
       <ScrollView>
 
         <View className="p-4">

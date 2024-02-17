@@ -38,7 +38,7 @@ const CustomerProfileScreen = ({ navigation }: INavigation) => {
   return (
     <View className="flex-1 p-4">
       {/* AppBar */}
-      <View className="flex-row justify-between items-center mb-4">
+      {/* <View className="flex-row justify-between items-center mb-4">
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={arrow} className="w-6 h-6 text-gray-500" />
         </TouchableOpacity>
@@ -48,7 +48,7 @@ const CustomerProfileScreen = ({ navigation }: INavigation) => {
         >
           <Text className="text-green-600 font-semibold">ADD TO TICKET</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       <ScrollView>
         <View className="items-center">

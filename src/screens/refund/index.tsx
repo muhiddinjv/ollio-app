@@ -21,7 +21,7 @@ const RefundScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex-grow">
-      <View className="bg-green-600 p-4 justify-between flex-row items-center">
+      {/* <View className="bg-green-600 p-4 justify-between flex-row items-center">
         <View className="flex-row items-center">
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image source={arrow} className="h-6 w-6" style={{tintColor:'white'}}/>
@@ -32,7 +32,7 @@ const RefundScreen = ({ navigation }: INavigation) => {
           <Text className="text-white text-xl font-semibold mr-4">REFUND</Text>
           <Image source={more} className="h-6 w-6" style={{tintColor:'white'}} />
         </View>
-      </View>
+      </View> */}
       <ScrollView>
         <View className="justify-start items-center">
           <Text className="text-4xl mt-10 text-black">UZS 150,000</Text>

@@ -18,7 +18,7 @@ const AssignTicketTo = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex-1 bg-white">
-      <View className="flex-row justify-between items-center p-4 md:p-8 border-b border-gray-300">
+      {/* <View className="flex-row justify-between items-center p-4 md:p-8 border-b border-gray-300">
         <View className="flex-row items-center">
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
@@ -37,7 +37,7 @@ const AssignTicketTo = ({ navigation }: INavigation) => {
             TRANSFER
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <View className="flex-row items-center px-4 md:px-8 border-b border-gray-300 h-12 md:h-16">
         <Image
           source={search_icon}

@@ -80,7 +80,7 @@ export const InitApp = () => {
         <Drawer.Screen name="AssignTicketTo" component={AssignTicketTo} />
         {/* FIX BottomTabs STYLE */}
         <Drawer.Screen name="BottomTabs" component={BottomTabs} />
-        <Drawer.Screen name="Sidebar" component={Sidebar} />
+        {/* <Drawer.Screen name="Sidebar" component={Sidebar} /> */}
       </Drawer.Navigator>
     // </AppContext.Provider>
   );

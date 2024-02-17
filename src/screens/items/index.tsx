@@ -14,12 +14,12 @@ const ItemsScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="h-full bg-white">
-      <AppBar title="Items" hamburgerIcon={{ onPress: toggleDrawer }} />
+      {/* <AppBar title="Items" hamburgerIcon={{ onPress: toggleDrawer }} />
       <Sidebar
         navigation={navigation}
         openDrawer={openDrawer}
         toggleDrawer={toggleDrawer}
-      />
+      /> */}
       {homePages?.map((el: any, index) => (
         <TouchableOpacity
           key={index}

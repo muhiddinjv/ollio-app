@@ -72,7 +72,7 @@ const OrdersScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex-1">
-      <View className="flex-row bg-green-500 p-4 justify-between items-center">
+      {/* <View className="flex-row bg-green-500 p-4 justify-between items-center">
         <View className="flex-row items-center">
           <Image source={more_1} className="h-8 w-8 mr-2" />
           <Picker
@@ -82,11 +82,10 @@ const OrdersScreen = ({ navigation }: INavigation) => {
           >
             <Picker.Item label="All items" value="option1" />
             <Picker.Item label="Option 2" value="option2" />
-            {/* Add more Picker.Item components as needed */}
           </Picker>
         </View>
         <Image source={search_icon} className="h-6 w-6" />
-      </View>
+      </View> */}
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}

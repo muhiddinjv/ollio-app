@@ -30,7 +30,7 @@ const EditCustomerScreen = ({ navigation }: INavigation) => {
   return (
     <View className="flex-1">
       {/* AppBar */}
-      <View className="flex-row justify-between items-center border-b border-gray-500 p-4 mt-4">
+      {/* <View className="flex-row justify-between items-center border-b border-gray-500 p-4 mt-4">
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={arrow} className="h-6 w-6 text-gray-600" />
         </TouchableOpacity>
@@ -40,7 +40,7 @@ const EditCustomerScreen = ({ navigation }: INavigation) => {
         >
           <Text className="text-green-600 font-semibold text-lg">Save</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       <ScrollView
         showsVerticalScrollIndicator={false}

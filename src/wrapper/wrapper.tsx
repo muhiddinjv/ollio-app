@@ -1,16 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import 'react-native-gesture-handler';
-import { InitApp } from './Init';
-import { AuthApp } from '../screens/auth';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Loader from '../components/loader';
-import axios from '../utils/axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { InitApp } from './Init';
+import 'react-native-gesture-handler';
+import Loader from '../components/loader';
+import { AuthApp } from '../screens/auth';
+import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LOGIN } from '../app/slices/authentication';
-const Drawer = createDrawerNavigator();
+import axios from '../utils/axios';
 
 function Wrapper(): JSX.Element {
   // const [token, setToken] = useState<any>(null) 

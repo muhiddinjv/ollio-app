@@ -35,7 +35,7 @@ const SalesScreen = ({ navigation }: INavigation) => {
 
   return (
     <View className="flex-1 w-full">
-      <AppBar
+      {/* <AppBar
         title="Items"
         hamburgerIcon={{ onPress: () => setOpenDrawer(!openDrawer) }}
         userPlusIcon={{ onPress: () => alert("add customer") }}
@@ -45,7 +45,7 @@ const SalesScreen = ({ navigation }: INavigation) => {
         navigation={navigation}
         openDrawer={openDrawer}
         toggleDrawer={() => setOpenDrawer(!openDrawer)}
-      />
+      /> */}
       <View className="p-2 bg-white flex-row items-center justify-around">
         <TouchableOpacity
           onPress={() => navigation.navigate("SaveTicket")}

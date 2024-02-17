@@ -18,8 +18,8 @@ function App(): JSX.Element {
     return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        {/* <Wrapper /> */}
-        <TestApp />
+        <Wrapper />
+        {/* <TestApp /> */}
       </Provider>
     </QueryClientProvider>
     )

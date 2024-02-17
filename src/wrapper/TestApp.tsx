@@ -10,6 +10,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Button } from "react-native";
 
 const Header = ({ name, openDrawer }: any) => (
   <View style={styles.header}>
@@ -109,7 +110,15 @@ const TestApp = () => {
       >
         <Drawer.Screen name="Home" component={Home} />
         <Drawer.Screen name="Profile" component={Profile} />
-        <Drawer.Screen name="Settings" component={Settings} />
+        <Drawer.Screen name="Settings" component={Settings} options={{
+          headerTitle: (props) => <Text>New header</Text>,
+          headerRight: () => (
+            <Button
+              title="Settings"
+              onPress={() => alert('This is a button!')}
+            />
+          ),
+        }}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );

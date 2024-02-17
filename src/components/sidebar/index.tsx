@@ -8,16 +8,16 @@ const Sidebar = ({ openDrawer, toggleDrawer, navigation }: any) => {
   const [active, setActive] = useState(0);
 
   return (
-    <Drawer.Section
+    <View
       style={{
         zIndex: 40,
         width: "100%",
         height: "100%",
         position: "absolute",
-        display: openDrawer ? "flex" : "none",
+        // display: openDrawer ? "flex" : "none",
       }}
     >
-      <TouchableOpacity onPress={toggleDrawer} className="absolute w-full h-full bg-black opacity-60" />
+      {/* <TouchableOpacity onPress={toggleDrawer} className="absolute w-full h-full bg-black opacity-60" /> */}
       <View className="w-4/6">
         <View className="flex-row items-center justify-between p-4 py-10 bg-green-500">
           <View>
@@ -48,7 +48,7 @@ const Sidebar = ({ openDrawer, toggleDrawer, navigation }: any) => {
           ))}
         </View>
       </View>
-    </Drawer.Section>
+    </View>
   );
 };
 

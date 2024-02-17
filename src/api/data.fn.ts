@@ -7,7 +7,7 @@ export const register = async (el: any) => axios.post("auth/register", el).then(
 
 export const getMe = async () => axios.get("auth/profile").then(res => res.data).catch(err => err)
 
-export const getShops = async () => axios.get("shops/", {headers: {Authorization: `Bearer ${AsyncStorage.getItem("token")}`}}).then(res => res.data).catch(err => err)
+export const getShops = async () => await axios.get("shops", {headers: {Authorization: `Bearer ${await AsyncStorage.getItem("token")}`}}).then(res => res.data).catch(err => err)
 
 export const getAllUsers = async () => axios.get("users").then(res => res.data).catch(err => err)
 

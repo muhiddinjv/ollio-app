@@ -1,18 +1,26 @@
 import axios from "./axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 // Users 
-export const signIn = async (el: any) => axios.post("auth/signin", el)
-    .then(res => console.log(333))
-    .catch(err => err)
 
-
-
+    interface Credentials {
+        phoneNumber: string;
+        password: string;
+      }
+      
+      export async function signIn(credentials:Credentials) {
+        try {
+            return axios.post('/auth/signin', credentials);
+        } catch (error) {
+            throw new Error(" Error signing in: " + error);;
+            
+        }
+      }
 
 
 
 export const register = async (el: any) => axios.post("auth/signup", el).then(res => res.data).catch(err => err)
 
-export const getMe = async () => axios.get("auth/profile").then(res => res.data).catch(err => err)
+export const getProfile = async () => axios.get("auth/profile").then(res => res.data).catch(err => err)
 
 export const getShops = async () => await axios.get("shops", {headers: {Authorization: `Bearer ${await AsyncStorage.getItem("token")}`}}).then(res => res.data).catch(err => err)
 

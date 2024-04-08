@@ -3,10 +3,10 @@ import { Text, View, StyleSheet, Button, Alert } from 'react-native';
 import { AuthProvider, useAuth } from '.';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput, useTheme, Button as RNButton } from 'react-native-paper';
-import { useMe } from '../../api/data.service';
+import { useMe } from '../../api/queries';
 import { INavigation } from '../../utils/interfaces';
 import { setToken } from './astorage';
-import axios from 'axios';
+import { signIn } from '../../api/requests';
 
 const LogOutButton = () => {
   const { signOut } = useAuth();
@@ -27,9 +27,7 @@ export default function SingIn({ navigation }: INavigation) {
 
   const handleSignIn = async () => {
     try {
-      const {data} = await axios.post('http://10.0.2.2:3000/auth/signin',{
-        phoneNumber, password
-      });
+      const {data} = await signIn({phoneNumber, password}); 
       if (data) {
         await setToken(data.accessToken);
         navigation.navigate("Sales");

@@ -1,28 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllCharts, getAllClients, getAllFields, getAllHistories, getAllLocations, getAllPackages, getAllStatus, getAllUsers, getAllWorkers, getProfile, getParentStatus } from "./requests";
+import { getAllCharts, getAllClients, getFields, getAllHistories, getLocations, getAllUsers, getStaff, getProfile, getParentStatus } from "./requests";
 
 // Users  
 export const useMe = () => useQuery({queryKey: ["auth/profile"], queryFn: getProfile})
 export const useUsers = () => useQuery({ queryKey: ["users"], queryFn: getAllUsers })
 
 // Client statuses
-export const useStatus = () => useQuery({ queryKey: ["get/status"], queryFn: getAllStatus })
-export const useClients = () => useQuery({ queryKey: ["get/clients"], queryFn: getAllClients })
-export const useParentStatuses = () => useQuery({queryKey: ["get/status/parent"], queryFn: getParentStatus})
-export const useLeadsHistory = ({id}: any) => useQuery({queryKey: ["/get/leads/history"], queryFn: getAllHistories})
+export const useClients = () => useQuery({ queryKey: ["clients"], queryFn: getAllClients })
+export const useParentStatuses = () => useQuery({queryKey: ["status/parent"], queryFn: getParentStatus})
+export const useLeadsHistory = ({id}: any) => useQuery({queryKey: ["leads/history"], queryFn: getAllHistories})
 
 // Fields 
-export const useFields = () => useQuery({ queryKey: ["fields"], queryFn: getAllFields })
+export const useFields = () => useQuery({ queryKey: ["fields"], queryFn: getFields })
 export const useCharts = () => useQuery({queryKey: ["leads/statistics"], queryFn: getAllCharts})
 
 // Locations 
-export const useLocations = () => useQuery({queryKey: ["locations"], queryFn: getAllLocations})
-
-// Packages 
-export const usePackages = () => useQuery({queryKey: ["packages"], queryFn: getAllPackages})
+export const useLocations = () => useQuery({queryKey: ["locations"], queryFn: getLocations})
 
 // Workers 
-export const useWorkers = () => useQuery({ queryKey: ["leads"], queryFn: getAllWorkers })
-
-// Leads
-// export const useLeads = () => useQuery({queryKey: ["/get/leads"], queryFn: getAllWorkers})
+export const useStaff = () => useQuery({ queryKey: ["staff"], queryFn: getStaff })

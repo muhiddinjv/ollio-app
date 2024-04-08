@@ -23,6 +23,7 @@ web-build/
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+bun.lockb
 
 # macOS
 .DS_Store
@@ -36,4 +37,3 @@ yarn-error.*
 
 # directories
 .vscode
-.bun.lockb

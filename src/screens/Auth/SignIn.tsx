@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Button, Alert } from 'react-native';
-import { AuthProvider, useAuth } from '.';
+import { Text, View, Button, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput, useTheme, Button as RNButton } from 'react-native-paper';
-import { useMe } from '../../api/queries';
 import { INavigation } from '../../utils/interfaces';
-import { setToken } from './astorage';
 import { signIn } from '../../api/requests';
+import { AuthProvider, useAuth } from '.';
+import { setToken } from './astorage';
 
 const LogOutButton = () => {
   const { signOut } = useAuth();
@@ -19,23 +18,18 @@ const LogInButton = () => {
 };
 
 export default function SingIn({ navigation }: INavigation) {
-  const { status, userToken } = useAuth();
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [password, setPassword] = React.useState("");
   const theme = useTheme();
-  const user = useMe();
 
   const handleSignIn = async () => {
     try {
       const {data} = await signIn({phoneNumber, password}); 
-      if (data) {
-        await setToken(data.accessToken);
-        navigation.navigate("Sales");
-      } else {
-        Alert.alert("Password or Email is wrong...");
-      }
+      await setToken(data.accessToken);
+      navigation.navigate("Sales");
     } catch (error) {
-      console.error(333,error);
+      Alert.alert("Phone or password is wrong!");
+      // console.error(333,error);
     }
   };
 
@@ -57,9 +51,9 @@ export default function SingIn({ navigation }: INavigation) {
           value={phoneNumber}
           keyboardType="number-pad"
           onChangeText={(text) => setPhoneNumber(text)}
-          mode="outlined"
           className="mb-5 w-full dark:bg-slate-700"
           textColor={theme.colors.secondary}
+          mode="outlined"
         />
         <TextInput
           label="Password"

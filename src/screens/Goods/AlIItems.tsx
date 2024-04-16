@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { ScrollView } from "react-native-gesture-handler";
 import { View, Dimensions } from "react-native";
-import {} from '../../api/data.fn'
 import { INavigation } from "../../utils/interfaces";
 import { FABplus } from "../../components/FABplus";
 import ListItem from "../../components/ListItem";

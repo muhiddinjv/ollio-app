@@ -136,3 +136,9 @@
         }...
     ]
 </details>
+
+|  | Mon| Tue |
+|-|-|-|  
+| 0% Read | 0 min | 0 min |
+| 10% Walk | 10k steps | 0 steps |  
+| 30% pushup | 30 reops | 0 reps |

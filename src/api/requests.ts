@@ -1,21 +1,18 @@
 import axios from "./axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-// Users 
 
-    interface Credentials {
-        phoneNumber: string;
-        password: string;
-      }
-      
-      export async function signIn(credentials:Credentials) {
-        try {
-            return axios.post('/auth/signin', credentials);
-        } catch (error) {
-            throw new Error(" Error signing in: " + error);;
-            
-        }
-      }
+interface Credentials {
+  phoneNumber: string;
+  password: string;
+}
 
+export async function signIn(credentials:Credentials) {
+  try {
+    return axios.post('http://10.0.2.2:4000/auth/signin', credentials);
+  } catch (error) {
+    throw new Error(" Error signing in: " + error);;
+  }
+}
 
 
 export const register = async (el: any) => axios.post("auth/signup", el).then(res => res.data).catch(err => err)

@@ -51,9 +51,9 @@ export default function SingIn({ navigation }: INavigation) {
           value={phoneNumber}
           keyboardType="number-pad"
           onChangeText={(text) => setPhoneNumber(text)}
+          mode="outlined"
           className="mb-5 w-full dark:bg-slate-700"
           textColor={theme.colors.secondary}
-          mode="outlined"
         />
         <TextInput
           label="Password"

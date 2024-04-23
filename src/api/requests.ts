@@ -6,11 +6,13 @@ interface Credentials {
   password: string;
 }
 
-export async function signIn(credentials:Credentials) {
+export async function signIn(credentials: Credentials) {
   try {
-    return axios.post('http://10.0.2.2:4000/auth/signin', credentials);
-  } catch (error) {
-    throw new Error(" Error signing in: " + error);;
+    const response = await axios.post('http://10.0.2.2:4000/auth/signin', credentials);
+    return response.data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error.response.data.message);
   }
 }
 

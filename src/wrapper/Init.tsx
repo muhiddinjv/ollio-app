@@ -75,6 +75,7 @@ export const InitApp = () => {
         ),
       }}
     >
+      <Drawer.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <Drawer.Screen name="Sales" component={SalesScreen} />
       <Drawer.Screen name="Items" component={ItemsMenu} />
       <Drawer.Screen name="EditItem" component={EditItem} />
@@ -100,7 +101,6 @@ export const InitApp = () => {
       <Drawer.Screen name="Ticket" component={TicketScreen} />
       {/* FIX BottomTabs STYLE */}
       <Drawer.Screen name="BottomTabs" component={BottomTabs} />
-      <Drawer.Screen name="SignIn" component={SignIn} />
     </Drawer.Navigator>
   );
 };

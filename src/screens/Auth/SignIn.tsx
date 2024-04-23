@@ -46,7 +46,6 @@ export default function SignIn({ navigation }: INavigation) {
     <AuthProvider>
       <View className='flex-1 justify-center bg-gray-200 p-2'>
         <SafeAreaView className="flex flex-grow justify-center p-16 dark:bg-slate-800">
-          <LogOutButton />
           <View className="flex flex-1 items-center justify-center">
             {findErrorForField("phoneNumber") && (
               <Text className="text-red-500">{findErrorForField("phoneNumber")}</Text>

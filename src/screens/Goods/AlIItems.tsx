@@ -5,19 +5,9 @@ import { View, Dimensions } from "react-native";
 import { INavigation } from "../../utils/interfaces";
 import { FABplus } from "../../components/FABplus";
 import ListItem from "../../components/ListItem";
+import { Catalog } from "./Catalog";
 
-const TabPublic = () => (
-  <ScrollView>
-    {[...Array(20)].map((_, index) => (
-      <ListItem
-        key={index}
-        title="COCA-COLA"
-        description="kolani rasmini qidirishga vaqt yoq shunga qulupnay rasmini qoydim, Hojaka"
-        variant="checkbox"
-      />
-    ))}
-  </ScrollView>
-);
+
 
 const TabPrivate = () => (
   <ScrollView>
@@ -66,7 +56,7 @@ const AllItems = ({ navigation }: INavigation) => {
   }, [index]);
 
   const renderScene = SceneMap({
-    first: TabPublic,
+    first: Catalog,
     second: TabPrivate,
     third: () => <TabMore navigation={navigation.navigate} />,
   });

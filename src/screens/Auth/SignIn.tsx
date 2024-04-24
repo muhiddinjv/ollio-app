@@ -33,7 +33,7 @@ export default function SignIn({ navigation }: INavigation) {
       return response.data;
     } catch (error: any) {
       setError(error?.response?.data?.message || []);
-      setTimeout(() => setError([]), 4000);
+      setTimeout(() => setError([]), 5000);
     }
   };
 

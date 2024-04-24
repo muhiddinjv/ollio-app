@@ -59,7 +59,7 @@ export const InitApp = () => {
 
   return (
     <Drawer.Navigator
-      initialRouteName="SignIn"
+      initialRouteName="AllItems"
       drawerContent={(props) => <Sidebar {...props} />}
       screenOptions={{
         headerStyle: {

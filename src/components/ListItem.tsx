@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from "react"; // Ensure React is in scope when using JSX
 import { View } from "react-native";
 import { useColorScheme } from "nativewind";
 import { Divider, List, Text } from "react-native-paper";
@@ -12,6 +12,8 @@ interface IListItem {
   price?: number;
   editable?: boolean;
   navigate?: any;
+  checked?: boolean; // New
+  onChange?: () => void; // New
 }
 
 const ListItem = ({
@@ -21,6 +23,8 @@ const ListItem = ({
   price,
   editable,
   navigate,
+  checked, // New
+  onChange, // New
 }: IListItem) => {
   const { colorScheme } = useColorScheme();
 
@@ -45,7 +49,7 @@ const ListItem = ({
         )}
         right={() => {
           if (variant === "checkbox") {
-            return <CenteredCheckbox />;
+            return <CenteredCheckbox checked={checked} onChange={onChange} />;
           } else {
             return (
               <View className="justify-center">

@@ -1,14 +1,14 @@
-import { useState } from "react";
+import React from "react";
 import { Checkbox, TouchableRipple } from "react-native-paper";
 
-export const CenteredCheckbox = () => {
-  const [checked, setChecked] = useState<boolean>(false);
+interface CenteredCheckboxProps {
+  checked?: boolean;
+  onChange?: () => void;
+}
 
+export const CenteredCheckbox = ({ checked, onChange }: CenteredCheckboxProps) => {
   return (
-    <TouchableRipple
-      className="justify-center"
-      onPress={() => setChecked(!checked)}
-    >
+    <TouchableRipple onPress={onChange}>
       <Checkbox status={checked ? "checked" : "unchecked"} />
     </TouchableRipple>
   );

@@ -6,21 +6,8 @@ import { INavigation } from "../../utils/interfaces";
 import { FABplus } from "../../components/FABplus";
 import ListItem from "../../components/ListItem";
 import { Catalog } from "./Catalog";
+import { Goods } from "./Goods";
 
-
-
-const TabPrivate = () => (
-  <ScrollView>
-    {[...Array(10)].map((_, index) => (
-      <ListItem
-        key={index}
-        title="COCA-COLA"
-        description="kolani rasmini qidirishga vaqt yoq shunga qulupnay rasmini qoydim, Hojaka"
-        price={15000 + index}
-      />
-    ))}
-  </ScrollView>
-);
 
 const TabMore = ({ navigation }: any) => (
   <ScrollView>
@@ -57,7 +44,7 @@ const AllItems = ({ navigation }: INavigation) => {
 
   const renderScene = SceneMap({
     first: Catalog,
-    second: TabPrivate,
+    second: Goods,
     third: () => <TabMore navigation={navigation.navigate} />,
   });
 
@@ -82,7 +69,7 @@ const AllItems = ({ navigation }: INavigation) => {
         renderScene={renderScene}
         onIndexChange={setIndex}
       />
-      <FABplus visible={visible} />
+      <FABplus visible={visible} itemIds={itemIds} navigate={navigation.navigate} />
     </View>
   );
 };

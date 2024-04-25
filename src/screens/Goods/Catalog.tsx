@@ -16,16 +16,14 @@ export const Catalog = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const getCatalogItems = async () => {
-        setIsLoading(true);
         try {
+            setIsLoading(false);
             const response = await axios.get('http://10.0.2.2:4000/catalog');
             setCatalogItems(response.data);
-        } catch (error) {
-            console.error(error);
-            Alert.alert('Error', 'Failed to fetch catalog items.');
-        } finally {
-            setIsLoading(false);
-        }
+        }  catch (error) {
+            setIsLoading(true);
+            console.error(error,'failed to fetch catalog');
+        } 
     };
     
     useEffect(() => {

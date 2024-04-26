@@ -11,7 +11,7 @@ import { INavigation } from "../../utils/interfaces";
 
 export const Goods = ({navigation}: INavigation) => {
     const [goods, setGoods] = useState<any>();
-    const [itemIds, setItemIds] = useState<string[]>([]);
+    const [goodIds, setGoodIds] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const getGoods = async () => {
@@ -45,14 +45,14 @@ export const Goods = ({navigation}: INavigation) => {
 
     return (
         <ScrollView>
-          {goods?.map((item:any) => (
+          {goods?.map((good:any) => (
             <ListItem
-                key={item._id}
-                title={item.name}
+                key={good._id}
+                title={good.name}
                 description="description was supposed to be here"
                 // variant="checkbox"
-                price={item.price}
-                checked={itemIds.includes(item._id)}
+                price={good.price}
+                checked={goodIds.includes(good._id)}
                 // onChange={() => handleToggleItem(item._id)}
             />
           ))}

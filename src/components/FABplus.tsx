@@ -4,15 +4,20 @@ import { useState } from "react";
 import { MainColors } from "../theme";
 import axios from "axios";
 import { getToken } from "../screens/Auth/astorage";
+import { useQueryClient } from "@tanstack/react-query";
 
-export const FABplus = ({ visible, itemIds, navigate }: { visible: boolean; itemIds: string[]; navigate: any }) => {
+export const FABplus = ({ visible, navigate }: { visible: boolean; navigate: any }) => {
+  const queryClient = useQueryClient();
+  const catalogIds = queryClient.getQueryData<string[]>(['catalogIds']) || [];
+  console.log('FAB',catalogIds);
+
   const { colorScheme } = useColorScheme();
   const [open, setOpen] = useState<boolean>(false);
 
   const handleAddToGoods = async () => {
     const accessToken = await getToken();
     try {
-      await axios.post('http://10.0.2.2:4000/goods', { catalogIds: itemIds }, {
+      await axios.post('http://10.0.2.2:4000/goods', { catalogIds }, {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
       navigate('Goods');

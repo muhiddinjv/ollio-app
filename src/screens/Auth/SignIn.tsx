@@ -29,7 +29,7 @@ export default function SignIn({ navigation }: INavigation) {
     try {
       const response = await axios.post('http://10.0.2.2:4000/auth/signin', { phoneNumber, password });
       setToken(response.data.accessToken);
-      navigation.navigate('Sales');
+      navigation.navigate('AllItems');
       return response.data;
     } catch (error: any) {
       setError(error?.response?.data?.message || []);

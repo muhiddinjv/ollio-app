@@ -7,6 +7,7 @@ import { FABplus } from "../../components/FABplus";
 import ListItem from "../../components/ListItem";
 import { Catalog } from "./Catalog";
 import { Goods } from "./Goods";
+import { useGlobal } from "../../contexts";
 
 
 const TabMore = ({ navigation }: any) => (
@@ -33,6 +34,7 @@ const AllItems = ({ navigation }: INavigation) => {
   const [selectedValue, setSelectedValue] = useState(null);
   const [visible, setVisible] = useState<boolean>(false);
   const [index, setIndex] = useState(0);
+  // const { state, dispatch } = useGlobal();
 
   useEffect(() => {
     if (index < 2) {
@@ -60,6 +62,10 @@ const AllItems = ({ navigation }: INavigation) => {
     setSelectedValue(value);
   };
 
+  // const toggleVisibility = () => {
+  //   dispatch({ type: 'TOGGLE_VISIBILITY', payload: !state.visible });
+  // };
+
   return (
     <View className="flex-1 bg-white dark:bg-slate-800">
       <TabView
@@ -69,7 +75,7 @@ const AllItems = ({ navigation }: INavigation) => {
         renderScene={renderScene}
         onIndexChange={setIndex}
       />
-      <FABplus visible={visible} itemIds={itemIds} navigate={navigation.navigate} />
+      <FABplus visible={visible} navigate={navigation.navigate} />
     </View>
   );
 };

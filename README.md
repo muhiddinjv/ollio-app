@@ -142,3 +142,12 @@
 | 0% Read | 0 min | 0 min |
 | 10% Walk | 10k steps | 0 steps |  
 | 30% pushup | 30 reops | 0 reps |
+
+```javascript
+    const handleToggleItem = (id: string) => {
+        queryClient.setQueryData(['catalogIds'], (prevIds: string[]) => {
+            const updatedIds = prevIds ? (prevIds.includes(id) ? prevIds.filter(itemID => itemID !== id) : [...prevIds, id]) : [id];
+            return updatedIds;
+        });
+    };
+```

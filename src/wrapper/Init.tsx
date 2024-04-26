@@ -43,6 +43,7 @@ import AssignOrder from "../screens/Orders/AssignOrder";
 import BottomTabs from "../components/bottom_tabs";
 import SalesScreen from "../screens/Sales";
 import SignIn from "../screens/Auth/SignIn";
+import { Goods } from "../screens/Goods/Goods";
 
 onlineManager.setEventListener((setOnline) => {
   return NetInfo.addEventListener((state) => {

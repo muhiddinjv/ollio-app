@@ -17,7 +17,7 @@ export const Catalog = () => {
     queryClient.setQueryData(['catalogIds'], itemIds);
 
     const { data: catalogItems, isLoading, isError } = useQuery({ queryKey: ['catalogItems'], queryFn: async () => {
-        const response = await axios.get('http://10.0.2.2:4000/catalogs');
+        const response = await axios.get('http://10.0.2.2:4000/catalog');
         return response.data;
     }});
 

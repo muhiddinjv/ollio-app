@@ -1,38 +1,24 @@
 import { ScrollView } from "react-native-gesture-handler";
 import ListItem from "../../components/ListItem";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
 import axios from "axios";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, Text } from "react-native-paper";
 import { MainColors } from "../../theme";
 import { getToken } from "../Auth/astorage";
-import { INavigation } from "../../utils/interfaces";
+import { useQuery } from "@tanstack/react-query";
 
 
-export const Goods = ({navigation}: INavigation) => {
-    const [goods, setGoods] = useState<any>();
+export const Goods = ({ keyProp }: { keyProp: string }) => {
     const [goodIds, setGoodIds] = useState<string[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
 
-    const getGoods = async () => {
-      try {
-        const accessToken = await getToken();
-          const response = await axios.get('http://10.0.2.2:4000/goods', {
-            headers: {
-              Authorization: `Bearer ${accessToken}`
-            }
-          });
-          setGoods(response.data);
-        } catch (error) {
-          setIsLoading(true);
-          console.error(error,'failed to fetch goods');
-        } 
-        
-      };
-    
-    useEffect(() => {
-        getGoods();
-    }, []);
+    const { data: goods, isLoading, isError } = useQuery({ queryKey: ['goods', keyProp], queryFn: async () => {
+      const accessToken = await getToken();
+      const response = await axios.get('http://10.0.2.2:4000/goods',{
+        headers: { Authorization: `Bearer ${accessToken}` }
+      });
+      return response.data;
+    }});
 
 
     if (isLoading) {
@@ -41,6 +27,14 @@ export const Goods = ({navigation}: INavigation) => {
                 <ActivityIndicator animating={true} color={MainColors.primary} size="large"/>
             </View>
         )
+    }
+
+    if (isError) {
+      return (
+          <View className="flex-1 justify-center items-center">
+              <Text className="text-xl text-red-500">Error fetching data</Text>
+          </View>
+      )
     }
 
     return (

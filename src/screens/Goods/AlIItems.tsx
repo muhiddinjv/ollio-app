@@ -7,8 +7,6 @@ import { FABplus } from "../../components/FABplus";
 import ListItem from "../../components/ListItem";
 import { Catalog } from "./Catalog";
 import { Goods } from "./Goods";
-import { useGlobal } from "../../contexts";
-
 
 const TabMore = ({ navigation }: any) => (
   <ScrollView>
@@ -31,10 +29,9 @@ const routes = [
 ];
 
 const AllItems = ({ navigation }: INavigation) => {
-  const [selectedValue, setSelectedValue] = useState(null);
   const [visible, setVisible] = useState<boolean>(false);
+  const [key, setKey] = useState('initialKey');
   const [index, setIndex] = useState(0);
-  // const { state, dispatch } = useGlobal();
 
   useEffect(() => {
     if (index < 2) {
@@ -44,9 +41,14 @@ const AllItems = ({ navigation }: INavigation) => {
     }
   }, [index]);
 
+  const changeTabIndex = (newIndex: number) => {
+    setIndex(newIndex);
+    setKey(new Date().getTime().toString()); // Update the key to trigger re-render
+  };
+
   const renderScene = SceneMap({
     first: Catalog,
-    second: Goods,
+    second: () => <Goods keyProp={key} />, 
     third: () => <TabMore navigation={navigation.navigate} />,
   });
 
@@ -58,14 +60,6 @@ const AllItems = ({ navigation }: INavigation) => {
     />
   );
 
-  const handlePickerChange = (value: any) => {
-    setSelectedValue(value);
-  };
-
-  // const toggleVisibility = () => {
-  //   dispatch({ type: 'TOGGLE_VISIBILITY', payload: !state.visible });
-  // };
-
   return (
     <View className="flex-1 bg-white dark:bg-slate-800">
       <TabView
@@ -75,7 +69,7 @@ const AllItems = ({ navigation }: INavigation) => {
         renderScene={renderScene}
         onIndexChange={setIndex}
       />
-      <FABplus visible={visible} navigate={navigation.navigate} />
+      <FABplus visible={visible} navigate={navigation.navigate} changeTabIndex={changeTabIndex}/>
     </View>
   );
 };

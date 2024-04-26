@@ -4,12 +4,17 @@ import { useState } from "react";
 import { MainColors } from "../theme";
 import axios from "axios";
 import { getToken } from "../screens/Auth/astorage";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const FABplus = ({ visible, navigate }: { visible: boolean; navigate: any }) => {
+interface IFABplus {
+  visible: boolean; 
+  navigate: any; 
+  changeTabIndex: (index: number) => void;
+}
+
+export const FABplus = ({ visible, navigate, changeTabIndex }: IFABplus) => {
   const queryClient = useQueryClient();
   const catalogIds = queryClient.getQueryData<string[]>(['catalogIds']) || [];
-  console.log('FAB',catalogIds);
 
   const { colorScheme } = useColorScheme();
   const [open, setOpen] = useState<boolean>(false);
@@ -20,7 +25,7 @@ export const FABplus = ({ visible, navigate }: { visible: boolean; navigate: any
       await axios.post('http://10.0.2.2:4000/goods', { catalogIds }, {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
-      navigate('Goods');
+      changeTabIndex(1); 
     } catch (error) {
       console.error('Failed to add to goods:', error);
     }

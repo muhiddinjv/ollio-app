@@ -7,14 +7,14 @@ import { ActivityIndicator, Text } from "react-native-paper";
 import { MainColors } from "../../theme";
 import { getToken } from "../Auth/astorage";
 import { useQuery } from "@tanstack/react-query";
-
+import axiosInstance from "../../api/instance";
 
 export const Goods = ({ keyProp }: { keyProp: string }) => {
     const [goodIds, setGoodIds] = useState<string[]>([]);
 
     const { data: goods, isLoading, isError } = useQuery({ queryKey: ['goods', keyProp], queryFn: async () => {
       const accessToken = await getToken();
-      const response = await axios.get('http://10.0.2.2:4000/goods',{
+      const response = await axiosInstance.get('goods',{
         headers: { Authorization: `Bearer ${accessToken}` }
       });
       return response.data;

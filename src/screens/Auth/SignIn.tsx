@@ -6,6 +6,7 @@ import { INavigation } from '../../utils/interfaces';
 import { AuthProvider, useAuth } from '.';
 import { setToken } from './astorage';
 import axios from 'axios';
+import axiosInstance from '../../api/instance';
 
 const LogOutButton = () => {
   const { signOut } = useAuth();
@@ -27,9 +28,9 @@ export default function SignIn({ navigation }: INavigation) {
 
   const handleSignIn = async () => {
     try {
-      const response = await axios.post('http://10.0.2.2:4000/auth/signin', { phoneNumber, password });
+      const response = await axiosInstance.post('auth/signin', { phoneNumber, password });
       setToken(response.data.accessToken);
-      navigation.navigate('Sales');
+      navigation.navigate('AllItems');
       return response.data;
     } catch (error: any) {
       setError(error?.response?.data?.message || []);

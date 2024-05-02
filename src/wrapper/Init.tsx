@@ -8,6 +8,7 @@ import Sidebar from "../components/Sidebar";
 import { MainColors } from "../theme";
 
 //AUTH
+import SignIn from "../screens/Auth/SignIn";
 // import SignInScreen from "../screens/Auth/SignIn";
 // import SignupScreen from "../screens/Auth/SignUp";
 // import SplashScreen from "../screens/Auth/Splash";
@@ -42,8 +43,6 @@ import AssignOrder from "../screens/Orders/AssignOrder";
 
 import BottomTabs from "../components/bottom_tabs";
 import SalesScreen from "../screens/Sales";
-import SignIn from "../screens/Auth/SignIn";
-import { Goods } from "../screens/Goods/Goods";
 
 onlineManager.setEventListener((setOnline) => {
   return NetInfo.addEventListener((state) => {

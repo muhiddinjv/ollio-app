@@ -2,7 +2,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import ListItem from "../../components/ListItem";
 import { useState } from "react";
 import { View } from "react-native";
-import axios from "axios";
 import { ActivityIndicator, Text } from "react-native-paper";
 import { MainColors } from "../../theme";
 import { getToken } from "../Auth/astorage";

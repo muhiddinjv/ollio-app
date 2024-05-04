@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from 'axios';
+import axiosInstance from "../api/instance";
 
 const fetchCatalogItems = async () => {
-    const { data } = await axios.get('http://10.0.2.2:4000/catalog');
+    const { data } = await axiosInstance.get('http://10.0.2.2:4000/catalog');
     return data;
 };
 

@@ -5,7 +5,6 @@ import { TextInput, useTheme, Button as RNButton } from 'react-native-paper';
 import { INavigation } from '../../utils/interfaces';
 import { AuthProvider, useAuth } from '.';
 import { setToken } from './astorage';
-import axios from 'axios';
 import axiosInstance from '../../api/instance';
 
 const LogOutButton = () => {

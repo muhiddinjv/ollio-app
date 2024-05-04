@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Text } from "react-native-paper";
 import { MainColors } from "../../theme";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import axiosInstance from "../../api/instance";
 
 interface CatalogItem {
   _id: string;
@@ -17,7 +18,7 @@ export const Catalog = () => {
     queryClient.setQueryData(['catalogIds'], itemIds);
 
     const { data: catalogItems, isLoading, isError } = useQuery({ queryKey: ['catalogItems'], queryFn: async () => {
-        const response = await axios.get('http://10.0.2.2:4000/catalog');
+        const response = await axiosInstance.get('catalog');
         return response.data;
     }});
 

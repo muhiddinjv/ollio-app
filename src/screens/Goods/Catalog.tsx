@@ -1,7 +1,6 @@
-import { ScrollView, Alert, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import ListItem from "../../components/ListItem";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ActivityIndicator, Text } from "react-native-paper";
 import { MainColors } from "../../theme";
 import { useQuery, useQueryClient } from "@tanstack/react-query";

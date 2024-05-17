@@ -1,7 +1,7 @@
 
 export const homePages = [
   {
-    screen: "AllItems",
+    screen: "AllGoods",
     name: "Items",
     icon: "format-list-bulleted",
   },
@@ -24,7 +24,7 @@ export const sidebarItems = [
     icon: "shopping",
   },
   {
-    screen: "AllItems",
+    screen: "AllGoods",
     name: "Orders",
     icon: "receipt",
   },

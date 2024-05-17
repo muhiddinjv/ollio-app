@@ -13,8 +13,13 @@ export async function removeItem(key: string): Promise<void> {
   return AsyncStorage.removeItem(key);
 }
 
-const TOKEN = "token";
+const ACCESS_TOKEN = "accessToken";
+const REFRESH_TOKEN = "refreshToken";
 
-export const getToken = () => getItem<string>(TOKEN)
-export const removeToken = () => removeItem(TOKEN)
-export const setToken  = (value : string ) => setItem<string>(TOKEN,value)
+export const getAccessToken = () => getItem<string>(ACCESS_TOKEN)
+export const removeAccessToken = () => removeItem(ACCESS_TOKEN)
+export const setAccessToken  = (value : string ) => setItem<string>(ACCESS_TOKEN,value)
+
+export const getRefreshToken = () => getItem<string>(REFRESH_TOKEN)
+export const removeRefreshToken = () => removeItem(REFRESH_TOKEN)
+export const setRefreshToken  = (value : string ) => setItem<string>(REFRESH_TOKEN,value)

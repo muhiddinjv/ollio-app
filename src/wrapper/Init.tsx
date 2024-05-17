@@ -17,11 +17,11 @@ import SignIn from "../screens/Auth/SignIn";
 
 //ITEMS
 import ItemsMenu from "../screens/Goods/ItemsMenu";
-import AllItems from "../screens/Goods/AlIItems";
-import EditItem from "../screens/Goods/EditItem";
+import AllGoods from "../screens/Goods/AllGoods";
+import EditGood from "../screens/Goods/EditGood";
 import SearchScreen from "../screens/Goods/SearchItem";
 import AddToCartScreen from "../screens/Goods/AddToCart";
-// import AllItems from "../screens/orders";
+// import AllGoods from "../screens/orders";
 
 //PAYMENT
 import RefundScreen from "../screens/Payment/Refund";
@@ -59,7 +59,7 @@ export const InitApp = () => {
 
   return (
     <Drawer.Navigator
-      initialRouteName="SignIn"
+      initialRouteName="AllGoods"
       drawerContent={(props) => <Sidebar {...props} />}
       screenOptions={{
         headerStyle: {
@@ -78,8 +78,8 @@ export const InitApp = () => {
       <Drawer.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
       <Drawer.Screen name="Sales" component={SalesScreen} />
       <Drawer.Screen name="Items" component={ItemsMenu} />
-      <Drawer.Screen name="EditItem" component={EditItem} />
-      <Drawer.Screen name="AllItems" component={AllItems} />
+      <Drawer.Screen name="EditGood" component={EditGood} />
+      <Drawer.Screen name="AllGoods" component={AllGoods} />
       <Drawer.Screen name="Orders" component={Orders} />
       <Drawer.Screen name="SaveOrder" component={SaveOrder} />
       <Drawer.Screen name="AssignOrder" component={AssignOrder} />

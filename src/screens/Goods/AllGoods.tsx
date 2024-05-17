@@ -28,7 +28,7 @@ const routes = [
   { key: "third", title: "More" },
 ];
 
-const AllItems = ({ navigation }: INavigation) => {
+const AllGoods = ({ navigation }: INavigation) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [key, setKey] = useState('initialKey');
   const [index, setIndex] = useState(0);
@@ -48,7 +48,7 @@ const AllItems = ({ navigation }: INavigation) => {
 
   const renderScene = SceneMap({
     first: Catalog,
-    second: () => <Goods keyProp={key} />, 
+    second: () => <Goods keyProp={key} navigation={navigation.navigate}/>, 
     third: () => <TabMore navigation={navigation.navigate} />,
   });
 
@@ -74,4 +74,4 @@ const AllItems = ({ navigation }: INavigation) => {
   );
 };
 
-export default AllItems;
+export default AllGoods;

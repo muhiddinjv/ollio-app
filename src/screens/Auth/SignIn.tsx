@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput, useTheme, Button as RNButton } from 'react-native-paper';
 import { INavigation } from '../../utils/interfaces';
 import { AuthProvider, useAuth } from '.';
-import { setToken } from './astorage';
+import { getAccessToken, getRefreshToken, setAccessToken, setRefreshToken } from './astorage';
 import axiosInstance from '../../api/instance';
 
 const LogOutButton = () => {
@@ -28,23 +28,29 @@ export default function SignIn({ navigation }: INavigation) {
   const handleSignIn = async () => {
     try {
       const response = await axiosInstance.post('auth/signin', { phoneNumber, password });
-      setToken(response.data.accessToken);
-      navigation.navigate('AllItems');
+      setAccessToken(response.data.accessToken);
+      setRefreshToken(response.data.refreshToken);
+      
+      navigation.navigate('AllGoods');
       return response.data;
     } catch (error: any) {
+      console.log({error: error.response});
       setError(error?.response?.data?.message || []);
       setTimeout(() => setError([]), 5000);
     }
   };
 
+
   const findErrorForField = (fieldName: string) => {
-    const fieldError = error?.find((err: any) => err.field === fieldName);
+    if(error !== undefined){
+      const fieldError = error?.find((err: any) => err.field === fieldName);
     return fieldError ? fieldError.text : null;
+    }
   };
 
   return (
     <AuthProvider>
-      <View className='flex-1 justify-center bg-gray-200 p-2'>
+      <View className='flex-1 justify-center bg-gray-200'>
         <SafeAreaView className="flex flex-grow justify-center p-16 dark:bg-slate-800">
           <View className="flex flex-1 items-center justify-center">
             {findErrorForField("phoneNumber") && (

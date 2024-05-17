@@ -40,7 +40,7 @@ const ListItem = ({
         descriptionStyle={{
           color: MainColors.icon[colorScheme],
         }}
-        onPress={() => editable && navigate("EditItem")}
+        onPress={() => editable && navigate("EditGood")}
         left={(props) => (
           <List.Image
             style={props.style}

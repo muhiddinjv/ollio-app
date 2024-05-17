@@ -1,28 +1,76 @@
-import axios from 'axios';
-import { getToken } from '../screens/Auth/astorage';
+import axios, { AxiosInstance } from 'axios';
+import { getAccessToken, getRefreshToken, removeAccessToken } from '../screens/Auth/astorage';
+import { errorCatch } from './err.catch';
 
-const axiosInstance = axios.create({
-    baseURL: 'http://10.0.2.2:4000/',
-})
-
+const axiosInstance: AxiosInstance = axios.create({
+	withCredentials: true,
+	baseURL: "http://10.0.2.2:4000/",
+	headers: {
+	  "Content-Type": "application/json",
+	},
+});
 
 // axiosInstance.interceptors.response.use(res => res, async error => {
-//     if (error.response && error.response.status === 401){
-//         console.log('call the refresh token here');
-//         // console.log(333,getToken());
-//         try {
-//             const refreshToken = await axiosInstance.get('auth/refresh');
-//             console.log(222,refreshToken);
-//             axios.defaults.headers.common['Authorization'] = `Bearer ${refreshToken}`;
-
-//             const originalRequest = error.config;
-//             originalRequest.headers['Authorization'] = `Bearer ${refreshToken}`;
-//         } catch (error) {
-//             console.log(111);
-//             return Promise.reject(error)
-//         }
+// 	console.log('err status',error.response.status);
+// 	if (error.response.status === 401){
+// 		await axiosInstance.get('auth/refresh',{
+// 			withCredentials: true
+// 		}).catch(async rtError => {
+// 			await removeAccessToken();
+// 			return Promise.reject(rtError)
+// 		})
+// 		return axios(error.config)
+// 	}
+// 	return Promise.reject(error)
+// })
+// axiosInstance.interceptors.response.use(res => res, async error => {
+//     if (error.response.status === 401){
+// 		try {
+// 			const rt = await getRefreshToken();
+// 			console.log(111,rt);
+// 			const refreshToken = await axiosInstance.post('auth/refresh');
+// 			axios.defaults.headers.common['Authorization'] = `Bearer ${refreshToken}`;
+// 			error.config.headers['Authorization'] = `Bearer ${refreshToken}`;
+// 			return axiosInstance(error.config);
+// 		} catch (error) {
+// 			console.log(444);
+// 			return Promise.reject(error);
+// 		}
 //     }
 //     return Promise.reject(error)
 // })
 
-export default axiosInstance;
+// axiosInstance.interceptors.request.use(async (config) => {
+// 	const accessToken = await getAccessToken();
+
+// 	if (config.headers && accessToken) {
+// 		config.headers.Authorization = `Bearer ${accessToken}`
+// 	}
+
+// 	return config
+// })
+
+// axiosInstance.interceptors.response.use(
+// 	(config) => config,
+// 	async (error) => {
+// 		console.log({error});
+// 		const originalRequest = error.config
+
+// 		if (error.response.status === 401) {
+// 			originalRequest._isRetry = true
+
+// 			try {
+// 				const rt = await getRefreshToken();
+// 				console.log(rt);
+// 				return axiosInstance.request(originalRequest)
+// 			} catch (error) {
+// 				// if (errorCatch(error) === 'jwt expired') removeTokensStorage()
+// 			}
+// 		}
+
+// 		throw error
+// 	}
+// )
+
+export default axiosInstance
+

@@ -1,6 +1,6 @@
 /// Auth.tsx
 import * as React from 'react';
-import { getToken, setToken, removeToken } from './astorage';
+import { getAccessToken, setAccessToken, removeAccessToken } from './astorage';
 
 interface AuthState {
   userToken: string | undefined | null;
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   React.useEffect(() => {
     const initState = async () => {
       try {
-        const userToken = await getToken();
+        const userToken = await getAccessToken();
         if (userToken !== null) {
           dispatch({ type: 'SIGN_IN', token: userToken });
         } else {
@@ -65,11 +65,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const authActions: AuthContextActions = React.useMemo(
     () => ({
       signIn: async (token: string) => {
+        console.log('token>>>',token);
         dispatch({ type: 'SIGN_IN', token });
-        await setToken(token);
+        await setAccessToken(token);
       },
       signOut: async () => {
-        await removeToken(); // TODO: use Vars
+        await removeAccessToken(); // TODO: use Vars
         dispatch({ type: 'SIGN_OUT' });
       },
     }),

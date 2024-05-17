@@ -32,7 +32,7 @@ const tableData: TableTypes = [
   },
 ];
 
-const EditItemScreen = ({ navigation }: INavigation) => {
+const EditGood = ({ navigation }: INavigation) => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
@@ -180,4 +180,4 @@ const EditItemScreen = ({ navigation }: INavigation) => {
   );
 };
 
-export default EditItemScreen;
+export default EditGood;

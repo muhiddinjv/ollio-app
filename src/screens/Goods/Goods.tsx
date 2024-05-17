@@ -4,21 +4,20 @@ import { useState } from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 import { MainColors } from "../../theme";
-import { getToken } from "../Auth/astorage";
+import { getAccessToken } from "../Auth/astorage";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../api/instance";
 
-export const Goods = ({ keyProp }: { keyProp: string }) => {
+export const Goods = ({ keyProp, navigation }: { keyProp: string, navigation: any }) => {
     const [goodIds, setGoodIds] = useState<string[]>([]);
 
     const { data: goods, isLoading, isError } = useQuery({ queryKey: ['goods', keyProp], queryFn: async () => {
-      const accessToken = await getToken();
+      const accessToken = await getAccessToken();
       const response = await axiosInstance.get('goods',{
         headers: { Authorization: `Bearer ${accessToken}` }
       });
       return response.data;
     }});
-
 
     if (isLoading) {
         return (
@@ -29,6 +28,7 @@ export const Goods = ({ keyProp }: { keyProp: string }) => {
     }
 
     if (isError) {
+      console.log('isError :>> ', isError);
       return (
           <View className="flex-1 justify-center items-center">
               <Text className="text-xl text-red-500">Error fetching data</Text>
@@ -44,6 +44,8 @@ export const Goods = ({ keyProp }: { keyProp: string }) => {
                 title={good.name}
                 description="description was supposed to be here"
                 // variant="checkbox"
+                editable
+                navigate={navigation}
                 price={good.price}
                 checked={goodIds.includes(good._id)}
                 // onChange={() => handleToggleItem(item._id)}

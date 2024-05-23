@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AuthStack from "./src/navigation/AuthStack";
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
 
@@ -59,7 +60,7 @@ function App() {
           onStateChange={(state) =>
             AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))}>
           <QueryClientProvider client={queryClient} >
-            <InitApp />
+            <AuthStack />
           </QueryClientProvider>
         </NavigationContainer>
       </PaperProvider>

@@ -19,23 +19,23 @@ export const homePages = [
 
 export const sidebarItems = [
   {
-    screen: "SalesScreen",
     name: "Sales",
+    screen: "SalesScreen",
     icon: "shopping",
   },
   {
+    name: "Goods",
     screen: "AllGoods",
-    name: "Orders",
-    icon: "receipt",
-  },
-  {
-    screen: "ItemsMenu",
-    name: "Items",
     icon: "format-list-bulleted",
   },
   {
-    screen: "SignIn",
+    name: "Items",
+    screen: "ItemsMenu",
+    icon: "format-list-bulleted",
+  },
+  {
     name: "SignIn",
+    screen: "SignIn",
     icon: "alpha-a-box",
   },
   // {

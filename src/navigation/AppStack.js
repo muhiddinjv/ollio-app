@@ -1,76 +1,70 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import { Button } from 'react-native-paper';
+import { MainColors } from '../theme';
 
-import CustomDrawer from '../components/CustomDrawer';
-
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-import ProfileScreen from '../screens/ProfileScreen';
-import MessagesScreen from '../screens/MessagesScreen';
-import MomentsScreen from '../screens/MomentsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-
-import TabNavigator from './TabNavigator';
+import SalesScreen from '../screens/Sales';
+import ItemsMenu from '../screens/Goods/ItemsMenu';
+import AllGoods from '../screens/Goods/AllGoods';
+import SignIn from '../screens/Auth/SignIn';
+import Sidebar from '../components/Sidebar';
 
 const Drawer = createDrawerNavigator();
 
 const AuthStack = () => {
   return (
     <Drawer.Navigator
-      drawerContent={props => <CustomDrawer {...props} />}
+      drawerContent={props => <Sidebar {...props} />}
       screenOptions={{
-        headerShown: false,
-        drawerActiveBackgroundColor: '#aa18ea',
+        // headerShown: false,
+        headerStyle: {
+          backgroundColor: MainColors.primary,
+        },
+        headerTintColor: "white",
+        headerTitleStyle: {
+          fontWeight: "bold",
+          color: "white",
+        },
+        drawerActiveBackgroundColor: '#8200d6',
         drawerActiveTintColor: '#fff',
         drawerInactiveTintColor: '#333',
         drawerLabelStyle: {
-          marginLeft: -25,
-          fontFamily: 'Roboto-Medium',
-          fontSize: 15,
-        },
+          fontSize: 18,
+        }
       }}>
       <Drawer.Screen
-        name="Home"
-        component={TabNavigator}
+        name="Sales"
+        component={SalesScreen}
         options={{
           drawerIcon: ({color}) => (
-            <Ionicons name="home-outline" size={22} color={color} />
+            <Button icon="currency-usd" textColor={color} />
           ),
         }}
       />
       <Drawer.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="Goods"
+        component={AllGoods}
         options={{
           drawerIcon: ({color}) => (
-            <Ionicons name="person-outline" size={22} color={color} />
+            <Button icon="box" textColor={color} />
           ),
         }}
       />
       <Drawer.Screen
-        name="Messages"
-        component={MessagesScreen}
+        name="Items"
+        component={ItemsMenu}
         options={{
           drawerIcon: ({color}) => (
-            <Ionicons name="chatbox-ellipses-outline" size={22} color={color} />
+            <Button icon="arrow-up" textColor={color} />
           ),
         }}
       />
       <Drawer.Screen
-        name="Moments"
-        component={MomentsScreen}
+        name="SignIn"
+        component={SignIn}
         options={{
           drawerIcon: ({color}) => (
-            <Ionicons name="timer-outline" size={22} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          drawerIcon: ({color}) => (
-            <Ionicons name="settings-outline" size={22} color={color} />
+            <Button icon="login" textColor={color} />
           ),
         }}
       />

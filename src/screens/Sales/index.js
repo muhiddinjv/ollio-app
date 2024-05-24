@@ -5,7 +5,7 @@ import { AppContext } from "../../utils";
 import { styled } from "nativewind";
 import { IconButton } from "react-native-paper";
 import ListItem from "../../components/ListItem";
-import ScreenWrapper from "../../wrapper/ScreenWrapper";
+import Wrapper from "../../wrapper/Wrapper";
 import SaveChargeBtns from "../../components/SaveChargeBtns";
 
 const StyledPicker = styled(Picker);
@@ -64,7 +64,7 @@ const SalesScreen = ({ navigation }) => {
           />
         </View>
       </View>
-      <ScreenWrapper>
+      <Wrapper>
         {tempItems.map((value, index) => (
           <ListItem
             key={index}
@@ -73,7 +73,7 @@ const SalesScreen = ({ navigation }) => {
             price={5000}
           />
         ))}
-      </ScreenWrapper>
+      </Wrapper>
         <SaveChargeBtns navigation={navigation} />
     </View>
   );

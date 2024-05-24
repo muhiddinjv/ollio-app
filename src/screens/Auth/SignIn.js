@@ -33,7 +33,7 @@ export default function SignIn({ navigation }) {
       setAccessToken(response.data.accessToken)
       setRefreshToken(response.data.refreshToken)
 
-      navigation.navigate("AllGoods")
+      navigation.navigate("Goods")
       return response.data
     } catch (error) {
       console.log({ error: error.response })

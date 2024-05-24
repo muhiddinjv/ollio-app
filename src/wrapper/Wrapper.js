@@ -12,7 +12,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 
 
-export default function ScreenWrapper({
+export default function Wrapper({
   children,
   withScrollView = true,
   style,

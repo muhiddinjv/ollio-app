@@ -1,6 +1,4 @@
-
-export const homePages = [
-  {
+export const homePages = [{
     screen: "AllGoods",
     name: "Items",
     icon: "format-list-bulleted",
@@ -17,8 +15,7 @@ export const homePages = [
   },
 ];
 
-export const sidebarItems = [
-  {
+export const sidebarItems = [{
     name: "Sales",
     screen: "SalesScreen",
     icon: "shopping",

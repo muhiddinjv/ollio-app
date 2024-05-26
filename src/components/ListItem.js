@@ -12,8 +12,8 @@ const ListItem = ({
   price,
   editable,
   navigate,
-  checked, // New
-  onChange, // New
+  checked,
+  onChange,
 }) => {
   const { colorScheme } = useColorScheme();
 
@@ -29,7 +29,7 @@ const ListItem = ({
         descriptionStyle={{
           color: MainColors.icon[colorScheme],
         }}
-        onPress={() => editable && navigate("EditGood")}
+        onPress={() => editable && navigate('GoodEdit')}
         left={(props) => (
           <List.Image
             style={props.style}

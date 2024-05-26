@@ -6,7 +6,7 @@ export const breakpoints = {
   xl: 1200,
 }
 
-export const defaultTheme = {
+export const DefaultTheme = {
   colors: {
     white: '#ffffff',
     black: '#000000',
@@ -28,8 +28,17 @@ export const DarkScheme = {
   background: "#1e293b",
 };
 
+export const LightScheme = {
+  primary: "#7845ac",
+  secondary: "#665a6f",
+  tertiary: "#805158",
+  error: "#ba1a1a",
+  title: "#FFFFFF",
+  background: "#FFFFFF",
+};
+
 export const MainColors = {
-  primary: "#6b21a8",
+  primary: '#8200d6',
   icon: {
     light: "#000",
     dark: "#fff",
@@ -47,11 +56,4 @@ export const MainColors = {
 // #1e293b tailwind bg color
 // #6b21a8 tailwind primary
 
-export const LightScheme = {
-  primary: "#7845ac",
-  secondary: "#665a6f",
-  tertiary: "#805158",
-  error: "#ba1a1a",
-  title: "#FFFFFF",
-  background: "#FFFFFF",
-};
+

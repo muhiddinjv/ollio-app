@@ -1,8 +1,7 @@
 import React from 'react'
-import { NotifyOnChangeProps } from '@tanstack/query-core'
 import { useFocusEffect } from '@react-navigation/native'
 
-export function useFocusNotifyOnChangeProps(notifyOnChangeProps?: NotifyOnChangeProps) {
+export function useFocusNotifyOnChangeProps(notifyOnChangeProps) {
   const focusedRef = React.useRef(true)
 
   useFocusEffect(

@@ -5,17 +5,19 @@ import SignIn from '../screens/Auth/SignIn';
 import SignUp from '../screens/Auth/SignUp';
 import GoodEdit from '../screens/Goods/GoodEdit';
 import DrawerNav from './DrawerNav';
+import { Goods } from '../screens/Goods/Goods';
 
 const Stack = createStackNavigator();
 const isLoggedIn = true; 
 
-const RootStack = () => {
+const AppStack = () => {
   return (
     <Stack.Navigator>
       {isLoggedIn ? (
         <Stack.Group>
           <Stack.Screen name="DrawerNav" component={DrawerNav} options={{ headerShown: false }}/>
           <Stack.Screen name="GoodEdit" component={GoodEdit} />
+          <Stack.Screen name="Goods" component={Goods} />
         </Stack.Group>
       ) : (
         <Stack.Group screenOptions={{ headerShown: false }}>
@@ -32,4 +34,4 @@ const RootStack = () => {
   );
 };
 
-export default RootStack;
+export default AppStack;

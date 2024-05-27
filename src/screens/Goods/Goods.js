@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query"
 import axiosInstance from "../../api/instance"
 
 export const Goods = ({ keyProp, navigation }) => {
-  const [goodIds, setGoodIds] = useState([])
+  const [goodId, setGoodId] = useState([])
 
   const { data: goods, isLoading, isError } = useQuery({
     queryKey: ["goods", keyProp],
@@ -38,7 +38,7 @@ export const Goods = ({ keyProp, navigation }) => {
     console.log("isError :>> ", isError)
     return (
       <View className="flex-1 justify-center items-center">
-        <Text className="text-xl text-red-500">Error fetching data</Text>
+        <Text className="text-xl text-red-500">Error: sign in again</Text>
       </View>
     )
   }
@@ -48,6 +48,7 @@ export const Goods = ({ keyProp, navigation }) => {
       {goods?.map(good => (
         <ListItem
           key={good._id}
+          goodId={good._id}
           title={good.name}
           description="description was supposed to be here"
           // variant="checkbox"
@@ -55,7 +56,7 @@ export const Goods = ({ keyProp, navigation }) => {
           navigate={navigation}
           price={good.price}
           // onChange={() => handleToggleItem(item._id)}
-          checked={goodIds.includes(good._id)}
+          checked={goodId.includes(good._id)}
         />
       ))}
     </ScrollView>

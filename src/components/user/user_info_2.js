@@ -1,7 +1,6 @@
 import React, { Component, useState } from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { user_1 } from "../../assets/icons";
-import { IBase } from "../../utils/interfaces";
 
 const UserInfo2 = ({ title, subtitle, icon }) => {
   const [customerName, setCustomerName] = useState("");

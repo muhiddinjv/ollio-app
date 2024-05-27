@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View, ScrollView, SafeAreaView } from "react-native";
 import { Switch, Text, IconButton, Divider, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 
 import { CardElevated } from "../../components/CardElevated";
 import { TxtInput } from "../../components/TxtInput";
-import TableCard from "../../components/TableCard";
+import { TableCard } from "../../components/TableCard";
+import { useQuery } from "@tanstack/react-query";
+import { getAccessToken } from "../Auth/astorage";
+import axiosInstance from "../../api/instance";
+import { GlobalContext } from "../../../App";
 
 const tableData = [
   {
@@ -26,15 +30,18 @@ const tableData = [
 ];
 
 const GoodEdit = ({ navigation }) => {
+  const { goodId } = useContext(GlobalContext);
+
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
-  const [price, setPrice] = useState("");
-  const [cost, setCost] = useState("");
-  const [sku, setSku] = useState("");
-  const [modifiera, setModifierA] = useState(false);
-  const [modifierb, setModifierB] = useState(false);
+  const [quantity, setQuantity] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [cost, setCost] = useState(0);
   const [groupItem, setGroupItem] = useState(false);
   const [trackStock, setTrackStock] = useState(false);
+
+  const [modifiera, setModifierA] = useState(false);
+  const [modifierb, setModifierB] = useState(false);
   const [modifiers, setModifiers] = useState([
     { title: "", subtitle: "", isEnabled: false },
     { title: "", subtitle: "", isEnabled: false },
@@ -44,6 +51,29 @@ const GoodEdit = ({ navigation }) => {
     shape: "",
     isSelected: false,
   });
+
+  const { data: goods, isLoading, isError } = useQuery({
+    queryKey: ["goods"], queryFn: async () => {
+      const accessToken = await getAccessToken()
+      const response = await axiosInstance.get(`goods/${goodId}`, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      })
+      return response.data
+    }
+  })
+
+
+  useEffect(() => {
+    if (goods) {
+      setName(goods.name);
+      setPrice(goods.price.toString());
+      setCost(goods.cost.toString());
+      setQuantity(goods.quantity.toString());
+      setGroupItem(goods.groupItem);
+      setTrackStock(goods.trackStock);
+      // setCategory(goods.category);
+    }
+  }, [goods]);
 
   const handleAddVariant = () => {
     // Implement logic to add a new variant
@@ -61,6 +91,12 @@ const GoodEdit = ({ navigation }) => {
     // Implement logic to toggle the representation selection
   };
 
+  console.log(goods);
+  console.log({isLoading});
+  console.log({isError});
+  console.log({trackStock});
+  console.log({groupItem});
+
   return (
     <SafeAreaView className="flex-1 dark:bg-gray-900">
       {/* <AppBar title="Edit Items" backButton={{ onPress: ()=> alert('back button was clicked!') }} saveButton={{ onPress: ()=> alert('save button was clicked!'), label: 'save' }}/> */}
@@ -70,20 +106,23 @@ const GoodEdit = ({ navigation }) => {
           <View className="flex flex-row">
             <TxtInput
               value={cost}
-              onChangeText={setCost}
               label="Cost"
               marginRight={2}
+              onChangeText={setCost}
               keyboardType="phone-pad"
             />
             <TxtInput
               value={price}
-              onChangeText={setPrice}
               label="Price"
               marginLeft={2}
+              onChangeText={setPrice}
               keyboardType="phone-pad"
             />
           </View>
-          <TxtInput value={sku} onChangeText={setSku} label="SKU" />
+          <View className='flex flex-row'>
+            <TxtInput value={quantity} marginRight={2} onChangeText={setQuantity} label="Quantity" />
+            <TxtInput value={0} marginLeft={2} onChangeText={()=>{}} label="SKU" />
+          </View>
           <View className="border-b border-slate-400">
             <Picker
               style={{ marginLeft: -15 }}

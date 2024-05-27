@@ -4,8 +4,10 @@ import { useColorScheme } from "nativewind";
 import { Divider, List, Text } from "react-native-paper";
 import { MainColors } from "../theme";
 import { CenteredCheckbox } from "./CenteredCheckbox";
+import { GlobalContext } from "../../App";
 
 const ListItem = ({
+  goodId,
   title,
   description,
   variant,
@@ -16,6 +18,7 @@ const ListItem = ({
   onChange,
 }) => {
   const { colorScheme } = useColorScheme();
+  const { setGoodId } = React.useContext(GlobalContext);
 
   return (
     <List.Section className="m-0">
@@ -29,7 +32,13 @@ const ListItem = ({
         descriptionStyle={{
           color: MainColors.icon[colorScheme],
         }}
-        onPress={() => editable && navigate('GoodEdit')}
+        onPress={() => {
+          setGoodId(goodId)
+          if(editable){
+            navigate('GoodEdit'); 
+          }
+        }
+        }
         left={(props) => (
           <List.Image
             style={props.style}

@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { DataTable, Card, Text } from "react-native-paper";
 import { CenteredCheckbox } from "./CenteredCheckbox";
 
-const TableCard = ({ data, title }) => {
+export const TableCard = ({ data, title }) => {
   return (
     <Card className="bg-white px-2 py-4 mb-4 rounded-none">
       <Card.Title title={title} titleVariant="titleLarge" />
@@ -33,4 +33,3 @@ const TableCard = ({ data, title }) => {
   );
 };
 
-export default TableCard;

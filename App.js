@@ -5,7 +5,7 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/
 import { Linking, Platform } from 'react-native';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import RootStack from "./src/stacks/RootStack";
+import AppStack from "./src/stacks/AppStack";
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
 // const { LightTheme } = adaptNavigationTheme({ reactNavigationLight: DefaultTheme });
@@ -17,6 +17,17 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+export const GlobalContext = React.createContext();
+export function GlobalState({ children }){
+  const [goodId, setGoodId] = React.useState()
+
+  return (
+    <GlobalContext.Provider value={{ goodId, setGoodId }}>
+      {children}
+    </GlobalContext.Provider>
+  );
+};
 
 function App() {
    // Don't persist state/screen on web since it's based on URL
@@ -55,16 +66,18 @@ function App() {
   }
 
   return (
-    <PaperProvider>
-      <NavigationContainer
-        initialState={initialState}
-        onStateChange={(state) =>
-          AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))}>
-        <QueryClientProvider client={queryClient} >
-          <RootStack />
-        </QueryClientProvider>
-      </NavigationContainer>
-    </PaperProvider>
+    <GlobalState>
+      <PaperProvider>
+        <NavigationContainer
+          initialState={initialState}
+          onStateChange={(state) =>
+            AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))}>
+          <QueryClientProvider client={queryClient} >
+            <AppStack />
+          </QueryClientProvider>
+        </NavigationContainer>
+      </PaperProvider>
+    </GlobalState>
   );
 }
 

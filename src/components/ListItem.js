@@ -4,7 +4,7 @@ import { useColorScheme } from "nativewind";
 import { Divider, List, Text } from "react-native-paper";
 import { MainColors } from "../theme";
 import { CenteredCheckbox } from "./CenteredCheckbox";
-import { GlobalContext } from "../../App";
+import { GlobalContext } from "../context";
 
 const ListItem = ({
   goodId,
@@ -42,7 +42,7 @@ const ListItem = ({
         left={(props) => (
           <List.Image
             style={props.style}
-            source={require("../assets/icon.png")}
+            source={require("../../assets/icon.png")}
           />
         )}
         right={() => {

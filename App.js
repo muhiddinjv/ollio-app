@@ -1,11 +1,13 @@
 import React from "react";
 import "react-native-gesture-handler";
+import { Linking, Platform } from 'react-native';
 import { PaperProvider, MD3DarkTheme, MD3LightTheme, MD2DarkTheme, MD2LightTheme, adaptNavigationTheme } from 'react-native-paper';
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
-import { Linking, Platform } from 'react-native';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppStack from "./src/stacks/AppStack";
+import { GlobalState } from "./src/context";
+import { AuthProvider } from "./src/screens/Auth";
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
 // const { LightTheme } = adaptNavigationTheme({ reactNavigationLight: DefaultTheme });
@@ -17,17 +19,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-export const GlobalContext = React.createContext();
-export function GlobalState({ children }){
-  const [goodId, setGoodId] = React.useState()
-
-  return (
-    <GlobalContext.Provider value={{ goodId, setGoodId }}>
-      {children}
-    </GlobalContext.Provider>
-  );
-};
 
 function App() {
    // Don't persist state/screen on web since it's based on URL
@@ -59,7 +50,7 @@ function App() {
     if (!isReady) {
       restoreState();
     }
-  }, [isReady]);
+  }, [isReady])
 
   if (!isReady) {
     return null;
@@ -73,7 +64,9 @@ function App() {
           onStateChange={(state) =>
             AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))}>
           <QueryClientProvider client={queryClient} >
-            <AppStack />
+            <AuthProvider>
+              <AppStack />
+            </AuthProvider>
           </QueryClientProvider>
         </NavigationContainer>
       </PaperProvider>

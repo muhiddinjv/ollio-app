@@ -3,10 +3,10 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
-import { Catalog } from '../screens/Goods/Catalog';
-import { Goods } from '../screens/Goods/Goods';
 import { IconButton } from 'react-native-paper';
+import Catalog from '../screens/Goods/Catalog';
 import GoodEdit from '../screens/Goods/GoodEdit';
+import Goods from '../screens/Goods/Goods';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

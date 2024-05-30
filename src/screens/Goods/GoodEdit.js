@@ -1,15 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, ScrollView, SafeAreaView } from "react-native";
+import { View, ScrollView, SafeAreaView, Alert } from "react-native";
 import { Switch, Text, IconButton, Divider, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { CardElevated } from "../../components/CardElevated";
-import { TxtInput } from "../../components/TxtInput";
 import { TableCard } from "../../components/TableCard";
-import { useQuery } from "@tanstack/react-query";
+import { TxtInput } from "../../components/TxtInput";
+
 import { getAccessToken } from "../Auth/astorage";
+import { GlobalContext } from "../../context";
+
 import axiosInstance from "../../api/instance";
-import { GlobalContext } from "../../../App";
 
 const tableData = [
   {
@@ -30,9 +32,11 @@ const tableData = [
 ];
 
 const GoodEdit = ({ navigation }) => {
+  const queryClient = useQueryClient();
+
   const { goodId } = useContext(GlobalContext);
 
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
@@ -52,8 +56,8 @@ const GoodEdit = ({ navigation }) => {
     isSelected: false,
   });
 
-  const { data: goods, isLoading, isError } = useQuery({
-    queryKey: ["goods"], queryFn: async () => {
+  const goodsQuery = useQuery({
+    queryKey: ["good"], queryFn: async () => {
       const accessToken = await getAccessToken()
       const response = await axiosInstance.get(`goods/${goodId}`, {
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -62,47 +66,56 @@ const GoodEdit = ({ navigation }) => {
     }
   })
 
+  
+
 
   useEffect(() => {
-    if (goods) {
-      setName(goods.name);
-      setPrice(goods.price.toString());
-      setCost(goods.cost.toString());
-      setQuantity(goods.quantity.toString());
-      setGroupItem(goods.groupItem);
-      setTrackStock(goods.trackStock);
+    if (goodsQuery?.data) {
+      setTitle(goodsQuery?.data.title);
+      setPrice(String(goodsQuery?.data.price));
+      setCost(String(goodsQuery?.data.cost));
+      setQuantity(String(goodsQuery?.data.quantity));
+      setGroupItem(goodsQuery?.data.groupItem);
+      setTrackStock(goodsQuery?.data.trackStock);
       // setCategory(goods.category);
     }
-  }, [goods]);
+  }, [goodsQuery?.data]);
 
   const handleAddVariant = () => {
     // Implement logic to add a new variant
   };
 
-  const handleToggleStore = (store) => {
-    // Implement logic to toggle the store selection
+  const handleUpdateGood = async () => {
+    const accessToken = await getAccessToken();
+    try {
+      await axiosInstance.patch(`goods/${goodId}`, {
+        title,
+        // category,
+        quantity,
+        price: parseFloat(price),
+        cost: parseFloat(cost),
+        groupItem,
+        trackStock,
+        // modifiers,
+        // representation
+      }, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      });
+      // Alert.alert("Good updated successfully");
+      navigation.navigate("DrawerNav")
+    } catch (error) {
+      console.error("Error updating good:", error);
+    } finally {
+      queryClient.invalidateQueries(["good", "goods"]);
+    }
   };
-
-  const handleToggleModifier = (index) => {
-    // Implement logic to toggle the modifier selection
-  };
-
-  const handleToggleRepresentation = () => {
-    // Implement logic to toggle the representation selection
-  };
-
-  console.log(goods);
-  console.log({isLoading});
-  console.log({isError});
-  console.log({trackStock});
-  console.log({groupItem});
 
   return (
     <SafeAreaView className="flex-1 dark:bg-gray-900">
       {/* <AppBar title="Edit Items" backButton={{ onPress: ()=> alert('back button was clicked!') }} saveButton={{ onPress: ()=> alert('save button was clicked!'), label: 'save' }}/> */}
       <ScrollView>
         <CardElevated>
-          <TxtInput value={name} onChangeText={setName} label="Name" />
+          <TxtInput value={title} onChangeText={setTitle} label="Title" />
           <View className="flex flex-row">
             <TxtInput
               value={cost}
@@ -170,7 +183,7 @@ const GoodEdit = ({ navigation }) => {
 
         <TableCard title="Stores" data={tableData} />
 
-        <CardElevated title="Modifiers">
+        {/* <CardElevated title="Modifiers">
           <View className="flex-row items-center justify-between my-2">
             <View>
               <Text className="text-lg text-black font-semibold">Addon</Text>
@@ -194,17 +207,17 @@ const GoodEdit = ({ navigation }) => {
               onValueChange={() => setModifierB(!modifierb)}
             />
           </View>
-        </CardElevated>
+        </CardElevated> */}
 
         <CardElevated>
           <Button
-            icon="delete"
+            icon="recycle"
             textColor="white"
-            onPress={() => console.log("Save button pressed")}
-            className="bg-red-400 py-3 rounded-md"
+            onPress={handleUpdateGood}
+            className="bg-green-500 py-3 rounded-md"
             labelStyle={{ fontSize: 20 }}
           >
-            DELETE
+            UPDATE
           </Button>
         </CardElevated>
       </ScrollView>

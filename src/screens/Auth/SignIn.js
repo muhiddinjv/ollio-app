@@ -3,7 +3,7 @@ import { Text, View, Button } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { TextInput, useTheme, Button as RNButton } from "react-native-paper"
 import { AuthProvider, useAuth } from "."
-import { setAccessToken, setRefreshToken } from "./astorage"
+import { setAccessToken, setRefreshToken, getAccessToken } from "./astorage"
 import axiosInstance from "../../api/instance"
 
 const LogOutButton = () => {
@@ -21,19 +21,30 @@ export default function SignIn({ navigation }) {
   const [password, setPassword] = React.useState("")
   const [showPassword, setShowPassword] = React.useState(false)
   const [error, setError] = React.useState()
-  const { status, userToken } = useAuth()
+  const { status, userToken, signIn } = useAuth()
   const theme = useTheme()
 
-  const handleSignIn = async () => {
-    try {
-      const response = await axiosInstance.post("auth/signin", {
-        phoneNumber,
-        password
-      })
-      setAccessToken(response.data.accessToken)
-      setRefreshToken(response.data.refreshToken)
 
-      navigation.navigate("Goods")
+  // React.useEffect(() => {
+  //   const token = getAccessToken()
+  //   console.log(token);
+
+  //   if(token) {
+  //     navigation.navigate('DrawerNav')
+  //   }
+  // }, [])
+
+  const handleSignIn = async () => {  
+    try {
+      const response = await axiosInstance.post("auth/signin", { phoneNumber, password })
+      const { accessToken, refreshToken } = response.data;
+      setAccessToken(accessToken)
+      setRefreshToken(refreshToken)
+
+      signIn(accessToken);
+      console.log('object');
+      navigation.navigate("DrawerNav")
+      console.log('clicked sigin');
       return response.data
     } catch (error) {
       console.log({ error: error.response })
@@ -93,7 +104,7 @@ export default function SignIn({ navigation }) {
             <RNButton
               mode="contained"
               onPress={handleSignIn}
-              className="mb-5 w-full p-1"
+              className="mb-5 w-full p-1 rounded"
               textColor="white"
             >
               Sign In

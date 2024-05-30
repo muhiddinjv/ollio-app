@@ -1,4 +1,4 @@
-import { FAB, Text } from "react-native-paper";
+import { FAB, Text, useTheme } from "react-native-paper";
 import { useColorScheme } from "nativewind";
 import { useState } from "react";
 import { MainColors } from "../theme";
@@ -8,12 +8,13 @@ import axiosInstance from "../api/instance";
 import { View } from "react-native";
 
 
-export const FABplus = ({ visible, changeTabIndex }) => {
+const FABplus = ({ visible, changeTabIndex }) => {
   const queryClient = useQueryClient();
   const catalogIds = queryClient.getQueryData(['catalogIds']) || [];
   const { colorScheme } = useColorScheme();
   const [ open, setOpen ] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const { colors } = useTheme();
 
   const addToGoodsMutation = useMutation({
     mutationFn: async () => {
@@ -44,7 +45,7 @@ export const FABplus = ({ visible, changeTabIndex }) => {
       )}
       <FAB.Group
         color={MainColors.plusText[colorScheme]}
-        fabStyle={{ backgroundColor: MainColors.plus[colorScheme] }}
+        fabStyle={{ backgroundColor: colors.primary }}
         backdropColor="#00000090"
         open={open}
         icon={open ? "close" : "plus"}
@@ -59,3 +60,4 @@ export const FABplus = ({ visible, changeTabIndex }) => {
     </>
   );
 };
+export default FABplus;

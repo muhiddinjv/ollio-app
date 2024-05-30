@@ -3,18 +3,13 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native'
 
 const Loader = () => {
   return (
-    <View style={[styles.container, styles.horizontal]}>
+    <View className="flex-1 items-center justify-center">
       <ActivityIndicator size="large" />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: 'center',
-  },
   horizontal: {
     flexDirection: 'row',
     justifyContent: 'space-around',

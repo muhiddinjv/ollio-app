@@ -2,38 +2,31 @@ import React from "react";
 
 
 export const emailValidator = (email) => {
-    const re = /\S+@\S+\.\S+/;
-  
-    if (!email || email.length <= 0) return 'Email cannot be empty.';
-    if (!re.test(email)) return 'Ooops! We need a valid email address.';
-  
-    return '';
-  };
+  const re = /\S+@\S+\.\S+/;
 
-  export function phoneValidator(phoneNumber) {
-    const regex = /^998\d{7}$/;
+  if (!email || email.length <= 0) return 'Email cannot be empty.';
+  if (!re.test(email)) return 'Ooops! We need a valid email address.';
 
-    if (!phoneNumber || phoneNumber.length <= 0) return 'Email cannot be empty.';
-    if (!regex.test(phoneNumber)) return 'Ooops! We need a valid email address.';
+  return '';
+};
 
-    return regex.test(phoneNumber);
-  }
-  
-  export const passwordValidator = (password) => {
-    if (!password || password.length <= 0) return 'Password cannot be empty.';
-  
-    return '';
-  };
-  
-  export const nameValidator = (name) => {
-    if (!name || name.length <= 0) return 'Name cannot be empty.';
-  
-    return '';
-  };
+export function phoneValidator(phoneNumber) {
+  const regex = /^998\d{7}$/;
 
-  export const AppContext = React.createContext({
-    isDarkTheme: false,
-    setIsDarkTheme: () => {},
-    openDrawer: false,
-    setOpenDrawer: () => {},
-  });
+  if (!phoneNumber || phoneNumber.length <= 0) return 'Email cannot be empty.';
+  if (!regex.test(phoneNumber)) return 'Ooops! We need a valid email address.';
+
+  return regex.test(phoneNumber);
+}
+
+export const passwordValidator = (password) => {
+  if (!password || password.length <= 0) return 'Password cannot be empty.';
+
+  return '';
+};
+
+export const nameValidator = (name) => {
+  if (!name || name.length <= 0) return 'Name cannot be empty.';
+
+  return '';
+};

@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { ScrollView } from "react-native-gesture-handler";
 import { View, Dimensions } from "react-native";
-import { FABplus } from "../../components/FABplus";
-import ListItem from "../../components/ListItem";
-import { Catalog } from "./Catalog";
-import { Goods } from "./Goods";
 import { useTheme } from "react-native-paper";
+
+import FABplus from "../../components/FABplus";
+import ListItem from "../../components/ListItem";
+import Catalog from "./Catalog";
+import Goods from "./Goods";
 
 const TabMore = ({ navigation }) => (
   <ScrollView>

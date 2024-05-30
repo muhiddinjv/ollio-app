@@ -1,16 +1,7 @@
 import * as React from "react";
-import {
-  ScrollView,
-  ScrollViewProps,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from "react-native";
-import { MD3Theme, useTheme } from "react-native-paper";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-
 
 export default function Wrapper({
   children,

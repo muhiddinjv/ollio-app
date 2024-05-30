@@ -67,14 +67,11 @@ export const editField = async ({field, id}) => axios.put(`fields/${id}`, field)
 export const deleteField = async (id) => axios.delete(`fields/${id}`).then(res => res.data).catch(err => err)
 export const createField = async (field) => axios.post(`fields`, field).then(res => res.data).catch(err => err)
 
-
-
 // Locations 
 export const getLocations = async () => axios.get("locations").then(res => res.data).catch(err => err)
 export const editLocation = async ({location, id}) => axios.put(`locations/${id}`, location).then(res => res.data).catch(err => err)
 export const deleteLocation = async (id) => axios.delete(`locations/${id}`).then(res => res.data).catch(err => err)
 export const createLocation = async (location) => axios.post(`locations`, location).then(res => res.data).catch(err => err)
-
 
 // Workers 
 export const getStaff = async ({params}) => axios.get("leads", {params}).then(res => res.data).catch(err => err)

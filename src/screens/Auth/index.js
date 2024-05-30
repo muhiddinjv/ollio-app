@@ -1,4 +1,3 @@
-/// Auth.tsx
 import * as React from "react"
 import { getAccessToken, setAccessToken, removeAccessToken } from "./astorage"
 
@@ -50,7 +49,6 @@ export const AuthProvider = ({ children }) => {
   const authActions = React.useMemo(
     () => ({
       signIn: async token => {
-        console.log("token>>>", token)
         dispatch({ type: "SIGN_IN", token })
         await setAccessToken(token)
       },

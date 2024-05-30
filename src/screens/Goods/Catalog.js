@@ -6,7 +6,7 @@ import { MainColors } from "../../theme";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../../api/instance";
 
-export const Catalog = () => {
+const Catalog = () => {
     const queryClient = useQueryClient();
     const [itemIds, setItemIds] = useState([]);
     queryClient.setQueryData(['catalogIds'], itemIds);
@@ -51,7 +51,7 @@ export const Catalog = () => {
           {catalogItems.map((item) => (
             <ListItem
                 key={item._id}
-                title={item.name}
+                title={item.title}
                 description="description was supposed to be here"
                 variant="checkbox"
                 checked={catalogIds?.includes(item._id)}
@@ -61,3 +61,4 @@ export const Catalog = () => {
         </ScrollView>
     );
 };
+export default Catalog;

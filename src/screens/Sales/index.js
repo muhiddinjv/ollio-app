@@ -1,18 +1,52 @@
 import React, { useContext, useState } from "react";
 import { View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { AppContext } from "../../utils";
 import { styled } from "nativewind";
-import { IconButton } from "react-native-paper";
+import { ActivityIndicator, IconButton, Text } from "react-native-paper";
 import ListItem from "../../components/ListItem";
-import Wrapper from "../../wrapper/Wrapper";
+import Wrapper from "../../components/Wrapper";
 import SaveChargeBtns from "../../components/SaveChargeBtns";
+import { useQuery } from "@tanstack/react-query";
+import { getAccessToken } from "../Auth/astorage";
+import axiosInstance from "../../api/instance";
+import { MainColors } from "../../theme";
+import Loader from "../../components/Loader";
 
 const StyledPicker = styled(Picker);
 
 const SalesScreen = ({ navigation }) => {
   const [selectedValue, setSelectedValue] = useState("option1");
-  const { openDrawer, setOpenDrawer } = useContext(AppContext);
+
+  const { data: goods, isLoading, isError } = useQuery({
+    queryKey: ["goods"],
+    queryFn: async () => {
+      const accessToken = await getAccessToken()
+      const response = await axiosInstance.get("goods", {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      })
+      return response.data
+    }
+  })
+
+  if (isLoading) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator
+          animating={true}
+          color={MainColors.primary}
+          size="large"
+        />
+      </View>
+    )
+  }
+
+  if (isError) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-xl text-red-500">Error: sign in again</Text>
+      </View>
+    )
+  }
 
   const tempItems = [
     "coca-cola",
@@ -45,7 +79,7 @@ const SalesScreen = ({ navigation }) => {
       toggleDrawer={() => setOpenDrawer(!openDrawer)}
       /> */}
       
-      <View className="flex-row bg-white items-center pl-4 h-14 border border-gray-400">
+      <View className="flex-row items-center pl-4 h-14 border border-gray-400">
         <StyledPicker
           selectedValue={selectedValue}
           onValueChange={(itemValue) => setSelectedValue(itemValue)}
@@ -65,14 +99,14 @@ const SalesScreen = ({ navigation }) => {
         </View>
       </View>
       <Wrapper>
-        {tempItems.map((value, index) => (
+        {Array.isArray(goods) ? goods.map((good, index) => (
           <ListItem
             key={index}
-            title={value}
-            description="mahsuloti"
+            title={good.title}
             price={5000}
+            // description={value.description}
           />
-        ))}
+        )) : <Loader />}
       </Wrapper>
         <SaveChargeBtns navigation={navigation} />
     </View>

@@ -8,7 +8,7 @@ import { getAccessToken } from "../Auth/astorage"
 import { useQuery } from "@tanstack/react-query"
 import axiosInstance from "../../api/instance"
 
-export const Goods = ({ keyProp, navigation }) => {
+const Goods = ({ keyProp, navigation }) => {
   const [goodId, setGoodId] = useState([])
 
   const { data: goods, isLoading, isError } = useQuery({
@@ -49,7 +49,7 @@ export const Goods = ({ keyProp, navigation }) => {
         <ListItem
           key={good._id}
           goodId={good._id}
-          title={good.name}
+          title={good.title}
           description="description was supposed to be here"
           // variant="checkbox"
           editable
@@ -62,3 +62,4 @@ export const Goods = ({ keyProp, navigation }) => {
     </ScrollView>
   )
 }
+export default Goods;

@@ -26,7 +26,6 @@ const AppStack = () => {
         navigation.navigate('DrawerNav');
       }
     };
-
     checkToken();
   }, []);
 

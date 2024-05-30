@@ -48,42 +48,13 @@ const SalesScreen = ({ navigation }) => {
     )
   }
 
-  const tempItems = [
-    "coca-cola",
-    "fanta",
-    "sprite",
-    "chocolate",
-    "pop-corn",
-    "huggies",
-    "nuts",
-    "paper",
-    "utencils",
-    "dairy products",
-    "snickers",
-    "mars",
-    "cookies",
-    "marshmallow",
-  ];
-
   return (
-    <View className="flex-1 w-full bg-white dark:bg-slate-800">
-      {/* <AppBar
-        title="Items"
-        hamburgerIcon={{ onPress: () => setOpenDrawer(!openDrawer) }}
-        userPlusIcon={{ onPress: () => alert("add customer") }}
-        threeDots={{ onPress: () => alert("threedots") }}
-      />
-      <Sidebar
-      navigation={navigation}
-      openDrawer={openDrawer}
-      toggleDrawer={() => setOpenDrawer(!openDrawer)}
-      /> */}
-      
+    <View className="flex-1 w-full dark:bg-slate-800">      
       <View className="flex-row items-center pl-4 h-14 border border-gray-400">
         <StyledPicker
           selectedValue={selectedValue}
           onValueChange={(itemValue) => setSelectedValue(itemValue)}
-          className="w-4/5 text-base text-black"
+          className="w-4/5 text-base dark:text-white"
         >
           <Picker.Item label="All items" value="option0" />
           <Picker.Item label="Option 1" value="option1" />

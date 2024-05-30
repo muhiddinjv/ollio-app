@@ -5,6 +5,8 @@ import { TextInput, useTheme, Button as RNButton } from "react-native-paper"
 import { AuthProvider, useAuth } from "."
 import { setAccessToken, setRefreshToken, getAccessToken } from "./astorage"
 import axiosInstance from "../../api/instance"
+import { useColorScheme } from "nativewind"
+import { MainColors } from "../../theme"
 
 const LogOutButton = () => {
   const { signOut } = useAuth()
@@ -23,11 +25,11 @@ export default function SignIn({ navigation }) {
   const [error, setError] = React.useState()
   const { status, userToken, signIn } = useAuth()
   const theme = useTheme()
+  const { colorScheme } = useColorScheme();
 
 
   // React.useEffect(() => {
   //   const token = getAccessToken()
-  //   console.log(token);
 
   //   if(token) {
   //     navigation.navigate('DrawerNav')
@@ -42,9 +44,7 @@ export default function SignIn({ navigation }) {
       setRefreshToken(refreshToken)
 
       signIn(accessToken);
-      console.log('object');
       navigation.navigate("DrawerNav")
-      console.log('clicked sigin');
       return response.data
     } catch (error) {
       console.log({ error: error.response })
@@ -77,8 +77,8 @@ export default function SignIn({ navigation }) {
               keyboardType="number-pad"
               onChangeText={text => setPhoneNumber(text)}
               mode="outlined"
-              className="mb-5 w-full dark:bg-slate-700"
-              textColor={theme.colors.secondary}
+              className="mb-5 w-full dark:bg-slate-700 text-white"
+              textColor={MainColors.icon[colorScheme]}
             />
             {findErrorForField("password") && (
               <Text className="text-red-500">
@@ -92,7 +92,7 @@ export default function SignIn({ navigation }) {
               onChangeText={text => setPassword(text)}
               secureTextEntry={!showPassword}
               mode="outlined"
-              textColor={theme.colors.secondary}
+              textColor={MainColors.icon[colorScheme]}
               className="mb-5 w-full dark:bg-slate-700"
               right={
                 <TextInput.Icon

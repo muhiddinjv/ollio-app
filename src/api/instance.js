@@ -11,7 +11,6 @@ const axiosInstance = axios.create({
 });
 
 // axiosInstance.interceptors.response.use(res => res, async error => {
-// 	console.log('err status',error.response.status);
 // 	if (error.response.status === 401){
 // 		await axiosInstance.get('auth/refresh',{
 // 			withCredentials: true
@@ -27,13 +26,11 @@ const axiosInstance = axios.create({
 //     if (error.response.status === 401){
 // 		try {
 // 			const rt = await getRefreshToken();
-// 			console.log(111,rt);
 // 			const refreshToken = await axiosInstance.post('auth/refresh');
 // 			axios.defaults.headers.common['Authorization'] = `Bearer ${refreshToken}`;
 // 			error.config.headers['Authorization'] = `Bearer ${refreshToken}`;
 // 			return axiosInstance(error.config);
 // 		} catch (error) {
-// 			console.log(444);
 // 			return Promise.reject(error);
 // 		}
 //     }
@@ -53,7 +50,6 @@ const axiosInstance = axios.create({
 // axiosInstance.interceptors.response.use(
 // 	(config) => config,
 // 	async (error) => {
-// 		console.log({error});
 // 		const originalRequest = error.config
 
 // 		if (error.response.status === 401) {
@@ -61,7 +57,6 @@ const axiosInstance = axios.create({
 
 // 			try {
 // 				const rt = await getRefreshToken();
-// 				console.log(rt);
 // 				return axiosInstance.request(originalRequest)
 // 			} catch (error) {
 // 				// if (errorCatch(error) === 'jwt expired') removeTokensStorage()

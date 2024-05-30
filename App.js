@@ -1,16 +1,14 @@
 import React from "react";
 import "react-native-gesture-handler";
 import { Linking, Platform } from 'react-native';
-import { PaperProvider, MD3DarkTheme, MD3LightTheme, MD2DarkTheme, MD2LightTheme, adaptNavigationTheme } from 'react-native-paper';
-import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
+import { PaperProvider } from 'react-native-paper';
+import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppStack from "./src/stacks/AppStack";
-import { GlobalState } from "./src/context";
 import { AuthProvider } from "./src/screens/Auth";
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
-// const { LightTheme } = adaptNavigationTheme({ reactNavigationLight: DefaultTheme });
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,13 +18,14 @@ const queryClient = new QueryClient({
   },
 });
 
+export const GlobalContext = React.createContext();
+
 function App() {
    // Don't persist state/screen on web since it's based on URL
   const [isReady, setIsReady] = React.useState(Platform.OS === 'web');
   const [initialState, setInitialState] = React.useState();
-  
-  // const colorScheme = useColorScheme();
-  // const paperTheme = colorScheme === 'dark' ? MD3DarkTheme : MD3LightTheme;
+  const [goodId, setGoodId] = React.useState()
+
 
   React.useEffect(() => {
     const restoreState = async () => {
@@ -57,7 +56,7 @@ function App() {
   }
 
   return (
-    <GlobalState>
+    <GlobalContext.Provider value={{ goodId, setGoodId }}>
       <PaperProvider>
         <NavigationContainer
           initialState={initialState}
@@ -70,7 +69,7 @@ function App() {
           </QueryClientProvider>
         </NavigationContainer>
       </PaperProvider>
-    </GlobalState>
+    </GlobalContext.Provider>
   );
 }
 

@@ -44,7 +44,7 @@ const FABplus = ({ visible, changeTabIndex }) => {
         </View>
       )}
       <FAB.Group
-        color={MainColors.plusText[colorScheme]}
+        color={MainColors.text[colorScheme]}
         fabStyle={{ backgroundColor: colors.primary }}
         backdropColor="#00000090"
         open={open}

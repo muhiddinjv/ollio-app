@@ -4,7 +4,7 @@ import { useColorScheme } from "nativewind";
 import { Divider, List, Text } from "react-native-paper";
 import { MainColors } from "../theme";
 import { CenteredCheckbox } from "./CenteredCheckbox";
-import { GlobalContext } from "../context";
+import { GlobalContext } from "../../App";
 
 const ListItem = ({
   goodId,

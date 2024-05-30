@@ -9,7 +9,7 @@ import { TableCard } from "../../components/TableCard";
 import { TxtInput } from "../../components/TxtInput";
 
 import { getAccessToken } from "../Auth/astorage";
-import { GlobalContext } from "../../context";
+import { GlobalContext } from "../../../App";
 
 import axiosInstance from "../../api/instance";
 
@@ -65,9 +65,6 @@ const GoodEdit = ({ navigation }) => {
       return response.data
     }
   })
-
-  
-
 
   useEffect(() => {
     if (goodsQuery?.data) {

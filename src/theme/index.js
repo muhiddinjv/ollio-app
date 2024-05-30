@@ -47,7 +47,7 @@ export const MainColors = {
     light: "#6b21a8",
     dark: "#fff",
   },
-  plusText: {
+  text: {
     dark: "#000",
     light: "#fff",
   }

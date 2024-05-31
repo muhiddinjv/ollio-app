@@ -51,7 +51,7 @@ const FABplus = ({ visible, changeTabIndex }) => {
         icon={open ? "close" : "plus"}
         actions={[
           { icon: "check-bold", label: "Check all", labelTextColor: "white", onPress: () => {} },
-          { icon: "plus-box", label: "Add item", labelTextColor: "white", onPress: () => {} },
+          { icon: "plus-box", label: "Add a good", labelTextColor: "white", onPress: () => {} },
           { icon: "arrow-right-bold", label: "Add to goods", labelTextColor: "white", onPress: () => addToGoodsMutation.mutate() },
         ]}
         onStateChange={({ open }) => setOpen(open)}

@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppStack from "./src/stacks/AppStack";
 import { AuthProvider } from "./src/screens/Auth";
+import { GlobalContext } from "./src/utils";
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
 
@@ -17,8 +18,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-export const GlobalContext = React.createContext();
 
 function App() {
    // Don't persist state/screen on web since it's based on URL

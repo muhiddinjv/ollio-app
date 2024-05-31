@@ -1,6 +1,5 @@
 import React from "react";
 
-
 export const emailValidator = (email) => {
   const re = /\S+@\S+\.\S+/;
 
@@ -30,3 +29,5 @@ export const nameValidator = (name) => {
 
   return '';
 };
+
+export const GlobalContext = React.createContext();

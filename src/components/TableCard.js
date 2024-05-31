@@ -5,7 +5,7 @@ import { CenteredCheckbox } from "./CenteredCheckbox";
 
 export const TableCard = ({ data, title }) => {
   return (
-    <Card className="px-2 py-4 mb-4 rounded-none">
+    <Card className="px-2 py-4 mb-4 rounded-none bg-white dark:bg-slate-700">
       <Card.Title title={title} titleVariant="titleLarge" />
       <View className="flex-row items-center ml-4">
         <CenteredCheckbox />

@@ -8,11 +8,6 @@ import axiosInstance from "../../api/instance"
 import { useColorScheme } from "nativewind"
 import { MainColors } from "../../theme"
 
-const LogOutButton = () => {
-  const { signOut } = useAuth()
-  return <Button title="Log Out" onPress={signOut} />
-}
-
 const LogInButton = () => {
   const { signIn } = useAuth()
   return <Button title="Log IN" onPress={() => signIn("my_token")} />
@@ -24,7 +19,6 @@ export default function SignIn({ navigation }) {
   const [showPassword, setShowPassword] = React.useState(false)
   const [error, setError] = React.useState()
   const { status, userToken, signIn } = useAuth()
-  const theme = useTheme()
   const { colorScheme } = useColorScheme();
 
 
@@ -96,6 +90,7 @@ export default function SignIn({ navigation }) {
               className="mb-5 w-full dark:bg-slate-700"
               right={
                 <TextInput.Icon
+                  color={MainColors.icon[colorScheme]}
                   icon={`${showPassword ? 'eye-off' : 'eye'}`}
                   onPress={() => setShowPassword(!showPassword)}
                 />

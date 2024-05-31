@@ -3,10 +3,10 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import { IconButton, useTheme } from 'react-native-paper';
 import { useColorScheme } from 'nativewind';
 
-import SalesScreen from '../screens/Sales';
+import SignOutScreen from '../screens/Auth/SignOut';
 import GoodTabs from '../screens/Goods/GoodTabs';
+import SalesScreen from '../screens/Sales';
 import Sidebar from '../components/Sidebar';
-import SignIn from '../screens/Auth/SignIn';
 
 const Drawer = createDrawerNavigator();
 
@@ -44,11 +44,11 @@ const DrawerNav = () => {
         }}
       />
       <Drawer.Screen
-        name="SignIn"
-        component={SignIn}
+        name="Sign out"
+        component={SignOutScreen}
         options={{
           drawerIcon: ({color}) => (
-            <IconButton className='m-0' icon="account" iconColor={color} />
+            <IconButton className='m-0' icon="logout" iconColor={color} />
           ),
         }}
       />

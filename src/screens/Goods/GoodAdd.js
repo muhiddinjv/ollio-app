@@ -2,15 +2,13 @@ import React, { useState, useContext, useEffect } from "react";
 import { View, ScrollView, SafeAreaView, Alert } from "react-native";
 import { Switch, Text, IconButton, Divider, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { CardElevated } from "../../components/CardElevated";
 import { TableCard } from "../../components/TableCard";
 import { TxtInput } from "../../components/TxtInput";
 
 import { getAccessToken } from "../Auth/astorage";
-import { GlobalContext } from "../../utils";
-
 import axiosInstance from "../../api/instance";
 
 const tableData = [
@@ -31,10 +29,8 @@ const tableData = [
   },
 ];
 
-const GoodEdit = ({ navigation }) => {
+const GoodAdd = ({ navigation }) => {
   const queryClient = useQueryClient();
-
-  const { goodId } = useContext(GlobalContext);
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -43,28 +39,6 @@ const GoodEdit = ({ navigation }) => {
   const [cost, setCost] = useState(0);
   const [groupItem, setGroupItem] = useState(false);
   const [trackStock, setTrackStock] = useState(false);
-
-  const [modifiera, setModifierA] = useState(false);
-  const [modifierb, setModifierB] = useState(false);
-  const [modifiers, setModifiers] = useState([
-    { title: "", subtitle: "", isEnabled: false },
-    { title: "", subtitle: "", isEnabled: false },
-  ]);
-  const [representation, setRepresentation] = useState({
-    color: "",
-    shape: "",
-    isSelected: false,
-  });
-
-  const goodsQuery = useQuery({
-    queryKey: ["good"], queryFn: async () => {
-      const accessToken = await getAccessToken()
-      const response = await axiosInstance.get(`goods/${goodId}`, {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      })
-      return response.data
-    }
-  })
 
   useEffect(() => {
     if (goodsQuery?.data) {
@@ -78,34 +52,32 @@ const GoodEdit = ({ navigation }) => {
     }
   }, [goodsQuery?.data]);
 
-  const handleAddVariant = () => {
-    // Implement logic to add a new variant
-  };
+  const newGood = {
+    title,
+    quantity,
+    price: parseFloat(price),
+    cost: parseFloat(cost),
+    groupItem,
+    trackStock
+  }
 
-  const handleUpdateGood = async () => {
-    const accessToken = await getAccessToken();
-    try {
-      await axiosInstance.patch(`goods/${goodId}`, {
-        title,
-        // category,
-        quantity,
-        price: parseFloat(price),
-        cost: parseFloat(cost),
-        groupItem,
-        trackStock,
-        // modifiers,
-        // representation
-      }, {
+  const addGoodMutation = useMutation({
+    mutationFn: async () => {
+      const accessToken = await getAccessToken();
+      await axiosInstance.post('goods', newGood, {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
-      // Alert.alert("Good updated successfully");
-      navigation.navigate("DrawerNav")
-    } catch (error) {
-      console.error("Error updating good:", error);
-    } finally {
-      queryClient.invalidateQueries(["good", "goods"]);
+    },
+    onSuccess: () => {
+      changeTabIndex(1);
+      queryClient.invalidateQueries(['goods']);
+      setErrorMessage(null);
+    },
+    onError: (error) => {
+      setErrorMessage(error.response.data.message[0].text);
+      setTimeout(() => setErrorMessage(null), 5000);
     }
-  };
+  });
 
   return (
     <SafeAreaView className="flex-1 dark:bg-gray-900">
@@ -210,7 +182,7 @@ const GoodEdit = ({ navigation }) => {
           <Button
             icon="recycle"
             textColor="white"
-            onPress={handleUpdateGood}
+            onPress={() => addGoodMutation.mutate()}
             className="bg-green-500 py-3 rounded-md"
             labelStyle={{ fontSize: 20 }}
           >
@@ -222,4 +194,4 @@ const GoodEdit = ({ navigation }) => {
   );
 };
 
-export default GoodEdit;
+export default GoodAdd;

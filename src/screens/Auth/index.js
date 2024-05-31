@@ -53,6 +53,8 @@ export const AuthProvider = ({ children }) => {
         await setAccessToken(token)
       },
       signOut: async () => {
+        console.log('signout completed');
+
         await removeAccessToken() // TODO: use Vars
         dispatch({ type: "SIGN_OUT" })
       }

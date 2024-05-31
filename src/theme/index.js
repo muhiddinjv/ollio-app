@@ -40,7 +40,7 @@ export const LightScheme = {
 export const MainColors = {
   primary: '#8200d6',
   icon: {
-    light: "#000",
+    light: "#444",
     dark: "#fff",
   },
   plus: {

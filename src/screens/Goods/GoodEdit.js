@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
-import { View, ScrollView, SafeAreaView, Alert } from "react-native";
-import { Switch, Text, IconButton, Divider, Button } from "react-native-paper";
+import { useState, useContext, useEffect, useLayoutEffect } from "react";
+import { View, SafeAreaView, Alert, Platform } from "react-native";
+import { Switch, Text, IconButton, Button, Appbar, useTheme } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -12,6 +12,9 @@ import { getAccessToken } from "../Auth/astorage";
 import { GlobalContext } from "../../utils";
 
 import axiosInstance from "../../api/instance";
+import Wrapper from "../../components/Wrapper";
+
+const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
 const tableData = [
   {
@@ -35,6 +38,7 @@ const GoodEdit = ({ navigation }) => {
   const queryClient = useQueryClient();
 
   const { goodId } = useContext(GlobalContext);
+  const { colors } = useTheme();
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -55,6 +59,28 @@ const GoodEdit = ({ navigation }) => {
     shape: "",
     isSelected: false,
   });
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <Appbar.Header
+          theme={{ mode: 'adaptive' }}
+          elevated={true}
+        >
+          <Appbar.BackAction onPress={() => navigation.goBack()} />
+          <Appbar.Content title="Edit Good" />
+          {/* <Appbar.Action icon="calendar" onPress={() => {}} />
+          <Appbar.Action icon="magnify" onPress={() => {}} />
+          <Appbar.Action icon={MORE_ICON} onPress={() => {}} /> */}
+          <Button onPress={saveGood} labelStyle={{ fontSize: 15, color: 'black' }}>
+            SAVE
+          </Button>
+        </Appbar.Header>
+      ),
+    });
+  }, [
+    navigation
+  ]);
 
   const goodsQuery = useQuery({
     queryKey: ["good"], queryFn: async () => {
@@ -82,7 +108,7 @@ const GoodEdit = ({ navigation }) => {
     // Implement logic to add a new variant
   };
 
-  const handleUpdateGood = async () => {
+  const saveGood = async () => {
     const accessToken = await getAccessToken();
     try {
       await axiosInstance.patch(`goods/${goodId}`, {
@@ -107,10 +133,23 @@ const GoodEdit = ({ navigation }) => {
     }
   };
 
+  const deleteGood = async () => {
+    const accessToken = await getAccessToken();
+    try {
+      await axiosInstance.delete(`goods/${goodId}`, 
+      { headers: { Authorization: `Bearer ${accessToken}` }});
+      // Alert.alert("Good updated successfully");
+      navigation.navigate("DrawerNav")
+    } catch (error) {
+      console.error("Error deleting good:", error);
+    } finally {
+      queryClient.invalidateQueries(["good", "goods"]);
+    }
+  };
+ 
   return (
-    <SafeAreaView className="flex-1 dark:bg-gray-900">
-      {/* <AppBar title="Edit Items" backButton={{ onPress: ()=> alert('back button was clicked!') }} saveButton={{ onPress: ()=> alert('save button was clicked!'), label: 'save' }}/> */}
-      <ScrollView>
+    <Wrapper>
+      <SafeAreaView className="flex-1 dark:bg-gray-900">
         <CardElevated>
           <TxtInput value={title} onChangeText={setTitle} label="Title" />
           <View className="flex flex-row">
@@ -208,17 +247,17 @@ const GoodEdit = ({ navigation }) => {
 
         <CardElevated>
           <Button
-            icon="recycle"
             textColor="white"
-            onPress={handleUpdateGood}
-            className="bg-green-500 py-3 rounded-md"
+            icon="trash-can-outline"
+            onPress={deleteGood}
+            className="bg-red-500 py-2 rounded"
             labelStyle={{ fontSize: 20 }}
           >
-            UPDATE
+            DELETE
           </Button>
         </CardElevated>
-      </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Wrapper>
   );
 };
 

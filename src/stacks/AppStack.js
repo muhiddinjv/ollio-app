@@ -37,8 +37,8 @@ const AppStack = () => {
       <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
       <Stack.Screen name="DrawerNav" component={DrawerNav} options={{ headerShown: false }}/>
       <Stack.Screen name="GoodEdit" component={GoodEdit}/>
-      <Stack.Screen name="GoodAdd" component={GoodAdd}/>
       <Stack.Screen name="GoodTabs" component={GoodTabs}/>
+      <Stack.Screen name="GoodAdd" component={GoodAdd}/>
       <Stack.Screen name="Goods" component={Goods}/>
       {/* Common modal screens */}
       {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>

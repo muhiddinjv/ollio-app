@@ -10,6 +10,7 @@ import { TxtInput } from "../../components/TxtInput";
 
 import { getAccessToken } from "../Auth/astorage";
 import axiosInstance from "../../api/instance";
+import Wrapper from "../../components/Wrapper";
 
 const tableData = [
   {
@@ -39,18 +40,7 @@ const GoodAdd = ({ navigation }) => {
   const [cost, setCost] = useState(0);
   const [groupItem, setGroupItem] = useState(false);
   const [trackStock, setTrackStock] = useState(false);
-
-  useEffect(() => {
-    if (goodsQuery?.data) {
-      setTitle(goodsQuery?.data.title);
-      setPrice(String(goodsQuery?.data.price));
-      setCost(String(goodsQuery?.data.cost));
-      setQuantity(String(goodsQuery?.data.quantity));
-      setGroupItem(goodsQuery?.data.groupItem);
-      setTrackStock(goodsQuery?.data.trackStock);
-      // setCategory(goods.category);
-    }
-  }, [goodsQuery?.data]);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const newGood = {
     title,
@@ -80,8 +70,15 @@ const GoodAdd = ({ navigation }) => {
   });
 
   return (
-    <SafeAreaView className="flex-1 dark:bg-gray-900">
-      {/* <AppBar title="Edit Items" backButton={{ onPress: ()=> alert('back button was clicked!') }} saveButton={{ onPress: ()=> alert('save button was clicked!'), label: 'save' }}/> */}
+    <Wrapper>
+      <SafeAreaView className="flex-1 dark:bg-gray-900">
+      {errorMessage && (
+        <View style={{ backgroundColor: 'red', padding: 10 }}>
+          <Text style={{ color: 'white' }}>
+          {errorMessage}
+          </Text>
+        </View>
+      )}
       <ScrollView>
         <CardElevated>
           <TxtInput value={title} onChangeText={setTitle} label="Title" />
@@ -152,32 +149,6 @@ const GoodAdd = ({ navigation }) => {
 
         <TableCard title="Stores" data={tableData} />
 
-        {/* <CardElevated title="Modifiers">
-          <View className="flex-row items-center justify-between my-2">
-            <View>
-              <Text className="text-lg text-black font-semibold">Addon</Text>
-              <Text>Available in all stores</Text>
-            </View>
-
-            <Switch
-              value={modifiera}
-              onValueChange={() => setModifierA(!modifiera)}
-            />
-          </View>
-          <Divider />
-          <View className="flex-row items-center justify-between my-2">
-            <View>
-              <Text className="text-lg text-black font-semibold">Fillers</Text>
-              <Text>Available in all stores</Text>
-            </View>
-
-            <Switch
-              value={modifierb}
-              onValueChange={() => setModifierB(!modifierb)}
-            />
-          </View>
-        </CardElevated> */}
-
         <CardElevated>
           <Button
             icon="recycle"
@@ -186,11 +157,12 @@ const GoodAdd = ({ navigation }) => {
             className="bg-green-500 py-3 rounded-md"
             labelStyle={{ fontSize: 20 }}
           >
-            UPDATE
+            ADD
           </Button>
         </CardElevated>
       </ScrollView>
     </SafeAreaView>
+    </Wrapper>
   );
 };
 

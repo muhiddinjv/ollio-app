@@ -6,7 +6,7 @@ import { getAccessToken } from "../screens/Auth/astorage";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import axiosInstance from "../api/instance";
 import { View } from "react-native";
-
+import { useNavigation } from "@react-navigation/native";
 
 const FABplus = ({ visible, changeTabIndex }) => {
   const queryClient = useQueryClient();
@@ -15,6 +15,7 @@ const FABplus = ({ visible, changeTabIndex }) => {
   const [ open, setOpen ] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const { colors } = useTheme();
+  const navigation = useNavigation();
 
   const addToGoodsMutation = useMutation({
     mutationFn: async () => {
@@ -51,7 +52,7 @@ const FABplus = ({ visible, changeTabIndex }) => {
         icon={open ? "close" : "plus"}
         actions={[
           { icon: "check-bold", label: "Check all", labelTextColor: "white", onPress: () => {} },
-          { icon: "plus-box", label: "Add a good", labelTextColor: "white", onPress: () => {} },
+          { icon: "plus-box", label: "Add a good", labelTextColor: "white", onPress: () => navigation.navigate("GoodAdd") },
           { icon: "arrow-right-bold", label: "Add to goods", labelTextColor: "white", onPress: () => addToGoodsMutation.mutate() },
         ]}
         onStateChange={({ open }) => setOpen(open)}

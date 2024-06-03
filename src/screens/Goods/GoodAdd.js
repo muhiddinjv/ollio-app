@@ -64,6 +64,7 @@ const GoodAdd = ({ navigation }) => {
       setErrorMessage(null);
     },
     onError: (error) => {
+      console.log('mutationFn', newGood);
       setErrorMessage(error.response.data.message[0].text);
       setTimeout(() => setErrorMessage(null), 5000);
     }

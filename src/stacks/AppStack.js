@@ -36,7 +36,7 @@ const AppStack = () => {
       <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }}/>
       <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
       <Stack.Screen name="DrawerNav" component={DrawerNav} options={{ headerShown: false }}/>
-      <Stack.Screen name="GoodEdit" component={GoodEdit}/>
+      <Stack.Screen name="GoodEdit" component={GoodEdit} options={{ headerShown: false }}/>
       <Stack.Screen name="GoodTabs" component={GoodTabs}/>
       <Stack.Screen name="GoodAdd" component={GoodAdd}/>
       <Stack.Screen name="Goods" component={Goods}/>

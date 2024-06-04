@@ -1,11 +1,10 @@
-import { useState, useContext, useEffect, useLayoutEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { View, SafeAreaView, Alert, Platform } from "react-native";
 import { Switch, Text, IconButton, Button, Appbar, useTheme } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { CardElevated } from "../../components/CardElevated";
-import { TableCard } from "../../components/TableCard";
 import { TxtInput } from "../../components/TxtInput";
 
 import { getAccessToken } from "../Auth/astorage";
@@ -13,8 +12,6 @@ import { GlobalContext } from "../../utils";
 
 import axiosInstance from "../../api/instance";
 import Wrapper from "../../components/Wrapper";
-
-const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
 const tableData = [
   {
@@ -130,17 +127,13 @@ const GoodEdit = ({ navigation }) => {
   return (
     <>
       <Appbar.Header
+        style={{ backgroundColor: colors.primary }}
         theme={{ mode: 'adaptive' }}
-        elevated={true}
+      // elevated={true}
       >
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Edit Good" />
-        {/* <Appbar.Action icon="calendar" onPress={() => {}} />
-          <Appbar.Action icon="magnify" onPress={() => {}} />
-          <Appbar.Action icon={MORE_ICON} onPress={() => {}} />  */}
-        <Button onPress={saveGood} labelStyle={{ fontSize: 15, color: 'black' }}>
-          SAVE
-        </Button>
+        <Appbar.BackAction iconColor="white" onPress={() => navigation.goBack()} />
+        <Appbar.Content title="Edit Good" titleStyle={{ color: 'white' }} />
+        <Appbar.Action icon="content-save" size={28} color="white" onPress={saveGood} />
       </Appbar.Header>
       <Wrapper>
 
@@ -212,33 +205,35 @@ const GoodEdit = ({ navigation }) => {
             </View>
           </CardElevated>
 
-          <TableCard title="Stores" data={tableData} />
+          {/* <TableCard title="Stores" data={tableData} /> */}
 
-          {/* <CardElevated title="Modifiers">
-      <View className="flex-row items-center justify-between my-2">
-        <View>
-          <Text className="text-lg text-black font-semibold">Addon</Text>
-          <Text>Available in all stores</Text>
-        </View>
+          {/* 
+              <CardElevated title="Modifiers">
+                <View className="flex-row items-center justify-between my-2">
+                  <View>
+                    <Text className="text-lg text-black font-semibold">Addon</Text>
+                    <Text>Available in all stores</Text>
+                  </View>
 
-        <Switch
-          value={modifiera}
-          onValueChange={() => setModifierA(!modifiera)}
-        />
-      </View>
-      <Divider />
-      <View className="flex-row items-center justify-between my-2">
-        <View>
-          <Text className="text-lg text-black font-semibold">Fillers</Text>
-          <Text>Available in all stores</Text>
-        </View>
+                  <Switch
+                    value={modifiera}
+                    onValueChange={() => setModifierA(!modifiera)}
+                  />
+                </View>
+                <Divider />
+                <View className="flex-row items-center justify-between my-2">
+                  <View>
+                    <Text className="text-lg text-black font-semibold">Fillers</Text>
+                    <Text>Available in all stores</Text>
+                  </View>
 
-        <Switch
-          value={modifierb}
-          onValueChange={() => setModifierB(!modifierb)}
-        />
-      </View>
-    </CardElevated> */}
+                  <Switch
+                    value={modifierb}
+                    onValueChange={() => setModifierB(!modifierb)}
+                  />
+                </View>
+              </CardElevated> 
+            */}
 
           <CardElevated>
             <Button

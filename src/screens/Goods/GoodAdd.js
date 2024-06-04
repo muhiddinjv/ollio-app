@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import { View, ScrollView, SafeAreaView, Alert } from "react-native";
 import { Switch, Text, IconButton, Divider, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
@@ -57,6 +57,7 @@ const GoodAdd = ({ navigation }) => {
       await axiosInstance.post('goods', newGood, {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
+      navigation.navigate("DrawerNav")
     },
     onSuccess: () => {
       changeTabIndex(1);
@@ -69,6 +70,17 @@ const GoodAdd = ({ navigation }) => {
       setTimeout(() => setErrorMessage(null), 5000);
     }
   });
+
+  const handleSubmit = async () => {
+    // Check if the title is empty
+    if (!title.trim()) {
+      Alert.alert("Title Required", "Please fill out the title field.");
+      return; // Exit the function early if the title is empty
+    }
+  
+    // Proceed with the mutation if the title is valid
+    addGoodMutation.mutate();
+  };
 
   return (
     <Wrapper>
@@ -154,7 +166,7 @@ const GoodAdd = ({ navigation }) => {
           <Button
             icon="recycle"
             textColor="white"
-            onPress={() => addGoodMutation.mutate()}
+            onPress={handleSubmit}
             className="bg-green-500 py-3 rounded-md"
             labelStyle={{ fontSize: 20 }}
           >

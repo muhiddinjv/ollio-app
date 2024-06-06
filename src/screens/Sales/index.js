@@ -16,12 +16,14 @@ const StyledPicker = styled(Picker);
 
 const SalesScreen = ({ navigation }) => {
   const [selectedValue, setSelectedValue] = useState("option1");
+  const page = 1;
+  const limit = 3;
 
   const { data: goods, isLoading, isError } = useQuery({
     queryKey: ["goods"],
     queryFn: async () => {
       const accessToken = await getAccessToken()
-      const response = await axiosInstance.get("goods", {
+      const response = await axiosInstance.get(`goods?page=${page}&limit=${limit}`, {
         headers: { Authorization: `Bearer ${accessToken}` }
       })
       return response.data
@@ -74,8 +76,8 @@ const SalesScreen = ({ navigation }) => {
           <ListItem
             key={index}
             title={good.title}
-            price={5000}
-            // description={value.description}
+            price={good.price}
+            description={good.description}
           />
         )) : <Loader />}
       </Wrapper>

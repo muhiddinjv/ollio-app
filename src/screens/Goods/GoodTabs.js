@@ -26,7 +26,7 @@ const initialLayout = { width: Dimensions.get("window").width };
 const routes = [
   { key: "first", title: "Catalog" },
   { key: "second", title: "Goods" },
-  // { key: "third", title: "More" },
+  { key: "third", title: "More" },
 ];
 
 const GoodTabs = ({ navigation }) => {
@@ -51,7 +51,7 @@ const GoodTabs = ({ navigation }) => {
   const renderScene = SceneMap({
     first: Catalog,
     second: () => <Goods keyProp={key} navigation={navigation.navigate}/>, 
-    // third: () => <TabMore navigation={navigation.navigate} />,
+    third: () => <TabMore navigation={navigation.navigate} />,
   });
 
   const renderTabBar = (props) => (

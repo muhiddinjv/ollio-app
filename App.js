@@ -14,7 +14,9 @@ const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false,
+      staleTime: 300000, // 5 minutes
+      retry: 2,
+      refetchOnWindowFocus: true,
     },
   },
 });

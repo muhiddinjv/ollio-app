@@ -67,9 +67,10 @@ const GoodEdit = ({ navigation }) => {
     }
   })
 
+  console.log(goodsQuery.data);
+
   useEffect(() => {
     if (goodsQuery?.data) {
-      console.log(goodsQuery.data.title);
       setTitle(goodsQuery?.data.title);
       setPrice(String(goodsQuery?.data.price));
       setCost(String(goodsQuery?.data.cost));

@@ -1,65 +1,58 @@
-import { ScrollView } from "react-native-gesture-handler"
-import ListItem from "../../components/ListItem"
-import { useState } from "react"
-import { View } from "react-native"
-import { ActivityIndicator, Text } from "react-native-paper"
-import { MainColors } from "../../theme"
-import { getAccessToken } from "../Auth/astorage"
-import { useQuery } from "@tanstack/react-query"
-import axiosInstance from "../../api/instance"
+import { FlatList, RefreshControl } from "react-native";
+import ListItem from "../../components/ListItem";
+import { useRef, useState } from "react";
+import { View } from "react-native";
+import { ActivityIndicator, Text } from "react-native-paper";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 
 const Goods = ({ keyProp, navigation }) => {
-  const [goodId, setGoodId] = useState([])
+  const [goodId, setGoodId] = useState([]);
+  const [products, setProducts] = useState();
+  const [filters, setFilters] = useState({
+    search: '',
+  });
 
-  const { data: goods, isLoading, isError } = useQuery({
-    queryKey: ["goods", keyProp],
-    queryFn: async () => {
-      const accessToken = await getAccessToken()
-      const response = await axiosInstance.get("goods", {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      })
-      return response.data
-    }
+  const {
+    data,
+    isRefreshing,
+    onRefresh,
+    onEndReached,
+    isFetchingNextPage
+  } = useInfiniteScroll({
+    url: "goods",
+    limit: 25,
+    filters: filters,
+    key: ['goods', keyProp],
   })
 
-  if (isLoading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator
-          animating={true}
-          color={MainColors.primary}
-          size="large"
-        />
-      </View>
-    )
-  }
-
-  if (isError) {
-    console.log("isError :>> ", isError)
-    return (
-      <View className="flex-1 justify-center items-center">
-        <Text className="text-xl text-red-500">Error: sign in again</Text>
-      </View>
-    )
-  }
-
   return (
-    <ScrollView>
-      {goods?.map(good => (
+    <FlatList
+      data={data}
+      onEndReached={onEndReached}
+      removeClippedSubviews={true}
+      refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+      renderItem={({ item }) => (
         <ListItem
-          key={good._id}
-          goodId={good._id}
-          title={good.title}
-          description="description was supposed to be here"
-          // variant="checkbox"
+          key={item._id}
+          goodId={item._id}
+          title={item.title}
+          description={item.description}
           editable
           navigate={navigation}
-          price={good.price}
-          // onChange={() => handleToggleItem(item._id)}
-          checked={goodId.includes(good._id)}
+          price={item.price} 
+          checked={goodId.includes(item._id)}
         />
-      ))}
-    </ScrollView>
-  )
-}
+      )}
+      ListEmptyComponent={
+        <View className='flex items-center'>
+          <Text>No result</Text>
+        </View>
+      }
+      ListFooterComponent={() =>
+        {isFetchingNextPage && <ActivityIndicator />}
+      }
+    />
+  );
+};
+
 export default Goods;

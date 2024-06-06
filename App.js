@@ -27,7 +27,6 @@ function App() {
   const [initialState, setInitialState] = React.useState();
   const [goodId, setGoodId] = React.useState()
 
-
   React.useEffect(() => {
     const restoreState = async () => {
       try {

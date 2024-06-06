@@ -67,8 +67,6 @@ const GoodEdit = ({ navigation }) => {
     }
   })
 
-  console.log(goodsQuery.data);
-
   useEffect(() => {
     if (goodsQuery?.data) {
       setTitle(goodsQuery?.data.title);

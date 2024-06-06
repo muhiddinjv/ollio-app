@@ -1,54 +1,33 @@
-import React, { useContext, useState } from "react";
-import { View } from "react-native";
+import React, { useState } from "react";
+import { FlatList, RefreshControl, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { styled } from "nativewind";
 import { ActivityIndicator, IconButton, Text } from "react-native-paper";
 import ListItem from "../../components/ListItem";
-import Wrapper from "../../components/Wrapper";
 import SaveChargeBtns from "../../components/SaveChargeBtns";
-import { useQuery } from "@tanstack/react-query";
-import { getAccessToken } from "../Auth/astorage";
-import axiosInstance from "../../api/instance";
-import { MainColors } from "../../theme";
 import Loader from "../../components/Loader";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 
 const StyledPicker = styled(Picker);
 
 const SalesScreen = ({ navigation }) => {
   const [selectedValue, setSelectedValue] = useState("option1");
-  const page = 1;
-  const limit = 3;
+  const [filters, setFilters] = useState({
+    search: '',
+  });
 
-  const { data: goods, isLoading, isError } = useQuery({
-    queryKey: ["goods"],
-    queryFn: async () => {
-      const accessToken = await getAccessToken()
-      const response = await axiosInstance.get(`goods?page=${page}&limit=${limit}`, {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      })
-      return response.data
-    }
+  const {
+    data,
+    isRefreshing,
+    onRefresh,
+    onEndReached,
+    isFetchingNextPage
+  } = useInfiniteScroll({
+    url: "goods",
+    limit: 25,
+    filters: filters,
+    key: ['goods'],
   })
-
-  if (isLoading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator
-          animating={true}
-          color={MainColors.primary}
-          size="large"
-        />
-      </View>
-    )
-  }
-
-  if (isError) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <Text className="text-xl text-red-500">Error: sign in again</Text>
-      </View>
-    )
-  }
 
   return (
     <View className="flex-1 w-full dark:bg-slate-800">      
@@ -71,16 +50,31 @@ const SalesScreen = ({ navigation }) => {
           />
         </View>
       </View>
-      <Wrapper>
-        {Array.isArray(goods) ? goods.map((good, index) => (
-          <ListItem
-            key={index}
-            title={good.title}
-            price={good.price}
-            description={good.description}
-          />
-        )) : <Loader />}
-      </Wrapper>
+        {Array.isArray(data) 
+        ? <FlatList
+          data={data}
+          onEndReached={onEndReached}
+          removeClippedSubviews={true}
+          refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+          renderItem={({ item }) => (
+            <ListItem
+              key={item._id}
+              title={item.title}
+              description={item.description}
+              editable
+              navigate={navigation}
+              price={item.price} 
+            />
+          )}
+          ListEmptyComponent={
+            <View className='flex items-center'>
+              <Text>No result</Text>
+            </View>
+          }
+          ListFooterComponent={() =>
+            {isFetchingNextPage && <ActivityIndicator />}
+          }/> 
+        : <Loader />}
         <SaveChargeBtns navigation={navigation} />
     </View>
   );

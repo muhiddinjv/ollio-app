@@ -33,6 +33,7 @@ const ListItem = ({
           color: MainColors.icon[colorScheme],
         }}
         onPress={() => {
+          console.log('goodId :>> ', goodId);
           setGoodId(goodId)
           if(editable){
             navigate('GoodEdit'); 

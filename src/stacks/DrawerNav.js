@@ -10,6 +10,18 @@ import Sidebar from '../components/Sidebar';
 
 const Drawer = createDrawerNavigator();
 
+function CustomDrawerContent({ navigation }) {
+  return (
+    <Button
+      title="Go somewhere"
+      onPress={() => {
+        // Navigate using the `navigation` prop that you received
+        navigation.navigate('SomeScreen');
+      }}
+    />
+  );
+}
+
 const DrawerNav = () => {
   const { colorScheme } = useColorScheme();
   const { colors } = useTheme();
@@ -26,6 +38,7 @@ const DrawerNav = () => {
         drawerLabelStyle: { marginLeft: -25, fontSize: 18}
       }}>
       <Drawer.Screen
+        // drawerContent={(props) => <CustomDrawerContent {...props}/>}
         name="Sales"
         component={SalesScreen}
         options={{

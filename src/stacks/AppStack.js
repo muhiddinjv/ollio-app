@@ -20,7 +20,6 @@ const AppStack = () => {
   React.useEffect(() => {
     const checkToken = async () => {
       const accessToken = await getAccessToken();
-      console.log({accessToken});
       // if no token, navigate to SignIn
       if (!accessToken) {
         navigation.navigate('SignIn');

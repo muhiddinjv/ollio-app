@@ -4,7 +4,7 @@ import { Picker } from "@react-native-picker/picker";
 import { styled } from "nativewind";
 import { ActivityIndicator, IconButton, Text } from "react-native-paper";
 import ListItem from "../../components/ListItem";
-import SaveChargeBtns from "../../components/SaveChargeBtns";
+import SaveCharge from "../../components/SaveCharge";
 import Loader from "../../components/Loader";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 
@@ -59,10 +59,9 @@ const SalesScreen = ({ navigation }) => {
           renderItem={({ item }) => (
             <ListItem
               key={item._id}
+              goodId={item._id}
               title={item.title}
               description={item.description}
-              editable
-              navigate={navigation}
               price={item.price} 
             />
           )}
@@ -75,7 +74,7 @@ const SalesScreen = ({ navigation }) => {
             {isFetchingNextPage && <ActivityIndicator />}
           }/> 
         : <Loader />}
-        <SaveChargeBtns navigation={navigation} />
+        <SaveCharge navigation={navigation} />
     </View>
   );
 };

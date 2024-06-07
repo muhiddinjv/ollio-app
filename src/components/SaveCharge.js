@@ -2,7 +2,7 @@ import { View } from "react-native";
 import React from "react";
 import { Button } from "react-native-paper";
 
-const SaveChargeBtns = ({ navigation }) => {
+const SaveCharge = ({ navigation }) => {
   return (
     <View className="p-2 bg-white dark:bg-slate-800 flex-row">
       <Button textColor="white" className="p-2 bg-violet-800 font-semibold rounded flex-1" onPress={() => {}}>SAVE</Button>
@@ -11,4 +11,4 @@ const SaveChargeBtns = ({ navigation }) => {
   );
 };
 
-export default SaveChargeBtns;
+export default SaveCharge;

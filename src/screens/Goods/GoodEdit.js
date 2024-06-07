@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { View, SafeAreaView, Alert, Platform } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { Switch, Text, IconButton, Button, Appbar, useTheme } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -45,20 +45,10 @@ const GoodEdit = ({ navigation }) => {
   const [groupItem, setGroupItem] = useState(false);
   const [trackStock, setTrackStock] = useState(false);
 
-  const [modifiera, setModifierA] = useState(false);
-  const [modifierb, setModifierB] = useState(false);
-  const [modifiers, setModifiers] = useState([
-    { title: "", subtitle: "", isEnabled: false },
-    { title: "", subtitle: "", isEnabled: false },
-  ]);
-  const [representation, setRepresentation] = useState({
-    color: "",
-    shape: "",
-    isSelected: false,
-  });
-
   const goodsQuery = useQuery({
-    queryKey: ["good"], queryFn: async () => {
+    queryKey: ["good",goodId], queryFn: async () => {
+      console.log('goodId in goodsQuery :>> ', goodId);
+
       const accessToken = await getAccessToken()
       const response = await axiosInstance.get(`goods/${goodId}`, {
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -77,7 +67,7 @@ const GoodEdit = ({ navigation }) => {
       setTrackStock(goodsQuery?.data.trackStock);
       // setCategory(goods.category);
     }
-  }, [goodsQuery?.data]);
+  }, [goodsQuery?.data, goodId]);
 
   const handleAddVariant = () => {
     // Implement logic to add a new variant
@@ -99,7 +89,6 @@ const GoodEdit = ({ navigation }) => {
       }, {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
-      // Alert.alert("Good updated successfully");
       navigation.navigate("DrawerNav")
     } catch (error) {
       console.error("Error updating good:", error);
@@ -111,9 +100,7 @@ const GoodEdit = ({ navigation }) => {
   const deleteGood = async () => {
     const accessToken = await getAccessToken();
     try {
-      await axiosInstance.delete(`goods/${goodId}`,
-        { headers: { Authorization: `Bearer ${accessToken}` } });
-      // Alert.alert("Good updated successfully");
+      await axiosInstance.delete(`goods/${goodId}`, { headers: { Authorization: `Bearer ${accessToken}` } });
       navigation.navigate("DrawerNav")
     } catch (error) {
       console.error("Error deleting good:", error);
@@ -128,14 +115,13 @@ const GoodEdit = ({ navigation }) => {
       <Appbar.Header
         style={{ backgroundColor: colors.primary }}
         theme={{ mode: 'adaptive' }}
-      // elevated={true}
       >
         <Appbar.BackAction iconColor="white" onPress={() => navigation.goBack()} />
         <Appbar.Content title="Edit Good" titleStyle={{ color: 'white' }} />
         <Appbar.Action icon="content-save" size={28} color="white" onPress={saveGood} />
       </Appbar.Header>
-      <Wrapper>
 
+      <Wrapper>
         <SafeAreaView className="flex-1 dark:bg-gray-900">
           <CardElevated>
             <TxtInput value={title} onChangeText={setTitle} label="Title" />
@@ -252,18 +238,3 @@ const GoodEdit = ({ navigation }) => {
 };
 
 export default GoodEdit;
-/*
-    <Appbar.Header
-          // theme={{ mode: 'adaptive' }}
-          elevated={true}
-        >
-          <Appbar.BackAction onPress={() => navigation.goBack()} />
-          <Appbar.Content title="Edit Good" />
-<Appbar.Action icon="calendar" onPress={() => {}} />
-          <Appbar.Action icon="magnify" onPress={() => {}} />
-          <Appbar.Action icon={MORE_ICON} onPress={() => {}} /> 
-          <Button onPress={saveGood} labelStyle={{ fontSize: 15, color: 'black' }}>
-            SAVE
-          </Button>
-        </Appbar.Header>
-*/

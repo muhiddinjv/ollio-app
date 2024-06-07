@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { useColorScheme } from "nativewind";
 import { Divider, List, Text } from "react-native-paper";
 import { MainColors } from "../theme";
-import { CenteredCheckbox } from "./CenteredCheckbox";
+import { CheckBox } from "./CheckBox";
 import { GlobalContext } from "../utils";
 
 const ListItem = ({
@@ -33,7 +33,6 @@ const ListItem = ({
           color: MainColors.icon[colorScheme],
         }}
         onPress={() => {
-          console.log('goodId :>> ', goodId);
           setGoodId(goodId)
           if(editable){
             navigate('GoodEdit'); 
@@ -47,8 +46,8 @@ const ListItem = ({
           />
         )}
         right={() => {
-          if (variant === "checkbox") {
-            return <CenteredCheckbox checked={checked} onChange={onChange} />;
+          if (variant === "CheckBox") {
+            return <CheckBox checked={checked} onChange={onChange} />;
           } else {
             return (
               <View className="justify-center">

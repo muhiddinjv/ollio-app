@@ -53,7 +53,7 @@ const Catalog = () => {
                 key={item._id}
                 title={item.title}
                 description="description was supposed to be here"
-                variant="checkbox"
+                variant="CheckBox"
                 checked={catalogIds?.includes(item._id)}
                 onChange={() => handleToggleItem(item._id)}
             />

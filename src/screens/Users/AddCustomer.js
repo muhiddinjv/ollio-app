@@ -3,7 +3,7 @@ import { View, ScrollView, Image } from "react-native";
 import { Text } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 // import { search_icon } from "../../assets/icons";
-import SaveChargeBtns from "../../components/SaveChargeBtns";
+import SaveCharge from "../../components/SaveCharge";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { styled } from "nativewind";
@@ -33,7 +33,7 @@ const AddCustomerScreen = ({ navigation }) => {
     <View className="flex-1">
       <ScrollView className="p-4">
         <View className="w-full items-center">
-          <SaveChargeBtns />
+          <SaveCharge />
         </View>
         <View className="flex-row justify-center items-center border border-black h-12 my-4">
           <StyledPicker

@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { View, SafeAreaView } from "react-native";
-import { Switch, Text, IconButton, Button, Appbar, useTheme } from "react-native-paper";
+import { Switch, Text, IconButton, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -12,6 +12,7 @@ import { GlobalContext } from "../../utils";
 
 import axiosInstance from "../../api/instance";
 import Wrapper from "../../components/Wrapper";
+import Header from "../../components/Header";
 
 const tableData = [
   {
@@ -35,7 +36,6 @@ const GoodEdit = ({ navigation }) => {
   const queryClient = useQueryClient();
 
   const { goodId } = useContext(GlobalContext);
-  const { colors } = useTheme();
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -112,19 +112,11 @@ const GoodEdit = ({ navigation }) => {
 
   return (
     <>
-      <Appbar.Header
-        style={{ backgroundColor: colors.primary }}
-        theme={{ mode: 'adaptive' }}
-      >
-        <Appbar.BackAction iconColor="white" onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Edit Good" titleStyle={{ color: 'white' }} />
-        <Appbar.Action icon="content-save" size={28} color="white" onPress={saveGood} />
-      </Appbar.Header>
-
+      <Header title="Edit Good" icon="content-save" hasBackBtn={true} navigation={navigation} onPress={saveGood}/>
       <Wrapper>
         <SafeAreaView className="flex-1 dark:bg-gray-900">
           <CardElevated>
-            <TxtInput value={title} onChangeText={setTitle} label="Title" />
+            <TxtInput value={title} onChangeText={setTitle} label="Title"/>
             <View className="flex flex-row">
               <TxtInput
                 value={cost}

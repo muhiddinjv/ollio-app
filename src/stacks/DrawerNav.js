@@ -1,44 +1,70 @@
 import React from 'react';
+import { Platform, View } from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import { IconButton, useTheme } from 'react-native-paper';
+import { IconButton, useTheme, Text, Button } from 'react-native-paper';
 import { useColorScheme } from 'nativewind';
 
 import SignOutScreen from '../screens/Auth/SignOut';
 import GoodTabs from '../screens/Goods/GoodTabs';
 import SalesScreen from '../screens/Sales';
 import Sidebar from '../components/Sidebar';
+import { useRoute } from '@react-navigation/native';
+import Header from '../components/Header';
 
 const Drawer = createDrawerNavigator();
+const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
-function CustomDrawerContent({ navigation }) {
-  return (
-    <Button
-      title="Go somewhere"
-      onPress={() => {
-        // Navigate using the `navigation` prop that you received
-        navigation.navigate('SomeScreen');
-      }}
-    />
-  );
-}
-
-const DrawerNav = () => {
+const DrawerNav = ({navigation}) => {
   const { colorScheme } = useColorScheme();
   const { colors } = useTheme();
+  const route = useRoute();
 
   return (
     <Drawer.Navigator
       drawerContent={props => <Sidebar {...props} />}
-      screenOptions={{
+      screenOptions={({ route }) => ({
+        headerRight: () => {
+          if (route.name === 'Sales') {
+            return (
+              <View className="flex-row items-center">
+                <Button icon="cart" mode="contained" labelStyle={{fontSize:19}} onPress={() => console.log('cart')}>
+                  999
+                </Button>
+                <IconButton
+                  icon="account-plus"
+                  iconColor="white"
+                  size={25}
+                  onPress={() => console.log('account')}
+                />
+                <IconButton
+                  icon={MORE_ICON}
+                  iconColor="white"
+                  size={25}
+                  onPress={() => console.log('more')}
+                />
+              </View>
+            );
+          }
+          if (route.name === 'Goods') {
+            return (
+              <IconButton
+                icon="magnify"
+                iconColor="white"
+                size={25}
+                onPress={() => console.log('hello')}
+              />
+            );
+          }
+        },
         headerTintColor: "white",
         headerStyle: { backgroundColor: colors.primary },
         drawerActiveBackgroundColor: colors.primary,
         drawerActiveTintColor: 'white',
-        drawerInactiveTintColor: colorScheme == 'dark' ? '#fff' : '#333',
+        drawerInactiveTintColor: colorScheme == 'dark'? '#fff' : '#333',
         drawerLabelStyle: { marginLeft: -25, fontSize: 18}
-      }}>
+      })}
+    >
       <Drawer.Screen
-        // drawerContent={(props) => <CustomDrawerContent {...props}/>}
         name="Sales"
         component={SalesScreen}
         options={{

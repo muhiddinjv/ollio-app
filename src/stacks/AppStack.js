@@ -10,6 +10,7 @@ import Goods from '../screens/Goods/Goods';
 import GoodEdit from '../screens/Goods/GoodEdit';
 import GoodTabs from '../screens/Goods/GoodTabs';
 import GoodAdd from '../screens/Goods/GoodAdd';
+import GoodQty from '../screens/Goods/GoodQty';
 
 const Stack = createStackNavigator();
 const isLoggedIn = true; 
@@ -38,6 +39,7 @@ const AppStack = () => {
       <Stack.Screen name="GoodEdit" component={GoodEdit} options={{ headerShown: false }}/>
       <Stack.Screen name="GoodTabs" component={GoodTabs} options={{ headerShown: false }}/>
       <Stack.Screen name="GoodAdd" component={GoodAdd}/>
+      <Stack.Screen name="GoodQty" component={GoodQty}/>
       <Stack.Screen name="Goods" component={Goods}/>
       {/* Common modal screens */}
       {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>

@@ -58,9 +58,11 @@ const SalesScreen = ({ navigation }) => {
           refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
           renderItem={({ item }) => (
             <ListItem
+              onSalesScreen
               key={item._id}
               goodId={item._id}
               title={item.title}
+              navigate={navigation.navigate}
               description={item.description}
               price={item.price} 
             />

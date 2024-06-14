@@ -4,7 +4,7 @@ import { getAccessToken } from "../screens/Auth/astorage"
 import axiosInstance from "../api/instance"
 import _ from "lodash"
 
-export const useInfiniteScroll = ({ key, url, limit = 10, filters }) => {
+export const useInfiniteScroll = ({ key, url, limit = 100, filters }) => {
   const queryKey = [ ...key, ..._.values(_.omitBy(filters || {}, _.isEmpty))]
     .filter(c => Boolean(c) && !_.isEmpty(c))
 

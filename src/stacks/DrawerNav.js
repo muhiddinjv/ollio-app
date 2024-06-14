@@ -6,7 +6,7 @@ import { useColorScheme } from 'nativewind';
 
 import SignOutScreen from '../screens/Auth/SignOut';
 import GoodTabs from '../screens/Goods/GoodTabs';
-import SalesScreen from '../screens/Sales';
+import SalesScreen from '../screens/Sales/Sales';
 import Sidebar from '../components/Sidebar';
 import { useRoute } from '@react-navigation/native';
 import Header from '../components/Header';
@@ -28,7 +28,7 @@ const DrawerNav = ({navigation}) => {
             return (
               <View className="flex-row items-center">
                 <Button icon="cart" mode="contained" labelStyle={{fontSize:19}} onPress={() => console.log('cart')}>
-                  999
+                  99+
                 </Button>
                 <IconButton
                   icon="account-plus"

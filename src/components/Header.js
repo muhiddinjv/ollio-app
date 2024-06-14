@@ -9,7 +9,6 @@ const Header = ({ title, icon, onPress, navigation, hasBackBtn }) => {
       {hasBackBtn && <Appbar.BackAction iconColor="white" onPress={() => navigation.goBack()} />}
       <Appbar.Content title={title} titleStyle={{ color: 'white' }} />
       <Appbar.Action icon={icon} size={28} color="white" onPress={onPress} />
-      <Appbar.Action icon={icon} size={28} color="white" onPress={onPress} />
     </Appbar.Header>
   );
 };

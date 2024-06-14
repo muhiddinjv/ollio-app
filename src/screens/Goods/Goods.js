@@ -1,6 +1,6 @@
 import { FlatList, RefreshControl } from "react-native";
 import ListItem from "../../components/ListItem";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";

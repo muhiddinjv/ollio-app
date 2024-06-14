@@ -26,7 +26,7 @@ const initialLayout = { width: Dimensions.get("window").width };
 const routes = [
   { key: "first", title: "Catalog" },
   { key: "second", title: "Goods" },
-  { key: "third", title: "More" },
+  // { key: "third", title: "More" },
 ];
 
 const GoodTabs = ({ navigation }) => {

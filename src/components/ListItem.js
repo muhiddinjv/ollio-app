@@ -13,6 +13,7 @@ const ListItem = ({
   variant,
   price,
   editable,
+  onSalesScreen,
   navigate,
   checked,
   onChange,
@@ -36,6 +37,9 @@ const ListItem = ({
           setGoodId(goodId)
           if(editable){
             navigate('GoodEdit'); 
+          } 
+          if(onSalesScreen){
+            navigate('GoodQty'); 
           }
         }
         }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Platform, View } from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import { IconButton, useTheme, Text, Button } from 'react-native-paper';
@@ -9,12 +9,13 @@ import GoodTabs from '../screens/Goods/GoodTabs';
 import SalesScreen from '../screens/Sales/Sales';
 import Sidebar from '../components/Sidebar';
 import { useRoute } from '@react-navigation/native';
-import Header from '../components/Header';
+import { GlobalContext } from '../utils';
 
 const Drawer = createDrawerNavigator();
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
 const DrawerNav = ({navigation}) => {
+  const { goodQty } = useContext(GlobalContext);
   const { colorScheme } = useColorScheme();
   const { colors } = useTheme();
   const route = useRoute();
@@ -27,14 +28,14 @@ const DrawerNav = ({navigation}) => {
           if (route.name === 'Sales') {
             return (
               <View className="flex-row items-center">
-                <Button icon="cart" mode="contained" labelStyle={{fontSize:19}} onPress={() => console.log('cart')}>
-                  99+
+                <Button icon="cart" mode="contained" labelStyle={{fontSize:19}} onPress={() => navigation.navigate('Bills')}>
+                  {goodQty}
                 </Button>
                 <IconButton
                   icon="account-plus"
                   iconColor="white"
                   size={25}
-                  onPress={() => console.log('account')}
+                  onPress={() => navigation.navigate('Buyers')}
                 />
                 <IconButton
                   icon={MORE_ICON}
@@ -51,7 +52,7 @@ const DrawerNav = ({navigation}) => {
                 icon="magnify"
                 iconColor="white"
                 size={25}
-                onPress={() => console.log('hello')}
+                onPress={() => console.log('search')}
               />
             );
           }

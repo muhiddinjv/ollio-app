@@ -38,6 +38,7 @@ export const LightScheme = {
 };
 
 export const MainColors = {
+  paperPrimary: 'rgba(103, 80, 164, 1)',
   primary: '#8200d6',
   icon: {
     light: "#444",

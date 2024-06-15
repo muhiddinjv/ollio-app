@@ -11,9 +11,11 @@ import GoodEdit from '../screens/Goods/GoodEdit';
 import GoodTabs from '../screens/Goods/GoodTabs';
 import GoodAdd from '../screens/Goods/GoodAdd';
 import GoodQty from '../screens/Goods/GoodQty';
+import Bills from '../screens/Bills/Bills';
+import Buyers from '../screens/Users/Buyers';
 
 const Stack = createStackNavigator();
-const isLoggedIn = true; 
+const isSignedIn = true; 
 
 const AppStack = () => {
   const navigation = useNavigation();
@@ -21,7 +23,6 @@ const AppStack = () => {
   React.useEffect(() => {
     const checkToken = async () => {
       const accessToken = await getAccessToken();
-      // if no token, navigate to SignIn
       if (!accessToken) {
         navigation.navigate('SignIn');
       } else {
@@ -32,15 +33,17 @@ const AppStack = () => {
   }, []);
 
   return (
-    <Stack.Navigator initialRouteName={isLoggedIn ? 'DrawerNav' : 'SignIn'}>
+    <Stack.Navigator initialRouteName={isSignedIn ? 'DrawerNav' : 'SignIn'}>
       <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }}/>
       <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
       <Stack.Screen name="DrawerNav" component={DrawerNav} options={{ headerShown: false }}/>
       <Stack.Screen name="GoodEdit" component={GoodEdit} options={{ headerShown: false }}/>
       <Stack.Screen name="GoodTabs" component={GoodTabs} options={{ headerShown: false }}/>
+      <Stack.Screen name="GoodQty" component={GoodQty} options={{ headerShown: false }}/>
       <Stack.Screen name="GoodAdd" component={GoodAdd}/>
-      <Stack.Screen name="GoodQty" component={GoodQty}/>
       <Stack.Screen name="Goods" component={Goods}/>
+      <Stack.Screen name="Bills" component={Bills}/>
+      <Stack.Screen name="Buyers" component={Buyers}/>
       {/* Common modal screens */}
       {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Help" component={Help} />

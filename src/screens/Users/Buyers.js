@@ -2,14 +2,14 @@ import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 
-const CustomersScreen = ({ navigation }) => {
+const Buyers = ({ navigation }) => {
   return (
     <View className="flex-1">
       <View className="flex-row items-center justify-between border-b border-gray-500 p-4">
         <TouchableOpacity onPress={() => navigation.goBack()}>
           {/* <Image source={close} className="h-6 w-6" /> */}
         </TouchableOpacity>
-        <Text className="text-lg font-semibold">Add Customer to Ticket</Text>
+        <Text className="text-lg font-semibold">Add Buyer to Bill</Text>
         <View></View>
       </View>
 
@@ -21,15 +21,15 @@ const CustomersScreen = ({ navigation }) => {
       </View>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate("EditCustomerScreen")}
+        onPress={() => navigation.navigate("BuyerAdd")}
         className="p-3 rounded-lg items-center mt-4"
       >
         <Text className="text-green-600 text-lg font-semibold">
-          ADD NEW CUSTOMER
+          ADD NEW BUYER
         </Text>
       </TouchableOpacity>
       <View className="border-b border-gray-500 h-0.5"></View>
-      <Text className="text-lg font-semibold mt-4 ml-2">Recent customers</Text>
+      <Text className="text-lg font-semibold mt-4 ml-2">Recent buyers</Text>
       <ScrollView>
         <View className="flex items-center p-2">
           {[...Array(20)].map((_, index) => (
@@ -49,4 +49,4 @@ const CustomersScreen = ({ navigation }) => {
   );
 };
 
-export default CustomersScreen;
+export default Buyers;

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import "react-native-gesture-handler";
 import { Linking, Platform } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
@@ -23,11 +23,13 @@ const queryClient = new QueryClient({
 
 function App() {
    // Don't persist state/screen on web since it's based on URL
-  const [isReady, setIsReady] = React.useState(Platform.OS === 'web');
-  const [initialState, setInitialState] = React.useState();
-  const [goodId, setGoodId] = React.useState()
+  const [ isReady, setIsReady ] = useState(Platform.OS === 'web');
+  const [ initialState, setInitialState ] = useState();
+  const [ goodQty, setGoodQty ] = useState(0);
+  const [ goodId, setGoodId ] = useState(null)
+  const [ buyerId, setBuyerId ] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const restoreState = async () => {
       try {
         const initialUrl = await Linking.getInitialURL();
@@ -56,7 +58,7 @@ function App() {
   }
 
   return (
-    <GlobalContext.Provider value={{ goodId, setGoodId }}>
+    <GlobalContext.Provider value={{ goodId, setGoodId, goodQty, setGoodQty }}>
       <PaperProvider>
         <NavigationContainer
           initialState={initialState}

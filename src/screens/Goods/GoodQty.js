@@ -1,19 +1,21 @@
-import { View, Text } from 'react-native'
+import { View, Platform, Keyboard, Alert } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query';
 import { getAccessToken } from '../Auth/astorage';
 import axiosInstance from '../../api/instance';
 import { GlobalContext } from '../../utils';
+import { TextInput } from 'react-native-paper';
+import Header from '../../components/Header';
 
-const GoodQty = () => {
-    const { goodId } = useContext(GlobalContext);
-    const [title, setTitle] = useState("");
+const GoodQty = ({navigation}) => {
+    const { goodId, setGoodQty, goodQty } = useContext(GlobalContext);
+    const [ title, setTitle ] = useState();
 
     const goodsQuery = useQuery({
-        queryKey: ["good",goodId], queryFn: async () => {
+        queryKey: ["good", goodId], queryFn: async () => {
             const accessToken = await getAccessToken()
             const response = await axiosInstance.get(`goods/${goodId}`, {
-            headers: { Authorization: `Bearer ${accessToken}` }
+                headers: { Authorization: `Bearer ${accessToken}` }
             })
             return response.data
         }
@@ -27,7 +29,8 @@ const GoodQty = () => {
       
     return (
         <View>
-            <Text>Title: {title}</Text>
+            <Header title={title} fontSize={18} icon="content-save" navigation={navigation} backBtn/>
+            <TextInput onChangeText={qty => setGoodQty(qty)} value={goodQty} returnKeyType='done' onSubmitEditing = {() => navigation.navigate('Sales')} keyboardType={Platform.OS === 'ios' ? "number-pad" : "numeric"} placeholder='0' className='text-2xl' autoFocus />
         </View>
     )
 }

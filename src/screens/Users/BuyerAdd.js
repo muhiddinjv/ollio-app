@@ -10,7 +10,7 @@ import { styled } from "nativewind";
 
 const StyledPicker = styled(Picker);
 
-const AddCustomerScreen = ({ navigation }) => {
+const BuyerAdd = ({ navigation }) => {
   const [selectedItem, setSelectedItem] = useState("");
   const [Products, setProducts] = useState([
     { id: 1, name: "Narxlar o'zgarishi mumkin", price: 0 },
@@ -76,4 +76,4 @@ const AddCustomerScreen = ({ navigation }) => {
   );
 };
 
-export default AddCustomerScreen;
+export default BuyerAdd;

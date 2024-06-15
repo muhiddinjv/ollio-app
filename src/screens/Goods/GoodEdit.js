@@ -112,7 +112,7 @@ const GoodEdit = ({ navigation }) => {
 
   return (
     <>
-      <Header title="Edit Good" icon="content-save" hasBackBtn={true} navigation={navigation} onPress={saveGood}/>
+      <Header title="Edit Good" icon="content-save" navigation={navigation} onPress={saveGood} backBtn rightBtn />
       <Wrapper>
         <SafeAreaView className="flex-1 dark:bg-gray-900">
           <CardElevated>

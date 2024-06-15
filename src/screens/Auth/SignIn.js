@@ -31,6 +31,7 @@ export default function SignIn({ navigation }) {
   // }, [])
 
   const handleSignIn = async () => {  
+    console.log('auth >> ', phoneNumber, password);
     try {
       const response = await axiosInstance.post("auth/signin", { phoneNumber, password })
       const { accessToken, refreshToken } = response.data;

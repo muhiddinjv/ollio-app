@@ -1,5 +1,5 @@
 export const useAllServices = () => {
-  const { $apiClient } = useNuxtApp()
+  const { $apiClient } = useNuxtApp() // Vue.js Nuxt.js 
 
   const getMe = (params) => $apiClient.post('/login', params)
 

@@ -1,4 +1,4 @@
-import { View, Platform, Keyboard, Alert } from 'react-native'
+import { View, Platform } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query';
 import { getAccessToken } from '../Auth/astorage';
@@ -7,9 +7,9 @@ import { GlobalContext } from '../../utils';
 import { TextInput } from 'react-native-paper';
 import Header from '../../components/Header';
 
-const GoodQty = ({navigation}) => {
+const GoodQty = ({ navigation }) => {
     const { goodId, setGoodQty, goodQty } = useContext(GlobalContext);
-    const [ title, setTitle ] = useState();
+    const [title, setTitle] = useState();
 
     const goodsQuery = useQuery({
         queryKey: ["good", goodId], queryFn: async () => {
@@ -26,11 +26,17 @@ const GoodQty = ({navigation}) => {
             setTitle(goodsQuery?.data.title);
         }
     }, [goodsQuery?.data, goodId]);
-      
+
     return (
         <View>
-            <Header title={title} fontSize={18} icon="content-save" navigation={navigation} backBtn/>
-            <TextInput onChangeText={qty => setGoodQty(qty)} value={goodQty} returnKeyType='done' onSubmitEditing = {() => navigation.navigate('Sales')} keyboardType={Platform.OS === 'ios' ? "number-pad" : "numeric"} placeholder='0' className='text-2xl' autoFocus />
+            <Header title={title} fontSize={18} icon="content-save" navigation={navigation} backBtn />
+            <TextInput 
+                onChangeText={qty => setGoodQty(qty)} 
+                value={goodQty} returnKeyType='done' 
+                onSubmitEditing={() => navigation.navigate('Sales')} 
+                keyboardType={Platform.OS === 'ios' ? "number-pad" : "numeric"} 
+                placeholder='0' className='text-2xl' autoFocus 
+            />
         </View>
     )
 }

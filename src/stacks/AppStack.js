@@ -12,6 +12,7 @@ import GoodTabs from '../screens/Goods/GoodTabs';
 import GoodAdd from '../screens/Goods/GoodAdd';
 import GoodQty from '../screens/Goods/GoodQty';
 import Bills from '../screens/Bills/Bills';
+import Bills2 from '../screens/Bills/Bills2';
 import Buyers from '../screens/Users/Buyers';
 
 const Stack = createStackNavigator();

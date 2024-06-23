@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, ScrollView, SafeAreaView, Alert } from "react-native";
-import { Switch, Text, IconButton, Divider, Button } from "react-native-paper";
-import { Picker } from "@react-native-picker/picker";
+import { Switch, Text, IconButton, Button } from "react-native-paper";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Picker } from "@react-native-picker/picker";
 
 import { CardElevated } from "../../components/CardElevated";
 import { TableCard } from "../../components/TableCard";

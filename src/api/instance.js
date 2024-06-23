@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { getAccessToken, getRefreshToken, removeAccessToken } from '../screens/Auth/astorage';
-import { errorCatch } from './err.catch';
+import { errorCatch } from './use_in_future/err.catch';
 
 const androidEmulatorUrl = "http://10.0.2.2:4000/";
 const expoGoAppUrl = "http://192.168.95.6:4000/";

@@ -33,8 +33,10 @@ const Bills = () => {
     })
 
   return (
-    <View>
-      <Text>Bills</Text>
+    <View className='p-4'>
+      <Text>title + quantity</Text>
+      <Text>total price per product</Text>
+      <Text>total price of all products</Text>
     </View>
   )
 }

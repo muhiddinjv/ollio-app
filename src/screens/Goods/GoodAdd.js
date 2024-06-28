@@ -77,7 +77,6 @@ const GoodAdd = ({ navigation }) => {
       Alert.alert("Title Required", "Please fill out the title field.");
       return; // Exit the function early if the title is empty
     }
-  
     // Proceed with the mutation if the title is valid
     addGoodMutation.mutate();
   };

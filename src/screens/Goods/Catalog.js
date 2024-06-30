@@ -11,11 +11,9 @@ const Catalog = () => {
   const [itemIds, setItemIds] = useState([]);
   queryClient.setQueryData(["catalogIds"], itemIds);
 
-  const {
-    data: { data: catalogItems },
-    isLoading,
-    isError,
-  } = UseGetCatalog({});
+  const { data, isLoading, isError } = UseGetCatalog({});
+
+  const catalogItems = data?.data || [];
 
   const handleToggleItem = (id) => {
     setItemIds((prevIds) => {
@@ -53,7 +51,7 @@ const Catalog = () => {
 
   return (
     <ScrollView>
-      {catalogItems.map((item) => (
+      {catalogItems?.map((item) => (
         <ListItem
           key={item._id}
           title={item.title}

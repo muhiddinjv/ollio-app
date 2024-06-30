@@ -6,14 +6,6 @@ export const getCatalog = (queryParams) =>
     params: queryParams,
   });
 
-// export const UseGetCatalog = ({ queryParams }) => {
-//   return useQuery(["CATALOG_ITEMS", queryParams], async () => {
-//     return await getCatalog(queryParams)
-//       .then((res) => res)
-//       .catch((err) => console.log(err));
-//   });
-// };
-
 export const UseGetCatalog = ({ queryParams }) => {
   return useQuery({
     queryKey: ["CATALOG_ITEMS", queryParams],

@@ -2,94 +2,74 @@ import { useState, useContext, useEffect } from "react";
 import { View, SafeAreaView } from "react-native";
 import { Switch, Text, IconButton, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-
+import { useQueryClient } from "@tanstack/react-query";
 import { CardElevated } from "../../components/CardElevated";
-import { TxtInput } from "../../components/TxtInput";
-
 import { getAccessToken } from "../Auth/astorage";
 import { GlobalContext } from "../../utils";
-
 import axiosInstance from "../../api/instance";
 import Wrapper from "../../components/Wrapper";
 import Header from "../../components/Header";
+import { Controller, useForm } from "react-hook-form";
+import ControlledInputCustom from "../../components/ControlledInputCustom";
+import { UseGetGood } from "../../services/goods.service";
 
-const tableData = [
-  {
-    key: 1,
-    shop: "Mega Planet",
-    price: 5600,
-  },
-  {
-    key: 2,
-    shop: "Korzinka",
-    price: 7200,
-  },
-  {
-    key: 3,
-    shop: "Havas",
-    price: 3400,
-  },
-];
 
 const GoodEdit = ({ navigation }) => {
   const queryClient = useQueryClient();
-
   const { goodId } = useContext(GlobalContext);
-
-  const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const [quantity, setQuantity] = useState(0);
-  const [price, setPrice] = useState(0);
-  const [cost, setCost] = useState(0);
-  const [groupItem, setGroupItem] = useState(false);
-  const [trackStock, setTrackStock] = useState(false);
 
-  const goodsQuery = useQuery({
-    queryKey: ["good",goodId], queryFn: async () => {
-      console.log('goodId in goodsQuery :>> ', goodId);
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    reset,
+    getValues,
+  } = useForm();
 
-      const accessToken = await getAccessToken()
-      const response = await axiosInstance.get(`goods/${goodId}`, {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      })
-      return response.data
-    }
-  })
+  const goodsQuery = UseGetGood(goodId);
 
   useEffect(() => {
     if (goodsQuery?.data) {
-      setTitle(goodsQuery?.data.title);
-      setPrice(String(goodsQuery?.data.price));
-      setCost(String(goodsQuery?.data.cost));
-      setQuantity(String(goodsQuery?.data.quantity));
-      setGroupItem(goodsQuery?.data.groupItem);
-      setTrackStock(goodsQuery?.data.trackStock);
-      // setCategory(goods.category);
+      console.log("goodsQueryCost", goodsQuery?.data);
+      reset({
+        cost: String(goodsQuery?.data.cost),
+        quantity: String(goodsQuery?.data.quantity),
+        price: String(goodsQuery?.data.price),
+        title: goodsQuery?.data.title,
+        groupItem: goodsQuery?.data?.groupItem,
+        trackStock: goodsQuery?.data?.trackStock,
+      });
     }
   }, [goodsQuery?.data, goodId]);
+
+  console.log("getValues", getValues("cost"));
 
   const handleAddVariant = () => {
     // Implement logic to add a new variant
   };
 
-  const saveGood = async () => {
+  const saveGood = async (data) => {
     const accessToken = await getAccessToken();
     try {
-      await axiosInstance.patch(`goods/${goodId}`, {
-        title,
-        // category,
-        quantity,
-        price: parseFloat(price),
-        cost: parseFloat(cost),
-        groupItem,
-        trackStock,
-        // modifiers,
-        // representation
-      }, {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      });
-      navigation.navigate("DrawerNav")
+      await axiosInstance.patch(
+        `goods/${goodId}`,
+        {
+          title: data?.title,
+          // category,
+          quantity: data?.quantity,
+          price: parseFloat(data?.price),
+          cost: parseFloat(data?.cost),
+          groupItem: data?.groupItem,
+          trackStock: data?.trackStock,
+          // modifiers,
+          // representation
+        },
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+      navigation.navigate("DrawerNav");
     } catch (error) {
       console.error("Error updating good:", error);
     } finally {
@@ -100,8 +80,10 @@ const GoodEdit = ({ navigation }) => {
   const deleteGood = async () => {
     const accessToken = await getAccessToken();
     try {
-      await axiosInstance.delete(`goods/${goodId}`, { headers: { Authorization: `Bearer ${accessToken}` } });
-      navigation.navigate("DrawerNav")
+      await axiosInstance.delete(`goods/${goodId}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      navigation.navigate("DrawerNav");
     } catch (error) {
       console.error("Error deleting good:", error);
     } finally {
@@ -109,33 +91,64 @@ const GoodEdit = ({ navigation }) => {
     }
   };
 
+  console.log("rendered times");
 
   return (
     <>
-      <Header title="Edit Good" icon="content-save" navigation={navigation} onPress={saveGood} backBtn rightBtn />
+      <Header
+        title="Edit Good"
+        icon="content-save"
+        navigation={navigation}
+        onPress={handleSubmit(saveGood)}
+        backBtn
+        rightBtn
+      />
       <Wrapper>
         <SafeAreaView className="flex-1 dark:bg-gray-900">
           <CardElevated>
-            <TxtInput value={title} onChangeText={setTitle} label="Title"/>
-            <View className="flex flex-row">
-              <TxtInput
-                value={cost}
-                label="Cost"
-                marginRight={2}
-                onChangeText={setCost}
-                keyboardType="phone-pad"
-              />
-              <TxtInput
-                value={price}
-                label="Price"
-                marginLeft={2}
-                onChangeText={setPrice}
-                keyboardType="phone-pad"
-              />
+            <ControlledInputCustom
+              inputLabel="Title"
+              control={control}
+              name="title"
+              className="bg-transparent w-full mb-0 pb-0 border-b-gray-600 border-b"
+            />
+            <View className="flex flex-row w-full gap-4">
+              <View className="w-1/2">
+                <ControlledInputCustom
+                  inputLabel="Cost"
+                  control={control}
+                  name="cost"
+                  label="Cost"
+                  className="bg-transparent w-full mb-0 pb-0 border-b-gray-600 border-b"
+                />
+              </View>
+              <View className="w-1/2">
+                <ControlledInputCustom
+                  inputLabel="Price"
+                  control={control}
+                  name="price"
+                  label="Cost"
+                  className="bg-transparent w-full mb-0 pb-0 border-b-gray-600 border-b"
+                />
+              </View>
             </View>
-            <View className='flex flex-row'>
-              <TxtInput value={quantity} marginRight={2} onChangeText={setQuantity} label="Quantity" />
-              <TxtInput value={0} marginLeft={2} onChangeText={() => { }} label="SKU" />
+            <View className="flex flex-row gap-2">
+              <View className="w-1/2">
+                <ControlledInputCustom
+                  inputLabel="Quantity"
+                  control={control}
+                  name="quantity"
+                  className="bg-transparent flex-grow mb-0 pb-0 border-b-gray-600 border-b"
+                />
+              </View>
+              <View className="w-1/2">
+                <ControlledInputCustom
+                  inputLabel="SKU"
+                  control={control}
+                  name="sku"
+                  className="bg-transparent flex-grow mb-0 pb-0 border-b-gray-600 border-b"
+                />
+              </View>
             </View>
             <View className="border-b border-slate-400">
               <Picker
@@ -153,24 +166,36 @@ const GoodEdit = ({ navigation }) => {
             <View className=" flex-row">
               <View className="flex-row items-center mr-10">
                 <Text>Group Item</Text>
-                <Switch
-                  value={groupItem}
-                  onValueChange={() => setGroupItem(!groupItem)}
+                <Controller
+                  control={control}
+                  name="groupItem"
+                  rules={{ required: "This field is required" }}
+                  render={({ field: { onChange, value } }) => (
+                    <Switch value={value} onValueChange={onChange} />
+                  )}
                 />
               </View>
               <View className="flex-row items-center">
                 <Text>Track Stock</Text>
-                <Switch
+                <Controller
+                  control={control}
+                  name="trackStock"
+                  render={({ field: { onChange, value } }) => (
+                    <Switch value={value} onValueChange={onChange} />
+                  )}
+                />
+                {/* <Switch
                   value={trackStock}
                   onValueChange={() => setTrackStock(!trackStock)}
-                />
+                /> */}
               </View>
             </View>
           </CardElevated>
 
           <CardElevated title="Variants">
             <Text>
-              Use variant if an item has different sizes, colors or other options
+              Use variant if an item has different sizes, colors or other
+              options
             </Text>
             <View className="flex-row items-center text-purple-800">
               <IconButton

@@ -1,21 +1,24 @@
 import React from "react";
 import { Controller } from "react-hook-form";
-import { Text, View } from "react-native";
-import { TextInput } from "react-native-paper";
+import { Text, TextInput, View } from "react-native";
+// import { TextInput } from "react-native-paper";
 
-const ControlledInput = ({
+const ControlledInputCustom = ({
   name,
   control,
   rules,
   className,
   error,
+  inputLabelClass,
   inputLabel,
   ...props
 }) => {
   console.log("error", error);
   return (
     <View className="flex-col">
-      {inputLabel ? <Text className="text-gray-500">{inputLabel}</Text> : null}
+      {inputLabel ? (
+        <Text className={`text-gray-500 ${inputLabelClass}`}>{inputLabel}</Text>
+      ) : null}
       <Controller
         name={name}
         control={control}
@@ -41,4 +44,4 @@ const ControlledInput = ({
   );
 };
 
-export default ControlledInput;
+export default ControlledInputCustom;

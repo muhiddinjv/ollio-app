@@ -31,7 +31,7 @@ const routes = [
 
 const GoodTabs = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
-  const [key, setKey] = useState('initialKey');
+  const [key, setKey] = useState("initialKey");
   const [index, setIndex] = useState(0);
   const { colors } = useTheme();
 
@@ -50,15 +50,15 @@ const GoodTabs = ({ navigation }) => {
 
   const renderScene = SceneMap({
     first: Catalog,
-    second: () => <Goods keyProp={key} navigation={navigation.navigate}/>, 
+    second: () => <Goods keyProp={key} navigation={navigation.navigate} />,
     third: () => <TabMore navigation={navigation.navigate} />,
   });
 
   const renderTabBar = (props) => (
     <TabBar
       {...props}
-      labelStyle={{ fontWeight: 'bold' }}
-      style={{backgroundColor: colors.primary}}
+      labelStyle={{ fontWeight: "bold" }}
+      style={{ backgroundColor: colors.primary }}
       indicatorStyle={{ backgroundColor: "white" }}
     />
   );
@@ -72,7 +72,11 @@ const GoodTabs = ({ navigation }) => {
         renderScene={renderScene}
         onIndexChange={setIndex}
       />
-      <FABplus visible={visible} navigate={navigation.navigate} changeTabIndex={changeTabIndex}/>
+      <FABplus
+        visible={visible}
+        navigate={navigation.navigate}
+        changeTabIndex={changeTabIndex}
+      />
     </View>
   );
 };

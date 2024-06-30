@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FlatList, RefreshControl, View } from "react-native";
+import { RefreshControl, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { styled } from "nativewind";
 import { ActivityIndicator, IconButton, Text } from "react-native-paper";
@@ -8,31 +8,26 @@ import SaveCharge from "../../components/SaveCharge";
 import Loader from "../../components/Loader";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { GlobalContext } from "../../utils";
+import { FlashList } from "@shopify/flash-list";
 
 const StyledPicker = styled(Picker);
 
 const SalesScreen = ({ navigation }) => {
   const { goodId, goodQty } = useContext(GlobalContext);
   const [selectedValue, setSelectedValue] = useState("option1");
-  const [selectedGood, setSelectedGood] = useState(0);
-  const [filters, setFilters] = useState({search: ''});
-  console.log('sales >> ',goodId, goodQty);
+  const [filters, setFilters] = useState({ search: "" });
+  console.log("sales >> ", goodId, goodQty);
 
-  const {
-    data,
-    isRefreshing,
-    onRefresh,
-    onEndReached,
-    isFetchingNextPage
-  } = useInfiniteScroll({
-    url: "goods",
-    limit: 25,
-    filters: filters,
-    key: ['goods'],
-  })
+  const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
+    useInfiniteScroll({
+      url: "goods",
+      limit: 25,
+      filters: filters,
+      key: ["goods"],
+    });
 
   return (
-    <View className="flex-1 w-full dark:bg-slate-800">     
+    <View className="flex-1 w-full dark:bg-slate-800">
       <SaveCharge navigation={navigation} />
       <View className="flex-row items-center pl-4 h-14 border border-gray-400">
         <StyledPicker
@@ -52,32 +47,40 @@ const SalesScreen = ({ navigation }) => {
           />
         </View>
       </View>
-        {Array.isArray(data) 
-          ? <FlatList
-            data={data}
-            onEndReached={onEndReached}
-            removeClippedSubviews={true}
-            refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
-            renderItem={({ item }) => (
-              <ListItem
-                onSalesScreen
-                key={item._id}
-                goodId={item._id}
-                title={item.title}
-                navigate={navigation.navigate}
-                description={item.description}
-                price={item.price} 
-              />
-            )}
-            ListEmptyComponent={
-              <View className='flex items-center'>
-                <Loader />
-              </View>
-            }
-            ListFooterComponent={() =>
-              {isFetchingNextPage && <ActivityIndicator />}
-            }/> 
-          : <Loader />}
+      {Array.isArray(data) ? (
+        <FlashList
+          data={data}
+          onEndReached={onEndReached}
+          onEndReachedThreshold={2}
+          removeClippedSubviews={true}
+          estimatedItemSize={84}
+          LoaderComponent={<Loader />}
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
+          renderItem={({ item }) => (
+            <ListItem
+              onSalesScreen
+              key={item._id}
+              goodId={item._id}
+              title={item.title}
+              navigate={navigation.navigate}
+              description={item.description}
+              price={item.price}
+            />
+          )}
+          ListEmptyComponent={
+            <View className="flex items-center">
+              <Loader />
+            </View>
+          }
+          ListFooterComponent={() => {
+            isFetchingNextPage && <ActivityIndicator />;
+          }}
+        />
+      ) : (
+        <Loader />
+      )}
     </View>
   );
 };

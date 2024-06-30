@@ -1,16 +1,23 @@
-import axios, { AxiosInstance } from 'axios';
-import { getAccessToken, getRefreshToken, removeAccessToken } from '../screens/Auth/astorage';
-import { errorCatch } from './use_in_future/err.catch';
+import axios, { AxiosInstance } from "axios";
+import {
+  getAccessToken,
+  getRefreshToken,
+  removeAccessToken,
+} from "../screens/Auth/astorage";
+import { errorCatch } from "./use_in_future/err.catch";
 
-const androidEmulatorUrl = "http://10.0.2.2:4000/";
-const expoGoAppUrl = "http://192.168.95.6:4000/";
+const baseURL = "http://localhost:4000/";
+const url = "http://192.168.0.105:4000/";
+
+// const androidEmulatorUrl = "http://10.0.2.2:4000/";
+// const expoGoAppUrl = "http://192.168.95.6:4000/";
 
 const axiosInstance = axios.create({
-	withCredentials: true,
-	baseURL: expoGoAppUrl,
-	headers: {
-	  "Content-Type": "application/json",
-	},
+  withCredentials: true,
+  baseURL: url,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 // axiosInstance.interceptors.response.use(res => res, async error => {
@@ -65,5 +72,4 @@ const axiosInstance = axios.create({
 // 	}
 // )
 
-export default axiosInstance
-
+export default axiosInstance;

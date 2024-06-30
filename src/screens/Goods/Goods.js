@@ -1,36 +1,35 @@
-import { FlatList, RefreshControl } from "react-native";
+import { RefreshControl } from "react-native";
 import ListItem from "../../components/ListItem";
 import { useState } from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
+import { FlashList } from "@shopify/flash-list";
 
 const Goods = ({ keyProp, navigation }) => {
   const [goodId, setGoodId] = useState([]);
-  const [products, setProducts] = useState();
   const [filters, setFilters] = useState({
-    search: '',
+    search: "",
   });
- 
-  const {
-    data,
-    isRefreshing,
-    onRefresh,
-    onEndReached,
-    isFetchingNextPage
-  } = useInfiniteScroll({
-    url: "goods",
-    limit: 25,
-    filters: filters,
-    key: ['goods', keyProp],
-  })
+
+  const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
+    useInfiniteScroll({
+      url: "goods",
+      limit: 25,
+      filters: filters,
+      key: ["goods", keyProp],
+    });
 
   return (
-    <FlatList
+    <FlashList
       data={data}
       onEndReached={onEndReached}
+      onEndReachedThreshold={2}
       removeClippedSubviews={true}
-      refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+      estimatedItemSize={84}
+      refreshControl={
+        <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+      }
       renderItem={({ item }) => (
         <ListItem
           key={item._id}
@@ -39,18 +38,18 @@ const Goods = ({ keyProp, navigation }) => {
           description={item.description}
           editable
           navigate={navigation}
-          price={item.price} 
+          price={item.price}
           checked={goodId.includes(item._id)}
         />
       )}
       ListEmptyComponent={
-        <View className='flex items-center'>
+        <View className="flex items-center">
           <Text>No result</Text>
         </View>
       }
-      ListFooterComponent={() =>
-        {isFetchingNextPage && <ActivityIndicator />}
-      }
+      ListFooterComponent={() => {
+        isFetchingNextPage && <ActivityIndicator />;
+      }}
     />
   );
 };

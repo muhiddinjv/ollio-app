@@ -14,7 +14,7 @@ const Goods = ({ keyProp, navigation }) => {
 
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
     useInfiniteScroll({
-      url: "goods",
+      url: "products/stock",
       limit: 25,
       filters: filters,
       key: ["goods", keyProp],

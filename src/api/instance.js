@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios";
+import axios from "axios";
 import {
   getAccessToken,
   getRefreshToken,
@@ -6,17 +6,19 @@ import {
 } from "../screens/Auth/astorage";
 import { errorCatch } from "./use_in_future/err.catch";
 
-const baseURL = "http://localhost:4000/";
-const url = "http://192.168.0.105:4000/";
+const token = getAccessToken();
+console.log("token", token);
 
-// const androidEmulatorUrl = "http://10.0.2.2:4000/";
-// const expoGoAppUrl = "http://192.168.95.6:4000/";
+// const baseURL = "http://localhost:4000/";
+// const url = "http://192.168.0.105:4000/";
+const url = "http://45.138.158.116:3000/";
 
 const axiosInstance = axios.create({
   withCredentials: true,
   baseURL: url,
   headers: {
     "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
   },
 });
 

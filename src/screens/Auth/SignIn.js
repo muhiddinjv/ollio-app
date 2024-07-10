@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   Text,
   View,
-  Button,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
@@ -11,7 +10,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TextInput, Button as RNButton } from "react-native-paper";
 import { AuthProvider, useAuth } from ".";
-import { setAccessToken, setRefreshToken, getAccessToken } from "./astorage";
+import { setAccessToken } from "./astorage";
 import axiosInstance from "../../api/instance";
 import { useColorScheme } from "nativewind";
 import { MainColors } from "../../theme";
@@ -20,7 +19,7 @@ import ControlledInput from "../../components/ControlledInput";
 
 export default function SignIn({ navigation }) {
   const [showPassword, setShowPassword] = React.useState(false);
-  const { status, userToken, signIn } = useAuth();
+  const { signIn } = useAuth();
   const { colorScheme } = useColorScheme();
 
   const {
@@ -31,15 +30,13 @@ export default function SignIn({ navigation }) {
 
   const handleSignIn = async (data) => {
     try {
-      const response = await axiosInstance.post("auth/signin", {
-        phoneNumber: data?.phoneNumber,
+      const response = await axiosInstance.post("auth/login", {
+        login: data?.phoneNumber,
         password: data?.password,
       });
-      const { accessToken, refreshToken } = response.data;
-      setAccessToken(accessToken);
-      setRefreshToken(refreshToken);
-
-      signIn(accessToken);
+      const { token } = response.data;
+      setAccessToken(token);
+      signIn(token);
       navigation.navigate("DrawerNav");
       return response.data;
     } catch (error) {
@@ -66,7 +63,7 @@ export default function SignIn({ navigation }) {
                   control={control}
                   error={errors?.phoneNumber?.message}
                   label="Phone number"
-                  keyboardType="number-pad"
+                  // keyboardType="number-pad"
                   mode="outlined"
                   className="mb-5 w-full dark:bg-slate-700 text-white"
                   textColor={MainColors.icon[colorScheme]}

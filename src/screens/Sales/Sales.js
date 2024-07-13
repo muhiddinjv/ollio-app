@@ -9,6 +9,7 @@ import Loader from "../../components/Loader";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
 import { GlobalContext } from "../../utils";
 import { FlashList } from "@shopify/flash-list";
+import GoodQuantityModal from "../Goods/GoodQuantityModal";
 
 const StyledPicker = styled(Picker);
 
@@ -16,11 +17,13 @@ const SalesScreen = ({ navigation }) => {
   const { goodId, goodQty } = useContext(GlobalContext);
   const [selectedValue, setSelectedValue] = useState("option1");
   const [filters, setFilters] = useState({ search: "" });
+  const [quantity, setQuantity] = useState(0);
   console.log("sales >> ", goodId, goodQty);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
     useInfiniteScroll({
-      url: "products/stock",
+      url: "products/global",
       limit: 25,
       filters: filters,
       key: ["goods"],
@@ -28,7 +31,17 @@ const SalesScreen = ({ navigation }) => {
 
   return (
     <View className="flex-1 w-full dark:bg-slate-800">
-      <SaveCharge navigation={navigation} />
+      <GoodQuantityModal
+        visible={isModalVisible}
+        onClose={() => {
+          setIsModalVisible(false);
+          setQuantity(0);
+        }}
+        value={quantity}
+        onChangeText={(text) => setQuantity(text)}
+      />
+      <SaveCharge navigation={navigation} isSaved={false} />
+
       <View className="flex-row items-center pl-4 h-14 border border-gray-400">
         <StyledPicker
           selectedValue={selectedValue}
@@ -47,6 +60,7 @@ const SalesScreen = ({ navigation }) => {
           />
         </View>
       </View>
+
       {Array.isArray(data) ? (
         <FlashList
           data={data}
@@ -67,6 +81,7 @@ const SalesScreen = ({ navigation }) => {
               navigate={navigation.navigate}
               description={item.description}
               price={item.price}
+              setIsModalVisible={setIsModalVisible}
             />
           )}
           ListEmptyComponent={

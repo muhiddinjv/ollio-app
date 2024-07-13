@@ -65,7 +65,7 @@ export default function SignIn({ navigation }) {
                   label="Phone number"
                   // keyboardType="number-pad"
                   mode="outlined"
-                  className="mb-5 w-full dark:bg-slate-700 text-white"
+                  className="w-full dark:bg-slate-700 text-white"
                   textColor={MainColors.icon[colorScheme]}
                   rules={{ required: "Phone number is required" }}
                 />
@@ -75,7 +75,7 @@ export default function SignIn({ navigation }) {
                   error={errors?.password?.message}
                   label="Password"
                   mode="outlined"
-                  className="mb-5 w-full dark:bg-slate-700 text-white"
+                  className="w-full dark:bg-slate-700 text-white"
                   textColor={MainColors.icon[colorScheme]}
                   rules={{ required: "Password is required" }}
                   secureTextEntry={!showPassword}

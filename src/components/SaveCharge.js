@@ -1,12 +1,26 @@
-import { View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import React from "react";
-import { Button } from "react-native-paper";
 
-const SaveCharge = ({ navigation }) => {
+const SaveCharge = ({ navigation, isSaved }) => {
   return (
-    <View className="p-2 bg-white dark:bg-slate-800 flex-row">
-      <Button textColor="white" className="p-2 bg-primary font-semibold rounded flex-1" onPress={() => {}}>SAVE</Button>
-      <Button textColor="white" className="ml-2 p-2 bg-primary font-semibold rounded flex-1" onPress={() => {}}>CHARGE</Button>
+    <View className="p-2 bg-white dark:bg-slate-800 flex-row gap-2">
+      <Pressable
+        className="p-2 bg-primary rounded flex-1"
+        onPress={() =>
+          isSaved
+            ? navigation.navigate("SaveTicket")
+            : navigation.navigate("OpenTickets")
+        }
+      >
+        <Text className="text-white text-xl text-center font-medium ">
+          {isSaved ? "SAVE" : "Open tickets"}
+        </Text>
+      </Pressable>
+      <Pressable className="p-2 bg-primary rounded flex-1">
+        <Text className="text-white text-xl text-center uppercase font-medium">
+          charge
+        </Text>
+      </Pressable>
     </View>
   );
 };

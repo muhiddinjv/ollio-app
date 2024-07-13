@@ -19,6 +19,8 @@ import SaveTicket from "../screens/Sales/SaveTicket";
 import BillDetails from "../screens/Bills/BillDetails";
 import { View } from "react-native";
 import PaidScreen from "../screens/Payment/Paid";
+import PaymentScreen from "../screens/Payment/Payment";
+import SalesScreen from "../screens/Sales/Sales";
 const Stack = createStackNavigator();
 const isSignedIn = true;
 
@@ -109,7 +111,29 @@ const AppStack = () => {
           // headerTitle: "",
         }}
       />
-      <Stack.Screen name="PaidScreen" component={PaidScreen} />
+      <Stack.Screen
+        name="PaidScreen"
+        component={PaidScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: "rgba(103, 80, 164, 1)",
+          },
+          headerTitle: "",
+          headerTintColor: "white",
+          headerLeft: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="PaymentScreen"
+        component={PaymentScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: "rgba(103, 80, 164, 1)",
+          },
+          headerTitle: "",
+          headerTintColor: "white",
+        }}
+      />
       {/* Common modal screens */}
       {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Help" component={Help} />

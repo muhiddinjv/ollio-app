@@ -17,6 +17,7 @@ const ListItem = ({
   navigate,
   checked,
   onChange,
+  setIsModalVisible,
 }) => {
   const { colorScheme } = useColorScheme();
   const { setGoodId } = React.useContext(GlobalContext);
@@ -34,15 +35,15 @@ const ListItem = ({
           color: MainColors.icon[colorScheme],
         }}
         onPress={() => {
-          setGoodId(goodId)
-          if(editable){
-            navigate('GoodEdit'); 
-          } 
-          if(onSalesScreen){
-            navigate('GoodQty'); 
+          setGoodId(goodId);
+          if (editable) {
+            navigate("GoodEdit");
           }
-        }
-        }
+          if (onSalesScreen) {
+            // navigate("GoodQty");
+            setIsModalVisible(true);
+          }
+        }}
         left={(props) => (
           <List.Image
             style={props.style}

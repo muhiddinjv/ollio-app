@@ -22,7 +22,7 @@ const PaidScreen = () => {
           <Text className="text-lg my-4">Change</Text>
         </View>
       </View>
-      <Image source={done} className="h-24 w-24 self-center my-48" />
+      {/* <Image source={done} className="h-24 w-24 self-center my-48" /> */}
       <TouchableOpacity className="border-2 border-slate-500 m-4 bg-gray-100 h-12 flex-row items-center justify-center">
         {/* <Image source={receipt} className="h-6 w-6 mx-2" /> */}
         <Text className="mx-2 font-bold">Receipt</Text>

@@ -1,20 +1,21 @@
-import React, { useContext } from 'react';
-import { Platform, View } from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import { IconButton, useTheme, Text, Button } from 'react-native-paper';
-import { useColorScheme } from 'nativewind';
+import React, { useContext } from "react";
+import { Platform, View } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { IconButton, useTheme, Text, Button } from "react-native-paper";
+import { useColorScheme } from "nativewind";
 
-import SignOutScreen from '../screens/Auth/SignOut';
-import GoodTabs from '../screens/Goods/GoodTabs';
-import SalesScreen from '../screens/Sales/Sales';
-import Sidebar from '../components/Sidebar';
-import { useRoute } from '@react-navigation/native';
-import { GlobalContext } from '../utils';
+import SignOutScreen from "../screens/Auth/SignOut";
+import GoodTabs from "../screens/Goods/GoodTabs";
+import SalesScreen from "../screens/Sales/Sales";
+import Sidebar from "../components/Sidebar";
+import { useRoute } from "@react-navigation/native";
+import { GlobalContext } from "../utils";
+import Bills from "../screens/Bills/Bills";
 
 const Drawer = createDrawerNavigator();
-const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
+const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
-const DrawerNav = ({navigation}) => {
+const DrawerNav = ({ navigation }) => {
   const { goodQty } = useContext(GlobalContext);
   const { colorScheme } = useColorScheme();
   const { colors } = useTheme();
@@ -22,37 +23,42 @@ const DrawerNav = ({navigation}) => {
 
   return (
     <Drawer.Navigator
-      drawerContent={props => <Sidebar {...props} />}
+      drawerContent={(props) => <Sidebar {...props} />}
       screenOptions={({ route }) => ({
         headerRight: () => {
-          if (route.name === 'Sales') {
+          if (route.name === "Sales") {
             return (
               <View className="flex-row items-center">
-                <Button icon="cart" mode="contained" labelStyle={{fontSize:19}} onPress={() => navigation.navigate('Bills')}>
+                <Button
+                  icon="cart"
+                  mode="contained"
+                  labelStyle={{ fontSize: 19 }}
+                  onPress={() => navigation.navigate("Bills")}
+                >
                   {goodQty}
                 </Button>
                 <IconButton
                   icon="account-plus"
                   iconColor="white"
                   size={25}
-                  onPress={() => navigation.navigate('Buyers')}
+                  onPress={() => navigation.navigate("Buyers")}
                 />
                 <IconButton
                   icon={MORE_ICON}
                   iconColor="white"
                   size={25}
-                  onPress={() => console.log('more')}
+                  onPress={() => console.log("more")}
                 />
               </View>
             );
           }
-          if (route.name === 'Goods') {
+          if (route.name === "Goods") {
             return (
               <IconButton
                 icon="magnify"
                 iconColor="white"
                 size={25}
-                onPress={() => console.log('search')}
+                onPress={() => console.log("search")}
               />
             );
           }
@@ -60,17 +66,17 @@ const DrawerNav = ({navigation}) => {
         headerTintColor: "white",
         headerStyle: { backgroundColor: colors.primary },
         drawerActiveBackgroundColor: colors.primary,
-        drawerActiveTintColor: 'white',
-        drawerInactiveTintColor: colorScheme == 'dark'? '#fff' : '#333',
-        drawerLabelStyle: { marginLeft: -25, fontSize: 18}
+        drawerActiveTintColor: "white",
+        drawerInactiveTintColor: colorScheme == "dark" ? "#fff" : "#333",
+        drawerLabelStyle: { marginLeft: -25, fontSize: 18 },
       })}
     >
       <Drawer.Screen
         name="Sales"
         component={SalesScreen}
         options={{
-          drawerIcon: ({color}) => (
-            <IconButton className='m-0' icon="currency-usd" iconColor={color} />
+          drawerIcon: ({ color }) => (
+            <IconButton className="m-0" icon="currency-usd" iconColor={color} />
           ),
         }}
       />
@@ -78,8 +84,21 @@ const DrawerNav = ({navigation}) => {
         name="Goods"
         component={GoodTabs}
         options={{
-          drawerIcon: ({color}) => (
-            <IconButton className='m-0' icon="format-list-bulleted" iconColor={color} />
+          drawerIcon: ({ color }) => (
+            <IconButton
+              className="m-0"
+              icon="format-list-bulleted"
+              iconColor={color}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Bills"
+        component={Bills}
+        options={{
+          drawerIcon: ({ color }) => (
+            <IconButton className="m-0" icon="cash-fast" iconColor={color} />
           ),
         }}
       />
@@ -87,8 +106,8 @@ const DrawerNav = ({navigation}) => {
         name="Sign out"
         component={SignOutScreen}
         options={{
-          drawerIcon: ({color}) => (
-            <IconButton className='m-0' icon="logout" iconColor={color} />
+          drawerIcon: ({ color }) => (
+            <IconButton className="m-0" icon="logout" iconColor={color} />
           ),
         }}
       />

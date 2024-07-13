@@ -12,12 +12,13 @@ import GoodTabs from "../screens/Goods/GoodTabs";
 import GoodAdd from "../screens/Goods/GoodAdd";
 import GoodQty from "../screens/Goods/GoodQty";
 import Bills from "../screens/Bills/Bills";
-import Bills2 from "../screens/Bills/Bills2";
 import Buyers from "../screens/Users/Buyers";
 import OpenTickets from "../screens/Sales/OpenTickets";
 import { AntDesign } from "@expo/vector-icons";
 import SaveTicket from "../screens/Sales/SaveTicket";
-
+import BillDetails from "../screens/Bills/BillDetails";
+import { View } from "react-native";
+import PaidScreen from "../screens/Payment/Paid";
 const Stack = createStackNavigator();
 const isSignedIn = true;
 
@@ -94,6 +95,21 @@ const AppStack = () => {
           ),
         }}
       />
+      <Stack.Screen
+        name="BillDetails"
+        component={BillDetails}
+        options={{
+          headerStyle: { backgroundColor: "rgba(103, 80, 164, 1)" },
+          headerTintColor: "white",
+          // headerLeft: () => (
+          //   <View className="pl-4">
+          //     <AntDesign name="arrowleft" size={24} color="white" />
+          //   </View>
+          // ),
+          // headerTitle: "",
+        }}
+      />
+      <Stack.Screen name="PaidScreen" component={PaidScreen} />
       {/* Common modal screens */}
       {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Help" component={Help} />

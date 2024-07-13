@@ -19,7 +19,7 @@ const SaveCharge = ({ navigation, isSaved }) => {
       <Pressable
         className="p-2 bg-primary rounded flex-1"
         onPress={() => {
-          navigation.navigate("PaidScreen");
+          navigation.navigate("PaymentScreen");
         }}
       >
         <Text className="text-white text-xl text-center uppercase font-medium">

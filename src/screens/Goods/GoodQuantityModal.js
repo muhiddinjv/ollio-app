@@ -28,14 +28,14 @@ export default function GoodQuantityModal({
         <Pressable
           title="Close"
           onPress={() => onClose()}
-          className="w-1/2 py-0.5 border border-gray-300 rounded-md"
+          className="w-1/2 py-3 border border-gray-300 rounded-md"
         >
           <Text className="text-center text-gray-400">Close</Text>
         </Pressable>
         <Pressable
           title="Close"
           onPress={() => onClose()}
-          className="w-1/2 bg-primary rounded-md items-center justify-center"
+          className="w-1/2 py-3 bg-primary rounded-md items-center justify-center"
         >
           <Text className="text-center text-white items-center justify-center">
             Save

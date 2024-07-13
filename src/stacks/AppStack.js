@@ -1,22 +1,25 @@
-import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import { getAccessToken } from '../screens/Auth/astorage';
-import { useNavigation } from '@react-navigation/native';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { getAccessToken } from "../screens/Auth/astorage";
+import { useNavigation } from "@react-navigation/native";
 
-import SignIn from '../screens/Auth/SignIn';
-import SignUp from '../screens/Auth/SignUp';
-import DrawerNav from './DrawerNav';
-import Goods from '../screens/Goods/Goods';
-import GoodEdit from '../screens/Goods/GoodEdit';
-import GoodTabs from '../screens/Goods/GoodTabs';
-import GoodAdd from '../screens/Goods/GoodAdd';
-import GoodQty from '../screens/Goods/GoodQty';
-import Bills from '../screens/Bills/Bills';
-import Bills2 from '../screens/Bills/Bills2';
-import Buyers from '../screens/Users/Buyers';
+import SignIn from "../screens/Auth/SignIn";
+import SignUp from "../screens/Auth/SignUp";
+import DrawerNav from "./DrawerNav";
+import Goods from "../screens/Goods/Goods";
+import GoodEdit from "../screens/Goods/GoodEdit";
+import GoodTabs from "../screens/Goods/GoodTabs";
+import GoodAdd from "../screens/Goods/GoodAdd";
+import GoodQty from "../screens/Goods/GoodQty";
+import Bills from "../screens/Bills/Bills";
+import Bills2 from "../screens/Bills/Bills2";
+import Buyers from "../screens/Users/Buyers";
+import OpenTickets from "../screens/Sales/OpenTickets";
+import { AntDesign } from "@expo/vector-icons";
+import SaveTicket from "../screens/Sales/SaveTicket";
 
 const Stack = createStackNavigator();
-const isSignedIn = true; 
+const isSignedIn = true;
 
 const AppStack = () => {
   const navigation = useNavigation();
@@ -25,26 +28,72 @@ const AppStack = () => {
     const checkToken = async () => {
       const accessToken = await getAccessToken();
       if (!accessToken) {
-        navigation.navigate('SignIn');
+        navigation.navigate("SignIn");
       } else {
-        navigation.navigate('DrawerNav');
+        navigation.navigate("DrawerNav");
       }
     };
     checkToken();
   }, []);
 
   return (
-    <Stack.Navigator initialRouteName={isSignedIn ? 'DrawerNav' : 'SignIn'}>
-      <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }}/>
-      <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
-      <Stack.Screen name="DrawerNav" component={DrawerNav} options={{ headerShown: false }}/>
-      <Stack.Screen name="GoodEdit" component={GoodEdit} options={{ headerShown: false }}/>
-      <Stack.Screen name="GoodTabs" component={GoodTabs} options={{ headerShown: false }}/>
-      <Stack.Screen name="GoodQty" component={GoodQty} options={{ headerShown: false }}/>
-      <Stack.Screen name="GoodAdd" component={GoodAdd}/>
-      <Stack.Screen name="Goods" component={Goods}/>
-      <Stack.Screen name="Bills" component={Bills}/>
-      <Stack.Screen name="Buyers" component={Buyers}/>
+    <Stack.Navigator initialRouteName={isSignedIn ? "DrawerNav" : "SignIn"}>
+      <Stack.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DrawerNav"
+        component={DrawerNav}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="GoodEdit"
+        component={GoodEdit}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="GoodTabs"
+        component={GoodTabs}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="GoodQty"
+        component={GoodQty}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="GoodAdd" component={GoodAdd} />
+      <Stack.Screen name="Goods" component={Goods} />
+      <Stack.Screen name="Bills" component={Bills} />
+      <Stack.Screen name="Buyers" component={Buyers} />
+      <Stack.Screen
+        name="OpenTickets"
+        component={OpenTickets}
+        options={{
+          headerTitle: "Open tickets",
+          headerBackImage: () => (
+            <AntDesign name="close" size={20} color="black" />
+          ),
+          headerTitleStyle: {
+            fontSize: 16,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="SaveTicket"
+        component={SaveTicket}
+        options={{
+          headerBackImage: () => (
+            <AntDesign name="close" size={20} color="black" />
+          ),
+        }}
+      />
       {/* Common modal screens */}
       {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Help" component={Help} />

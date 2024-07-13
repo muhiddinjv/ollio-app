@@ -13,10 +13,15 @@ const SaveCharge = ({ navigation, isSaved }) => {
         }
       >
         <Text className="text-white text-xl text-center font-medium ">
-          {isSaved ? "SAVE" : "Open tickets"}
+          {isSaved ? "SAVE" : "Open bills"}
         </Text>
       </Pressable>
-      <Pressable className="p-2 bg-primary rounded flex-1">
+      <Pressable
+        className="p-2 bg-primary rounded flex-1"
+        onPress={() => {
+          navigation.navigate("PaidScreen");
+        }}
+      >
         <Text className="text-white text-xl text-center uppercase font-medium">
           charge
         </Text>

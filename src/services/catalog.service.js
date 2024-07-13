@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../api/instance";
 
 export const getCatalog = (queryParams) =>
-  axiosInstance.get("products/global", {
+  axiosInstance.get("products/stock", {
     params: queryParams,
   });
 

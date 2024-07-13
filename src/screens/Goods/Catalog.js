@@ -11,7 +11,9 @@ const Catalog = () => {
   const [itemIds, setItemIds] = useState([]);
   queryClient.setQueryData(["catalogIds"], itemIds);
 
-  const { data, isLoading, isError } = UseGetCatalog({});
+  const { data, isLoading, isError } = UseGetCatalog({
+    queryParams: {},
+  });
 
   const catalogItems = data?.data || [];
 

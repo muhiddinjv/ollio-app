@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 // import { done, receipt } from "../../assets/icons";
-
-const PaidScreen = () => {
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+const PaidScreen = ({ navigation }) => {
   const [cashReceived, setCashReceived] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash"); // Default to Cash
 
@@ -12,24 +13,28 @@ const PaidScreen = () => {
 
       <View className="h-36 flex-row items-center justify-around">
         <View className="flex-col items-end w-48">
-          <Text className="text-2xl mt-8 text-center">UZS 98,000</Text>
-          <Text className="text-lg my-4">Total Paid</Text>
+          <Text className="text-2xl font-semibold mt-8 text-center">
+            UZS 98,000
+          </Text>
+          <Text className="text-lg my-4 text-gray-500">Total Paid</Text>
         </View>
 
-        <View className="w-px h-36"></View>
+        <View className="w-[2px] bg-gray-300 h-24"></View>
         <View className="flex-col w-48">
-          <Text className="text-2xl mt-8">UZS 0</Text>
-          <Text className="text-lg my-4">Change</Text>
+          <Text className="text-2xl font-semibold mt-8">UZS 0</Text>
+          <Text className="text-lg my-4 text-gray-500">Change</Text>
         </View>
       </View>
-      {/* <Image source={done} className="h-24 w-24 self-center my-48" /> */}
-      <TouchableOpacity className="border-2 border-slate-500 m-4 bg-gray-100 h-12 flex-row items-center justify-center">
-        {/* <Image source={receipt} className="h-6 w-6 mx-2" /> */}
-        <Text className="mx-2 font-bold">Receipt</Text>
+      <TouchableOpacity className="border border-gray-300 m-4 bg-gray-100 h-12 flex-row items-center justify-center">
+        <FontAwesome5 name="receipt" size={24} color="black" />
+        <Text className="mx-2 font-medium">Receipt</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity className="m-4 bg-green-500 h-12 flex-row items-center justify-center">
-        {/* <Image source={done} className="h-6 w-6 mx-2" style={{tintColor:'white'}} /> */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("SalesScreen")}
+        className="m-4 bg-primary h-12 flex-row items-center justify-center"
+      >
+        <AntDesign name="check" size={24} color="white" />
         <Text className="mx-2 text-white font-bold">NEW SALE</Text>
       </TouchableOpacity>
     </View>

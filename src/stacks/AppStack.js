@@ -22,6 +22,7 @@ import PaidScreen from "../screens/Payment/Paid";
 import PaymentScreen from "../screens/Payment/Payment";
 import SalesScreen from "../screens/Sales/Sales";
 import BillCart from "../screens/Bills/BillCart";
+import BillCartItemCount from "../screens/Bills/BillCartItemCount";
 const Stack = createStackNavigator();
 const isSignedIn = true;
 
@@ -149,6 +150,19 @@ const AppStack = () => {
             </Pressable>
           ),
           headerTintColor: "white",
+        }}
+      />
+       <Stack.Screen
+        name="BillCartItemCount"
+        component={BillCartItemCount}
+        options={{
+          headerTitle: "",
+          headerBackImage: () => (
+            <AntDesign name="close" size={20} color="black" />
+          ),
+          headerTitleStyle: {
+            fontSize: 16,
+          },
         }}
       />
 

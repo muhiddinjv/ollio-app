@@ -1,16 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../api/instance";
+import { getAccessToken } from "../screens/Auth/astorage";
 
-export const getCatalog = (queryParams) =>
-  axiosInstance.get("products/stock", {
-    params: queryParams,
+export const getCatalog = async () => {
+  const accessToken = await getAccessToken();
+
+  const response = await axiosInstance.get("products/stock", {
+    headers: { Authorization: `Bearer ${accessToken}` },
   });
+  return response;
+};
 
-export const UseGetCatalog = ({ queryParams }) => {
+export const UseGetCatalog = () => {
   return useQuery({
-    queryKey: ["CATALOG_ITEMS", queryParams],
+    queryKey: ["CATALOG_ITEMS"],
     queryFn: async () => {
-      return await getCatalog(queryParams)
+      return await getCatalog()
         .then((res) => res)
         .catch((err) => console.log(err));
     },

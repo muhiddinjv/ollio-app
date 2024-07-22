@@ -1,27 +1,46 @@
-import { View, Text, Modal } from "react-native";
 import React from "react";
+import { Modal, StyleSheet, View } from "react-native";
 
-export default function BaseModal({ visible, onClose, onSave, children }) {
+const BaseModal = ({ visible = false, onClose, children }) => {
   return (
     <Modal
-      animationType="slide"
+      animationType="fade"
+      transparent={true}
       visible={visible}
-      backgroundColor="rgba(0, 0, 0, 0.3)"
-      onRequestClose={() => onClose()}
-      onLayout={() => onSave()}
+      onRequestClose={() => {
+        onClose();
+      }}
     >
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: visible ? "rgba(0, 0, 0, 0.3)" : "",
-        }}
-      >
-        <View className="flex-1 justify-center items-center">
-          <View className="justify-center items-center bg-white dark:bg-gray-dark-900 border border-solid border-gray-300 dark:border-gray-800 rounded-lg p-6 shadow-md w-11/12">
-            {children}
-          </View>
-        </View>
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>{children}</View>
       </View>
     </Modal>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    padding: 20,
+  },
+  modalView: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    width: "100%",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+});
+
+export default BaseModal;

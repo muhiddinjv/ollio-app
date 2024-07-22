@@ -33,7 +33,7 @@ const DrawerNav = ({ navigation }) => {
                   icon="cart"
                   mode="contained"
                   labelStyle={{ fontSize: 19 }}
-                  onPress={() => navigation.navigate("Bills")}
+                  onPress={() => navigation.navigate("BillCart")}
                 >
                   {goodQty}
                 </Button>

@@ -17,10 +17,11 @@ import OpenTickets from "../screens/Sales/OpenTickets";
 import { AntDesign } from "@expo/vector-icons";
 import SaveTicket from "../screens/Sales/SaveTicket";
 import BillDetails from "../screens/Bills/BillDetails";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import PaidScreen from "../screens/Payment/Paid";
 import PaymentScreen from "../screens/Payment/Payment";
 import SalesScreen from "../screens/Sales/Sales";
+import BillCart from "../screens/Bills/BillCart";
 const Stack = createStackNavigator();
 const isSignedIn = true;
 
@@ -134,6 +135,23 @@ const AppStack = () => {
           headerTintColor: "white",
         }}
       />
+      <Stack.Screen
+        name="BillCart"
+        component={BillCart}
+        options={{
+          headerStyle: {
+            backgroundColor: "rgba(103, 80, 164, 1)",
+          },
+          headerTitle: "Bills cart",
+          headerLeft: () => (
+            <Pressable onPress={() => navigation.goBack()} className="pl-2">
+              <AntDesign name="arrowleft" size={24} color="white" />
+            </Pressable>
+          ),
+          headerTintColor: "white",
+        }}
+      />
+
       {/* Common modal screens */}
       {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Help" component={Help} />

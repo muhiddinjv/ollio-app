@@ -31,7 +31,7 @@ const PaidScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate("SalesScreen")}
+        onPress={() => navigation.navigate("Sales")}
         className="m-4 bg-primary h-12 flex-row items-center justify-center"
       >
         <AntDesign name="check" size={24} color="white" />

@@ -7,8 +7,8 @@ export default function GoodQuantityModal({
   onClose,
   value,
   onChangeText,
+  navigation,
 }) {
-  console.log("visible", visible);
   return (
     <BaseModal visible={visible} onClose={() => onClose()}>
       <View className="w-full">
@@ -17,11 +17,11 @@ export default function GoodQuantityModal({
           onChangeText={(qty) => onChangeText(qty)}
           value={value}
           returnKeyType="done"
-          onSubmitEditing={() => navigation.navigate("Sales")}
+          onSubmitEditing={() => navigation?.navigate("Sales")}
           keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
           placeholder="0"
           autoFocus
-          className="bg-transparent w-full mb-0 pb-0 border-b-gray-600 border-b"
+          className="bg-transparent w-full mb-0 pb-0 py-2 border-b-primary border-b"
         />
       </View>
       <View className="w-full flex-row justify-center mt-6 gap-x-2.5">

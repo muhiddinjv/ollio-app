@@ -77,7 +77,6 @@ const ThirdRoute = () => {
 const initialLayout = { width: Dimensions.get("window").width };
 
 const Orders = ({ navigation }) => {
-  // const { openDrawer, setOpenDrawer } = useContext(AppContext);
   const [selectedValue, setSelectedValue] = useState(null);
   const [index, setIndex] = useState(0);
   const [routes] = useState([

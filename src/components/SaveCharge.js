@@ -22,7 +22,7 @@ const SaveCharge = ({ navigation, isSaved }) => {
           navigation.navigate("PaymentScreen");
         }}
       >
-        <Text className="text-white text-xl text-center uppercase font-medium">
+        <Text className="text-white text-xl text-center capitalize font-medium">
           charge
         </Text>
       </Pressable>

@@ -1,21 +1,22 @@
 import { View, Platform } from "react-native";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAccessToken } from "../Auth/astorage";
 import axiosInstance from "../../api/instance";
 import { GlobalContext } from "../../utils";
 import { TextInput } from "react-native-paper";
 import Header from "../../components/Header";
+import { useGlobalState } from "../../hooks/useGlobalState";
 
 const GoodQty = ({ navigation }) => {
-  const { goodId, setGoodQty, goodQty } = useContext(GlobalContext);
+  const { goodId, setGoodQty, goodQty } = useGlobalState();
   const [title, setTitle] = useState();
 
   const goodsQuery = useQuery({
     queryKey: ["good", goodId],
     queryFn: async () => {
       const accessToken = await getAccessToken();
-      const response = await axiosInstance.get(`goods/${goodId}`, {
+      const response = await axiosInstance.get(`stock/${goodId}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       return response.data;

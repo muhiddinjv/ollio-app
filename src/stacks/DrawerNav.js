@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Platform, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { IconButton, useTheme, Text, Button } from "react-native-paper";
@@ -8,18 +8,16 @@ import SignOutScreen from "../screens/Auth/SignOut";
 import GoodTabs from "../screens/Goods/GoodTabs";
 import SalesScreen from "../screens/Sales/Sales";
 import Sidebar from "../components/Sidebar";
-import { useRoute } from "@react-navigation/native";
-import { GlobalContext } from "../utils";
 import Bills from "../screens/Bills/Bills";
+import { useGlobalState } from "../hooks/useGlobalState";
 
 const Drawer = createDrawerNavigator();
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
 const DrawerNav = ({ navigation }) => {
-  const { goodQty } = useContext(GlobalContext);
+  const { goodQty } = useGlobalState();
   const { colorScheme } = useColorScheme();
   const { colors } = useTheme();
-  const route = useRoute();
 
   return (
     <Drawer.Navigator

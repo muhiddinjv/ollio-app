@@ -1,42 +1,30 @@
 import { ScrollView, View } from "react-native";
 import ListItem from "../../components/ListItem";
-import { useState } from "react";
 import { ActivityIndicator, Text } from "react-native-paper";
 import { MainColors } from "../../theme";
-import { useQueryClient } from "@tanstack/react-query";
 import { UseGetCatalog } from "../../services/catalog.service";
+import { useGlobalState } from "../../hooks/useGlobalState";
 
 const Catalog = () => {
-  const queryClient = useQueryClient();
-  const [itemIds, setItemIds] = useState([]);
-  queryClient.setQueryData(["catalogIds"], itemIds);
-
+  const { selectedGoods, setSelectedGoods } = useGlobalState();
   const { data, isLoading, isError } = UseGetCatalog();
 
   const catalogItems = data?.data || [];
 
-  const handleToggleItem = (id) => {
-    setItemIds((prevIds) => {
-      if (prevIds.includes(id)) {
-        // Remove id from the array
-        return prevIds.filter((itemID) => itemID !== id);
-      } else {
-        // Add id to the array
-        return [...prevIds, id];
+  const handleToggleItem = (item) => {
+    setSelectedGoods((prev) => {
+      const isSelected = prev.find((p) => p.product_id === item._id);
+      if (isSelected) {
+        return prev.filter((p) => p.product_id !== item._id);
       }
+      return [...prev, { product_id: item._id, title: item.title, price: 0, cost: 0, quantity: 0 }];
     });
   };
-
-  console.log("data", data);
 
   if (isLoading) {
     return (
       <View className="flex-1 justify-center items-center">
-        <ActivityIndicator
-          animating={true}
-          color={MainColors.primary}
-          size="large"
-        />
+        <ActivityIndicator animating={true} color={MainColors.primary} size="large" />
       </View>
     );
   }
@@ -49,8 +37,6 @@ const Catalog = () => {
     );
   }
 
-  const catalogIds = queryClient.getQueryData(["catalogIds"]) || [];
-
   return (
     <ScrollView>
       {catalogItems?.map((item) => (
@@ -59,8 +45,8 @@ const Catalog = () => {
           title={item.title}
           description="description was supposed to be here"
           variant="CheckBox"
-          checked={catalogIds?.includes(item._id)}
-          onChange={() => handleToggleItem(item._id)}
+          checked={selectedGoods.some((p) => p.product_id === item._id)}
+          onChange={() => handleToggleItem(item)}
         />
       ))}
     </ScrollView>

@@ -1,32 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import { ScrollView } from "react-native-gesture-handler";
 import { View, Dimensions } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import FABplus from "../../components/FABplus";
-import ListItem from "../../components/ListItem";
+import GoodsList from "./GoodsList";
 import Catalog from "./Catalog";
-import Goods from "./Goods";
-
-const TabMore = ({ navigation }) => (
-  <ScrollView>
-    <ListItem
-      editable={true}
-      navigate={navigation}
-      title="COCA-COLA"
-      description="kolani rasmini qidirishga vaqt yoq shunga qulupnay rasmini qoydim, Hojaka"
-      price={62000}
-    />
-  </ScrollView>
-);
 
 const initialLayout = { width: Dimensions.get("window").width };
 
 const routes = [
   { key: "first", title: "Catalog" },
   { key: "second", title: "Goods" },
-  // { key: "third", title: "More" },
 ];
 
 const GoodTabs = ({ navigation }) => {
@@ -36,22 +21,12 @@ const GoodTabs = ({ navigation }) => {
   const { colors } = useTheme();
 
   useEffect(() => {
-    if (index < 2) {
-      setVisible(true);
-    } else {
-      setVisible(false);
-    }
+    setVisible(index < 1);
   }, [index]);
-
-  const changeTabIndex = (newIndex) => {
-    setIndex(newIndex);
-    setKey(new Date().getTime().toString()); // Update the key to trigger re-render
-  };
 
   const renderScene = SceneMap({
     first: Catalog,
-    second: () => <Goods keyProp={key} navigation={navigation.navigate} />,
-    third: () => <TabMore navigation={navigation.navigate} />,
+    second: () => <GoodsList keyProp={key} navigation={navigation} />,
   });
 
   const renderTabBar = (props) => (
@@ -75,7 +50,6 @@ const GoodTabs = ({ navigation }) => {
       <FABplus
         visible={visible}
         navigate={navigation.navigate}
-        changeTabIndex={changeTabIndex}
       />
     </View>
   );

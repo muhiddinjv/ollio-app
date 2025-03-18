@@ -1,22 +1,22 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { View, SafeAreaView } from "react-native";
 import { Switch, Text, IconButton, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { useQueryClient } from "@tanstack/react-query";
 import { CardElevated } from "../../components/CardElevated";
 import { getAccessToken } from "../Auth/astorage";
-import { GlobalContext } from "../../utils";
 import axiosInstance from "../../api/instance";
 import Wrapper from "../../components/Wrapper";
 import Header from "../../components/Header";
 import { Controller, useForm } from "react-hook-form";
 import ControlledInputCustom from "../../components/ControlledInputCustom";
 import { UseGetGood } from "../../services/goods.service";
+import { useGlobalState } from "../../hooks/useGlobalState";
 
 
 const GoodEdit = ({ navigation }) => {
   const queryClient = useQueryClient();
-  const { goodId } = useContext(GlobalContext);
+  const { goodId } = useGlobalState();
   const [category, setCategory] = useState("");
 
   const {
@@ -28,10 +28,10 @@ const GoodEdit = ({ navigation }) => {
   } = useForm();
 
   const goodsQuery = UseGetGood(goodId);
+  console.log("goodsQueryCost", goodsQuery);
 
   useEffect(() => {
     if (goodsQuery?.data) {
-      console.log("goodsQueryCost", goodsQuery?.data);
       reset({
         cost: String(goodsQuery?.data.cost),
         quantity: String(goodsQuery?.data.quantity),
@@ -43,27 +43,20 @@ const GoodEdit = ({ navigation }) => {
     }
   }, [goodsQuery?.data, goodId]);
 
-  console.log("getValues", getValues("cost"));
-
-  const handleAddVariant = () => {
-    // Implement logic to add a new variant
-  };
+  console.log("getValues", getValues("cost"), {errors});
 
   const saveGood = async (data) => {
     const accessToken = await getAccessToken();
     try {
       await axiosInstance.patch(
-        `goods/${goodId}`,
+        `stock/${goodId}`,
         {
           title: data?.title,
-          // category,
           quantity: data?.quantity,
           price: parseFloat(data?.price),
           cost: parseFloat(data?.cost),
           groupItem: data?.groupItem,
           trackStock: data?.trackStock,
-          // modifiers,
-          // representation
         },
         {
           headers: { Authorization: `Bearer ${accessToken}` },
@@ -80,7 +73,7 @@ const GoodEdit = ({ navigation }) => {
   const deleteGood = async () => {
     const accessToken = await getAccessToken();
     try {
-      await axiosInstance.delete(`goods/${goodId}`, {
+      await axiosInstance.delete(`stock/${goodId}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       navigation.navigate("DrawerNav");

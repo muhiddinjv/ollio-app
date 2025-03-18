@@ -4,7 +4,7 @@ import { getAccessToken } from "../screens/Auth/astorage";
 
 const getGoods = async (goodId) => {
   const accessToken = await getAccessToken();
-  const response = await axiosInstance.get(`goods/${goodId}`, {
+  const response = await axiosInstance.get(`stock/${goodId}`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
   return response.data;

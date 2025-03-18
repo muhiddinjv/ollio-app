@@ -29,5 +29,3 @@ export const nameValidator = (name) => {
 
   return '';
 };
-
-export const GlobalContext = React.createContext();

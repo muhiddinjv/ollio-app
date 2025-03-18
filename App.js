@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppStack from "./src/stacks/AppStack";
 import { AuthProvider } from "./src/screens/Auth";
-import { GlobalContext } from "./src/utils";
+import { GlobalProvider } from "./src/hooks/useGlobalState";
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
 
@@ -25,9 +25,6 @@ function App() {
    // Don't persist state/screen on web since it's based on URL
   const [ isReady, setIsReady ] = useState(Platform.OS === 'web');
   const [ initialState, setInitialState ] = useState();
-  const [ goodQty, setGoodQty ] = useState(0);
-  const [ goodId, setGoodId ] = useState(null)
-  const [ buyerId, setBuyerId ] = useState(null);
 
   useEffect(() => {
     const restoreState = async () => {
@@ -58,7 +55,7 @@ function App() {
   }
 
   return (
-    <GlobalContext.Provider value={{ goodId, setGoodId, goodQty, setGoodQty }}>
+    <GlobalProvider>
       <PaperProvider>
         <NavigationContainer
           initialState={initialState}
@@ -71,7 +68,7 @@ function App() {
           </QueryClientProvider>
         </NavigationContainer>
       </PaperProvider>
-    </GlobalContext.Provider>
+    </GlobalProvider>
   );
 }
 

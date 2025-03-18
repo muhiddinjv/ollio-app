@@ -2,7 +2,7 @@ import { View, Text, Pressable, Platform, TextInput } from "react-native";
 import React from "react";
 import BaseModal from "../../components/BaseModal";
 
-export default function GoodQuantityModal({
+export default function GoodQtyModal({
   visible,
   onClose,
   value,

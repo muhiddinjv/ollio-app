@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { RefreshControl, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { styled } from "nativewind";
@@ -7,23 +7,22 @@ import ListItem from "../../components/ListItem";
 import SaveCharge from "../../components/SaveCharge";
 import Loader from "../../components/Loader";
 import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
-import { GlobalContext } from "../../utils";
 import { FlashList } from "@shopify/flash-list";
-import GoodQuantityModal from "../Goods/GoodQuantityModal";
+import GoodQtyModal from "../Goods/GoodQtyModal";
+import { useGlobalState } from "../../hooks/useGlobalState";
 
 const StyledPicker = styled(Picker);
 
 const SalesScreen = ({ navigation }) => {
-  const { goodId, goodQty } = useContext(GlobalContext);
+  const { goodId, goodQty } = useGlobalState();
   const [selectedValue, setSelectedValue] = useState("option1");
   const [filters, setFilters] = useState({ search: "" });
   const [quantity, setQuantity] = useState(0);
-  console.log("sales >> ", goodId, goodQty);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
     useInfiniteScroll({
-      url: "products/global",
+      url: "stock",
       limit: 25,
       filters: filters,
       key: ["goods"],
@@ -31,7 +30,7 @@ const SalesScreen = ({ navigation }) => {
 
   return (
     <View className="flex-1 w-full dark:bg-slate-800">
-      <GoodQuantityModal
+      <GoodQtyModal
         visible={isModalVisible}
         onClose={() => {
           setIsModalVisible(false);

@@ -30,17 +30,18 @@ export default function SignIn({ navigation }) {
 
   const handleSignIn = async (data) => {
     try {
-      const response = await axiosInstance.post("auth/login", {
-        login: data?.phoneNumber,
+      const response = await axiosInstance.post("auth/signin", {
+        phone: data?.phoneNumber,
         password: data?.password,
       });
+      console.log({response});
       const { token } = response.data;
       setAccessToken(token);
       signIn(token);
       navigation.navigate("DrawerNav");
       return response.data;
     } catch (error) {
-      console.log("error", { error: error });
+      console.log("handleSignIn error", error);
     }
   };
 

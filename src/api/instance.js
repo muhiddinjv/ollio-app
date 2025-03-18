@@ -7,11 +7,11 @@ import {
 import { errorCatch } from "./use_in_future/err.catch";
 
 const token = getAccessToken();
-console.log("token", token);
+console.log("getAccessToken", token);
 
 // const baseURL = "http://localhost:4000/";
 // const url = "http://192.168.0.105:4000/";
-const url = "http://45.138.158.116:3000/";
+const url = "https://ollioapi.vercel.app/";
 
 const axiosInstance = axios.create({
   withCredentials: true,

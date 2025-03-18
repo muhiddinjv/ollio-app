@@ -1,13 +1,13 @@
 import { Pressable, View } from "react-native";
 import { Text } from "react-native-paper";
-import React, { useContext } from "react";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAccessToken } from "../Auth/astorage";
 import axiosInstance from "../../api/instance";
-import { GlobalContext } from "../../utils";
 import { FlashList } from "@shopify/flash-list";
 import Loader from "../../components/Loader";
 import { FontAwesome6 } from "@expo/vector-icons";
+import { useGlobalState } from "../../hooks/useGlobalState";
 const billsData = [
   {
     price: "3000",
@@ -47,7 +47,7 @@ const billsData = [
 ];
 
 const Bills = ({ navigation }) => {
-  const { goodId, goodQty } = useContext(GlobalContext);
+  const { goodId, goodQty } = useGlobalState();
 
   const billsQuery = useQuery({
     queryKey: ["bills"],

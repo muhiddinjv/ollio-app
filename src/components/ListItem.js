@@ -5,6 +5,7 @@ import { Divider, List, Text } from "react-native-paper";
 import { MainColors } from "../theme";
 import { CheckBox } from "./CheckBox";
 import { GlobalContext } from "../utils";
+import { useGlobalState } from "../hooks/useGlobalState";
 
 const ListItem = ({
   goodId,
@@ -20,7 +21,7 @@ const ListItem = ({
   setIsModalVisible,
 }) => {
   const { colorScheme } = useColorScheme();
-  const { setGoodId } = React.useContext(GlobalContext);
+  const { setGoodId } = useGlobalState();
 
   return (
     <List.Section className="m-0">

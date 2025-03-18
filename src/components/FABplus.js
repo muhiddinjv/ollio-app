@@ -18,7 +18,6 @@ const FABplus = ({ visible }) => {
   const handleManagePress = async () => {
     const storedGoods = await AsyncStorage.getItem("selectedGoods");
     const parsedGoods = storedGoods ? JSON.parse(storedGoods) : [];
-    console.log({parsedGoods});
   
     if (parsedGoods.length === 0) {
       alert("No products selected.");

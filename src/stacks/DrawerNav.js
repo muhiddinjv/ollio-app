@@ -5,8 +5,9 @@ import { IconButton, useTheme, Text, Button } from "react-native-paper";
 import { useColorScheme } from "nativewind";
 
 import SignOutScreen from "../screens/Auth/SignOut";
-import GoodTabs from "../screens/Goods/GoodTabs";
 import SalesScreen from "../screens/Sales/Sales";
+import GoodsStack from "./GoodsStack";
+
 import Sidebar from "../components/Sidebar";
 import Bills from "../screens/Bills/Bills";
 import { useGlobalState } from "../hooks/useGlobalState";
@@ -63,10 +64,17 @@ const DrawerNav = ({ navigation }) => {
         },
         headerTintColor: "white",
         headerStyle: { backgroundColor: colors.primary },
+        drawerStyle: {
+          backgroundColor: "#fff",
+          padding: 0, margin:0
+        },
         drawerActiveBackgroundColor: colors.primary,
         drawerActiveTintColor: "white",
         drawerInactiveTintColor: colorScheme == "dark" ? "#fff" : "#333",
-        drawerLabelStyle: { marginLeft: -25, fontSize: 18 },
+        drawerLabelStyle: { fontSize: 18 },
+        drawerItemStyle: {
+          borderRadius: 5,
+        },
       })}
     >
       <Drawer.Screen
@@ -80,15 +88,17 @@ const DrawerNav = ({ navigation }) => {
       />
       <Drawer.Screen
         name="Goods"
-        component={GoodTabs}
+        component={GoodsStack}
         options={{
           drawerIcon: ({ color }) => (
             <IconButton
               className="m-0"
               icon="format-list-bulleted"
               iconColor={color}
+              style={{ margin: 0, padding: 0 }}
             />
           ),
+          headerShown: false,
         }}
       />
       <Drawer.Screen

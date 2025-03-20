@@ -1,14 +1,14 @@
 import React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView, ScrollView, Alert, View, Dimensions } from "react-native";
-import { DataTable, TextInput, Button } from "react-native-paper";
+import { DataTable, TextInput, Button, Text } from "react-native-paper";
 import { useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../../api/instance";
 import { getAccessToken } from "../Auth/astorage";
 import Wrapper from "../../components/Wrapper";
 import { useGlobalState } from "../../hooks/useGlobalState";
 const { height } = Dimensions.get('window');
-
+//user id 67bc082e7773ef1bd0c80788
 const GoodsAdd = ({ navigation }) => {
   const queryClient = useQueryClient();
   const { selectedGoods, setSelectedGoods } = useGlobalState();
@@ -28,14 +28,21 @@ const GoodsAdd = ({ navigation }) => {
   const submitGoods = async () => {
     try {
       const accessToken = await getAccessToken();
-      await axiosInstance.post("/stock/receive", selectedGoods, {
+      const formattedGoods = selectedGoods.map((good) => ({
+        product_id: good.product_id,
+        quantity: Number(good.quantity),
+        cost: Number(good.cost),        
+        price: Number(good.price)       
+      }));
+      await axiosInstance.post("/stock/receive", formattedGoods, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       await AsyncStorage.removeItem("selectedGoods");
       queryClient.invalidateQueries(["goods"]);
-      navigation.navigate("GoodsList");
+      setSelectedGoods([]);
+      navigation.navigate("GoodTabs", { screen: "Dokon" });
     } catch (error) {
-      Alert.alert("Error", "Failed to add goods.");
+      Alert.alert("Error", `${error}`);
     }
   };
 
@@ -43,21 +50,29 @@ const GoodsAdd = ({ navigation }) => {
     <Wrapper>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1,  backgroundColor: "white", height: height * 0.89 }}>
-          <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+          <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
             <DataTable>
               <DataTable.Header>
-                <DataTable.Title style={{ flex: 1 }}>Tovar nomi</DataTable.Title>
-                <DataTable.Title numeric>Ol narx</DataTable.Title>
-                <DataTable.Title numeric>Sot narx</DataTable.Title>
-                <DataTable.Title numeric>Soni</DataTable.Title>
+                <DataTable.Title style={{ flex: 1, justifyContent: "center" }}>
+                  <Text style={{ fontWeight: "bold" }}>Tovar nomi</Text>
+                </DataTable.Title>
+                <DataTable.Title numeric>
+                  <Text style={{ fontWeight: "bold" }}>Ol narx</Text>
+                </DataTable.Title>
+                <DataTable.Title numeric>
+                  <Text style={{ fontWeight: "bold" }}>Sot narx</Text>
+                </DataTable.Title>
+                <DataTable.Title numeric style={{ justifyContent: "center" }}>
+                  <Text style={{ fontWeight: "bold", textAlign: 'center' }}>Soni</Text>
+                </DataTable.Title>
               </DataTable.Header>
+
               {selectedGoods.map((good, index) => (
                 <DataTable.Row key={index}>
-                  <DataTable.Cell
-                    style={{ flex: 2, backgroundColor: "transparent", fontSize: 12 }}
-                    disabled={Boolean(good.title)}
-                  >
-                    {good.title}
+                  <DataTable.Cell style={{ flex: 2, paddingVertical: 0, borderBottomWidth: 1, borderBottomColor: 'gray' }} disabled={Boolean(good.title)}>
+                    <ScrollView horizontal>
+                      <Text style={{ fontSize: 12 }}>{good.title}</Text>
+                    </ScrollView>
                   </DataTable.Cell>
                   <DataTable.Cell>
                     <TextInput
@@ -93,7 +108,6 @@ const GoodsAdd = ({ navigation }) => {
               bottom: 0,
               left: 0,
               right: 0,
-             
               padding: 10,
               borderTopWidth: 1,
               borderColor: "#ccc",

@@ -8,6 +8,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppStack from "./src/stacks/AppStack";
 import { AuthProvider } from "./src/screens/Auth";
 import { GlobalProvider } from "./src/hooks/useGlobalState";
+import { enableScreens } from "react-native-screens";
+enableScreens();
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
 

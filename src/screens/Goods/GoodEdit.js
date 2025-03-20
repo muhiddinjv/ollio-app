@@ -90,7 +90,7 @@ const GoodEdit = ({ navigation }) => {
     <>
       <Header
         title="Edit Good"
-        icon="content-save"
+        iconRight="content-save"
         navigation={navigation}
         onPress={handleSubmit(saveGood)}
         backBtn

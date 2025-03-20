@@ -1,56 +1,66 @@
 import React, { useState, useEffect } from "react";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import { View, Dimensions } from "react-native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { useNavigation } from "@react-navigation/native";
+import { Alert, View } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import FABplus from "../../components/FABplus";
 import GoodsList from "./GoodsList";
 import Catalog from "./Catalog";
+import Header from "../../components/Header";
 
-const initialLayout = { width: Dimensions.get("window").width };
+const Tab = createMaterialTopTabNavigator();
 
-const routes = [
-  { key: "first", title: "Catalog" },
-  { key: "second", title: "Goods" },
-];
+const GoodTabs = ({ route }) => {
+  const navigation = useNavigation();
+  const drawerNavigation = navigation.getParent();
 
-const GoodTabs = ({ navigation }) => {
-  const [visible, setVisible] = useState(false);
-  const [key, setKey] = useState("initialKey");
-  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
   const { colors } = useTheme();
 
+  const initialIndex = route?.params?.tabIndex ?? 0;
+
   useEffect(() => {
-    setVisible(index < 1);
-  }, [index]);
-
-  const renderScene = SceneMap({
-    first: Catalog,
-    second: () => <GoodsList keyProp={key} navigation={navigation} />,
-  });
-
-  const renderTabBar = (props) => (
-    <TabBar
-      {...props}
-      labelStyle={{ fontWeight: "bold" }}
-      style={{ backgroundColor: colors.primary }}
-      indicatorStyle={{ backgroundColor: "white" }}
-    />
-  );
+    setVisible(initialIndex === 0);
+  }, [initialIndex]);
 
   return (
-    <View className="flex-1 bg-white dark:bg-slate-800">
-      <TabView
-        navigationState={{ index, routes }}
-        initialLayout={initialLayout}
-        renderTabBar={renderTabBar}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      <Header
+        title="Goods"
+        fontSize={20}
+        iconLeft="menu"
+        navigation={navigation}
+        onPress={() => {
+          if (drawerNavigation?.openDrawer) {
+            drawerNavigation.openDrawer();
+          } else {
+            console.log("Drawer navigation is not available");
+          }
+        }}
+        leftBtn
       />
-      <FABplus
-        visible={visible}
-        navigate={navigation.navigate}
-      />
+      <Tab.Navigator
+        initialRouteName={initialIndex === 0 ? "Catalog" : "Dokon"}
+        screenOptions={{
+          tabBarStyle: { backgroundColor: colors.secondary },
+          tabBarIndicatorStyle: { backgroundColor: "white" },
+          tabBarLabelStyle: { fontWeight: "bold", color: "white" },
+        }}
+        screenListeners={{
+          state: (e) => {
+            const tabIndex = e.data.state.index;
+            setVisible(tabIndex === 0); // Hide FAB when on "Goods" tab
+          },
+        }}
+      >
+        <Tab.Screen name="Catalog" component={Catalog} />
+        <Tab.Screen name="Dokon">
+          {(props) => <GoodsList {...props} navigation={navigation} />}
+        </Tab.Screen>
+      </Tab.Navigator>
+
+      <FABplus visible={visible} navigate={navigation.navigate} />
     </View>
   );
 };

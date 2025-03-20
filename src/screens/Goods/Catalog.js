@@ -1,7 +1,7 @@
 import { ScrollView, View } from "react-native";
 import ListItem from "../../components/ListItem";
-import { ActivityIndicator, Text } from "react-native-paper";
 import { MainColors } from "../../theme";
+import { ActivityIndicator, Text } from "react-native-paper";
 import { UseGetCatalog } from "../../services/catalog.service";
 import { useGlobalState } from "../../hooks/useGlobalState";
 

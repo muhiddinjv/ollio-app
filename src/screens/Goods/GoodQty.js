@@ -34,7 +34,7 @@ const GoodQty = ({ navigation }) => {
       <Header
         title={title}
         fontSize={18}
-        icon="content-save"
+        iconRight="content-save"
         navigation={navigation}
         backBtn
       />

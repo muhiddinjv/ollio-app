@@ -6,7 +6,6 @@ import { useNavigation } from "@react-navigation/native";
 import SignIn from "../screens/Auth/SignIn";
 import SignUp from "../screens/Auth/SignUp";
 import DrawerNav from "./DrawerNav";
-import GoodsList from "../screens/Goods/GoodsList";
 import GoodEdit from "../screens/Goods/GoodEdit";
 import GoodTabs from "../screens/Goods/GoodTabs";
 import GoodsAdd from "../screens/Goods/GoodsAdd";
@@ -59,29 +58,12 @@ const AppStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="GoodTabs"
-        component={GoodTabs}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
         name="GoodQty"
         component={GoodQty}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Goods" component={GoodsList} />
       <Stack.Screen name="Bills" component={Bills} />
       <Stack.Screen name="Buyers" component={Buyers} />
-      <Stack.Screen 
-        name="GoodsAdd" 
-        component={GoodsAdd}
-        options={{
-          headerStyle: {
-            backgroundColor: "rgba(103, 80, 164, 1)",
-          },
-          headerTitle: "Manage Goods",
-          headerTintColor: "white",
-        }}
-      />
       <Stack.Screen
         name="OpenTickets"
         component={OpenTickets}

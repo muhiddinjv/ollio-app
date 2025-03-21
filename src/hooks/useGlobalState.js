@@ -7,13 +7,21 @@ export const GlobalProvider = ({ children }) => {
   const [goodQty, setGoodQty] = useState(0);
   const [goodId, setGoodId] = useState(null);
   const [selectedGoods, setSelectedGoods] = useState([]);
+  const [user, setUser] = useState(null);
   
   useEffect(() => {
     const loadSelectedGoods = async () => {
       const storedGoods = await AsyncStorage.getItem('selectedGoods');
       setSelectedGoods(storedGoods ? JSON.parse(storedGoods) : []);
     };
+    const loadUser = async () => {
+      const storedUser = await getItem("user");
+      if (storedUser) {
+        setUser(storedUser);
+      }
+    };
     loadSelectedGoods();
+    loadUser();
   }, []);
 
   useEffect(() => {
@@ -23,6 +31,7 @@ export const GlobalProvider = ({ children }) => {
   return (
     <GlobalContext.Provider 
       value={{ 
+        user, setUser,
         goodId, setGoodId, 
         goodQty, setGoodQty,
         selectedGoods, setSelectedGoods

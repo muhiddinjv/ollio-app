@@ -1,16 +1,29 @@
+import React from "react";
 import { View } from "react-native";
 import { Text, Switch, Button, IconButton, useTheme } from "react-native-paper";
 import { useColorScheme } from "nativewind";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import { useAuth } from "../screens/Auth/AuthProvider";
-import { removeAccessToken } from "../screens/Auth/astorage";
-import React from "react";
+import { removeAccessToken, getItem } from "../screens/Auth/astorage";
+import { useGlobalState } from "../hooks/useGlobalState";
 
 const Sidebar = (props) => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
+  const { user, setUser } = useGlobalState();
   const { signOut } = useAuth();
   const theme = useTheme();
+  
   const { navigation } = props;
+
+  React.useEffect(() => {
+    const fetchUserData = async () => {
+      const storedUser = await getItem("user");
+      if (storedUser) {
+        setUser(storedUser);
+      }
+    };
+    fetchUserData();
+  }, []);
 
   const handleSignOut = async () => {
     await removeAccessToken();
@@ -26,9 +39,9 @@ const Sidebar = (props) => {
       <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: theme.colors.primary}}>
         <View className="flex-row items-center justify-between px-6 pt-10">
           <View>
-            <Text className="pt-2 text-2xl text-white font-bold">Owner</Text>
-            <Text className="pt-2 text-lg text-white">POS 1</Text>
-            <Text className="pt-2 text-lg text-white">Koriznka</Text>
+            <Text className="pt-2 text-2xl text-white font-bold">{user.name}</Text>
+            <Text className="pt-2 text-2xl text-white font-bold">{user.role}</Text>
+            <Text className="pt-2 text-lg text-white">{user.store_type}</Text>
           </View>
           <IconButton icon="lock" size={35} iconColor={theme.colors.primary} className="bg-white h-12 w-12 rounded-full items-center justify-center" onPress={() => {alert('lock')}} />
         </View>

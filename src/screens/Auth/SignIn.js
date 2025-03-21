@@ -19,6 +19,7 @@ import ControlledInput from "../../components/ControlledInput";
 
 export default function SignIn({ navigation }) {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
   const { signIn } = useAuth();
   const { colorScheme } = useColorScheme();
 
@@ -28,20 +29,28 @@ export default function SignIn({ navigation }) {
     handleSubmit,
   } = useForm();
 
-  const handleSignIn = async (data) => {
+  React.useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => setErrorMessage(""), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+
+  const handleSignIn = async ({phone, password}) => {
     try {
-      const response = await axiosInstance.post("auth/signin", {
-        phone: data?.phoneNumber,
-        password: data?.password,
-      });
-      console.log({userdata: response.data});
-      const { token } = response.data;
-      setAccessToken(token);
-      signIn(token);
+      setErrorMessage("");
+      const {data} = await axiosInstance.post("auth/signin", {phone, password});
+      setAccessToken(data.token);
+      signIn(data.token);
       navigation.navigate("DrawerNav");
-      return response.data;
     } catch (error) {
       console.log("handleSignIn error", error);
+
+      if (error.response?.data?.message) {
+        setErrorMessage(error.response.data.message);
+      } else {
+        setErrorMessage("Something went wrong. Please try again.");
+      }
     }
   };
 
@@ -50,21 +59,20 @@ export default function SignIn({ navigation }) {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       className="w-full flex-1"
     >
-      <TouchableWithoutFeedback
-        onPress={Keyboard.dismiss}
-        className="w-full"
-        style={{ flex: 1, backgroundColor: "red" }}
-      >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} className="w-full">
         <AuthProvider>
           <View className="flex-1 justify-center bg-gray-200">
             <SafeAreaView className="flex flex-1 flex-grow justify-center p-16 dark:bg-slate-800">
               <View className="flex flex-1 items-center justify-center">
+                {errorMessage ? (
+                  <Text className="text-red-500 mb-3">{errorMessage}</Text>
+                ) : null}
+
                 <ControlledInput
-                  name="phoneNumber"
+                  name="phone"
                   control={control}
-                  error={errors?.phoneNumber?.message}
+                  error={errors?.phone?.message}
                   label="Phone number"
-                  // keyboardType="number-pad"
                   mode="outlined"
                   className="w-full dark:bg-slate-700 text-white"
                   textColor={MainColors.icon[colorScheme]}

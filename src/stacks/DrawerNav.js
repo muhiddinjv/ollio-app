@@ -6,7 +6,7 @@ import { useColorScheme } from "nativewind";
 
 import SalesScreen from "../screens/Sales/Sales";
 import GoodsStack from "./GoodsStack";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "./Sidebar";
 import Bills from "../screens/Bills/Bills";
 import { useGlobalState } from "../hooks/useGlobalState";
 
@@ -17,15 +17,6 @@ const DrawerNav = ({ navigation }) => {
   const { goodQty } = useGlobalState();
   const { colorScheme } = useColorScheme();
   const { colors } = useTheme();
-
-  const handleSignOut = async () => {
-    await removeAccessToken();
-    signOut();
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "SignIn" }],
-    });
-  };
 
   return (
     <Drawer.Navigator
@@ -71,17 +62,14 @@ const DrawerNav = ({ navigation }) => {
         },
         headerTintColor: "white",
         headerStyle: { backgroundColor: colors.primary },
-        drawerStyle: {
-          backgroundColor: "#fff",
-          padding: 0, margin:0
-        },
         drawerActiveBackgroundColor: colors.primary,
         drawerActiveTintColor: "white",
         drawerInactiveTintColor: colorScheme == "dark" ? "#fff" : "#333",
         drawerLabelStyle: { fontSize: 18 },
         drawerItemStyle: {
           borderRadius: 5,
-        },
+          marginHorizontal: 10
+        }
       })}
     >
       <Drawer.Screen

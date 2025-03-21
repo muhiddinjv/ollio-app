@@ -6,11 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import SignIn from "../screens/Auth/SignIn";
 import SignUp from "../screens/Auth/SignUp";
 import DrawerNav from "./DrawerNav";
-import GoodEdit from "../screens/Goods/GoodEdit";
-import GoodTabs from "../screens/Goods/GoodTabs";
-import GoodsAdd from "../screens/Goods/GoodsAdd";
 import GoodQty from "../screens/Goods/GoodQty";
-import Bills from "../screens/Bills/Bills";
 import Buyers from "../screens/Users/Buyers";
 import OpenTickets from "../screens/Sales/OpenTickets";
 import { AntDesign } from "@expo/vector-icons";
@@ -19,9 +15,13 @@ import BillDetails from "../screens/Bills/BillDetails";
 import { Pressable, View } from "react-native";
 import PaidScreen from "../screens/Payment/Paid";
 import PaymentScreen from "../screens/Payment/Payment";
-import SalesScreen from "../screens/Sales/Sales";
 import BillCart from "../screens/Bills/BillCart";
 import BillCartItemCount from "../screens/Bills/BillCartItemCount";
+import GoodEdit from "../screens/Goods/GoodEdit";
+import GoodTabs from "../screens/Goods/GoodTabs";
+import GoodsAdd from "../screens/Goods/GoodsAdd";
+import SalesScreen from "../screens/Sales/Sales";
+import Bills from "../screens/Bills/Bills";
 const Stack = createStackNavigator();
 
 const AppStack = () => {
@@ -59,7 +59,6 @@ const AppStack = () => {
         component={GoodQty}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Bills" component={Bills} />
       <Stack.Screen name="Buyers" component={Buyers} />
       <Stack.Screen
         name="OpenTickets"
@@ -149,12 +148,6 @@ const AppStack = () => {
           },
         }}
       />
-
-      {/* Common modal screens */}
-      {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Help" component={Help} />
-        <Stack.Screen name="Invite" component={Invite} />
-      </Stack.Group> */}
     </Stack.Navigator>
   );
 };

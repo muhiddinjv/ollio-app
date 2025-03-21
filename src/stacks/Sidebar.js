@@ -4,12 +4,12 @@ import { useColorScheme } from "nativewind";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import { useAuth } from "../screens/Auth/AuthProvider";
 import { removeAccessToken } from "../screens/Auth/astorage";
+import React from "react";
 
 const Sidebar = (props) => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
   const { signOut } = useAuth();
   const theme = useTheme();
-
   const { navigation } = props;
 
   const handleSignOut = async () => {
@@ -22,7 +22,7 @@ const Sidebar = (props) => {
   };
 
   return (
-    <View className="flex-1 w-full dark:bg-slate-800">
+    <View className="flex-1 w-full dark:bg-slate-800">{/* -- REMOVE PADDING DrawerContentScrollView ---*/}
       <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: theme.colors.primary}}>
         <View className="flex-row items-center justify-between px-6 pt-10">
           <View>
@@ -34,11 +34,12 @@ const Sidebar = (props) => {
         </View>
         <Switch
           color="white"
-          className="mr-2"
+          className="mr-2 mb-4"
           value={colorScheme === "light"}
           onChange={toggleColorScheme}
         />
-        <View className="bg-white dark:bg-slate-800">
+        {/* ----------------------------------- BAD CODE m-[-12]*/}
+        <View className="bg-white dark:bg-slate-800 pt-2 m-[-12]">
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>

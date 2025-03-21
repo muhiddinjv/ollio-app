@@ -2,10 +2,24 @@ import { View } from "react-native";
 import { Text, Switch, Button, IconButton, useTheme } from "react-native-paper";
 import { useColorScheme } from "nativewind";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
+import { useAuth } from "../screens/Auth/AuthProvider";
+import { removeAccessToken } from "../screens/Auth/astorage";
 
 const Sidebar = (props) => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
+  const { signOut } = useAuth();
   const theme = useTheme();
+
+  const { navigation } = props;
+
+  const handleSignOut = async () => {
+    await removeAccessToken();
+    signOut();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "SignIn" }]
+    });
+  };
 
   return (
     <View className="flex-1 w-full dark:bg-slate-800">
@@ -31,7 +45,7 @@ const Sidebar = (props) => {
 
       <View className="flex-row justify-between p-4 border-t border-gray-300">
         <Button className='w-min' icon="account-voice" mode="contained" onPress={() => {alert('sidebar profile')}}>Share</Button>
-        <Button className='w-min' icon="logout" mode="contained" onPress={() => {alert('sign out')}}>Sign Out</Button>
+        <Button className='w-min' icon="logout" mode="contained" onPress={handleSignOut}>Sign Out</Button>
       </View>
     </View>
   );

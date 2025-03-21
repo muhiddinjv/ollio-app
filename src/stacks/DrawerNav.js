@@ -1,13 +1,11 @@
 import React from "react";
 import { Platform, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { IconButton, useTheme, Text, Button } from "react-native-paper";
+import { IconButton, useTheme, Button } from "react-native-paper";
 import { useColorScheme } from "nativewind";
 
-import SignOutScreen from "../screens/Auth/SignOut";
 import SalesScreen from "../screens/Sales/Sales";
 import GoodsStack from "./GoodsStack";
-
 import Sidebar from "../components/Sidebar";
 import Bills from "../screens/Bills/Bills";
 import { useGlobalState } from "../hooks/useGlobalState";
@@ -19,6 +17,15 @@ const DrawerNav = ({ navigation }) => {
   const { goodQty } = useGlobalState();
   const { colorScheme } = useColorScheme();
   const { colors } = useTheme();
+
+  const handleSignOut = async () => {
+    await removeAccessToken();
+    signOut();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "SignIn" }],
+    });
+  };
 
   return (
     <Drawer.Navigator
@@ -107,15 +114,6 @@ const DrawerNav = ({ navigation }) => {
         options={{
           drawerIcon: ({ color }) => (
             <IconButton className="m-0" icon="cash-fast" iconColor={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Sign out"
-        component={SignOutScreen}
-        options={{
-          drawerIcon: ({ color }) => (
-            <IconButton className="m-0" icon="logout" iconColor={color} />
           ),
         }}
       />

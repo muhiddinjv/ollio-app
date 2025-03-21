@@ -1,5 +1,5 @@
 import React from "react";
-import { useAuth } from ".";
+import { useAuth } from "./AuthProvider";
 
 const SignOutScreen = ({navigation}) => {
     const { signOut } = useAuth();

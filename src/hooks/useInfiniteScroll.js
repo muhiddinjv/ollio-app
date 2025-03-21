@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useCallback, useMemo, useState } from "react"
 import { getAccessToken } from "../screens/Auth/astorage"
-import axiosInstance from "../api/instance"
+import axiosInstance from "../screens/Auth/axiostance"
 import _ from "lodash"
 
 export const useInfiniteScroll = ({ key, url, limit = 100, filters }) => {

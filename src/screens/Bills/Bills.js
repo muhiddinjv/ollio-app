@@ -3,7 +3,7 @@ import { Text } from "react-native-paper";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAccessToken } from "../Auth/astorage";
-import axiosInstance from "../../api/instance";
+import axiosInstance from "../Auth/axiostance";
 import { FlashList } from "@shopify/flash-list";
 import Loader from "../../components/Loader";
 import { FontAwesome6 } from "@expo/vector-icons";

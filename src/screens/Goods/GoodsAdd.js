@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView, ScrollView, Alert, View, Dimensions } from "react-native";
 import { DataTable, TextInput, Button, Text } from "react-native-paper";
 import { useQueryClient } from "@tanstack/react-query";
-import axiosInstance from "../../api/instance";
+import axiosInstance from "../Auth/axiostance";
 import { getAccessToken } from "../Auth/astorage";
 import Wrapper from "../../components/Wrapper";
 import { useGlobalState } from "../../hooks/useGlobalState";

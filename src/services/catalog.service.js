@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "../api/instance";
+import axiosInstance from "../screens/Auth/axiostance";
 import { getAccessToken } from "../screens/Auth/astorage";
 
 export const getCatalog = async () => {

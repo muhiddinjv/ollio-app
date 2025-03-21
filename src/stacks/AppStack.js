@@ -23,7 +23,6 @@ import SalesScreen from "../screens/Sales/Sales";
 import BillCart from "../screens/Bills/BillCart";
 import BillCartItemCount from "../screens/Bills/BillCartItemCount";
 const Stack = createStackNavigator();
-const isSignedIn = true;
 
 const AppStack = () => {
   const navigation = useNavigation();
@@ -33,15 +32,13 @@ const AppStack = () => {
       const accessToken = await getAccessToken();
       if (!accessToken) {
         navigation.navigate("SignIn");
-      } else {
-        navigation.navigate("DrawerNav");
       }
     };
     checkToken();
   }, []);
 
   return (
-    <Stack.Navigator initialRouteName={isSignedIn ? "DrawerNav" : "SignIn"}>
+    <Stack.Navigator initialRouteName="SignIn">
       <Stack.Screen
         name="SignIn"
         component={SignIn}

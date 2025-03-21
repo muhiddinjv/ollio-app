@@ -9,9 +9,9 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TextInput, Button as RNButton } from "react-native-paper";
-import { AuthProvider, useAuth } from ".";
+import { AuthProvider, useAuth } from "./AuthProvider";
 import { setAccessToken } from "./astorage";
-import axiosInstance from "../../api/instance";
+import axiosInstance from "./axiostance";
 import { useColorScheme } from "nativewind";
 import { MainColors } from "../../theme";
 import { useForm } from "react-hook-form";
@@ -34,7 +34,7 @@ export default function SignIn({ navigation }) {
         phone: data?.phoneNumber,
         password: data?.password,
       });
-      console.log({response});
+      console.log({userdata: response.data});
       const { token } = response.data;
       setAccessToken(token);
       signIn(token);

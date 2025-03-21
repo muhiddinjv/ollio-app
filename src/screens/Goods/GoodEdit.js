@@ -5,7 +5,7 @@ import { Picker } from "@react-native-picker/picker";
 import { useQueryClient } from "@tanstack/react-query";
 import { CardElevated } from "../../components/CardElevated";
 import { getAccessToken } from "../Auth/astorage";
-import axiosInstance from "../../api/instance";
+import axiosInstance from "../Auth/axiostance";
 import Wrapper from "../../components/Wrapper";
 import Header from "../../components/Header";
 import { Controller, useForm } from "react-hook-form";

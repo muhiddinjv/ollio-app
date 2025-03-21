@@ -2,7 +2,7 @@ import { View, Platform } from "react-native";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAccessToken } from "../Auth/astorage";
-import axiosInstance from "../../api/instance";
+import axiosInstance from "../Auth/axiostance";
 import { GlobalContext } from "../../utils";
 import { TextInput } from "react-native-paper";
 import Header from "../../components/Header";

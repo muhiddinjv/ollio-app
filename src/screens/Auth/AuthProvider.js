@@ -1,5 +1,5 @@
 import * as React from "react";
-import { getAccessToken, setAccessToken, removeAccessToken } from "./astorage";
+import { setAccessToken, removeAccessToken } from "./astorage";
 
 const AuthContext = React.createContext({
   status: "idle",
@@ -19,31 +19,11 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children, navigation }) => {
   const [state, dispatch] = React.useReducer(AuthReducer, {
     status: "idle",
     userToken: null,
   });
-
-  React.useEffect(() => {
-    const initState = async () => {
-      try {
-        const userToken = await getAccessToken();
-        console.log("userToken", userToken);
-        if (userToken !== null) {
-          dispatch({ type: "SIGN_IN", token: userToken });
-        } else {
-          dispatch({ type: "SIGN_OUT" });
-        }
-      } catch (e) {
-        // catch error here
-        console.log(e);
-        // Maybe sign_out user!
-      }
-    };
-
-    initState();
-  }, []);
 
   React.useImperativeHandle(AuthRef, () => authActions);
 
@@ -54,13 +34,16 @@ export const AuthProvider = ({ children }) => {
         await setAccessToken(token);
       },
       signOut: async () => {
-        console.log("signout completed");
+        console.log("Signing out...");
 
-        await removeAccessToken(); // TODO: use Vars
+        await removeAccessToken();
         dispatch({ type: "SIGN_OUT" });
+
+        // Redirect user to SignIn screen
+        navigation.navigate("SignIn");
       },
     }),
-    []
+    [navigation]
   );
 
   return (

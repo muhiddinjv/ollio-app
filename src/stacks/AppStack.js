@@ -7,7 +7,8 @@ import SignIn from "../screens/Auth/SignIn";
 import SignUp from "../screens/Auth/SignUp";
 import DrawerNav from "./DrawerNav";
 import GoodQty from "../screens/Goods/GoodQty";
-import Buyers from "../screens/Users/Buyers";
+import Users from "../screens/Users/Users";
+import UserAdd from "../screens/Users/UserAdd";
 import OpenTickets from "../screens/Sales/OpenTickets";
 import { AntDesign } from "@expo/vector-icons";
 import SaveTicket from "../screens/Sales/SaveTicket";
@@ -59,7 +60,8 @@ const AppStack = () => {
         component={GoodQty}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Buyers" component={Buyers} />
+      <Stack.Screen name="Users" component={Users} options={{ headerShown: false }}/>
+      <Stack.Screen name="UserAdd" component={UserAdd} options={{ headerShown: false }}/>
       <Stack.Screen
         name="OpenTickets"
         component={OpenTickets}

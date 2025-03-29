@@ -15,7 +15,7 @@ export const GlobalProvider = ({ children }) => {
       setSelectedGoods(storedGoods ? JSON.parse(storedGoods) : []);
     };
     const loadUser = async () => {
-      const storedUser = await getItem("user");
+      const storedUser = await AsyncStorage.getItem("user");
       if (storedUser) {
         setUser(storedUser);
       }

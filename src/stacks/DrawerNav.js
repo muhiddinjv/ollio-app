@@ -38,7 +38,7 @@ const DrawerNav = ({ navigation }) => {
                   icon="account-plus"
                   iconColor="white"
                   size={25}
-                  onPress={() => navigation.navigate("Buyers")}
+                  onPress={() => navigation.navigate("Users")}
                 />
                 <IconButton
                   icon={MORE_ICON}

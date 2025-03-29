@@ -1,5 +1,6 @@
 import * as React from "react";
 import { setAccessToken, removeAccessToken } from "./astorage";
+import { useNavigation } from '@react-navigation/native';
 
 const AuthContext = React.createContext({
   status: "idle",
@@ -39,8 +40,8 @@ export const AuthProvider = ({ children, navigation }) => {
         await removeAccessToken();
         dispatch({ type: "SIGN_OUT" });
 
-        // Redirect user to SignIn screen
-        navigation.navigate("SignIn");
+        const nav = navigation || useNavigation();
+        nav.navigate("SignIn");
       },
     }),
     [navigation]

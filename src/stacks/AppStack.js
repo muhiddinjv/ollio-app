@@ -25,7 +25,7 @@ import UserAdd from "../screens/Users/UserAdd";
 import Users from "../screens/Users/UserList";
 import Bills from "../screens/Bills/Bills";
 
-import UsersStack from "./UsersStack";
+import UserStack from "./UserStack";
 const Stack = createStackNavigator();
 
 const AppStack = () => {
@@ -63,7 +63,7 @@ const AppStack = () => {
         component={GoodQty}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Users" component={UsersStack} options={{ headerShown: false }}/>
+      <Stack.Screen name="Users" component={UserStack} options={{ headerShown: false }}/>
       <Stack.Screen
         name="OpenTickets"
         component={OpenTickets}

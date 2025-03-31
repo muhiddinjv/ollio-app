@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet, Pressable } from "react-native";
 import { Text, TextInput, Button, useTheme, ActivityIndicator } from "react-native-paper";
 import axiosInstance from "../Auth/axiostance"; // Assuming you have an axios instance
 import { getAccessToken } from "../Auth/astorage"; // Assuming you have a function to get access token
@@ -41,13 +41,13 @@ const UserList = ({ navigation }) => {
         <View style={styles.userList}>
           {error && <Text style={{ color: 'red' }}>Error: {error}</Text>}
           {!loading ? users.map((user) => (
-            <View key={user._id} style={styles.userItem}>
+            <Pressable key={user._id} style={styles.userItem} onPress={() => navigation.navigate("UserProfile", { user })}>
               <View style={styles.avatar} />
               <View style={styles.userInfo}>
                 <Text style={styles.userName}>{user.name}</Text>
                 <Text style={styles.userDetails}>{user.role.toUpperCase()}, {user.phone}</Text>
               </View>
-            </View>
+            </Pressable>
           )) : <ActivityIndicator size="large" color={colors.primary} />}
         </View>
       </ScrollView>

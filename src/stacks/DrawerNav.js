@@ -5,7 +5,7 @@ import { IconButton, useTheme, Button } from "react-native-paper";
 import { useColorScheme } from "nativewind";
 
 import SalesScreen from "../screens/Sales/Sales";
-import GoodsStack from "./GoodsStack";
+import GoodStack from "./GoodStack";
 import Sidebar from "./Sidebar";
 import Bills from "../screens/Bills/Bills";
 import { useGlobalState } from "../hooks";
@@ -83,7 +83,7 @@ const DrawerNav = ({ navigation }) => {
       />
       <Drawer.Screen
         name="Goods"
-        component={GoodsStack}
+        component={GoodStack}
         options={{
           drawerIcon: ({ color }) => (
             <IconButton

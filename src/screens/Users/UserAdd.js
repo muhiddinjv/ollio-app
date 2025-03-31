@@ -3,11 +3,11 @@ import { View, ScrollView, StyleSheet } from "react-native";
 import { TextInput, Button, useTheme } from "react-native-paper";
 import axiosInstance from "../../screens/Auth/axiostance";
 import { Picker } from "@react-native-picker/picker";
-import { useGlobalState } from "../../hooks/index"; // Adjust the import path as necessary
+import { useGlobalState } from "../../hooks/index";
 
 const UserAdd = ({ navigation }) => {
   const { colors } = useTheme();
-  const { user } = useGlobalState(); // Get the current user from global state
+  const { user } = useGlobalState();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
@@ -18,16 +18,6 @@ const UserAdd = ({ navigation }) => {
   const [pin, setPin] = useState("");
   
   const handleSave = async () => {
-    // Validate required fields
-    console.log(name, phone, pin, role, store_type);
-    if (!name || !phone || !pin || !role || !store_type) {
-      console.error("Please fill in all required fields.");
-      return; // Exit the function if validation fails
-    }
-
-    console.log('Current user object:', user); // Log the user object
-    console.log('user ID:', user?._id); // Log the user ID
-
     const userData = {
       phone,
       name,
@@ -37,14 +27,13 @@ const UserAdd = ({ navigation }) => {
       note,
       role,
       store_type,
-      owner_id: user?._id, // Add owner_id from the current user
+      owner_id: user?._id,
     };
 
     console.log("User Data to be sent:", userData);
 
     try {
-      const response = await axiosInstance.post("/users", userData);
-      console.log("User saved successfully:", response.data);
+      await axiosInstance.post("/users", userData);
       navigation.goBack();
     } catch (error) {
       console.error("Error saving user:", error.response ? error.response.data : error.message);

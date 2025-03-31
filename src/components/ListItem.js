@@ -1,10 +1,9 @@
-import React from "react"; // Ensure React is in scope when using JSX
+import React from "react";
 import { View } from "react-native";
 import { useColorScheme } from "nativewind";
 import { Divider, List, Text } from "react-native-paper";
 import { MainColors } from "../theme";
 import { CheckBox } from "./CheckBox";
-import { GlobalContext } from "../utils";
 import { useGlobalState } from "../hooks";
 
 const ListItem = ({

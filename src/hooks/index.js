@@ -1,11 +1,12 @@
 import { useCallback, useMemo, createContext, useState, useEffect, useContext } from "react"
 import { useQuery } from "@tanstack/react-query";
-import { useTheme } from "react-native-paper";
+import { Button, useTheme } from "react-native-paper";
 import { useInfiniteQuery } from "@tanstack/react-query"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import _ from "lodash"
 import { getAccessToken } from "../screens/Auth/astorage"
 import axiosInstance from "../screens/Auth/axiostance";
+import { useNavigation } from "@react-navigation/native";
 
 const GlobalContext = createContext();
 
@@ -165,14 +166,26 @@ export const useCatalog = () => {
       });
 };
 
-export const useHeaderStyle = (title) => {
+export const useHeaderStyle = (title, rightIcon, screenName) => {
     const { colors } = useTheme();
+    const navigation = useNavigation();
+
     return {
       headerStyle: {
         backgroundColor: colors.primary,
       },
       headerTitle: title,
       headerTintColor: colors.surface,
+    //   headerRight: rightIcon && (() => {
+    //     return  (
+    //         <Button
+    //             icon={rightIcon}
+    //             mode="contained"
+    //             labelStyle={{ fontSize: 19 }}
+    //             onPress={() => navigation.navigate(screenName)}
+    //         />
+    //     )
+    //   }),
     }
 }
 

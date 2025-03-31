@@ -10,8 +10,7 @@ import Wrapper from "../../components/Wrapper";
 import Header from "../../components/Header";
 import { Controller, useForm } from "react-hook-form";
 import ControlledInputCustom from "../../components/ControlledInputCustom";
-import { UseGetGood } from "../../services/goods.service";
-import { useGlobalState } from "../../hooks";
+import { useGlobalState, useGetGood } from "../../hooks";
 
 
 const GoodEdit = ({ navigation }) => {
@@ -27,8 +26,7 @@ const GoodEdit = ({ navigation }) => {
     getValues,
   } = useForm();
 
-  const goodsQuery = UseGetGood(goodId);
-  console.log("goodsQueryCost", goodsQuery);
+  const goodsQuery = useGetGood(goodId);
 
   useEffect(() => {
     if (goodsQuery?.data) {
@@ -42,8 +40,6 @@ const GoodEdit = ({ navigation }) => {
       });
     }
   }, [goodsQuery?.data, goodId]);
-
-  console.log("getValues", getValues("cost"), {errors});
 
   const saveGood = async (data) => {
     const accessToken = await getAccessToken();

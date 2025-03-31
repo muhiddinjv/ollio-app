@@ -9,7 +9,7 @@ import axiosInstance from "../screens/Auth/axiostance";
 
 const GlobalContext = createContext();
 
-async function setLocalStorageItem(key, setState, datatype) {
+async function loadStorageData(key, setState, datatype) {
     const data = await AsyncStorage.getItem(key);
     setState(data ? JSON.parse(data) : datatype);
 }
@@ -21,8 +21,8 @@ export const GlobalProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     
     useEffect(() => {
-      setLocalStorageItem('selectedGoods', setSelectedGoods, []);
-      setLocalStorageItem('user', setUser, null);
+      loadStorageData('selectedGoods', setSelectedGoods, []);
+      loadStorageData('user', setUser, null);
     }, []);
   
     useEffect(() => {

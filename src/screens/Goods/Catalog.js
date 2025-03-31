@@ -2,14 +2,13 @@ import { ScrollView, View } from "react-native";
 import ListItem from "../../components/ListItem";
 import { MainColors } from "../../theme";
 import { ActivityIndicator, Text } from "react-native-paper";
-import { UseGetCatalog } from "../../services/catalog.service";
-import { useGlobalState } from "../../hooks";
+import { useGlobalState, useCatalog } from "../../hooks";
 
 const Catalog = () => {
   const { selectedGoods, setSelectedGoods } = useGlobalState();
-  const { data, isLoading, isError } = UseGetCatalog();
+  const { data, isLoading, isError } = useCatalog();
 
-  const catalogItems = data?.data || [];
+  const catalogItems = data || [];
 
   const handleToggleItem = (item) => {
     setSelectedGoods((prev) => {

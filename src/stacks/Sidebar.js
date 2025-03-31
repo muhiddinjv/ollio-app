@@ -33,7 +33,6 @@ const Sidebar = (props) => {
       routes: [{ name: "SignIn" }]
     });
   };
-  console.log('user in sidebar', user);
 
   return (
     <View className="flex-1 w-full dark:bg-slate-800">{/* -- REMOVE PADDING DrawerContentScrollView ---*/}

@@ -17,7 +17,7 @@ import { MainColors } from "../../theme";
 import { useForm } from "react-hook-form";
 import ControlledInput from "../../components/ControlledInput";
 import { jwtDecode } from "jwt-decode";
-import { useGlobalState } from "../../hooks/useGlobalState";
+import { useGlobalState } from "../../hooks";
 
 export default function SignIn({ navigation }) {
   const [showPassword, setShowPassword] = React.useState(false);

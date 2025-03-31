@@ -8,7 +8,7 @@ import SalesScreen from "../screens/Sales/Sales";
 import GoodsStack from "./GoodsStack";
 import Sidebar from "./Sidebar";
 import Bills from "../screens/Bills/Bills";
-import { useGlobalState } from "../hooks/useGlobalState";
+import { useGlobalState } from "../hooks";
 
 const Drawer = createDrawerNavigator();
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";

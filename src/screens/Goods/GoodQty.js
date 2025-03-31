@@ -6,7 +6,7 @@ import axiosInstance from "../Auth/axiostance";
 import { GlobalContext } from "../../utils";
 import { TextInput } from "react-native-paper";
 import Header from "../../components/Header";
-import { useGlobalState } from "../../hooks/useGlobalState";
+import { useGlobalState } from "../../hooks";
 
 const GoodQty = ({ navigation }) => {
   const { goodId, setGoodQty, goodQty } = useGlobalState();

@@ -11,7 +11,7 @@ import Header from "../../components/Header";
 import { Controller, useForm } from "react-hook-form";
 import ControlledInputCustom from "../../components/ControlledInputCustom";
 import { UseGetGood } from "../../services/goods.service";
-import { useGlobalState } from "../../hooks/useGlobalState";
+import { useGlobalState } from "../../hooks";
 
 
 const GoodEdit = ({ navigation }) => {

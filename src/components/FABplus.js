@@ -5,7 +5,7 @@ import { MainColors } from "../theme";
 import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useGlobalState } from "../hooks/useGlobalState";
+import { useGlobalState } from "../hooks";
 
 const FABplus = ({ visible }) => {
   const { selectedGoods, setSelectedGoods } = useGlobalState();

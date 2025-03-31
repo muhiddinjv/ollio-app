@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
-import { Text, TextInput, Appbar, Button, useTheme, ActivityIndicator } from "react-native-paper";
-import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
-import axiosInstance from "../../screens/Auth/axiostance"; // Assuming you have an axios instance
-import { getAccessToken } from "../../screens/Auth/astorage"; // Assuming you have a function to get access token
+import { Text, TextInput, Button, useTheme, ActivityIndicator } from "react-native-paper";
+import axiosInstance from "../Auth/axiostance"; // Assuming you have an axios instance
+import { getAccessToken } from "../Auth/astorage"; // Assuming you have a function to get access token
 
-const Users = ({ navigation }) => {
+const UserList = ({ navigation }) => {
   const { colors } = useTheme();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,16 +29,12 @@ const Users = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Appbar.Header style={{ backgroundColor: colors.primary }}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} iconColor={colors.surface} />
-        <Appbar.Content title="Clients" titleStyle={{ color: colors.surface }} />
-      </Appbar.Header>
       <View style={styles.searchContainer}>
-        <TextInput label="Search" mode="outlined" style={styles.searchInput} />
+        <TextInput label="Izlash" mode="outlined" style={styles.searchInput} />
         <Button mode="contained" onPress={() => navigation.navigate("UserAdd")} style={styles.addButton}>
-          ADD NEW CLIENT
+          FOYDALANUVCHI QO'SHISH
         </Button>
-        <Text style={styles.recentClientsTitle}>Recent Clients</Text>
+        <Text style={styles.recentClientsTitle}>Yangi mijozlar</Text>
       </View>
 
       <ScrollView>
@@ -107,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Users;
+export default UserList;

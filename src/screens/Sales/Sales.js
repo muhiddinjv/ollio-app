@@ -6,10 +6,10 @@ import { ActivityIndicator, IconButton, Text } from "react-native-paper";
 import ListItem from "../../components/ListItem";
 import SaveCharge from "../../components/SaveCharge";
 import Loader from "../../components/Loader";
-import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
+import { useInfiniteScroll } from "../../hooks";
 import { FlashList } from "@shopify/flash-list";
 import GoodQtyModal from "../Goods/GoodQtyModal";
-import { useGlobalState } from "../../hooks/useGlobalState";
+import { useGlobalState } from "../../hooks";
 
 const StyledPicker = styled(Picker);
 
@@ -43,6 +43,7 @@ const SalesScreen = ({ navigation }) => {
 
       <View className="flex-row items-center pl-4 h-14 border border-gray-400">
         <StyledPicker
+          mode="dropdown"
           selectedValue={selectedValue}
           onValueChange={(itemValue) => setSelectedValue(itemValue)}
           className="w-4/5 text-base dark:text-white"

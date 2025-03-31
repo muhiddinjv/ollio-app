@@ -6,7 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../Auth/axiostance";
 import { getAccessToken } from "../Auth/astorage";
 import Wrapper from "../../components/Wrapper";
-import { useGlobalState } from "../../hooks/useGlobalState";
+import { useGlobalState } from "../../hooks";
 const { height } = Dimensions.get('window');
 //user id 67bc082e7773ef1bd0c80788
 const GoodsAdd = ({ navigation }) => {

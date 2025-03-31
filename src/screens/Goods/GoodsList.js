@@ -3,7 +3,7 @@ import ListItem from "../../components/ListItem";
 import { useState } from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
-import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
+import { useInfiniteScroll } from "../../hooks";
 import { FlashList } from "@shopify/flash-list";
 import { useNavigation } from "@react-navigation/native";
 

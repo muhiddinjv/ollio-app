@@ -5,7 +5,7 @@ import { Divider, List, Text } from "react-native-paper";
 import { MainColors } from "../theme";
 import { CheckBox } from "./CheckBox";
 import { GlobalContext } from "../utils";
-import { useGlobalState } from "../hooks/useGlobalState";
+import { useGlobalState } from "../hooks";
 
 const ListItem = ({
   goodId,

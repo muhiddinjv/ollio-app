@@ -5,7 +5,7 @@ import { useColorScheme } from "nativewind";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import { useAuth } from "../screens/Auth/AuthProvider";
 import { removeAccessToken, getItem } from "../screens/Auth/astorage";
-import { useGlobalState } from "../hooks/useGlobalState";
+import { useGlobalState } from "../hooks";
 
 const Sidebar = (props) => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
@@ -33,15 +33,16 @@ const Sidebar = (props) => {
       routes: [{ name: "SignIn" }]
     });
   };
+  console.log('user in sidebar', user);
 
   return (
     <View className="flex-1 w-full dark:bg-slate-800">{/* -- REMOVE PADDING DrawerContentScrollView ---*/}
       <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: theme.colors.primary}}>
         <View className="flex-row items-center justify-between px-6 pt-10">
           <View>
-            <Text className="pt-2 text-2xl text-white font-bold">{user?.name}</Text>
-            <Text className="pt-2 text-2xl text-white font-bold">{user?.role}</Text>
-            <Text className="pt-2 text-lg text-white">{user?.store_type}</Text>
+            <Text className="pt-2 text-2xl text-white font-bold">{user?.name || 'User'}</Text>
+            <Text className="pt-2 text-2xl text-white font-bold">{user?.role || 'Role'}</Text>
+            <Text className="pt-2 text-lg text-white">{user?.store_type || 'Store'}</Text>
           </View>
           <IconButton icon="lock" size={35} iconColor={theme.colors.primary} className="bg-white h-12 w-12 rounded-full items-center justify-center" onPress={() => {alert('lock')}} />
         </View>

@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppStack from "./src/stacks/AppStack";
 import { AuthProvider } from "./src/screens/Auth/AuthProvider";
-import { GlobalProvider } from "./src/hooks/useGlobalState";
+import { GlobalProvider } from "./src/hooks";
 import { enableScreens } from "react-native-screens";
 enableScreens();
 

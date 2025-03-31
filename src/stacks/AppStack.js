@@ -2,27 +2,30 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { getAccessToken } from "../screens/Auth/astorage";
 import { useNavigation } from "@react-navigation/native";
-
 import SignIn from "../screens/Auth/SignIn";
 import SignUp from "../screens/Auth/SignUp";
 import DrawerNav from "./DrawerNav";
 import GoodQty from "../screens/Goods/GoodQty";
-import Users from "../screens/Users/Users";
-import UserAdd from "../screens/Users/UserAdd";
 import OpenTickets from "../screens/Sales/OpenTickets";
 import { AntDesign } from "@expo/vector-icons";
+import { Pressable } from "react-native";
 import SaveTicket from "../screens/Sales/SaveTicket";
 import BillDetails from "../screens/Bills/BillDetails";
-import { Pressable, View } from "react-native";
 import PaidScreen from "../screens/Payment/Paid";
 import PaymentScreen from "../screens/Payment/Payment";
 import BillCart from "../screens/Bills/BillCart";
 import BillCartItemCount from "../screens/Bills/BillCartItemCount";
+
 import GoodEdit from "../screens/Goods/GoodEdit";
 import GoodTabs from "../screens/Goods/GoodTabs";
 import GoodsAdd from "../screens/Goods/GoodsAdd";
 import SalesScreen from "../screens/Sales/Sales";
+import UserList from "../screens/Users/UserList";
+import UserAdd from "../screens/Users/UserAdd";
+import Users from "../screens/Users/UserList";
 import Bills from "../screens/Bills/Bills";
+
+import UsersStack from "./UsersStack";
 const Stack = createStackNavigator();
 
 const AppStack = () => {
@@ -60,8 +63,7 @@ const AppStack = () => {
         component={GoodQty}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Users" component={Users} options={{ headerShown: false }}/>
-      <Stack.Screen name="UserAdd" component={UserAdd} options={{ headerShown: false }}/>
+      <Stack.Screen name="Users" component={UsersStack} options={{ headerShown: false }}/>
       <Stack.Screen
         name="OpenTickets"
         component={OpenTickets}

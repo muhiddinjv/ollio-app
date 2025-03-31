@@ -3,7 +3,7 @@ import ListItem from "../../components/ListItem";
 import { MainColors } from "../../theme";
 import { ActivityIndicator, Text } from "react-native-paper";
 import { UseGetCatalog } from "../../services/catalog.service";
-import { useGlobalState } from "../../hooks/useGlobalState";
+import { useGlobalState } from "../../hooks";
 
 const Catalog = () => {
   const { selectedGoods, setSelectedGoods } = useGlobalState();

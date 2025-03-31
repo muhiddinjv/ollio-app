@@ -1,84 +1,146 @@
 import React, { useState } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
-import { Text, TextInput, Button, useTheme, Appbar } from "react-native-paper";
-import axiosInstance from "../../screens/Auth/axiostance"; // Adjust the import as necessary
+import { TextInput, Button, useTheme } from "react-native-paper";
+import axiosInstance from "../../screens/Auth/axiostance";
+import { Picker } from "@react-native-picker/picker";
+import { useGlobalState } from "../../hooks/index"; // Adjust the import path as necessary
 
 const UserAdd = ({ navigation }) => {
   const { colors } = useTheme();
+  const { user } = useGlobalState(); // Get the current user from global state
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [pinCode, setPinCode] = useState("");
+  const [store_type, setStoreType] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const [note, setNote] = useState("");
-
+  const [pin, setPin] = useState("");
+  
   const handleSave = async () => {
+    // Validate required fields
+    console.log(name, phone, pin, role, store_type);
+    if (!name || !phone || !pin || !role || !store_type) {
+      console.error("Please fill in all required fields.");
+      return; // Exit the function if validation fails
+    }
+
+    console.log('Current user object:', user); // Log the user object
+    console.log('user ID:', user?._id); // Log the user ID
+
     const userData = {
       phone,
       name,
+      password,
       address,
-      pin: pinCode,
+      pin,
       note,
+      role,
+      store_type,
+      owner_id: user?._id, // Add owner_id from the current user
     };
 
+    console.log("User Data to be sent:", userData);
+
     try {
-      await axiosInstance.post("/users", userData);
+      const response = await axiosInstance.post("/users", userData);
+      console.log("User saved successfully:", response.data);
       navigation.goBack();
     } catch (error) {
-      console.error("Error saving user:", error);
+      console.error("Error saving user:", error.response ? error.response.data : error.message);
     }
   };
 
   return (
     <View className="flex-1">
-      <Appbar.Header style={{ backgroundColor: colors.primary }}>
-        <Appbar.BackAction
-          onPress={() => navigation.goBack()}
-          iconColor={colors.surface}
-        />
-        <Appbar.Content
-          title="Add Client to Bill"
-          titleStyle={{ color: colors.surface }}
-        />
-      </Appbar.Header>
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
+          <View style={styles.picker}>
+            <Picker
+              mode="dropdown"
+              selectedValue={role}
+              onValueChange={(itemValue) => setRole(itemValue)}
+              style={{ backgroundColor: colors.secondaryContainer }}
+            >
+              <Picker.Item label="Klient" value="client" />
+              <Picker.Item label="Kassir" value="staff" />
+              <Picker.Item label="Hojayin" value="owner" />
+            </Picker>
+          </View>
+          <View style={styles.picker}>
+            <Picker
+              mode="dropdown"
+              selectedValue={store_type}
+              onValueChange={(itemValue) => setStoreType(itemValue)}
+              style={{ backgroundColor: colors.secondaryContainer }}
+            >
+              <Picker.Item label="Optovik" value="wholesale" />
+              <Picker.Item label="Do'kon" value="retail" />
+            </Picker>
+          </View>
           <TextInput
-            label="Name"
+            label="Ism sharifi"
+            placeholder="Abdulla Qurbonov"
             value={name}
             onChangeText={setName}
             style={styles.input}
+            left={<TextInput.Icon icon="account" />}
+            required={true}
           />
           <TextInput
-            label="Phone"
+            label="Paroli"
+            placeholder="Ju94q1yiN_P@r0L"
+            value={password}
+            onChangeText={setPassword}
+            style={styles.input}
+            left={<TextInput.Icon icon="lock" />}
+            secureTextEntry={true}
+            required={true}
+          />
+          <TextInput
+            label="PIN kod"
+            placeholder="123456"
+            value={pin}
+            keyboardType="numeric"
+            onChangeText={setPin}
+            style={styles.input}
+            left={<TextInput.Icon icon="lock" />}
+            required={true}
+          />
+          <TextInput
+            label="Telefoni"
+            placeholder="998991234567"
             value={phone}
+            keyboardType="numeric"
             onChangeText={setPhone}
             style={styles.input}
+            left={<TextInput.Icon icon="phone" />}
+            required={true}
           />
           <TextInput
-            label="Address"
+            label="Manzili"
+            placeholder="Toshkent, Uzbekistan"
             value={address}
             onChangeText={setAddress}
             style={styles.input}
+            left={<TextInput.Icon icon="map-marker" />}
           />
+
           <TextInput
-            label="Client Code"
-            value={pinCode}
-            onChangeText={setPinCode}
-            style={styles.input}
-          />
-          <TextInput
-            label="Note"
+            label="Izoh"
+            placeholder="Mijoz haqida qo'shimcha ma'lumot"
             value={note}
             onChangeText={setNote}
             style={styles.input}
             multiline
-          />
+            left={<TextInput.Icon icon="note" />}
+          />  
           <Button
             mode="contained"
             onPress={handleSave}
             style={styles.saveButton}
           >
-            SAVE
+            SAQLASH
           </Button>
         </ScrollView>
       </View>
@@ -96,6 +158,13 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   input: {
+    marginBottom: 12,
+  },
+  picker: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#aaa',
+    // borderTopLeftRadius: 10,
+    // backgroundColor: '#f0f0f0',
     marginBottom: 12,
   },
   saveButton: {

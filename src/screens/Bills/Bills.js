@@ -7,7 +7,7 @@ import axiosInstance from "../Auth/axiostance";
 import { FlashList } from "@shopify/flash-list";
 import Loader from "../../components/Loader";
 import { FontAwesome6 } from "@expo/vector-icons";
-import { useGlobalState } from "../../hooks/useGlobalState";
+import { useGlobalState } from "../../hooks";
 const billsData = [
   {
     price: "3000",

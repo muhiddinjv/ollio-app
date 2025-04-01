@@ -44,29 +44,6 @@ const UserAdd = ({ navigation }) => {
     <View className="flex-1">
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
-          <View style={styles.picker}>
-            <Picker
-              mode="dropdown"
-              selectedValue={role}
-              onValueChange={(itemValue) => setRole(itemValue)}
-              style={{ backgroundColor: colors.secondaryContainer }}
-            >
-              <Picker.Item label="Klient" value="client" />
-              <Picker.Item label="Kassir" value="staff" />
-              <Picker.Item label="Hojayin" value="owner" />
-            </Picker>
-          </View>
-          <View style={styles.picker}>
-            <Picker
-              mode="dropdown"
-              selectedValue={store_type}
-              onValueChange={(itemValue) => setStoreType(itemValue)}
-              style={{ backgroundColor: colors.secondaryContainer }}
-            >
-              <Picker.Item label="Optovik" value="wholesale" />
-              <Picker.Item label="Do'kon" value="retail" />
-            </Picker>
-          </View>
           <TextInput
             label="Ism sharifi"
             placeholder="Abdulla Qurbonov"
@@ -124,6 +101,29 @@ const UserAdd = ({ navigation }) => {
             multiline
             left={<TextInput.Icon icon="note" />}
           />  
+          <View style={styles.picker}>
+            <Picker
+              mode="dropdown"
+              selectedValue={role}
+              onValueChange={(itemValue) => setRole(itemValue)}
+              style={{ backgroundColor: colors.secondaryContainer }}
+            >
+              <Picker.Item label="Klient" value="client" />
+              <Picker.Item label="Kassir" value="staff" />
+              <Picker.Item label="Hojayin" value="owner" />
+            </Picker>
+          </View>
+          <View style={styles.picker}>
+            <Picker
+              mode="dropdown"
+              selectedValue={store_type}
+              onValueChange={(itemValue) => setStoreType(itemValue)}
+              style={{ backgroundColor: colors.secondaryContainer }}
+            >
+              <Picker.Item label="Optovik" value="wholesale" />
+              <Picker.Item label="Do'kon" value="retail" />
+            </Picker>
+          </View>
           <Button
             mode="contained"
             onPress={handleSave}

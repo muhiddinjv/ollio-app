@@ -63,6 +63,22 @@ const UserEdit = ({ navigation }) => {
           style={styles.input}
           left={<TextInput.Icon icon="map-marker" />}
         />
+        <TextInput
+          label="PIN kod"
+          value={pin}
+          onChangeText={setPin}
+          style={styles.input}
+          keyboardType="numeric"
+          left={<TextInput.Icon icon="lock" />}
+        />
+        <TextInput
+          label="Izoh"
+          value={note}
+          onChangeText={setNote}
+          style={styles.input}
+          multiline
+          left={<TextInput.Icon icon="note" />}
+        />
         <View style={styles.picker}>
           <Picker
             mode="dropdown"
@@ -86,22 +102,6 @@ const UserEdit = ({ navigation }) => {
             <Picker.Item label="Do'kon" value="retail" />
           </Picker>
         </View>
-        <TextInput
-          label="PIN kod"
-          value={pin}
-          onChangeText={setPin}
-          style={styles.input}
-          keyboardType="numeric"
-          left={<TextInput.Icon icon="lock" />}
-        />
-        <TextInput
-          label="Izoh"
-          value={note}
-          onChangeText={setNote}
-          style={styles.input}
-          multiline
-          left={<TextInput.Icon icon="note" />}
-        />
         <Button mode="contained" onPress={handleSave} style={styles.saveButton}>
           SAQLASH
         </Button>
@@ -128,8 +128,6 @@ const styles = StyleSheet.create({
   picker: {
     borderBottomWidth: 1,
     borderBottomColor: '#aaa',
-    // borderTopLeftRadius: 10,
-    // backgroundColor: '#f0f0f0',
     marginBottom: 12,
   },
 });

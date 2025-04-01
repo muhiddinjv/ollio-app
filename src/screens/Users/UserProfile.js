@@ -47,7 +47,7 @@ const UserProfile = ({ navigation }) => {
           </View>
         </View>
         <Button mode="contained" onPress={() => {/* Add to ticket logic */}} style={styles.button}>
-          CHECKGA QO'SHISH
+          CHEKGA QO'SHISH
         </Button>
       </ScrollView>
     </View>

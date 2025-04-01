@@ -5,27 +5,10 @@ import { useNavigation } from "@react-navigation/native";
 import SignIn from "../screens/Auth/SignIn";
 import SignUp from "../screens/Auth/SignUp";
 import DrawerNav from "./DrawerNav";
-import GoodQty from "../screens/Goods/GoodQty";
-import OpenTickets from "../screens/Sales/OpenTickets";
-import { AntDesign } from "@expo/vector-icons";
-import { Pressable } from "react-native";
-import SaveTicket from "../screens/Sales/SaveTicket";
-import BillDetails from "../screens/Bills/BillDetails";
-import PaidScreen from "../screens/Payment/Paid";
-import PaymentScreen from "../screens/Payment/Payment";
-import BillCart from "../screens/Bills/BillCart";
-import BillCartItemCount from "../screens/Bills/BillCartItemCount";
-
-import GoodEdit from "../screens/Goods/GoodEdit";
-import GoodTabs from "../screens/Goods/GoodTabs";
-import GoodsAdd from "../screens/Goods/GoodsAdd";
-import SalesScreen from "../screens/Sales/Sales";
-import UserList from "../screens/Users/UserList";
-import UserAdd from "../screens/Users/UserAdd";
-import Users from "../screens/Users/UserList";
-import Bills from "../screens/Bills/Bills";
-
 import UserStack from "./UserStack";
+import SaleStack from "./SaleStack";
+import BillStack from "./BillStack";
+
 const Stack = createStackNavigator();
 
 const AppStack = () => {
@@ -43,115 +26,12 @@ const AppStack = () => {
 
   return (
     <Stack.Navigator initialRouteName="SignIn">
-      <Stack.Screen
-        name="SignIn"
-        component={SignIn}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUp}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="DrawerNav"
-        component={DrawerNav}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="GoodQty"
-        component={GoodQty}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }}/>
+      <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}/>
+      <Stack.Screen name="DrawerNav" component={DrawerNav} options={{ headerShown: false }}/>
       <Stack.Screen name="Users" component={UserStack} options={{ headerShown: false }}/>
-      <Stack.Screen
-        name="OpenTickets"
-        component={OpenTickets}
-        options={{
-          headerTitle: "Open tickets",
-          headerBackImage: () => (
-            <AntDesign name="close" size={20} color="black" />
-          ),
-          headerTitleStyle: {
-            fontSize: 16,
-          },
-        }}
-      />
-      <Stack.Screen
-        name="SaveTicket"
-        component={SaveTicket}
-        options={{
-          headerBackImage: () => (
-            <AntDesign name="close" size={20} color="black" />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="BillDetails"
-        component={BillDetails}
-        options={{
-          headerStyle: { backgroundColor: "rgba(103, 80, 164, 1)" },
-          headerTintColor: "white",
-          // headerLeft: () => (
-          //   <View className="pl-4">
-          //     <AntDesign name="arrowleft" size={24} color="white" />
-          //   </View>
-          // ),
-          // headerTitle: "",
-        }}
-      />
-      <Stack.Screen
-        name="PaidScreen"
-        component={PaidScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: "rgba(103, 80, 164, 1)",
-          },
-          headerTitle: "",
-          headerTintColor: "white",
-          headerLeft: () => null,
-        }}
-      />
-      <Stack.Screen
-        name="PaymentScreen"
-        component={PaymentScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: "rgba(103, 80, 164, 1)",
-          },
-          headerTitle: "",
-          headerTintColor: "white",
-        }}
-      />
-      <Stack.Screen
-        name="BillCart"
-        component={BillCart}
-        options={{
-          headerStyle: {
-            backgroundColor: "rgba(103, 80, 164, 1)",
-          },
-          headerTitle: "Bills cart",
-          headerLeft: () => (
-            <Pressable onPress={() => navigation.goBack()} className="pl-2">
-              <AntDesign name="arrowleft" size={24} color="white" />
-            </Pressable>
-          ),
-          headerTintColor: "white",
-        }}
-      />
-       <Stack.Screen
-        name="BillCartItemCount"
-        component={BillCartItemCount}
-        options={{
-          headerTitle: "",
-          headerBackImage: () => (
-            <AntDesign name="close" size={20} color="black" />
-          ),
-          headerTitleStyle: {
-            fontSize: 16,
-          },
-        }}
-      />
+      <Stack.Screen name="Sales" component={SaleStack} options={{ headerShown: false }}/>
+      <Stack.Screen name="Bills" component={BillStack} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
 };

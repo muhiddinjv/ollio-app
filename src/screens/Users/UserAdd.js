@@ -120,8 +120,8 @@ const UserAdd = ({ navigation }) => {
               onValueChange={(itemValue) => setStoreType(itemValue)}
               style={{ backgroundColor: colors.secondaryContainer }}
             >
+              <Picker.Item label="Do'kondor" value="retail" />
               <Picker.Item label="Optovik" value="wholesale" />
-              <Picker.Item label="Do'kon" value="retail" />
             </Picker>
           </View>
           <Button

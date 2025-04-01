@@ -3,27 +3,31 @@ import { View, ScrollView, StyleSheet, Pressable } from "react-native";
 import { Text, TextInput, Button, useTheme, ActivityIndicator } from "react-native-paper";
 import axiosInstance from "../Auth/axiostance"; // Assuming you have an axios instance
 import { getAccessToken } from "../Auth/astorage"; // Assuming you have a function to get access token
+import { useGlobalState } from "../../hooks";
 
 const UserList = ({ navigation }) => {
   const { colors } = useTheme();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [users, setUsers] = useState([]);
+  const { clients, setClients, setClient } = useGlobalState();
 
   useEffect(() => {
+    console.log("UserList rendered");
     const fetchData = async () => {
+      setLoading(true);
       try {
         const accessToken = await getAccessToken();
         const response = await axiosInstance.get("users?role=client", {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-        setUsers(response.data);
+        setClients(response.data);
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 
@@ -40,12 +44,15 @@ const UserList = ({ navigation }) => {
       <ScrollView>
         <View style={styles.userList}>
           {error && <Text style={{ color: 'red' }}>Error: {error}</Text>}
-          {!loading ? users.map((user) => (
-            <Pressable key={user._id} style={styles.userItem} onPress={() => navigation.navigate("UserProfile", { user })}>
+          {!loading ? clients.map((user) => (
+            <Pressable key={user._id} style={styles.userItem} onPress={() => {
+              setClient(user);
+              navigation.navigate("UserProfile");
+            }}>
               <View style={styles.avatar} />
               <View style={styles.userInfo}>
                 <Text style={styles.userName}>{user.name}</Text>
-                <Text style={styles.userDetails}>{user.role.toUpperCase()}, {user.phone}</Text>
+                <Text style={styles.userDetails}>{user?.role?.toUpperCase()}, {user.phone}</Text>
               </View>
             </Pressable>
           )) : <ActivityIndicator size="large" color={colors.primary} />}

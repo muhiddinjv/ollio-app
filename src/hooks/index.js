@@ -1,6 +1,6 @@
 import { useCallback, useMemo, createContext, useState, useEffect, useContext } from "react"
 import { useQuery } from "@tanstack/react-query";
-import { Button, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import { useInfiniteQuery } from "@tanstack/react-query"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import _ from "lodash"
@@ -10,31 +10,39 @@ import { useNavigation } from "@react-navigation/native";
 
 const GlobalContext = createContext();
 
-async function loadStorageData(key, setState, datatype) {
-    const data = await AsyncStorage.getItem(key);
-    setState(data ? JSON.parse(data) : datatype);
-}
-
 export const GlobalProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    const [clients, setClients] = useState([]);
+    const [client, setClient] = useState(null);
     const [goodQty, setGoodQty] = useState(0);
     const [goodId, setGoodId] = useState(null);
     const [selectedGoods, setSelectedGoods] = useState([]);
-    const [user, setUser] = useState(null);
     
     useEffect(() => {
-      loadStorageData('selectedGoods', setSelectedGoods, []);
-      loadStorageData('user', setUser, null);
+      const loadStorageData = async () => {
+        const storedUser = await AsyncStorage.getItem("user");
+        const storedClients = await AsyncStorage.getItem("clients");
+        const storedClient = await AsyncStorage.getItem("client");
+        setUser(storedUser ? JSON.parse(storedUser) : null);
+        setClient(storedClient ? JSON.parse(storedClient) : null);
+        setClients(storedClients ? JSON.parse(storedClients) : []);
+      };
+      loadStorageData();
     }, []);
   
     useEffect(() => {
-      AsyncStorage.setItem('user', JSON.stringify(user));
+      AsyncStorage.setItem("user", JSON.stringify(user));
+      AsyncStorage.setItem("client", JSON.stringify(client));
+      AsyncStorage.setItem("clients", JSON.stringify(clients));
       AsyncStorage.setItem('selectedGoods', JSON.stringify(selectedGoods));
-    }, [selectedGoods, user]);
+    }, [user, client, clients, selectedGoods]);
   
     return (
       <GlobalContext.Provider 
         value={{ 
           user, setUser,
+          clients, setClients,
+          client, setClient,
           goodId, setGoodId, 
           goodQty, setGoodQty,
           selectedGoods, setSelectedGoods

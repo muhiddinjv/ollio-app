@@ -1,12 +1,12 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Button, useTheme, Appbar } from "react-native-paper";
-import { useGlobalState } from "../../hooks/index";
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
+import { useGlobalState } from "../../hooks";
 
-const UserProfile = ({ route }) => {
+const UserProfile = ({ navigation }) => {
   const { colors } = useTheme();
-  const { user } = route.params;
+  const { client } = useGlobalState();
 
   return (
     <View style={styles.container}>
@@ -18,32 +18,32 @@ const UserProfile = ({ route }) => {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.profileContainer}>
           <View style={styles.avatar}>
-            <Text style={styles.avatarText}>{user?.name.charAt(0)}</Text>
+            <Text style={styles.avatarText}>{client?.name.charAt(0)}</Text>
           </View>
-          <Text style={styles.name}>{user?.name}</Text>
-          <Text style={styles.phone}>{user?.phone}</Text>
-          <Text style={styles.customerId}>ID: {user?._id}</Text>
+          <Text style={styles.name}>{client?.name}</Text>
+          <Text style={styles.phone}>{client?.phone}</Text>
+          <Text style={styles.customerId}>ID: {client?._id}</Text>
         </View>
         <View style={styles.detailsContainer}>
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="account" size={20} color={colors.primary} />
-            <Text style={styles.detailsTitle}>Role: {user?.role}</Text>
+            <Text style={styles.detailsTitle}>Role: {client?.role}</Text>
           </View>
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="store" size={20} color={colors.primary} />
-            <Text style={styles.detailsTitle}>Store Type: {user?.store_type}</Text>
+            <Text style={styles.detailsTitle}>Store Type: {client?.store_type}</Text>
           </View>
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="lock" size={20} color={colors.primary} />
-            <Text style={styles.detailsTitle}>PIN Code: {user?.pin}</Text>
+            <Text style={styles.detailsTitle}>PIN Code: {client?.pin}</Text>
           </View>
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="map-marker" size={20} color={colors.primary} />
-            <Text style={styles.detailsTitle}>Address: {user?.address || 'N/A'}</Text>
+            <Text style={styles.detailsTitle}>Address: {client?.address || 'N/A'}</Text>
           </View>
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="note" size={20} color={colors.primary} />
-            <Text style={styles.detailsTitle}>Note: {user?.note || 'N/A'}</Text>
+            <Text style={styles.detailsTitle}>Note: {client?.note || 'N/A'}</Text>
           </View>
         </View>
         <Button mode="contained" onPress={() => {/* Add to ticket logic */}} style={styles.button}>

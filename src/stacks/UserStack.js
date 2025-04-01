@@ -8,6 +8,7 @@ import { useHeaderStyle } from "../hooks";
 const Stack = createStackNavigator();
 
 export default function UserStack() {
+  console.log('6) UserStack loaded');
   return (
     <Stack.Navigator initialRouteName="UserList">
       <Stack.Screen name="UserList" component={UserList} options={useHeaderStyle("Foydalanuvchilar")}/>

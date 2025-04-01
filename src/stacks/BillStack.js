@@ -9,9 +9,10 @@ import BillCartItemCount from "../screens/Bills/BillCartItemCount";
 const Stack = createStackNavigator();
 
 export default function BillStack() {
+  console.log('5) BillStack loaded');
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Bills" component={Bills} options={{headerShown: false}}/>
+    <Stack.Navigator initialRouteName="BillList">
+      <Stack.Screen name="BillList" component={Bills} options={{headerShown: false}}/>
       <Stack.Screen name="BillCart" component={BillCart} options={{headerShown: false}}/>
       <Stack.Screen name="BillDetails" component={BillDetails} options={useHeaderStyle("Bill Details")}/>
       <Stack.Screen name="BillCartItemCount" component={BillCartItemCount} options={{headerShown: false}}/>

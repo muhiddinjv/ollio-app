@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+
 const PaymentScreen = ({ navigation }) => {
   const [paymentMethod, setPaymentMethod] = useState("Cash"); // Default to Cash
 

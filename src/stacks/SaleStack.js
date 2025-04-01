@@ -1,15 +1,22 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import { AntDesign } from "@expo/vector-icons";
+
 import GoodQty from "../screens/Goods/GoodQty";
 import OpenTickets from "../screens/Sales/OpenTickets";
 import SaveTicket from "../screens/Sales/SaveTicket";
+import PaidScreen from "../screens/Payment/Paid";
+import PaymentScreen from "../screens/Payment/Payment";
+import SalesScreen from "../screens/Sales/Sales";
 import { useHeaderStyle } from "../hooks";
 
 const Stack = createStackNavigator();
 
 export default function SaleStack() {
+  console.log('3) SaleStack loaded');
   return (
-    <Stack.Navigator initialRouteName="Sales">
+    <Stack.Navigator initialRouteName="SalesScreen" options={{ headerShown: false }}>
+      <Stack.Screen name="SalesScreen" component={SalesScreen} options={{ headerShown: false }}/>
       <Stack.Screen
         name="GoodQty"
         component={GoodQty}

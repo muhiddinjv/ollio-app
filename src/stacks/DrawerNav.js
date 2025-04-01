@@ -4,16 +4,17 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { IconButton, useTheme, Button } from "react-native-paper";
 import { useColorScheme } from "nativewind";
 
-import SalesScreen from "../screens/Sales/Sales";
 import GoodStack from "./GoodStack";
 import Sidebar from "./Sidebar";
-import Bills from "../screens/Bills/Bills";
 import { useGlobalState } from "../hooks";
+import BillStack from "./BillStack";
+import SaleStack from "./SaleStack";
 
 const Drawer = createDrawerNavigator();
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
 const DrawerNav = ({ navigation }) => {
+  console.log('2) DrawerNav loaded');
   const { goodQty } = useGlobalState();
   const { colorScheme } = useColorScheme();
   const { colors } = useTheme();
@@ -74,7 +75,7 @@ const DrawerNav = ({ navigation }) => {
     >
       <Drawer.Screen
         name="Sales"
-        component={SalesScreen}
+        component={SaleStack}
         options={{
           drawerIcon: ({ color }) => (
             <IconButton className="m-0" icon="currency-usd" iconColor={color} />
@@ -98,7 +99,7 @@ const DrawerNav = ({ navigation }) => {
       />
       <Drawer.Screen
         name="Bills"
-        component={Bills}
+        component={BillStack}
         options={{
           drawerIcon: ({ color }) => (
             <IconButton className="m-0" icon="cash-fast" iconColor={color} />

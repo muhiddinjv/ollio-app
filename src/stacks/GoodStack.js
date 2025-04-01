@@ -7,6 +7,7 @@ import { useHeaderStyle } from "../hooks";
 const Stack = createStackNavigator();
 
 export default function GoodStack() {
+  console.log('4) GoodStack loaded');
   return (
     <Stack.Navigator>
       <Stack.Screen name="GoodTabs" component={GoodTabs} options={{headerShown: false}}/>

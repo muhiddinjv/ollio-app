@@ -4,9 +4,9 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { IconButton, useTheme, Button } from "react-native-paper";
 import { useColorScheme } from "nativewind";
 
-import GoodStack from "./GoodStack";
 import Sidebar from "./Sidebar";
 import { useGlobalState } from "../hooks";
+import GoodStack from "./GoodStack";
 import BillStack from "./BillStack";
 import SaleStack from "./SaleStack";
 
@@ -31,7 +31,7 @@ const DrawerNav = ({ navigation }) => {
                   icon="cart"
                   mode="contained"
                   labelStyle={{ fontSize: 19 }}
-                  onPress={() => navigation.navigate("BillCart")}
+                  onPress={() => navigation.navigate("Bills", {screen: "BillCart"})}
                 >
                   {goodQty}
                 </Button>
@@ -50,7 +50,7 @@ const DrawerNav = ({ navigation }) => {
               </View>
             );
           }
-          if (route.name === "Goods") {
+          if (route.name === "GoodList") {
             return (
               <IconButton
                 icon="magnify"

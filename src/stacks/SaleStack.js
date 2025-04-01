@@ -7,7 +7,7 @@ import OpenTickets from "../screens/Sales/OpenTickets";
 import SaveTicket from "../screens/Sales/SaveTicket";
 import PaidScreen from "../screens/Payment/Paid";
 import PaymentScreen from "../screens/Payment/Payment";
-import SalesScreen from "../screens/Sales/Sales";
+import SalesScreen from "../screens/Sales/SalesList";
 import { useHeaderStyle } from "../hooks";
 
 const Stack = createStackNavigator();
@@ -15,13 +15,9 @@ const Stack = createStackNavigator();
 export default function SaleStack() {
   console.log('3) SaleStack loaded');
   return (
-    <Stack.Navigator initialRouteName="SalesScreen" options={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="SalesScreen">
       <Stack.Screen name="SalesScreen" component={SalesScreen} options={{ headerShown: false }}/>
-      <Stack.Screen
-        name="GoodQty"
-        component={GoodQty}
-        options={useHeaderStyle("Tovar Soni")}
-      />
+      <Stack.Screen name="GoodQty" component={GoodQty} options={useHeaderStyle("Tovar Soni")}/>
       <Stack.Screen
         name="OpenTickets"
         component={OpenTickets}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { RefreshControl, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { styled } from "nativewind";
-import { ActivityIndicator, IconButton, Text } from "react-native-paper";
+import { ActivityIndicator, IconButton, useTheme } from "react-native-paper";
 import ListItem from "../../components/ListItem";
 import SaveCharge from "../../components/SaveCharge";
 import Loader from "../../components/Loader";
@@ -14,6 +14,7 @@ import { useGlobalState } from "../../hooks";
 const StyledPicker = styled(Picker);
 
 const SalesScreen = ({ navigation }) => {
+  const { colors } = useTheme();
   const { goodId, goodQty } = useGlobalState();
   const [selectedValue, setSelectedValue] = useState("option1");
   const [filters, setFilters] = useState({ search: "" });

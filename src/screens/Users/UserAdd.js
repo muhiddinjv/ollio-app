@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
-import { TextInput, Button, useTheme } from "react-native-paper";
+import { TextInput, Button, useTheme, HelperText } from "react-native-paper";
 import axiosInstance from "../../screens/Auth/axiostance";
 import { Picker } from "@react-native-picker/picker";
 import { useGlobalState } from "../../hooks/index";
@@ -17,7 +17,27 @@ const UserAdd = ({ navigation }) => {
   const [note, setNote] = useState("");
   const [pin, setPin] = useState("");
   
+  const [errors, setErrors] = useState({});
+
   const handleSave = async () => {
+    // Reset errors
+    setErrors({});
+
+    // Validate inputs
+    const newErrors = {};
+    if (!name) newErrors.name = "Ism sharifi bo'lishi shart.";
+    if (!phone) newErrors.phone = "Telefoni bo'lishi shart.";
+    if (!address) newErrors.address = "Manzili bo'lishi shart.";
+    if (!store_type) newErrors.store_type = "Store type bo'lishi shart.";
+    if (!role) newErrors.role = "Role bo'lishi shart.";
+    if (!password) newErrors.password = "Paroli bo'lishi shart.";
+    if (!pin) newErrors.pin = "PIN kod bo'lishi shart.";
+    if (!note) newErrors.note = "Izoh bo'lishi shart.";
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return; // Stop execution if there are errors
+    }
+
     const userData = {
       phone,
       name,
@@ -51,7 +71,7 @@ const UserAdd = ({ navigation }) => {
             onChangeText={setName}
             style={styles.input}
             left={<TextInput.Icon icon="account" />}
-            required={true}
+            error={errors.name}
           />
           <TextInput
             label="Paroli"
@@ -61,7 +81,7 @@ const UserAdd = ({ navigation }) => {
             style={styles.input}
             left={<TextInput.Icon icon="lock" />}
             secureTextEntry={true}
-            required={true}
+            error={errors.password}
           />
           <TextInput
             label="PIN kod"
@@ -71,7 +91,7 @@ const UserAdd = ({ navigation }) => {
             onChangeText={setPin}
             style={styles.input}
             left={<TextInput.Icon icon="lock" />}
-            required={true}
+            error={errors.pin}
           />
           <TextInput
             label="Telefoni"
@@ -81,7 +101,7 @@ const UserAdd = ({ navigation }) => {
             onChangeText={setPhone}
             style={styles.input}
             left={<TextInput.Icon icon="phone" />}
-            required={true}
+            error={errors.phone}
           />
           <TextInput
             label="Manzili"
@@ -90,40 +110,47 @@ const UserAdd = ({ navigation }) => {
             onChangeText={setAddress}
             style={styles.input}
             left={<TextInput.Icon icon="map-marker" />}
+            error={errors.address}
           />
-
           <TextInput
             label="Izoh"
             placeholder="Mijoz haqida qo'shimcha ma'lumot"
             value={note}
             onChangeText={setNote}
             style={styles.input}
-            multiline
             left={<TextInput.Icon icon="note" />}
-          />  
+            error={errors.note}
+          />
+          
           <View style={styles.picker}>
             <Picker
               mode="dropdown"
               selectedValue={role}
               onValueChange={(itemValue) => setRole(itemValue)}
               style={{ backgroundColor: colors.secondaryContainer }}
+              error={errors.role}
             >
               <Picker.Item label="Klient" value="client" />
               <Picker.Item label="Kassir" value="staff" />
               <Picker.Item label="Hojayin" value="owner" />
             </Picker>
           </View>
+          
           <View style={styles.picker}>
             <Picker
               mode="dropdown"
               selectedValue={store_type}
               onValueChange={(itemValue) => setStoreType(itemValue)}
               style={{ backgroundColor: colors.secondaryContainer }}
+              error={errors.store_type}
             >
-              <Picker.Item label="Do'kondor" value="retail" />
               <Picker.Item label="Optovik" value="wholesale" />
+              <Picker.Item label="Do'kon" value="retail" />
             </Picker>
           </View>
+          
+
+          
           <Button
             mode="contained"
             onPress={handleSave}
@@ -149,15 +176,13 @@ const styles = StyleSheet.create({
   input: {
     marginBottom: 12,
   },
+  saveButton: {
+    marginTop: 20,
+  },
   picker: {
     borderBottomWidth: 1,
     borderBottomColor: '#aaa',
-    // borderTopLeftRadius: 10,
-    // backgroundColor: '#f0f0f0',
     marginBottom: 12,
-  },
-  saveButton: {
-    marginTop: 20,
   },
 });
 

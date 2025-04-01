@@ -60,6 +60,14 @@ const UserAdd = ({ navigation }) => {
     }
   };
 
+  const dynamicStyles = {
+    picker: {
+      borderBottomWidth: 1,
+      borderBottomColor: errors.role || errors.store_type ? 'red' : '#aaa',
+      marginBottom: 12,
+    },
+  }
+
   return (
     <View className="flex-1">
       <View style={styles.container}>
@@ -121,36 +129,29 @@ const UserAdd = ({ navigation }) => {
             left={<TextInput.Icon icon="note" />}
             error={errors.note}
           />
-          
-          <View style={styles.picker}>
+          <View style={dynamicStyles.picker}>
             <Picker
               mode="dropdown"
               selectedValue={role}
               onValueChange={(itemValue) => setRole(itemValue)}
               style={{ backgroundColor: colors.secondaryContainer }}
-              error={errors.role}
             >
               <Picker.Item label="Klient" value="client" />
               <Picker.Item label="Kassir" value="staff" />
               <Picker.Item label="Hojayin" value="owner" />
             </Picker>
           </View>
-          
-          <View style={styles.picker}>
+          <View style={dynamicStyles.picker}>
             <Picker
               mode="dropdown"
               selectedValue={store_type}
               onValueChange={(itemValue) => setStoreType(itemValue)}
               style={{ backgroundColor: colors.secondaryContainer }}
-              error={errors.store_type}
             >
               <Picker.Item label="Optovik" value="wholesale" />
               <Picker.Item label="Do'kon" value="retail" />
             </Picker>
           </View>
-          
-
-          
           <Button
             mode="contained"
             onPress={handleSave}
@@ -178,11 +179,6 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     marginTop: 20,
-  },
-  picker: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#aaa',
-    marginBottom: 12,
   },
 });
 

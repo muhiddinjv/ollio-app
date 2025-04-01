@@ -47,7 +47,7 @@ const UserProfile = ({ navigation }) => {
           </View>
         </View>
         <Button mode="contained" onPress={() => {/* Add to ticket logic */}} style={styles.button}>
-          ADD TO BILL
+          CHECKGA QO'SHISH
         </Button>
       </ScrollView>
     </View>

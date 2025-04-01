@@ -12,7 +12,6 @@ const UserList = ({ navigation }) => {
   const { clients, setClients, setClient } = useGlobalState();
 
   useEffect(() => {
-    console.log("UserList rendered");
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -27,7 +26,6 @@ const UserList = ({ navigation }) => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 

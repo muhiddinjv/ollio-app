@@ -12,7 +12,6 @@ const ControlledInput = ({
   inputLabel,
   ...props
 }) => {
-  console.log("error", error);
   return (
     <View className="flex-col w-full">
       {inputLabel ? <Text className="text-gray-500">{inputLabel}</Text> : null}

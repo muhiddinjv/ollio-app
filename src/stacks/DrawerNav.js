@@ -1,68 +1,38 @@
 import React from "react";
-import { Platform, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { IconButton, useTheme, Button } from "react-native-paper";
+import { IconButton, useTheme } from "react-native-paper";
 import { useColorScheme } from "nativewind";
 
-import Sidebar from "./Sidebar";
-import { useGlobalState } from "../hooks";
 import GoodStack from "./GoodStack";
 import BillStack from "./BillStack";
 import SaleStack from "./SaleStack";
+import UserStack from "./UserStack";
+import AuthStack from "./AuthStack";
+import Sidebar from "./Sidebar";
+import { getAccessToken } from "../screens/Auth/astorage";
 
 const Drawer = createDrawerNavigator();
-const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
 const DrawerNav = ({ navigation }) => {
   console.log('2) DrawerNav loaded');
-  const { goodQty } = useGlobalState();
   const { colorScheme } = useColorScheme();
   const { colors } = useTheme();
+
+  React.useEffect(() => {
+    const checkToken = async () => {
+      const accessToken = await getAccessToken();
+      if (!accessToken) {
+        navigation.navigate("Auth");
+      }
+    };
+    checkToken();
+  }, []);
 
   return (
     <Drawer.Navigator
       drawerContent={(props) => <Sidebar {...props} />}
-      screenOptions={({ route }) => ({
-        headerRight: () => {
-          if (route.name === "Sales") {
-            return (
-              <View className="flex-row items-center">
-                <Button
-                  icon="cart"
-                  mode="contained"
-                  labelStyle={{ fontSize: 19 }}
-                  onPress={() => navigation.navigate("Bills", {screen: "BillCart"})}
-                >
-                  {goodQty}
-                </Button>
-                <IconButton
-                  icon="account-plus"
-                  iconColor="white"
-                  size={25}
-                  onPress={() => navigation.navigate("Users")}
-                />
-                <IconButton
-                  icon={MORE_ICON}
-                  iconColor="white"
-                  size={25}
-                  onPress={() => console.log("more")}
-                />
-              </View>
-            );
-          }
-          if (route.name === "GoodList") {
-            return (
-              <IconButton
-                icon="magnify"
-                iconColor="white"
-                size={25}
-                onPress={() => console.log("search")}
-              />
-            );
-          }
-        },
-        headerTintColor: "white",
-        headerStyle: { backgroundColor: colors.primary },
+      screenOptions={() => ({
+        headerShown: false,
         drawerActiveBackgroundColor: colors.primary,
         drawerActiveTintColor: "white",
         drawerInactiveTintColor: colorScheme == "dark" ? "#fff" : "#333",
@@ -105,6 +75,16 @@ const DrawerNav = ({ navigation }) => {
             <IconButton className="m-0" icon="cash-fast" iconColor={color} />
           ),
         }}
+      />
+      <Drawer.Screen
+        name="Users"
+        component={UserStack}
+        options={{ drawerItemStyle: { display: 'none' } }}
+      />
+      <Drawer.Screen
+        name="Auth"
+        component={AuthStack}
+        options={{ drawerItemStyle: { display: 'none' } }}
       />
     </Drawer.Navigator>
   );

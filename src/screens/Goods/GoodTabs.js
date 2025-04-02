@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { useNavigation } from "@react-navigation/native";
-import { Alert, View } from "react-native";
+import { DrawerActions, useNavigation } from "@react-navigation/native";
+import { View } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import FABplus from "../../components/FABplus";
@@ -31,13 +31,7 @@ const GoodTabs = ({ route }) => {
         fontSize={20}
         iconLeft="menu"
         navigation={navigation}
-        onPress={() => {
-          if (drawerNavigation?.openDrawer) {
-            drawerNavigation.openDrawer();
-          } else {
-            console.log("Drawer navigation is not available");
-          }
-        }}
+        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
         leftBtn
       />
       <Tab.Navigator

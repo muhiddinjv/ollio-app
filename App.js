@@ -5,10 +5,10 @@ import { PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import AppStack from "./src/stacks/AppStack";
 import { AuthProvider } from "./src/screens/Auth/AuthProvider";
 import { GlobalProvider } from "./src/hooks";
 import { enableScreens } from "react-native-screens";
+import DrawerNav from "./src/stacks/DrawerNav";
 enableScreens();
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE_V1';
@@ -65,7 +65,7 @@ function App() {
             AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))}>
           <QueryClientProvider client={queryClient} >
             <AuthProvider>
-              <AppStack />
+              <DrawerNav />
             </AuthProvider>
           </QueryClientProvider>
         </NavigationContainer>

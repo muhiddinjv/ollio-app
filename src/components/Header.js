@@ -7,7 +7,7 @@ const Header = ({ title, iconLeft, iconRight, onPress, navigation, leftBtn, back
     <Appbar.Header style={{ backgroundColor: colors.primary }} theme={{ mode: 'adaptive' }}>
       {leftBtn && <Appbar.Action icon={iconLeft} size={28} color="white" onPress={onPress} />}
       {backBtn && <Appbar.BackAction iconColor="white" onPress={() => navigation.goBack()} />}
-      <Appbar.Content title={title} titleStyle={{ color: 'white', fontSize: fontSize || 22, fontWeight: 'bold' }} />
+      <Appbar.Content title={title} titleStyle={{ color: 'white', fontSize: fontSize || 22 }} />
       {rightBtn && <Appbar.Action icon={iconRight} size={28} color="white" onPress={onPress} />}
     </Appbar.Header>
   );

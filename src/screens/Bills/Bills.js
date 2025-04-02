@@ -8,6 +8,8 @@ import { FlashList } from "@shopify/flash-list";
 import Loader from "../../components/Loader";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useGlobalState } from "../../hooks";
+import Header from "../../components/Header";
+import { DrawerActions } from "@react-navigation/native";
 const billsData = [
   {
     price: "3000",
@@ -76,12 +78,21 @@ const Bills = ({ navigation }) => {
   });
 
   return (
-    <View className="p-4 flex-1">
-      <View className="border-b border-gray-200 pb-4">
+    <View className="flex-1">
+      <Header
+        title="Bills"
+        fontSize={20}
+        iconLeft="menu"
+        navigation={navigation}
+        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+        leftBtn
+      />
+      <View className="border-b border-gray-200 px-4 py-2">
         <Text className="text-primary font-medium text-lg">
           Wednesday, December 13, 2024
         </Text>
       </View>
+      <View className="p-4 flex-1">
       <FlashList
         data={billsData}
         onEndReachedThreshold={2}
@@ -113,6 +124,8 @@ const Bills = ({ navigation }) => {
       {/* <Text>title + quantity</Text>
       <Text>total price per product</Text>
       <Text>total price of all products</Text> */}
+      </View>
+
     </View>
   );
 };

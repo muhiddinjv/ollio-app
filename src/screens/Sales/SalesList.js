@@ -1,21 +1,24 @@
 import { useState } from "react";
-import { RefreshControl, View } from "react-native";
+import { Platform, RefreshControl, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { styled } from "nativewind";
-import { ActivityIndicator, IconButton, useTheme } from "react-native-paper";
+import { ActivityIndicator, Appbar, Button, IconButton, useTheme } from "react-native-paper";
 import ListItem from "../../components/ListItem";
 import SaveCharge from "../../components/SaveCharge";
 import Loader from "../../components/Loader";
-import { useInfiniteScroll } from "../../hooks";
+import { useInfiniteScroll, useNavigate } from "../../hooks";
 import { FlashList } from "@shopify/flash-list";
 import GoodQtyModal from "../Goods/GoodQtyModal";
 import { useGlobalState } from "../../hooks";
+import { DrawerActions, useNavigation } from "@react-navigation/native";
 
 const StyledPicker = styled(Picker);
+const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
 const SalesScreen = ({ navigation }) => {
+  // const navigation = useNavigation();
   const { colors } = useTheme();
-  const { goodId, goodQty } = useGlobalState();
+  const { goodId, goodQty, client } = useGlobalState();
   const [selectedValue, setSelectedValue] = useState("option1");
   const [filters, setFilters] = useState({ search: "" });
   const [quantity, setQuantity] = useState(0);
@@ -29,8 +32,34 @@ const SalesScreen = ({ navigation }) => {
       key: ["goods"],
     });
 
+  // const makeBill = async () => {
+  //   try {
+  //     const response = await axiosInstance.post("/bills", {
+  //       client_id: client._id,
+  //       products: [] // You can add products here if needed
+  //     });
+  //     console.log("Bill created:", response.data);
+  //   } catch (error) {
+  //     console.error("Error making bill:", error.response ? error.response.data : error.message);
+  //   }
+  // };
+
   return (
     <View className="flex-1 w-full dark:bg-slate-800">
+      <Appbar.Header style={{ backgroundColor: colors.primary }}>
+        <Appbar.Action icon="menu" onPress={() => navigation.dispatch(DrawerActions.openDrawer())} color={colors.surface} />
+        <Appbar.Content title="Savdo" titleStyle={{ color: colors.surface }} />
+        <Button
+          icon="cart"
+          mode="contained"
+          labelStyle={{ fontSize: 19 }}
+          onPress={() => navigation.navigate("Bills", {screen: "BillCart"})}
+        >
+          {goodQty}
+        </Button>
+        <Appbar.Action icon="account-plus" onPress={() => navigation.navigate("Users",{screen: "UserList"})} color={colors.surface} />
+        <Appbar.Action icon={MORE_ICON} onPress={() => console.log("more")} color={colors.surface} />
+      </Appbar.Header>
       <GoodQtyModal
         visible={isModalVisible}
         onClose={() => {

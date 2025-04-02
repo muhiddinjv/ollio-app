@@ -2,6 +2,7 @@ import { View, Text, ScrollView, Pressable } from "react-native";
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import SaveCharge from "../../components/SaveCharge";
+import Header from "../../components/Header";
 
 const billsData = [
   {
@@ -53,6 +54,14 @@ const Item = ({ name, price, quantity, navigation }) => {
 export default function BillCart({ navigation }) {
   return (
     <View className="flex-1">
+      <Header
+        title="Bill Cart"
+        iconRight="content-save"
+        navigation={navigation}
+        // onPress={handleSubmit(saveGood)}
+        backBtn
+        rightBtn
+      />
       <ScrollView className="p-4 flex-grow">
         <View className="border-b border-gray-300 pb-2">
           {billsData.map((item) => (

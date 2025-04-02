@@ -47,7 +47,7 @@ export default function SignIn({ navigation }) {
       await setItem("user", user); 
       setAccessToken(data.token);
       signIn(data.token);
-      navigation.navigate("DrawerNav");
+      navigation.navigate("Sales");
     } catch (error) {
       console.log("handleSignIn error", error);
 

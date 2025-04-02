@@ -18,14 +18,21 @@ export const GlobalProvider = ({ children }) => {
     const [goodId, setGoodId] = useState(null);
     const [selectedGoods, setSelectedGoods] = useState([]);
     
+    const [bill, setBill] = useState({
+      client_id: null,
+      products: [],
+    });
+  
     useEffect(() => {
       const loadStorageData = async () => {
         const storedUser = await AsyncStorage.getItem("user");
+        const storedBill = await AsyncStorage.getItem("bill");
         const storedClients = await AsyncStorage.getItem("clients");
         const storedClient = await AsyncStorage.getItem("client");
         setUser(storedUser ? JSON.parse(storedUser) : null);
         setClient(storedClient ? JSON.parse(storedClient) : null);
         setClients(storedClients ? JSON.parse(storedClients) : []);
+        setBill(storedBill ? JSON.parse(storedBill) : null);
       };
       loadStorageData();
     }, []);
@@ -35,7 +42,23 @@ export const GlobalProvider = ({ children }) => {
       AsyncStorage.setItem("client", JSON.stringify(client));
       AsyncStorage.setItem("clients", JSON.stringify(clients));
       AsyncStorage.setItem('selectedGoods', JSON.stringify(selectedGoods));
-    }, [user, client, clients, selectedGoods]);
+      AsyncStorage.setItem('bill', JSON.stringify(bill));
+    }, [user, client, clients, selectedGoods, bill]);
+  
+    const addClientToBill = (clientId) => {
+      setBill((prevBill) => ({
+        ...prevBill,
+        client_id: clientId,
+      }));
+    };
+  
+    const addProductToBill = (product) => {
+      setBill((prevBill) => ({
+        ...prevBill,
+        products: [...prevBill.products, product],
+      }));
+    };
+    console.log('GlobalProvider: ',{bill});
   
     return (
       <GlobalContext.Provider 
@@ -45,7 +68,10 @@ export const GlobalProvider = ({ children }) => {
           client, setClient,
           goodId, setGoodId, 
           goodQty, setGoodQty,
-          selectedGoods, setSelectedGoods
+          selectedGoods, setSelectedGoods,
+          bill, setBill,
+          addClientToBill,
+          addProductToBill,
         }}
       >
         {children}
@@ -61,6 +87,7 @@ export const useGlobalState = () => {
     }
     return context;
 };
+
 
 export const useInfiniteScroll = ({ key, url, limit = 100, filters }) => {
     const queryKey = [ ...key, ..._.values(_.omitBy(filters || {}, _.isEmpty))]

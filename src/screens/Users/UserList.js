@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, ScrollView, StyleSheet, Pressable } from "react-native";
 import { Text, TextInput, Button, useTheme, ActivityIndicator } from "react-native-paper";
-import axiosInstance from "../Auth/axiostance"; // Assuming you have an axios instance
-import { getAccessToken } from "../Auth/astorage"; // Assuming you have a function to get access token
+import axiosInstance from "../Auth/axiostance";
+import { getAccessToken } from "../Auth/astorage";
 import { useGlobalState } from "../../hooks";
+import Header from "../../components/Header";
 
 const UserList = ({ navigation }) => {
   const { colors } = useTheme();
@@ -31,6 +32,12 @@ const UserList = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Header
+        title="Foydalanuvchilar"
+        iconRight="content-save"
+        navigation={navigation}
+        backBtn
+      />
       <View style={styles.searchContainer}>
         <TextInput label="Izlash" mode="outlined" style={styles.searchInput} />
         <Button mode="contained" onPress={() => navigation.navigate("UserAdd")} style={styles.addButton}>
@@ -45,7 +52,7 @@ const UserList = ({ navigation }) => {
           {!loading ? clients.map((user) => (
             <Pressable key={user._id} style={styles.userItem} onPress={() => {
               setClient(user);
-              navigation.navigate("UserProfile");
+              navigation.navigate("UserProfile", { user });
             }}>
               <View style={styles.avatar} />
               <View style={styles.userInfo}>

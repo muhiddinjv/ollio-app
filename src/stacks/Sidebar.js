@@ -8,12 +8,11 @@ import { removeAccessToken, getItem } from "../screens/Auth/astorage";
 import { useGlobalState } from "../hooks";
 
 const Sidebar = (props) => {
+  const { navigation } = props;
   const { colorScheme, toggleColorScheme } = useColorScheme();
   const { user, setUser } = useGlobalState();
   const { signOut } = useAuth();
   const theme = useTheme();
-  
-  const { navigation } = props;
 
   React.useEffect(() => {
     const fetchUserData = async () => {
@@ -30,7 +29,7 @@ const Sidebar = (props) => {
     signOut();
     navigation.reset({
       index: 0,
-      routes: [{ name: "SignIn" }]
+      routes: [{ name: "Auth" }]
     });
   };
 

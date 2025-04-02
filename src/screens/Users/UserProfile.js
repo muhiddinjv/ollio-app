@@ -6,14 +6,19 @@ import { useGlobalState } from "../../hooks";
 
 const UserProfile = ({ navigation }) => {
   const { colors } = useTheme();
-  const { client } = useGlobalState();
+  const { client, addClientToBill } = useGlobalState();
+
+  const handleAddToBill = () => {
+    addClientToBill(client._id);
+    navigation.navigate("Sales", { screen: "SaleList" });
+  };
 
   return (
     <View style={styles.container}>
       <Appbar.Header style={{ backgroundColor: colors.primary }}>
         <Appbar.BackAction onPress={() => navigation.goBack()} iconColor={colors.surface} />
-        <Appbar.Content title="Foydalanuvchi profili" titleStyle={{ color: colors.surface }} iconColor={colors.surface} />
-        <Appbar.Action icon="account-edit" onPress={() => navigation.navigate("UserEdit")} color={colors.surface} />
+        <Appbar.Content title="Foydalanuvchi profili" titleStyle={{ color: colors.surface }} />
+        <Appbar.Action icon="account-edit" onPress={() => navigation.navigate("UserEdit", { user: client })} color={colors.surface} />
       </Appbar.Header>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.profileContainer}>
@@ -46,8 +51,8 @@ const UserProfile = ({ navigation }) => {
             <Text style={styles.detailsTitle}>Note: {client?.note || 'N/A'}</Text>
           </View>
         </View>
-        <Button mode="contained" onPress={() => {/* Add to ticket logic */}} style={styles.button}>
-          CHEKGA QO'SHISH
+        <Button mode="contained" onPress={handleAddToBill} style={styles.button}>
+          ADD TO BILL
         </Button>
       </ScrollView>
     </View>

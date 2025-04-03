@@ -18,11 +18,12 @@ const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 const SalesScreen = ({ navigation }) => {
   // const navigation = useNavigation();
   const { colors } = useTheme();
-  const { goodId, goodQty, client } = useGlobalState();
+  const { bill, addProductToBill, getTotalQuantity } = useGlobalState();
   const [selectedValue, setSelectedValue] = useState("option1");
   const [filters, setFilters] = useState({ search: "" });
   const [quantity, setQuantity] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
     useInfiniteScroll({
@@ -31,6 +32,20 @@ const SalesScreen = ({ navigation }) => {
       filters: filters,
       key: ["goods"],
     });
+
+  const handleProductPress = (product) => {
+    setSelectedProduct(product);
+    setIsModalVisible(true);
+  };
+
+  const handleSaveQuantity = () => {
+    const { _id, title, price } = selectedProduct;
+    if (quantity > 0 && _id) {
+      addProductToBill(_id, quantity, title, price);
+      setIsModalVisible(false);
+      setQuantity(0);
+    }
+  };
 
   // const makeBill = async () => {
   //   try {
@@ -55,9 +70,9 @@ const SalesScreen = ({ navigation }) => {
           labelStyle={{ fontSize: 19 }}
           onPress={() => navigation.navigate("Bills", {screen: "BillCart"})}
         >
-          {goodQty}
+          {getTotalQuantity()}
         </Button>
-        <Appbar.Action icon="account-plus" onPress={() => navigation.navigate("Users",{screen: "UserList"})} color={colors.surface} />
+        <Appbar.Action icon={bill.client_id ? "account-check" : "account-plus"} onPress={() => navigation.navigate("Users",{screen: "UserList"})} color={colors.surface} />
         <Appbar.Action icon={MORE_ICON} onPress={() => console.log("more")} color={colors.surface} />
       </Appbar.Header>
       <GoodQtyModal
@@ -66,8 +81,9 @@ const SalesScreen = ({ navigation }) => {
           setIsModalVisible(false);
           setQuantity(0);
         }}
-        value={quantity}
-        onChangeText={(text) => setQuantity(text)}
+        value={quantity.toString()}
+        onChangeText={(text) => setQuantity(Number(text))}
+        onSave={handleSaveQuantity}
       />
       <SaveCharge navigation={navigation} isSaved={false} />
 
@@ -111,7 +127,7 @@ const SalesScreen = ({ navigation }) => {
               navigate={navigation.navigate}
               description={item.description}
               price={item.price}
-              setIsModalVisible={setIsModalVisible}
+              setIsModalVisible={() => handleProductPress(item)}
             />
           )}
           ListEmptyComponent={

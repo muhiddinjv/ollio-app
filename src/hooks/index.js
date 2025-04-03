@@ -52,13 +52,29 @@ export const GlobalProvider = ({ children }) => {
       }));
     };
   
-    const addProductToBill = (product) => {
-      setBill((prevBill) => ({
-        ...prevBill,
-        products: [...prevBill.products, product],
-      }));
+    const addProductToBill = (productId, quantity, title, price) => {
+      setBill((prevBill) => {
+        const existingProductIndex = prevBill.products.findIndex(p => p.product_id === productId);
+        if (existingProductIndex > -1) {
+          // If the product already exists, update the quantity
+          const updatedProducts = [...prevBill.products];
+          updatedProducts[existingProductIndex].quantity += quantity;
+          return { ...prevBill, products: updatedProducts };
+        } else {
+          // If the product does not exist, add it to the list
+          return {
+            ...prevBill,
+            products: [...prevBill.products, { product_id: productId, quantity, title, price }],
+          };
+        }
+      });
     };
-    console.log('GlobalProvider: ',{bill});
+  
+    const getTotalQuantity = () => {
+      return bill.products.reduce((total, product) => total + product.quantity, 0);
+    };
+  
+    console.log('GlobalProvider: ', bill);
   
     return (
       <GlobalContext.Provider 
@@ -72,6 +88,7 @@ export const GlobalProvider = ({ children }) => {
           bill, setBill,
           addClientToBill,
           addProductToBill,
+          getTotalQuantity,
         }}
       >
         {children}

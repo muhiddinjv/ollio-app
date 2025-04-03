@@ -7,17 +7,17 @@ export default function GoodQtyModal({
   onClose,
   value,
   onChangeText,
-  navigation,
+  onSave,
 }) {
   return (
-    <BaseModal visible={visible} onClose={() => onClose()}>
+    <BaseModal visible={visible} onClose={onClose}>
       <View className="w-full">
         <Text>Change quantity</Text>
         <TextInput
-          onChangeText={(qty) => onChangeText(qty)}
+          onChangeText={onChangeText}
           value={value}
           returnKeyType="done"
-          onSubmitEditing={() => navigation?.navigate("Sales")}
+          onSubmitEditing={onSave}
           keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
           placeholder="0"
           autoFocus
@@ -27,19 +27,17 @@ export default function GoodQtyModal({
       <View className="w-full flex-row justify-center mt-6 gap-x-2.5">
         <Pressable
           title="Close"
-          onPress={() => onClose()}
+          onPress={onClose}
           className="w-1/2 py-3 border border-gray-300 rounded-md"
         >
           <Text className="text-center text-gray-400">Close</Text>
         </Pressable>
         <Pressable
-          title="Close"
-          onPress={() => onClose()}
+          title="Save"
+          onPress={onSave}
           className="w-1/2 py-3 bg-primary rounded-md items-center justify-center"
         >
-          <Text className="text-center text-white items-center justify-center">
-            Save
-          </Text>
+          <Text className="text-center text-white">Save</Text>
         </Pressable>
       </View>
     </BaseModal>

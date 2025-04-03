@@ -6,17 +6,16 @@ import { ActivityIndicator, Appbar, Button, IconButton, useTheme } from "react-n
 import ListItem from "../../components/ListItem";
 import SaveCharge from "../../components/SaveCharge";
 import Loader from "../../components/Loader";
-import { useInfiniteScroll, useNavigate } from "../../hooks";
+import { useInfiniteScroll } from "../../hooks";
 import { FlashList } from "@shopify/flash-list";
 import GoodQtyModal from "../Goods/GoodQtyModal";
 import { useGlobalState } from "../../hooks";
-import { DrawerActions, useNavigation } from "@react-navigation/native";
+import { DrawerActions } from "@react-navigation/native";
 
 const StyledPicker = styled(Picker);
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
 const SalesScreen = ({ navigation }) => {
-  // const navigation = useNavigation();
   const { colors } = useTheme();
   const { bill, addProductToBill, getTotalQuantity } = useGlobalState();
   const [selectedValue, setSelectedValue] = useState("option1");
@@ -70,7 +69,7 @@ const SalesScreen = ({ navigation }) => {
           labelStyle={{ fontSize: 19 }}
           onPress={() => navigation.navigate("Bills", {screen: "BillCart"})}
         >
-          {getTotalQuantity()}
+          {getTotalQuantity() || ""}
         </Button>
         <Appbar.Action icon={bill.client_id ? "account-check" : "account-plus"} onPress={() => navigation.navigate("Users",{screen: "UserList"})} color={colors.surface} />
         <Appbar.Action icon={MORE_ICON} onPress={() => console.log("more")} color={colors.surface} />

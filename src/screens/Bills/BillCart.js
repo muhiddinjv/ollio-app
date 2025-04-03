@@ -45,8 +45,10 @@ export default function BillCart({ navigation }) {
     <View className="flex-1">
       <Header
         title="Bill Cart"
-        iconRight="content-save"
+        iconRight={bill.client_id ? "account-check" : "account-plus"}
         navigation={navigation}
+        onPress={() => navigation.navigate("Users",{screen: "UserList"})} 
+        rightBtn
         backBtn
       />
       <ScrollView className="p-4 flex-grow">

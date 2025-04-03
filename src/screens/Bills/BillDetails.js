@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Pressable, ScrollView, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 import { Text } from "react-native";
 import Loader from "../../components/Loader";
 

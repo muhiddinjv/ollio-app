@@ -7,6 +7,7 @@ import _ from "lodash"
 import { getAccessToken } from "../screens/Auth/astorage"
 import axiosInstance from "../screens/Auth/axiostance";
 import { useNavigation } from "@react-navigation/native";
+import { calculateTotal } from "../utils";
 
 const GlobalContext = createContext();
 
@@ -17,6 +18,7 @@ export const GlobalProvider = ({ children }) => {
     const [goodQty, setGoodQty] = useState(0);
     const [goodId, setGoodId] = useState(null);
     const [selectedGoods, setSelectedGoods] = useState([]);
+    const [openBills, setOpenBills] = useState([]);
     
     const [bill, setBill] = useState({
       client_id: null,
@@ -27,12 +29,14 @@ export const GlobalProvider = ({ children }) => {
       const loadStorageData = async () => {
         const storedUser = await AsyncStorage.getItem("user");
         const storedBill = await AsyncStorage.getItem("bill");
-        const storedClients = await AsyncStorage.getItem("clients");
         const storedClient = await AsyncStorage.getItem("client");
+        const storedClients = await AsyncStorage.getItem("clients");
+        const storedOpenBills = await AsyncStorage.getItem("openBills");
         setUser(storedUser ? JSON.parse(storedUser) : null);
+        setBill(storedBill ? JSON.parse(storedBill) : null);
         setClient(storedClient ? JSON.parse(storedClient) : null);
         setClients(storedClients ? JSON.parse(storedClients) : []);
-        setBill(storedBill ? JSON.parse(storedBill) : null);
+        setOpenBills(storedOpenBills ? JSON.parse(storedOpenBills) : []);
       };
       loadStorageData();
     }, []);
@@ -41,9 +45,10 @@ export const GlobalProvider = ({ children }) => {
       AsyncStorage.setItem("user", JSON.stringify(user));
       AsyncStorage.setItem("client", JSON.stringify(client));
       AsyncStorage.setItem("clients", JSON.stringify(clients));
-      AsyncStorage.setItem('selectedGoods', JSON.stringify(selectedGoods));
       AsyncStorage.setItem('bill', JSON.stringify(bill));
-    }, [user, client, clients, selectedGoods, bill]);
+      AsyncStorage.setItem('openBills', JSON.stringify(openBills));
+      AsyncStorage.setItem('selectedGoods', JSON.stringify(selectedGoods));
+    }, [user, client, clients, selectedGoods, bill, openBills]);
   
     const addClientToBill = (clientId) => {
       setBill((prevBill) => ({
@@ -74,21 +79,35 @@ export const GlobalProvider = ({ children }) => {
       return bill.products.reduce((total, product) => total + product.quantity, 0);
     };
   
-    console.log('GlobalProvider: ', bill);
+    console.log('GlobalProvider: ', {bill});
+    console.log('GlobalProvider: ', {openBills});
+  
+    const saveBill = () => {
+      const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const billWithTitle = {
+        ...bill,
+        title: `Chek - ${currentTime}`,
+        total_price: calculateTotal(bill.products),
+      };
+      setOpenBills((prevBills) => [...prevBills, billWithTitle]);
+      setBill({ client_id: null, products: [] });
+    };
   
     return (
       <GlobalContext.Provider 
         value={{ 
+          saveBill,
           user, setUser,
-          clients, setClients,
-          client, setClient,
-          goodId, setGoodId, 
-          goodQty, setGoodQty,
-          selectedGoods, setSelectedGoods,
           bill, setBill,
           addClientToBill,
           addProductToBill,
           getTotalQuantity,
+          client, setClient,
+          goodId, setGoodId, 
+          clients, setClients,
+          goodQty, setGoodQty,
+          openBills, setOpenBills,
+          selectedGoods, setSelectedGoods,
         }}
       >
         {children}

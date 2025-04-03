@@ -1,29 +1,27 @@
 import { Pressable, Text, View } from "react-native";
 import React from "react";
 
-const SaveCharge = ({ navigation, isSaved }) => {
+const SaveCharge = ({ saveBill, navigation, isSaved }) => {
   return (
     <View className="p-2 bg-white dark:bg-slate-800 flex-row gap-2">
       <Pressable
         className="p-2 bg-primary rounded flex-1"
-        onPress={() =>
-          isSaved
-            ? navigation.navigate("SaveTicket")
-            : navigation.navigate("OpenTickets")
-        }
-      >
-        <Text className="text-white text-xl text-center font-medium ">
-          {isSaved ? "SAVE" : "Open bills"}
-        </Text>
-      </Pressable>
-      <Pressable
-        className="p-2 bg-primary rounded flex-1"
         onPress={() => {
-          navigation.navigate("PaymentScreen");
+          if (isSaved) {
+            navigation.navigate("BillsOpen");
+          } else {
+            saveBill();
+            navigation.navigate("SaveBill");
+          }
         }}
       >
+        <Text className="text-white text-xl text-center font-medium ">
+          {isSaved ? "Open Bills" : "Save Bill"}
+        </Text>
+      </Pressable>
+      <Pressable className="p-2 bg-primary rounded flex-1" onPress={() => navigation.navigate("Payment")}>
         <Text className="text-white text-xl text-center capitalize font-medium">
-          charge
+          Charge
         </Text>
       </Pressable>
     </View>

@@ -15,14 +15,20 @@ import { DrawerActions } from "@react-navigation/native";
 const StyledPicker = styled(Picker);
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
+const calculateTotal = (products) => {
+  return products.reduce((total, item) => total + (item.price * item.quantity), 0);
+};
+
 const SalesScreen = ({ navigation }) => {
   const { colors } = useTheme();
-  const { bill, addProductToBill, getTotalQuantity } = useGlobalState();
+  const { bill, saveBill, openBills, addProductToBill, getTotalQuantity } = useGlobalState();
   const [selectedValue, setSelectedValue] = useState("option1");
-  const [filters, setFilters] = useState({ search: "" });
-  const [quantity, setQuantity] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [filters, setFilters] = useState({ search: "" });
+  const [quantity, setQuantity] = useState(0);
+
+  const disabledBtn = bill.client_id === null || bill.products.length === 0;
 
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
     useInfiniteScroll({
@@ -46,6 +52,15 @@ const SalesScreen = ({ navigation }) => {
     }
   };
 
+  const handlePress = (IsOpenBills) => {
+    if(IsOpenBills){
+      navigation.navigate("Bills", { screen: "BillsOpen" });
+    }else{
+      saveBill();
+      navigation.navigate("Bills", { screen: "BillsOpen" });
+    }
+  };
+
   // const makeBill = async () => {
   //   try {
   //     const response = await axiosInstance.post("/bills", {
@@ -57,7 +72,6 @@ const SalesScreen = ({ navigation }) => {
   //     console.error("Error making bill:", error.response ? error.response.data : error.message);
   //   }
   // };
-
   return (
     <View className="flex-1 w-full dark:bg-slate-800">
       <Appbar.Header style={{ backgroundColor: colors.primary }}>
@@ -84,7 +98,24 @@ const SalesScreen = ({ navigation }) => {
         onChangeText={(text) => setQuantity(Number(text))}
         onSave={handleSaveQuantity}
       />
-      <SaveCharge navigation={navigation} isSaved={false} />
+      <View className="pb-2 px-2 bg-white dark:bg-slate-800 flex-row gap-2">
+        <Button
+          mode="contained"
+          onPress={()=>handlePress(openBills.length)}
+          style={{ flex: 1 }} 
+          disabled={bill.client_id === null && bill.products.length === 0 && openBills.length === 0}
+        >
+          {openBills.length ? "Open Bills" : "Save Bill"}
+        </Button>
+        <Button
+          mode="contained"
+          style={{ flex: 1 }} 
+          onPress={() => navigation.navigate("Payment")}
+          disabled={bill.client_id === null && bill.products.length === 0}
+        >
+          Charge
+        </Button>
+      </View>
 
       <View className="flex-row items-center pl-4 h-14 border border-gray-400">
         <StyledPicker

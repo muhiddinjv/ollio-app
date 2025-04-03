@@ -1,22 +1,19 @@
-import { View, ScrollView, Text } from "react-native";
+import { View, ScrollView, Text, Pressable } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import React from "react";
 import SaveCharge from "../../components/SaveCharge";
 import Header from "../../components/Header";
 import { useGlobalState } from "../../hooks";
-import { IconButton } from "react-native-paper";
-
-const calculateTotal = (products) => {
-  return products.reduce((total, item) => total + (item.price * item.quantity), 0);
-};
+import { Button, IconButton } from "react-native-paper";
+import { calculateTotal } from "../../utils";
 
 const Item = ({ title, price, quantity, onDelete }) => {
   const total = calculateTotal([{ price, quantity }]);
 
   const renderRightActions = () => {
     return (
-      <View className="flex-row items-center justify-center w-6">
-        <IconButton icon="delete" onPress={onDelete} iconColor="red" />
+      <View className="flex-row items-center justify-center">
+        <IconButton icon="delete" onPress={onDelete} />
       </View>
     );
   };
@@ -32,7 +29,7 @@ const Item = ({ title, price, quantity, onDelete }) => {
 };
 
 export default function BillCart({ navigation }) {
-  const { bill, setBill } = useGlobalState();
+  const { bill, setBill, saveBill, openBills } = useGlobalState();
   const total = calculateTotal(bill.products);
 
   const handleDelete = (productId) => {
@@ -41,6 +38,12 @@ export default function BillCart({ navigation }) {
       products: prevBill.products.filter((item) => item.product_id !== productId),
     }));
   };
+
+  const handleSave = () => {
+    saveBill();
+    navigation.navigate("Sales", { screen: "SalesList" });
+  };
+
   return (
     <View className="flex-1">
       <Header
@@ -63,14 +66,29 @@ export default function BillCart({ navigation }) {
             />
           ))}
         </View>
-        <View className="flex-row justify-between pt-3  ">
+        <View className="flex-row justify-between pt-3">
           <Text className="text-lg font-bold">Total</Text>
-          <Text className="text-lg font-bold">{total}</Text>
+          <Text className="text-lg font-bold">UZS {total}</Text>
         </View>
       </ScrollView>
-      <View className="pb-6 bg-transparent">
-        <SaveCharge isSaved navigation={navigation} />
+      <View className="p-2 bg-white dark:bg-slate-800 flex-row gap-2">
+        <Button
+          mode="contained"
+          onPress={handleSave}
+          style={{ flex: 1 }} 
+          disabled={bill.products.length === 0 || openBills.length === 0 || bill.client_id === null}
+        >
+          Save Bill
+        </Button>
+        <Button
+          mode="contained"
+          style={{ flex: 1 }} 
+          onPress={() => navigation.navigate("Payment")}
+          disabled={bill.products.length === 0}
+        >
+          Charge
+        </Button>
       </View>
     </View>
   );
-}
+};

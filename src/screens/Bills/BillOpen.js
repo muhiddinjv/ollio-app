@@ -9,6 +9,7 @@ import { Checkbox, TouchableRipple } from "react-native-paper";
 const TicketItem = ({ title, totalPrice, index }) => {
   const { setOpenBills } = useGlobalState();
   const [checked, setChecked] = useState(false);
+
   const handleDeleteBill = (index) => {
     Alert.alert(
       "Delete Bill",
@@ -28,6 +29,7 @@ const TicketItem = ({ title, totalPrice, index }) => {
       { cancelable: true }
     );
   };
+  
   return (
     <View className="py-3 flex-row items-center border-b border-b-gray-300">
       <TouchableRipple onPress={() => setChecked(!checked)}>
@@ -45,7 +47,7 @@ const TicketItem = ({ title, totalPrice, index }) => {
   );
 };
 
-export default function BillsOpen({ navigation }) {
+export default function BillOpen({ navigation }) {
   const { openBills } = useGlobalState();
   // navigation.setOptions({
   //   headerRight: () => (

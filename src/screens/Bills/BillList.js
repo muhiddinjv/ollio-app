@@ -10,6 +10,7 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { useGlobalState } from "../../hooks";
 import Header from "../../components/Header";
 import { DrawerActions } from "@react-navigation/native";
+
 const billsData = [
   {
     price: "3000",
@@ -48,7 +49,7 @@ const billsData = [
   },
 ];
 
-const Bills = ({ navigation }) => {
+const BillList = ({ navigation }) => {
   const { goodId, goodQty } = useGlobalState();
 
   const billsQuery = useQuery({
@@ -130,4 +131,4 @@ const Bills = ({ navigation }) => {
   );
 };
 
-export default Bills;
+export default BillList;

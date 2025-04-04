@@ -1,7 +1,6 @@
 import { View, ScrollView, Text, Pressable } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import React from "react";
-import SaveCharge from "../../components/SaveCharge";
 import Header from "../../components/Header";
 import { useGlobalState } from "../../hooks";
 import { Button, IconButton } from "react-native-paper";
@@ -41,7 +40,7 @@ export default function BillCart({ navigation }) {
 
   const handleSave = () => {
     saveBill();
-    navigation.navigate("Sales", { screen: "SalesList" });
+    navigation.goBack();
   };
 
   return (

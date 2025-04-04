@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { Platform, RefreshControl, View } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { styled } from "nativewind";
 import { ActivityIndicator, Appbar, Button, IconButton, useTheme } from "react-native-paper";
-import ListItem from "../../components/ListItem";
-import SaveCharge from "../../components/SaveCharge";
-import Loader from "../../components/Loader";
-import { useInfiniteScroll } from "../../hooks";
+import { Platform, RefreshControl, View } from "react-native";
+import { DrawerActions } from "@react-navigation/native";
+import { Picker } from "@react-native-picker/picker";
 import { FlashList } from "@shopify/flash-list";
+import { styled } from "nativewind";
+import Loader from "../../components/Loader";
+import ListItem from "../../components/ListItem";
+import { useInfiniteScroll } from "../../hooks";
 import GoodQtyModal from "../Goods/GoodQtyModal";
 import { useGlobalState } from "../../hooks";
-import { DrawerActions } from "@react-navigation/native";
 
 const StyledPicker = styled(Picker);
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
@@ -19,7 +18,7 @@ const calculateTotal = (products) => {
   return products.reduce((total, item) => total + (item.price * item.quantity), 0);
 };
 
-const SalesScreen = ({ navigation }) => {
+const SalesList = ({ navigation }) => {
   const { colors } = useTheme();
   const { bill, saveBill, openBills, addProductToBill, getTotalQuantity } = useGlobalState();
   const [selectedValue, setSelectedValue] = useState("option1");
@@ -28,7 +27,8 @@ const SalesScreen = ({ navigation }) => {
   const [filters, setFilters] = useState({ search: "" });
   const [quantity, setQuantity] = useState(0);
 
-  const disabledBtn = bill.client_id === null || bill.products.length === 0;
+  const isButtonDisabled = bill.client_id === null && bill.products.length === 0 && openBills.length === 0;
+  console.log(isButtonDisabled);
 
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
     useInfiniteScroll({
@@ -53,14 +53,14 @@ const SalesScreen = ({ navigation }) => {
   };
 
   const handlePress = (IsOpenBills) => {
-    if(IsOpenBills){
-      navigation.navigate("Bills", { screen: "BillsOpen" });
-    }else{
+    if (IsOpenBills) {
+      navigation.navigate("BillOpen")
+    } else {
       saveBill();
-      navigation.navigate("Bills", { screen: "BillsOpen" });
+      navigation.navigate("BillOpen")
     }
   };
-
+  
   // const makeBill = async () => {
   //   try {
   //     const response = await axiosInstance.post("/bills", {
@@ -81,7 +81,7 @@ const SalesScreen = ({ navigation }) => {
           icon="cart"
           mode="contained"
           labelStyle={{ fontSize: 19 }}
-          onPress={() => navigation.navigate("Bills", {screen: "BillCart"})}
+          onPress={() => navigation.navigate("BillCart")}
         >
           {getTotalQuantity() || ""}
         </Button>
@@ -101,17 +101,17 @@ const SalesScreen = ({ navigation }) => {
       <View className="pb-2 px-2 bg-white dark:bg-slate-800 flex-row gap-2">
         <Button
           mode="contained"
-          onPress={()=>handlePress(openBills.length)}
+          onPress={()=>handlePress(bill.products.length === 0)}
           style={{ flex: 1 }} 
-          disabled={bill.client_id === null && bill.products.length === 0 && openBills.length === 0}
+          disabled={isButtonDisabled}
         >
-          {openBills.length ? "Open Bills" : "Save Bill"}
+          {bill.products.length === 0 ? "Open Bills" : "Save Bill"}
         </Button>
         <Button
           mode="contained"
           style={{ flex: 1 }} 
           onPress={() => navigation.navigate("Payment")}
-          disabled={bill.client_id === null && bill.products.length === 0}
+          disabled={isButtonDisabled}
         >
           Charge
         </Button>
@@ -176,4 +176,4 @@ const SalesScreen = ({ navigation }) => {
   );
 };
 
-export default SalesScreen;
+export default SalesList;

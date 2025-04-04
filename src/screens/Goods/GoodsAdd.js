@@ -8,7 +8,7 @@ import { getAccessToken } from "../Auth/astorage";
 import Wrapper from "../../components/Wrapper";
 import { useGlobalState } from "../../hooks";
 const { height } = Dimensions.get('window');
-//user id 67bc082e7773ef1bd0c80788
+
 const GoodsAdd = ({ navigation }) => {
   const queryClient = useQueryClient();
   const { selectedGoods, setSelectedGoods } = useGlobalState();
@@ -40,7 +40,7 @@ const GoodsAdd = ({ navigation }) => {
       await AsyncStorage.removeItem("selectedGoods");
       queryClient.invalidateQueries(["goods"]);
       setSelectedGoods([]);
-      navigation.navigate("GoodTabs", { screen: "Dokon" });
+      navigation.navigate("GoodsList");
     } catch (error) {
       Alert.alert("Error", `${error}`);
     }

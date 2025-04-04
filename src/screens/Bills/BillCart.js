@@ -49,7 +49,7 @@ export default function BillCart({ navigation }) {
         title="Bill Cart"
         iconRight={bill.client_id ? "account-check" : "account-plus"}
         navigation={navigation}
-        onPress={() => navigation.navigate("Users",{screen: "UserList"})} 
+        onPress={() => navigation.navigate("UserList")} 
         rightBtn
         backBtn
       />
@@ -83,7 +83,7 @@ export default function BillCart({ navigation }) {
           mode="contained"
           style={{ flex: 1 }} 
           onPress={() => navigation.navigate("Payment")}
-          disabled={bill.products.length === 0}
+          disabled={bill.client_id === null || bill.products.length === 0}
         >
           Charge
         </Button>

@@ -10,13 +10,13 @@ const UserProfile = ({ navigation }) => {
 
   const handleAddToBill = () => {
     addClientToBill(client._id);
-    navigation.navigate("Sales", { screen: "SaleList" });
+    navigation.navigate("Sales");
   };
 
   return (
     <View style={styles.container}>
       <Appbar.Header style={{ backgroundColor: colors.primary }}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} iconColor={colors.surface} />
+        <Appbar.BackAction onPress={() => navigation.navigate("UserList")} iconColor={colors.surface} />
         <Appbar.Content title="Foydalanuvchi profili" titleStyle={{ color: colors.surface }} />
         <Appbar.Action icon="account-edit" onPress={() => navigation.navigate("UserEdit", { user: client })} color={colors.surface} />
       </Appbar.Header>

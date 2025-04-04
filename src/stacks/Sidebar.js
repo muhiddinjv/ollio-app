@@ -29,7 +29,7 @@ const Sidebar = (props) => {
     signOut();
     navigation.reset({
       index: 0,
-      routes: [{ name: "Auth" }]
+      routes: [{ name: "SignIn" }]
     });
   };
 

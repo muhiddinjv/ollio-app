@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, Alert } from "react-native";
-import { CheckBox } from "../../components/CheckBox";
 import { useGlobalState } from "../../hooks";
 import { MaterialIcons } from "@expo/vector-icons";
 import Header from "../../components/Header";

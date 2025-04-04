@@ -17,7 +17,6 @@ import BillCart from "../screens/Bills/BillCart";
 import BillOpen from "../screens/Bills/BillOpen";
 import BillDetails from "../screens/Bills/BillDetails";
 import BillCartItemCount from "../screens/Bills/BillCartItemCount";
-
 import PaymentScreen from "../screens/Payment/Payment";
 import GoodsAdd from "../screens/Goods/GoodsAdd";
 import GoodTabs from "../screens/Goods/GoodTabs";
@@ -137,7 +136,7 @@ const DrawerNav = ({ navigation }) => {
       <Drawer.Screen name="GoodsList" component={GoodsList} options={hidden} />
       <Drawer.Screen name="SignIn" component={SignIn} options={hidden} />
       <Drawer.Screen name="SignUp" component={SignupScreen} options={hidden} />
-      <Drawer.Screen name="Users" component={UserList} options={hidden} />
+      <Drawer.Screen name="UserList" component={UserList} options={hidden} />
       <Drawer.Screen name="UserAdd" component={UserAdd} options={hidden} />
       <Drawer.Screen name="UserEdit" component={UserEdit} options={hidden} />
       <Drawer.Screen name="UserProfile" component={UserProfile} options={hidden} />

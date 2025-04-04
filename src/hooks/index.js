@@ -85,8 +85,7 @@ export const GlobalProvider = ({ children }) => {
     const saveBill = () => {
       const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       const billWithTitle = {
-        ...bill,
-        title: `Chek - ${currentTime}`,
+        ...bill, title: `Bill - ${currentTime}`,
         total_price: calculateTotal(bill.products),
       };
       setOpenBills((prevBills) => [...prevBills, billWithTitle]);
@@ -123,7 +122,6 @@ export const useGlobalState = () => {
     }
     return context;
 };
-
 
 export const useInfiniteScroll = ({ key, url, limit = 100, filters }) => {
     const queryKey = [ ...key, ..._.values(_.omitBy(filters || {}, _.isEmpty))]
@@ -236,30 +234,6 @@ export const useCatalog = () => {
         },
       });
 };
-
-export const useHeaderStyle = (title, rightIcon, screenName) => {
-    const { colors } = useTheme();
-    const navigation = useNavigation();
-
-    return {
-      headerStyle: {
-        backgroundColor: colors.primary,
-      },
-      headerTitle: title,
-      headerTintColor: colors.surface,
-    //   headerRight: rightIcon && (() => {
-    //     return  (
-    //         <Button
-    //             icon={rightIcon}
-    //             mode="contained"
-    //             labelStyle={{ fontSize: 19 }}
-    //             onPress={() => navigation.navigate(screenName)}
-    //         />
-    //     )
-    //   }),
-    }
-}
-
 
 
 

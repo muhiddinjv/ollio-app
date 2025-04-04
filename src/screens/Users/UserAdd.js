@@ -4,6 +4,7 @@ import { TextInput, Button, useTheme, HelperText } from "react-native-paper";
 import axiosInstance from "../../screens/Auth/axiostance";
 import { Picker } from "@react-native-picker/picker";
 import { useGlobalState } from "../../hooks/index";
+import Header from "../../components/Header";
 
 const UserAdd = ({ navigation }) => {
   const { colors } = useTheme();
@@ -70,6 +71,12 @@ const UserAdd = ({ navigation }) => {
 
   return (
     <View className="flex-1">
+      <Header
+        title="User Add"
+        iconLeft="arrow-left"
+        onPress={() => navigation.navigate("UserList")}
+        leftBtn
+      />
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
           <TextInput

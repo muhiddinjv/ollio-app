@@ -85,7 +85,7 @@ const SalesList = ({ navigation }) => {
         >
           {getTotalQuantity() || ""}
         </Button>
-        <Appbar.Action icon={bill.client_id ? "account-check" : "account-plus"} onPress={() => navigation.navigate("Users",{screen: "UserList"})} color={colors.surface} />
+        <Appbar.Action icon={bill.client_id ? "account-check" : "account-plus"} onPress={() => navigation.navigate("UserList")} color={colors.surface} />
         <Appbar.Action icon={MORE_ICON} onPress={() => console.log("more")} color={colors.surface} />
       </Appbar.Header>
       <GoodQtyModal
@@ -103,7 +103,7 @@ const SalesList = ({ navigation }) => {
           mode="contained"
           onPress={()=>handlePress(bill.products.length === 0)}
           style={{ flex: 1 }} 
-          disabled={isButtonDisabled}
+          disabled={bill.client_id === null && bill.products.length === 0 && openBills.length === 0}
         >
           {bill.products.length === 0 ? "Open Bills" : "Save Bill"}
         </Button>
@@ -111,7 +111,7 @@ const SalesList = ({ navigation }) => {
           mode="contained"
           style={{ flex: 1 }} 
           onPress={() => navigation.navigate("Payment")}
-          disabled={isButtonDisabled}
+          disabled={bill.client_id === null || bill.products.length === 0}
         >
           Charge
         </Button>

@@ -10,6 +10,7 @@ import ListItem from "../../components/ListItem";
 import { useInfiniteScroll } from "../../hooks";
 import GoodQtyModal from "../Goods/GoodQtyModal";
 import { useGlobalState } from "../../hooks";
+import Numpad from "../../components/Numpad";
 
 const StyledPicker = styled(Picker);
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
@@ -39,6 +40,7 @@ const SalesList = ({ navigation }) => {
     });
 
   const handleProductPress = (product) => {
+    setQuantity(0);
     setSelectedProduct(product);
     setIsModalVisible(true);
   };
@@ -88,7 +90,7 @@ const SalesList = ({ navigation }) => {
         <Appbar.Action icon={bill.client_id ? "account-check" : "account-plus"} onPress={() => navigation.navigate("UserList")} color={colors.surface} />
         <Appbar.Action icon={MORE_ICON} onPress={() => console.log("more")} color={colors.surface} />
       </Appbar.Header>
-      <GoodQtyModal
+      {/* <GoodQtyModal
         visible={isModalVisible}
         onClose={() => {
           setIsModalVisible(false);
@@ -96,6 +98,15 @@ const SalesList = ({ navigation }) => {
         }}
         value={quantity.toString()}
         onChangeText={(text) => setQuantity(Number(text))}
+        onSave={handleSaveQuantity}
+      /> */}
+      <Numpad
+        visible={isModalVisible}
+        onClose={() => {
+          setQuantity(0);
+          setIsModalVisible(false);
+        }}
+        onConfirm={(value) => setQuantity(value)}
         onSave={handleSaveQuantity}
       />
       <View className="pb-2 px-2 bg-white dark:bg-slate-800 flex-row gap-2">

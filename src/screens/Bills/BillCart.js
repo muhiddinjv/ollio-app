@@ -75,7 +75,7 @@ export default function BillCart({ navigation }) {
           mode="contained"
           onPress={handleSave}
           style={{ flex: 1 }} 
-          disabled={bill.products.length === 0 || openBills.length === 0 || bill.client_id === null}
+          disabled={bill.client_id === null && bill.products.length === 0}
         >
           Save Bill
         </Button>

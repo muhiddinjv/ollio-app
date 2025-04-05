@@ -92,8 +92,8 @@ export const GlobalProvider = ({ children }) => {
     );
   };
 
-  console.log("GlobalProvider: ", { bill });
-  console.log("GlobalProvider: ", { openBills });
+  console.log("GlobalProvider: ", JSON.stringify(bill));
+  console.log("GlobalProvider: ", JSON.stringify(openBills));
 
   const saveBill = () => {
     const currentTime = new Date().toLocaleTimeString([], {

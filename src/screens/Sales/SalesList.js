@@ -59,18 +59,14 @@ const SalesList = ({ navigation }) => {
     }
   };
   
-  // const makeBill = async () => {
-  //   try {
-  //     const response = await axiosInstance.post("/bills", {
-  //       client_id: client._id,
-  //       products: [] // You can add products here if needed
-  //     });
-  //     console.log("Bill created:", response.data);
-  //   } catch (error) {
-  //     console.error("Error making bill:", error.response ? error.response.data : error.message);
-  //   }
-  // };
-  console.log('quantity :>> ', quantity);
+  const createBill = async () => {
+    try {
+      const response = await axiosInstance.post("/bills", bill);
+      console.log("Bill created:", response.data);
+    } catch (error) {
+      console.error("Error making bill:", error.response ? error.response.data : error.message);
+    }
+  };
   return (
     <View className="flex-1 w-full dark:bg-slate-800">
       <Appbar.Header style={{ backgroundColor: colors.primary }}>
@@ -107,15 +103,15 @@ const SalesList = ({ navigation }) => {
           style={{ flex: 1 }} 
           disabled={bill.client_id === null && bill.products.length === 0 && openBills.length === 0}
         >
-          {bill.products.length === 0 ? "Open Bills" : "Save Bill"}
+          {bill.products.length === 0 ? "CHEKLAR" : "SAQLA"}
         </Button>
         <Button
           mode="contained"
           style={{ flex: 1 }} 
-          onPress={() => navigation.navigate("Payment")}
+          onPress={() => navigation.navigate("BillPaid")}
           disabled={bill.client_id === null || bill.products.length === 0}
         >
-          Charge
+          SOTISH
         </Button>
       </View>
 

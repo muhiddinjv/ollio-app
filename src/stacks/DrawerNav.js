@@ -17,12 +17,11 @@ import BillCart from "../screens/Bills/BillCart";
 import BillOpen from "../screens/Bills/BillOpen";
 import BillDetails from "../screens/Bills/BillDetails";
 import BillCartItemCount from "../screens/Bills/BillCartItemCount";
-import PaymentScreen from "../screens/Payment/Payment";
 import GoodsAdd from "../screens/Goods/GoodsAdd";
 import GoodTabs from "../screens/Goods/GoodTabs";
-import SaveTicket from "../screens/Sales/SaveTicket";
 import PaidScreen from "../screens/Payment/Paid";
 import GoodQty from "../screens/Goods/GoodQty";
+import BillPaid from "../screens/Bills/BillPaid";
 
 const Drawer = createDrawerNavigator();
 
@@ -90,18 +89,7 @@ const DrawerNav = ({ navigation }) => {
         }}
       />
       <Drawer.Screen
-        name="SaveTicket"
-        component={SaveTicket}
-        options={{
-          headerBackImage: () => (
-            <AntDesign name="close" size={20} color="black" />
-          ),
-          drawerItemStyle: { display: "none" },
-          headerShown: false,
-        }}
-      />
-      <Drawer.Screen
-        name="PaidScreen"
+        name="Paid"
         component={PaidScreen}
         options={{
           headerStyle: {
@@ -115,17 +103,9 @@ const DrawerNav = ({ navigation }) => {
         }}
       />
       <Drawer.Screen
-        name="PaymentScreen"
-        component={PaymentScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: "rgba(103, 80, 164, 1)",
-          },
-          headerTitle: "",
-          headerTintColor: "white",
-          drawerItemStyle: { display: "none" },
-          headerShown: false,
-        }}
+        name="BillPaid"
+        component={BillPaid}
+        options={hidden}
       />
       <Drawer.Screen name="GoodQty" component={GoodQty} options={hidden} />
       <Drawer.Screen name="BillCart" component={BillCart} options={hidden} />

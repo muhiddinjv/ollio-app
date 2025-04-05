@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, FlatList, Alert } from "react-native";
-import { useGlobalState } from "../../hooks";
 import { MaterialIcons } from "@expo/vector-icons";
-import Header from "../../components/Header";
+import { View, Text, FlatList, Alert } from "react-native";
 import { Checkbox, TouchableRipple } from "react-native-paper";
+import { useGlobalState } from "../../hooks";
+import Header from "../../components/Header";
 
 const TicketItem = ({ title, totalPrice, index }) => {
   const { setOpenBills } = useGlobalState();
@@ -39,7 +39,7 @@ const TicketItem = ({ title, totalPrice, index }) => {
       <MaterialIcons
         name="delete"
         size={24}
-        color="red"
+        color="grey"
         onPress={() => handleDeleteBill(index)}
       />
     </View>
@@ -59,7 +59,7 @@ export default function BillOpen({ navigation }) {
   
   return (
     <View>
-      <Header title="Open Bills" navigation={navigation} backBtn />
+      <Header title="Ochiq Cheklar" navigation={navigation} backBtn />
       <View className="p-2 flex">
         <FlatList
           data={openBills}

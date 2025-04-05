@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Portal, Dialog, Button, IconButton } from 'react-native-paper';
 
-const Numpad = ({ visible, onClose, onSave, onConfirm }) => {
-  const [quantity, setQuantity] = useState('');
-
+const Numpad = ({ visible, onClose, onConfirm, quantity, setQuantity }) => {
   const handlePress = (value) => {
     if (value === 'OK') {
-      onSave();
-      onConfirm(quantity);
-      onClose();
+      if (quantity) {
+        onConfirm(quantity);
+        onClose();
+      }
     } else if (value === 'DEL') {
       setQuantity((prev) => prev.slice(0, -1));
     } else {
@@ -29,12 +28,12 @@ const Numpad = ({ visible, onClose, onSave, onConfirm }) => {
         </View>
         <Dialog.Content>
           <View style={styles.quantityDisplay}>
-            <Text style={styles.quantityText}>{quantity || '0'}</Text>
-            <IconButton icon="backspace" size={30} onPress={() => handlePress('DEL')} />
+            <Text style={styles.quantityText}>{quantity}</Text>
+            <IconButton icon="backspace-outline" size={30} onPress={() => handlePress('DEL')} />
           </View>
 
           <View style={styles.keyboard}>
-            {['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', 'OK'].map((key) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, '.', 0, 'OK'].map((key) => (
               <Button
                 key={key}
                 mode="text"
@@ -54,7 +53,6 @@ const Numpad = ({ visible, onClose, onSave, onConfirm }) => {
 
 const styles = StyleSheet.create({
   dialog: {
-    margin: 0,
     backgroundColor: '#fff',
     borderRadius: 10,
   },

@@ -8,7 +8,6 @@ import { styled } from "nativewind";
 import Loader from "../../components/Loader";
 import ListItem from "../../components/ListItem";
 import { useInfiniteScroll } from "../../hooks";
-import GoodQtyModal from "../Goods/GoodQtyModal";
 import { useGlobalState } from "../../hooks";
 import Numpad from "../../components/Numpad";
 
@@ -26,10 +25,7 @@ const SalesList = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [filters, setFilters] = useState({ search: "" });
-  const [quantity, setQuantity] = useState(0);
-
-  const isButtonDisabled = bill.client_id === null && bill.products.length === 0 && openBills.length === 0;
-  console.log(isButtonDisabled);
+  const [quantity, setQuantity] = useState('');
 
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
     useInfiniteScroll({
@@ -40,7 +36,7 @@ const SalesList = ({ navigation }) => {
     });
 
   const handleProductPress = (product) => {
-    setQuantity(0);
+    console.log(product);
     setSelectedProduct(product);
     setIsModalVisible(true);
   };
@@ -48,9 +44,9 @@ const SalesList = ({ navigation }) => {
   const handleSaveQuantity = () => {
     const { _id, title, price } = selectedProduct;
     if (quantity > 0 && _id) {
-      addProductToBill(_id, quantity, title, price);
+      addProductToBill(_id, parseFloat(quantity), title, price);
       setIsModalVisible(false);
-      setQuantity(0);
+      setQuantity('');
     }
   };
 
@@ -74,6 +70,7 @@ const SalesList = ({ navigation }) => {
   //     console.error("Error making bill:", error.response ? error.response.data : error.message);
   //   }
   // };
+  console.log('quantity :>> ', quantity);
   return (
     <View className="flex-1 w-full dark:bg-slate-800">
       <Appbar.Header style={{ backgroundColor: colors.primary }}>
@@ -90,24 +87,18 @@ const SalesList = ({ navigation }) => {
         <Appbar.Action icon={bill.client_id ? "account-check" : "account-plus"} onPress={() => navigation.navigate("UserList")} color={colors.surface} />
         <Appbar.Action icon={MORE_ICON} onPress={() => console.log("more")} color={colors.surface} />
       </Appbar.Header>
-      {/* <GoodQtyModal
-        visible={isModalVisible}
-        onClose={() => {
-          setIsModalVisible(false);
-          setQuantity(0);
-        }}
-        value={quantity.toString()}
-        onChangeText={(text) => setQuantity(Number(text))}
-        onSave={handleSaveQuantity}
-      /> */}
       <Numpad
         visible={isModalVisible}
         onClose={() => {
-          setQuantity(0);
           setIsModalVisible(false);
+          setQuantity('');
         }}
-        onConfirm={(value) => setQuantity(value)}
-        onSave={handleSaveQuantity}
+        onConfirm={(value) => {
+          setQuantity(value)
+          handleSaveQuantity()
+        }}
+        quantity={quantity}
+        setQuantity={setQuantity}
       />
       <View className="pb-2 px-2 bg-white dark:bg-slate-800 flex-row gap-2">
         <Button

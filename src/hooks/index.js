@@ -48,9 +48,9 @@ export const GlobalProvider = ({ children }) => {
 
   useEffect(() => {
     AsyncStorage.setItem("user", JSON.stringify(user));
+    AsyncStorage.setItem("bill", JSON.stringify(bill));
     AsyncStorage.setItem("client", JSON.stringify(client));
     AsyncStorage.setItem("clients", JSON.stringify(clients));
-    AsyncStorage.setItem("bill", JSON.stringify(bill));
     AsyncStorage.setItem("openBills", JSON.stringify(openBills));
     AsyncStorage.setItem("selectedGoods", JSON.stringify(selectedGoods));
   }, [user, client, clients, selectedGoods, bill, openBills]);
@@ -160,7 +160,6 @@ export const useInfiniteScroll = ({ key, url, limit = 100, filters }) => {
 
   const queryFn = async ({ pageParam = 1 }) => {
     const accessToken = await getAccessToken();
-
     const { data } = await axiosInstance.get(url, {
       headers: { Authorization: `Bearer ${accessToken}` },
       params: {

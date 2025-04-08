@@ -34,7 +34,7 @@ const DrawerNav = ({ navigation }) => {
   React.useEffect(() => {
     const checkToken = async () => {
       const accessToken = await getAccessToken();
-      console.log("Access Token:", accessToken);
+      console.log("DrawerNav Access Token:", accessToken);
       if (!accessToken) {
         console.log("No access token found. Redirecting to SignIn...");
         navigation.navigate("SignIn");

@@ -1,13 +1,23 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Portal, Dialog, Button, IconButton } from 'react-native-paper';
+import { checkStockQuantity } from '../utils';
 
-const Numpad = ({ visible, onClose, onConfirm, quantity, setQuantity }) => {
-  const handlePress = (value) => {
+const Numpad = ({ visible, onClose, onConfirm, quantity, setQuantity, productId }) => {
+  const handlePress = async (value) => {
     if (value === 'OK') {
       if (quantity) {
-        onConfirm(quantity);
-        onClose();
+        try {
+          const stockCheckResult = await checkStockQuantity(productId, quantity);
+          if (!stockCheckResult.success) {
+            alert(stockCheckResult.message);
+          } else {
+            onConfirm(quantity);
+            onClose();
+          }
+        } catch (error) {
+          alert("An error occurred while checking stock.");
+        }
       }
     } else if (value === 'DEL') {
       setQuantity((prev) => prev.slice(0, -1));
@@ -77,15 +87,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   keyboard: {
-    gap: 20,
+    gap: 10,
     // borderWidth: 1,
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
   button: {
-    width: 80,
-    height: 80,
+    width: 90,
+    height: 90,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,

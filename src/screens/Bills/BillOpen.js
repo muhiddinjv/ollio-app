@@ -30,18 +30,13 @@ const TicketItem = ({ title, totalPrice, index }) => {
   };
   
   return (
-    <View className="py-3 flex-row items-center border-b border-b-gray-300">
+    <View className="py-2 flex-row items-center border-b border-b-gray-300">
       <TouchableRipple onPress={() => setChecked(!checked)}>
         <Checkbox status={checked ? "checked" : "unchecked"} />
       </TouchableRipple>
       <Text className="text-sm">{title}</Text>
-      <Text className="ml-auto">UZS {totalPrice}</Text>
-      <MaterialIcons
-        name="delete"
-        size={24}
-        color="grey"
-        onPress={() => handleDeleteBill(index)}
-      />
+      <Text className="ml-auto mr-2">UZS {totalPrice}</Text>
+      <MaterialIcons name="delete" size={24} color="grey" onPress={() => handleDeleteBill(index)} />
     </View>
   );
 };

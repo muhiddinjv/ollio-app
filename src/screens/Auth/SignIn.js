@@ -10,20 +10,15 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TextInput, Button as RNButton } from "react-native-paper";
 import { AuthProvider, useAuth } from "./AuthProvider";
-import { setAccessToken, setItem } from "./astorage";
-import axiosInstance from "./axiostance";
 import { useColorScheme } from "nativewind";
 import { MainColors } from "../../theme";
 import { useForm } from "react-hook-form";
 import ControlledInput from "../../components/ControlledInput";
-import { jwtDecode } from "jwt-decode";
-import { useGlobalState } from "../../hooks";
 
 export default function SignIn({ navigation }) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
   const { colorScheme } = useColorScheme();
-  const { setUser } = useGlobalState();
   const { signIn } = useAuth();
 
   const {
@@ -39,18 +34,13 @@ export default function SignIn({ navigation }) {
     }
   }, [errorMessage]);
 
-  const handleSignIn = async ({phone, password}) => {
+  const handleSignIn = async ({ phone, password }) => {
     try {
       setErrorMessage("");
-      const {data} = await axiosInstance.post("auth/signin", {phone, password});
-      const user = jwtDecode(data.token);
-      await setItem("user", user); 
-      setAccessToken(data.token);
-      signIn(data.token);
+      signIn(phone, password);
       navigation.navigate("Sales");
     } catch (error) {
       console.log("handleSignIn error", error);
-
       if (error.response?.data?.message) {
         setErrorMessage(error.response.data.message);
       } else {

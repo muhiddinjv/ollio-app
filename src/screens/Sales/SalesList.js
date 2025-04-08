@@ -108,7 +108,7 @@ const SalesList = ({ navigation }) => {
         <Button
           mode="contained"
           style={{ flex: 1 }} 
-          onPress={() => navigation.navigate("BillPaid")}
+          onPress={() => navigation.navigate("SaleMade")}
           disabled={bill.client_id === null || bill.products.length === 0}
         >
           SOTISH

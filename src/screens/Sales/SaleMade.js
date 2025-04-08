@@ -4,10 +4,10 @@ import { Button, useTheme } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import Header from "../../components/Header";
 
-const BillPaid = ({ navigation }) => {
+const SaleMade = ({ navigation }) => {
   const { colors } = useTheme();
 
-  const totalAmount = "UZS 98,000"; // Example total amount
+  const totalAmount = "UZS 98,000";
 
   const handleDownload = () => {
     navigation.navigate("Sales");
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BillPaid;
+export default SaleMade;

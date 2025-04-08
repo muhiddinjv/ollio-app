@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
-// import { close, delete1 } from "../../assets/icons";
+import { View, Text, TouchableOpacity, TextInput } from "react-native";
 
 const QuantityScreen = ({ navigation }) => {
   const [quantity, setQuantity] = useState("");

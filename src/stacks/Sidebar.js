@@ -1,14 +1,13 @@
 import React from "react";
 import { View } from "react-native";
-import { Text, Switch, Button, IconButton, useTheme } from "react-native-paper";
 import { useColorScheme } from "nativewind";
+import { Text, Switch, Button, IconButton, useTheme } from "react-native-paper";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import { useAuth } from "../screens/Auth/AuthProvider";
-import { removeAccessToken, getItem } from "../screens/Auth/astorage";
+import { getItem } from "../screens/Auth/astorage";
 import { useGlobalState } from "../hooks";
 
 const Sidebar = (props) => {
-  const { navigation } = props;
   const { colorScheme, toggleColorScheme } = useColorScheme();
   const { user, setUser } = useGlobalState();
   const { signOut } = useAuth();
@@ -23,15 +22,6 @@ const Sidebar = (props) => {
     };
     fetchUserData();
   }, []);
-
-  const handleSignOut = async () => {
-    await removeAccessToken();
-    signOut();
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "SignIn" }]
-    });
-  };
 
   return (
     <View className="flex-1 w-full dark:bg-slate-800">{/* -- REMOVE PADDING DrawerContentScrollView ---*/}
@@ -58,7 +48,7 @@ const Sidebar = (props) => {
 
       <View className="flex-row justify-between p-4 border-t border-gray-300">
         <Button className='w-min' icon="account-voice" mode="contained" onPress={() => {alert('sidebar profile')}}>Share</Button>
-        <Button className='w-min' icon="logout" mode="contained" onPress={handleSignOut}>Sign Out</Button>
+        <Button className='w-min' icon="logout" mode="contained" onPress={signOut}>Sign Out</Button>
       </View>
     </View>
   );

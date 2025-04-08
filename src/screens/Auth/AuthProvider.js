@@ -1,6 +1,8 @@
 import * as React from "react";
-import { setAccessToken, removeAccessToken } from "./astorage";
 import { useNavigation } from '@react-navigation/native';
+import { setAccessToken, removeAccessToken, getRefreshToken, setRefreshToken, setItem } from "./astorage";
+import axiosInstance from "./axiostance";
+import {jwtDecode} from "jwt-decode";
 
 const AuthContext = React.createContext({
   status: "idle",
@@ -20,7 +22,8 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider = ({ children, navigation }) => {
+export const AuthProvider = ({ children }) => {
+  const navigation = useNavigation();
   const [state, dispatch] = React.useReducer(AuthReducer, {
     status: "idle",
     userToken: null,
@@ -30,18 +33,44 @@ export const AuthProvider = ({ children, navigation }) => {
 
   const authActions = React.useMemo(
     () => ({
-      signIn: async (token) => {
-        dispatch({ type: "SIGN_IN", token });
-        await setAccessToken(token);
+      signIn: async (phone, password) => {
+        try {
+          const { data } = await axiosInstance.post("auth/signin", { phone, password });
+          const user = jwtDecode(data.accessToken);
+          await setItem("user", user);
+          await setAccessToken(data.accessToken);
+          await setRefreshToken(data.refreshToken);
+          dispatch({ type: "SIGN_IN", token: data.accessToken });
+        } catch (error) {
+          console.error("Error during sign in:", error);
+          throw error;
+        }
       },
       signOut: async () => {
         console.log("Signing out...");
-
-        await removeAccessToken();
-        dispatch({ type: "SIGN_OUT" });
-
-        const nav = navigation || useNavigation();
-        nav.navigate("SignIn");
+        const refreshToken = await getRefreshToken();
+        try {
+          const result = await axiosInstance.post("auth/signout", { refreshToken });
+          console.log('Sign out response:', result.data);
+          await removeAccessToken();
+          dispatch({ type: "SIGN_OUT" });
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "SignIn" }]
+          });
+        } catch (error) {
+          console.error("Error during sign out:", error);
+        }
+      },
+      refreshToken: async () => {
+        const refreshToken = await getRefreshToken();
+        if (!refreshToken) {
+          throw new Error("No refresh token found.");
+        }
+      
+        const response = await axiosInstance.post("auth/refresh", { refreshToken });
+        await setAccessToken(response.data.accessToken);
+        await setRefreshToken(response.data.refreshToken);
       },
     }),
     [navigation]

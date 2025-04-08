@@ -21,7 +21,7 @@ import GoodsAdd from "../screens/Goods/GoodsAdd";
 import GoodTabs from "../screens/Goods/GoodTabs";
 import PaidScreen from "../screens/Payment/Paid";
 import GoodQty from "../screens/Goods/GoodQty";
-import BillPaid from "../screens/Bills/BillPaid";
+import SaleMade from "../screens/Sales/SaleMade";
 
 const Drawer = createDrawerNavigator();
 
@@ -34,8 +34,10 @@ const DrawerNav = ({ navigation }) => {
   React.useEffect(() => {
     const checkToken = async () => {
       const accessToken = await getAccessToken();
+      console.log("Access Token:", accessToken);
       if (!accessToken) {
-        navigation.navigate("Auth");
+        console.log("No access token found. Redirecting to SignIn...");
+        navigation.navigate("SignIn");
       }
     };
     checkToken();
@@ -102,11 +104,7 @@ const DrawerNav = ({ navigation }) => {
           headerShown: false,
         }}
       />
-      <Drawer.Screen
-        name="BillPaid"
-        component={BillPaid}
-        options={hidden}
-      />
+      <Drawer.Screen name="SaleMade" component={SaleMade} options={hidden} />
       <Drawer.Screen name="GoodQty" component={GoodQty} options={hidden} />
       <Drawer.Screen name="BillCart" component={BillCart} options={hidden} />
       <Drawer.Screen name="BillOpen" component={BillOpen} options={hidden} />
@@ -125,3 +123,9 @@ const DrawerNav = ({ navigation }) => {
 };
 
 export default DrawerNav;
+
+/*
+client: 67c04aa89b212873f50d2cee
+67b85cc8ac2e3c40d155f6e3
+67b85cc8ac2e3c40d155f6f2
+*/

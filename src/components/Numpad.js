@@ -3,12 +3,12 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Portal, Dialog, Button, IconButton } from 'react-native-paper';
 import { checkStockQuantity } from '../utils';
 
-const Numpad = ({ visible, onClose, onConfirm, quantity, setQuantity, productId }) => {
+const Numpad = ({ visible, onClose, onConfirm, quantity, setQuantity, selectedProduct }) => {
   const handlePress = async (value) => {
     if (value === 'OK') {
       if (quantity) {
         try {
-          const stockCheckResult = await checkStockQuantity(productId, quantity);
+          const stockCheckResult = await checkStockQuantity(selectedProduct?._id, quantity);
           if (!stockCheckResult.success) {
             alert(stockCheckResult.message);
           } else {
@@ -33,8 +33,8 @@ const Numpad = ({ visible, onClose, onConfirm, quantity, setQuantity, productId 
     <Portal>
       <Dialog visible={visible} onDismiss={onClose} style={styles.dialog}>
         <View style={styles.header}>
-          <IconButton icon="close" size={30} onPress={onClose} />
-          <Text style={styles.title}>Quantity</Text>
+          <IconButton icon="close" size={30} onPress={onClose} style={{ marginLeft: 15 }} />
+          <Text style={styles.title}>{selectedProduct?.title}</Text>
         </View>
         <Dialog.Content>
           <View style={styles.quantityDisplay}>
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
+    width: '80%',
     fontWeight: 'bold',
   },
   quantityDisplay: {

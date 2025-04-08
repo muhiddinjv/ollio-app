@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use(async (config) => {
 axiosInstance.interceptors.response.use(
   (response) => response, // Return response if no errors
   async (error) => {
-    if (error.response?.status === 401) {
+    if (error.response?.status === 403) {
       console.log("Token expired. Attempting to refresh...");
 
       const refreshToken = await getRefreshToken(); // Get the refresh token

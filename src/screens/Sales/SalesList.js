@@ -66,7 +66,6 @@ const SalesList = ({ navigation }) => {
       console.error("Error making bill:", error.response ? error.response.data : error.message);
     }
   };
-  console.log('selectedProduct :>> ', selectedProduct);
   return (
     <View className="flex-1 w-full dark:bg-slate-800">
       <Appbar.Header style={{ backgroundColor: colors.primary }}>
@@ -95,7 +94,7 @@ const SalesList = ({ navigation }) => {
         }}
         quantity={quantity}
         setQuantity={setQuantity}
-        productId={selectedProduct?._id}
+        selectedProduct={selectedProduct}
       />
       <View className="pb-2 px-2 bg-white dark:bg-slate-800 flex-row gap-2">
         <Button

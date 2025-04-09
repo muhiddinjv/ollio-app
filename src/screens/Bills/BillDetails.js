@@ -2,6 +2,7 @@ import React from "react";
 import { Pressable, ScrollView, View } from "react-native";
 import { Text } from "react-native";
 import Loader from "../../components/Loader";
+import Header from "../../components/Header";
 
 const Item = ({ name, quantity, price }) => {
   return (
@@ -12,7 +13,7 @@ const Item = ({ name, quantity, price }) => {
     </View>
   );
 };
-const BillDetails = () => {
+const BillDetails = ({navigation}) => {
   const items = [
     { name: "a74 cola 1.5L (1bl*6ta)", quantity: 1, price: "15,000", id: 0 },
     { name: "a75 cola 1.5L (1bl*6ta)", quantity: 2, price: "32,000", id: 1 },
@@ -50,7 +51,9 @@ const BillDetails = () => {
   ];
 
   return (
-    <ScrollView className="p-4">
+    <ScrollView className="">
+      <Header title="Bills" navigation={navigation} fontSize={20} backBtn/>
+      <View className="p-4">
       <View className="py-4 border-b border-gray-300">
         <Text className="text-4xl text-center font-medium">UZS 150 000</Text>
         <Text className="text-gray-600 text-xl text-center">Total</Text>
@@ -113,6 +116,8 @@ const BillDetails = () => {
           </View>
         }
       /> */}
+      </View>
+
     </ScrollView>
   );
 };

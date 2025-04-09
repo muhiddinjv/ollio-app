@@ -7,13 +7,12 @@ import SignIn from "../screens/Auth/SignIn";
 import SignupScreen from "../screens/Auth/SignUp";
 import SalesList from "../screens/Sales/SalesList";
 import GoodsList from "../screens/Goods/GoodsList";
-import BillList from "../screens/Bills/BillList";
 import UserList from "../screens/Users/UserList";
 import UserAdd from "../screens/Users/UserAdd";
 import UserEdit from "../screens/Users/UserEdit";
 import UserProfile from "../screens/Users/UserProfile";
 import BillCart from "../screens/Bills/BillCart";
-import BillOpen from "../screens/Bills/BillOpen";
+import BillList from "../screens/Bills/BillList";
 import BillDetails from "../screens/Bills/BillDetails";
 import GoodsAdd from "../screens/Goods/GoodsAdd";
 import GoodTabs from "../screens/Goods/GoodTabs";
@@ -93,7 +92,6 @@ const DrawerNav = ({ navigation }) => {
       <Drawer.Screen name="SaleMade" component={SaleMade} options={hidden} />
       <Drawer.Screen name="GoodQty" component={GoodQty} options={hidden} />
       <Drawer.Screen name="BillCart" component={BillCart} options={hidden} />
-      <Drawer.Screen name="BillOpen" component={BillOpen} options={hidden} />
       <Drawer.Screen name="BillDetails" component={BillDetails} options={hidden} />
       <Drawer.Screen name="GoodsAdd" component={GoodsAdd} options={hidden}/>
       <Drawer.Screen name="GoodsList" component={GoodsList} options={hidden} />

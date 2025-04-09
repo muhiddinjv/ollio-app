@@ -13,8 +13,6 @@ const Tab = createMaterialTopTabNavigator();
 
 const GoodTabs = ({ route }) => {
   const navigation = useNavigation();
-  const drawerNavigation = navigation.getParent();
-
   const [visible, setVisible] = useState(true);
   const { colors } = useTheme();
 

@@ -78,10 +78,10 @@ const SalesList = ({ navigation }) => {
 
   const handlePress = (IsOpenBills) => {
     if (IsOpenBills) {
-      navigation.navigate("BillOpen")
+      navigation.navigate("Bills")
     } else {
       saveBill();
-      navigation.navigate("BillOpen")
+      navigation.navigate("Bills")
     }
   };
   

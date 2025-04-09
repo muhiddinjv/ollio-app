@@ -6,6 +6,7 @@ import { ActivityIndicator, Text } from "react-native-paper";
 import { useInfiniteScroll } from "../../hooks";
 import { FlashList } from "@shopify/flash-list";
 import { useNavigation } from "@react-navigation/native";
+import Loader from "../../components/Loader";
 
 const GoodsList = ({ keyProp }) => {
   const [goodId, setGoodId] = useState([]);
@@ -43,9 +44,10 @@ const GoodsList = ({ keyProp }) => {
             checked={goodId.includes(item._id)}
           />
         )}
+        LoaderComponent={<Loader />}
         ListEmptyComponent={
           <View className="flex items-center">
-            <Text>No result</Text>
+            <Loader />
           </View>
         }
         ListFooterComponent={() => {

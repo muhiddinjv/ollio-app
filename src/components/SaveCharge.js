@@ -8,7 +8,7 @@ const SaveCharge = ({ saveBill, navigation, isSaved }) => {
         className="p-2 bg-primary rounded flex-1"
         onPress={() => {
           if (isSaved) {
-            navigation.navigate("BillOpen");
+            navigation.navigate("BillList");
           } else {
             saveBill();
             navigation.navigate("SaveBill");

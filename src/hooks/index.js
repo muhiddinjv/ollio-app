@@ -6,6 +6,7 @@ import {
   useEffect,
   useContext,
 } from "react";
+import { Alert } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -69,8 +70,40 @@ export const GlobalProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchBills(); // Fetch bills when the component mounts
+    fetchBills();
   }, []);
+
+  const deleteBill = async (billId, setBills) => {
+    Alert.alert(
+      "Delete Bill",
+      "Are you sure you want to delete this bill?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: async () => {
+            try {
+              const response = await axiosInstance.delete(`/bills/${billId}`);
+              if (response.data.success) {
+                console.log("Bill deleted successfully:", response.data);
+                setBills((prevBills) => prevBills.filter((bill) => bill._id !== billId));
+              } else {
+                console.error("Failed to delete bill:", response.data.message);
+                throw new Error(response.data.message);
+              }
+            } catch (error) {
+              console.error("Error deleting bill:", error.response ? error.response.data : error.message);
+              throw error;
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
 
   const addClientToBill = (clientId) => {
     setBill((prevBill) => ({
@@ -130,6 +163,7 @@ export const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         saveBill,
+        deleteBill,
         user, setUser,
         bill, setBill,
         bills, setBills,

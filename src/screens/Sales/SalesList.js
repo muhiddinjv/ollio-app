@@ -21,7 +21,7 @@ const calculateTotal = (products) => {
 
 const SalesList = ({ navigation }) => {
   const { colors } = useTheme();
-  const { bill, setBill, openBills, addProductToBill, getTotalQuantity } = useGlobalState();
+  const { bill, setBill, fetchBills, addProductToBill, getTotalQuantity } = useGlobalState();
   const [selectedValue, setSelectedValue] = useState("option1");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -42,9 +42,9 @@ const SalesList = ({ navigation }) => {
   };
 
   const handleSaveQuantity = () => {
-    const { _id, title, price } = selectedProduct;
-    if (quantity > 0 && _id) {
-      addProductToBill(_id, parseFloat(quantity), title, price);
+    const { product_id, title, price } = selectedProduct;
+    if (quantity > 0 && product_id) {
+      addProductToBill(product_id, parseFloat(quantity), title, price);
       setIsModalVisible(false);
       setQuantity('');
     }
@@ -58,13 +58,16 @@ const SalesList = ({ navigation }) => {
         quantity: product.quantity,
       })),
     };
+    console.log(JSON.stringify(billData));
 
     try {
       const response = await axiosInstance.post("/bills", billData);
       if (response.data.success) {
         console.log("Bill created successfully:", response.data.billId);
+        console.log(333,response.data);
         // Optionally, you can reset the bill state after successful creation
-        setBill({ client_id: null, products: [] });
+        // setBill({ client_id: null, products: [] });
+        fetchBills()
       } else {
         console.error("Failed to create bill:", response.data.message);
       }

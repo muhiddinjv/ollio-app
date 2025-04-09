@@ -141,8 +141,7 @@ export const GlobalProvider = ({ children }) => {
     );
   };
 
-  console.log("GlobalProvider: ", JSON.stringify(bill));
-  console.log("GlobalProvider: ", JSON.stringify(openBills));
+  // console.log("GlobalProvider: ", JSON.stringify(bill));
 
   const saveBill = () => {
     const currentTime = new Date().toLocaleTimeString([], {
@@ -162,6 +161,7 @@ export const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         saveBill,
+        fetchBills,
         deleteBill,
         user, setUser,
         bill, setBill,

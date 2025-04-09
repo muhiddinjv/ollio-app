@@ -41,5 +41,17 @@ export const calculateTotal = (products) => {
   return products.reduce((total, item) => total + (item.price * item.quantity), 0);
 };
 
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = {
+    hour: '2-digit',
+    minute: '2-digit',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  };
+  return date.toLocaleString('en-GB', options).replace(',', ''); // Format to HH:MM, DD-MM-YYYY
+};
+
 
 

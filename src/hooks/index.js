@@ -24,6 +24,7 @@ export const GlobalProvider = ({ children }) => {
   const [goodId, setGoodId] = useState(null);
   const [selectedGoods, setSelectedGoods] = useState([]);
   const [openBills, setOpenBills] = useState([]);
+  const [bills, setBills] = useState([]);
 
   const [bill, setBill] = useState({
     client_id: null,
@@ -36,12 +37,10 @@ export const GlobalProvider = ({ children }) => {
       const storedBill = await AsyncStorage.getItem("bill");
       const storedClient = await AsyncStorage.getItem("client");
       const storedClients = await AsyncStorage.getItem("clients");
-      const storedOpenBills = await AsyncStorage.getItem("openBills");
       setUser(storedUser ? JSON.parse(storedUser) : null);
       setBill(storedBill ? JSON.parse(storedBill) : null);
       setClient(storedClient ? JSON.parse(storedClient) : null);
       setClients(storedClients ? JSON.parse(storedClients) : []);
-      setOpenBills(storedOpenBills ? JSON.parse(storedOpenBills) : []);
     };
     loadStorageData();
   }, []);
@@ -51,9 +50,27 @@ export const GlobalProvider = ({ children }) => {
     AsyncStorage.setItem("bill", JSON.stringify(bill));
     AsyncStorage.setItem("client", JSON.stringify(client));
     AsyncStorage.setItem("clients", JSON.stringify(clients));
-    AsyncStorage.setItem("openBills", JSON.stringify(openBills));
     AsyncStorage.setItem("selectedGoods", JSON.stringify(selectedGoods));
   }, [user, client, clients, selectedGoods, bill, openBills]);
+
+
+  const fetchBills = async () => {
+    const accessToken = await getAccessToken();
+    try {
+      const response = await axiosInstance.get("/bills", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setBills(response.data); // Set the fetched bills to state
+    } catch (error) {
+      console.error("Error fetching bills:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBills(); // Fetch bills when the component mounts
+  }, []);
 
   const addClientToBill = (clientId) => {
     setBill((prevBill) => ({
@@ -113,25 +130,18 @@ export const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         saveBill,
-        user,
-        setUser,
-        bill,
-        setBill,
+        user, setUser,
+        bill, setBill,
+        bills, setBills,
         addClientToBill,
         addProductToBill,
         getTotalQuantity,
-        client,
-        setClient,
-        goodId,
-        setGoodId,
-        clients,
-        setClients,
-        goodQty,
-        setGoodQty,
-        openBills,
-        setOpenBills,
-        selectedGoods,
-        setSelectedGoods,
+        client, setClient,
+        goodId, setGoodId,
+        clients, setClients,
+        goodQty, setGoodQty,
+        openBills, setOpenBills,
+        selectedGoods, setSelectedGoods,
       }}
     >
       {children}

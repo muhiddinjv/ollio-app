@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { View, Text, FlatList, Alert } from "react-native";
-import { Checkbox, TouchableRipple } from "react-native-paper";
 import { useGlobalState } from "../../hooks";
 import Header from "../../components/Header";
 
-const TicketItem = ({ title, totalPrice, index }) => {
-  const { setOpenBills } = useGlobalState();
-  const [checked, setChecked] = useState(false);
+const BillItem = ({ title, status, totalPrice, index, setBills }) => {
+  const billPaid = status === "paid";
 
   const handleDeleteBill = (index) => {
     Alert.alert(
@@ -21,7 +19,8 @@ const TicketItem = ({ title, totalPrice, index }) => {
         {
           text: "Delete",
           onPress: () => {
-            setOpenBills((prevBills) => prevBills.filter((_, i) => i !== index));
+            // setOpenBills((prevBills) => prevBills.filter((_, i) => i !== index));
+            setBills((prevBills) => prevBills.filter((_, i) => i !== index));
           },
         },
       ],
@@ -31,38 +30,31 @@ const TicketItem = ({ title, totalPrice, index }) => {
   
   return (
     <View className="py-2 flex-row items-center border-b border-b-gray-300">
-      <TouchableRipple onPress={() => setChecked(!checked)}>
-        <Checkbox status={checked ? "checked" : "unchecked"} />
-      </TouchableRipple>
-      <Text className="text-sm">{title}</Text>
+      <MaterialIcons name={billPaid ? "check-circle" : "check-circle-outline"} size={24} color="grey" />
+      <Text className="ml-2 text-sm">{title}</Text>
       <Text className="ml-auto mr-2">UZS {totalPrice}</Text>
-      <MaterialIcons name="delete" size={24} color="grey" onPress={() => handleDeleteBill(index)} />
+      <MaterialIcons disabled={billPaid} name="delete" size={24} color={billPaid ? "lightgray" : "grey"} onPress={() => handleDeleteBill(index)} />
     </View>
   );
 };
 
 export default function BillOpen({ navigation }) {
-  const { openBills } = useGlobalState();
-  // navigation.setOptions({
-  //   headerRight: () => (
-  //     <View className="pr-2.5">
-  //       <MaterialIcons name="delete" size={24} color="gray" />
-  //     </View>
-  //   ),
-  // });
-
+  const {bills, setBills} = useGlobalState();
   
   return (
     <View>
       <Header title="Ochiq Cheklar" navigation={navigation} backBtn />
       <View className="p-2 flex">
         <FlatList
-          data={openBills}
+          data={bills}
           renderItem={({ item, index }) => (
-            <TicketItem
-              title={item.title}
+            <BillItem
+              title={item.created_at}
+              status={item.status}
               totalPrice={item.total_price}
               index={index}
+              onDelete={() => handleDeleteBill(index)}
+              setBills={setBills}
             />
           )}
           // keyExtractor={(item) => item.id.toString()}

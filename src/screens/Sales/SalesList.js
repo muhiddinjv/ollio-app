@@ -10,6 +10,7 @@ import ListItem from "../../components/ListItem";
 import { useInfiniteScroll } from "../../hooks";
 import { useGlobalState } from "../../hooks";
 import Numpad from "../../components/Numpad";
+import axiosInstance from "../Auth/axiostance";
 
 const StyledPicker = styled(Picker);
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
@@ -20,7 +21,7 @@ const calculateTotal = (products) => {
 
 const SalesList = ({ navigation }) => {
   const { colors } = useTheme();
-  const { bill, saveBill, openBills, addProductToBill, getTotalQuantity } = useGlobalState();
+  const { bill, setBill, openBills, addProductToBill, getTotalQuantity } = useGlobalState();
   const [selectedValue, setSelectedValue] = useState("option1");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -49,6 +50,29 @@ const SalesList = ({ navigation }) => {
     }
   };
 
+  const saveBill = async () => {
+    const billData = {
+      client_id: bill.client_id,
+      products: bill.products.map(product => ({
+        product_id: product.product_id,
+        quantity: product.quantity,
+      })),
+    };
+
+    try {
+      const response = await axiosInstance.post("/bills", billData);
+      if (response.data.success) {
+        console.log("Bill created successfully:", response.data.billId);
+        // Optionally, you can reset the bill state after successful creation
+        setBill({ client_id: null, products: [] });
+      } else {
+        console.error("Failed to create bill:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error creating bill:", error.response ? error.response.data : error.message);
+    }
+  };
+
   const handlePress = (IsOpenBills) => {
     if (IsOpenBills) {
       navigation.navigate("BillOpen")
@@ -66,6 +90,9 @@ const SalesList = ({ navigation }) => {
       console.error("Error making bill:", error.response ? error.response.data : error.message);
     }
   };
+
+
+
   return (
     <View className="flex-1 w-full dark:bg-slate-800">
       <Appbar.Header style={{ backgroundColor: colors.primary }}>
@@ -101,9 +128,9 @@ const SalesList = ({ navigation }) => {
           mode="contained"
           onPress={()=>handlePress(bill.products.length === 0)}
           style={{ flex: 1 }} 
-          disabled={bill.client_id === null && bill.products.length === 0 && openBills.length === 0}
+          // disabled={bill.client_id === null && bill.products.length === 0 && openBills.length === 0}
         >
-          {bill.products.length === 0 ? "CHEKLAR" : "SAQLA"}
+          {bill.products.length === 0 ? "OPEN BILLS" : "SAVE"}
         </Button>
         <Button
           mode="contained"
@@ -111,7 +138,7 @@ const SalesList = ({ navigation }) => {
           onPress={() => navigation.navigate("SaleMade")}
           disabled={bill.client_id === null || bill.products.length === 0}
         >
-          SOTISH
+          SALE
         </Button>
       </View>
 

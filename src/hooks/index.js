@@ -26,6 +26,7 @@ export const GlobalProvider = ({ children }) => {
   const [selectedGoods, setSelectedGoods] = useState([]);
   const [openBills, setOpenBills] = useState([]);
   const [bills, setBills] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [bill, setBill] = useState({
     client_id: null,
@@ -56,16 +57,14 @@ export const GlobalProvider = ({ children }) => {
 
 
   const fetchBills = async () => {
-    const accessToken = await getAccessToken();
+    setLoading(true);
     try {
-      const response = await axiosInstance.get("/bills", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      setBills(response.data); // Set the fetched bills to state
+      const response = await axiosInstance.get("/bills");
+      setBills(response.data);
     } catch (error) {
       console.error("Error fetching bills:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -174,6 +173,7 @@ export const GlobalProvider = ({ children }) => {
         goodId, setGoodId,
         clients, setClients,
         goodQty, setGoodQty,
+        loading, setLoading,
         openBills, setOpenBills,
         selectedGoods, setSelectedGoods,
       }}

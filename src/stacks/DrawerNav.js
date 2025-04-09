@@ -3,7 +3,6 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { IconButton, useTheme } from "react-native-paper";
 import { useColorScheme } from "nativewind";
 import Sidebar from "./Sidebar";
-import { getAccessToken } from "../screens/Auth/astorage";
 import SignIn from "../screens/Auth/SignIn";
 import SignupScreen from "../screens/Auth/SignUp";
 import SalesList from "../screens/Sales/SalesList";
@@ -16,7 +15,6 @@ import UserProfile from "../screens/Users/UserProfile";
 import BillCart from "../screens/Bills/BillCart";
 import BillOpen from "../screens/Bills/BillOpen";
 import BillDetails from "../screens/Bills/BillDetails";
-import BillCartItemCount from "../screens/Bills/BillCartItemCount";
 import GoodsAdd from "../screens/Goods/GoodsAdd";
 import GoodTabs from "../screens/Goods/GoodTabs";
 import PaidScreen from "../screens/Payment/Paid";
@@ -30,18 +28,6 @@ const DrawerNav = ({ navigation }) => {
   const { colors } = useTheme();
 
   const hidden = { drawerItemStyle: { display: "none" }, headerShown: false };
-
-  React.useEffect(() => {
-    const checkToken = async () => {
-      const accessToken = await getAccessToken();
-      console.log("DrawerNav Access Token:", accessToken);
-      if (!accessToken) {
-        console.log("No access token found. Redirecting to SignIn...");
-        navigation.navigate("SignIn");
-      }
-    };
-    checkToken();
-  }, []);
 
   return (
     <Drawer.Navigator
@@ -109,7 +95,6 @@ const DrawerNav = ({ navigation }) => {
       <Drawer.Screen name="BillCart" component={BillCart} options={hidden} />
       <Drawer.Screen name="BillOpen" component={BillOpen} options={hidden} />
       <Drawer.Screen name="BillDetails" component={BillDetails} options={hidden} />
-      <Drawer.Screen name="BillCartItemCount" component={BillCartItemCount} options={hidden} />
       <Drawer.Screen name="GoodsAdd" component={GoodsAdd} options={hidden}/>
       <Drawer.Screen name="GoodsList" component={GoodsList} options={hidden} />
       <Drawer.Screen name="SignIn" component={SignIn} options={hidden} />

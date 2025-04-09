@@ -1,8 +1,9 @@
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
-import { View, Text, FlatList, Alert } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import { useGlobalState } from "../../hooks";
 import Header from "../../components/Header";
+import Loader from "../../components/Loader";
 
 const BillItem = ({ title, status, totalPrice, onDelete }) => {
   const billPaid = status === "paid"
@@ -17,7 +18,7 @@ const BillItem = ({ title, status, totalPrice, onDelete }) => {
 };
 
 export default function BillOpen({ navigation }) {
-  const { bills, setBills, deleteBill } = useGlobalState();
+  const { bills, setBills, deleteBill, loading } = useGlobalState();
 
   const handleDeleteBill = (billId) => {
     deleteBill(billId, setBills);
@@ -27,7 +28,7 @@ export default function BillOpen({ navigation }) {
     <View>
       <Header title="Ochiq Cheklar" navigation={navigation} backBtn />
       <View className="p-2 flex">
-        <FlatList
+        {loading ? <Loader/> : <FlatList
           data={bills}
           renderItem={({ item }) => (
             <BillItem
@@ -38,7 +39,7 @@ export default function BillOpen({ navigation }) {
             />
           )}
           keyExtractor={(item) => item._id}
-        />
+        />}
       </View>
     </View>
   );

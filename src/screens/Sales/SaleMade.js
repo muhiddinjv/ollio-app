@@ -1,21 +1,38 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert, Platform } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import Header from "../../components/Header";
 import axiosInstance from "../Auth/axiostance";
 import { useGlobalState } from "../../hooks";
-import {Skeleton} from "react-native-skeletons";
+import { Skeleton } from "react-native-skeletons";
 import { ActivityIndicator } from "react-native";
+import * as FileSystem from "expo-file-system";
+import { shareAsync } from "expo-sharing";
+import { getAccessToken } from "../Auth/astorage";
+import { formattedDate } from "../../utils";
 
 const SaleMade = ({ navigation }) => {
   const [isPaid, setIsPaid] = useState(false);
-  const [payLoading, setPayLoading] = useState(false); 
+  const [payLoading, setPayLoading] = useState(false);
   const { billItem, loading, fetchBills } = useGlobalState();
-  const { colors: {primary, backdrop} } = useTheme();
+  const {colors: { primary, backdrop }} = useTheme();
 
-  const handleDownload = () => {
-    navigation.navigate("Sales");
+  const handleDownload = async () => {
+    try {
+      const accessToken = await getAccessToken();
+      const date = formattedDate(billItem?.created_at);
+      const filename = `bill_${date}.pdf`;
+      const pdfUrl = `https://ollioapi.vercel.app/bills/pdf/${billItem?._id}`;
+
+      const result = await FileSystem.downloadAsync(
+        pdfUrl, FileSystem.documentDirectory + filename,
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      await shareAsync(result.uri);
+    } catch (error) {
+      Alert.alert("Error", `Failed to download PDF: ${error.message}`);
+    }
   };
 
   const handleSale = async () => {
@@ -29,7 +46,12 @@ const SaleMade = ({ navigation }) => {
         Alert.alert("Error", "Failed to process sale.");
       }
     } catch (error) {
-      Alert.alert("Error", `Error processing sale: ${error.response ? error.response.data : error.message}`);
+      Alert.alert(
+        "Error",
+        `Error processing sale: ${
+          error.response ? error.response.data : error.message
+        }`
+      );
     } finally {
       setPayLoading(false);
     }
@@ -50,7 +72,11 @@ const SaleMade = ({ navigation }) => {
         {payLoading ? (
           <ActivityIndicator size={100} color={primary} />
         ) : (
-          <MaterialIcons name="check-circle" size={120} color={isPaid ? primary : backdrop} />
+          <MaterialIcons
+            name="check-circle"
+            size={120}
+            color={isPaid ? primary : backdrop}
+          />
         )}
         <View style={styles.buttonContainer}>
           <Button

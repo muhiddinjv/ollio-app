@@ -53,5 +53,16 @@ export const formatDate = (dateString) => {
   return date.toLocaleString('en-GB', options).replace(',', ''); // Format to HH:MM, DD-MM-YYYY
 };
 
+export const formattedDate = (date) => {
+  const d = new Date(date);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = d.toLocaleString('default', { month: 'short' });
+  const year = d.getFullYear();
+  const hours = String(d.getHours()).padStart(2, '0');
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+
+  return `${day}_${month}_${year}_${hours}_${minutes}`;
+};
+
 
 

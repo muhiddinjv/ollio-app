@@ -11,7 +11,7 @@ import { ActivityIndicator } from "react-native";
 const SaleMade = ({ navigation }) => {
   const [isPaid, setIsPaid] = useState(false);
   const [payLoading, setPayLoading] = useState(false); 
-  const { billItem, loading } = useGlobalState();
+  const { billItem, loading, fetchBills } = useGlobalState();
   const { colors: {primary, backdrop} } = useTheme();
 
   const handleDownload = () => {
@@ -24,6 +24,7 @@ const SaleMade = ({ navigation }) => {
       const response = await axiosInstance.post(`/bills/pay/${billItem?._id}`);
       if (response.data.success) {
         setIsPaid(true);
+        fetchBills();
       } else {
         Alert.alert("Error", "Failed to process sale.");
       }
@@ -56,17 +57,17 @@ const SaleMade = ({ navigation }) => {
             mode="contained"
             icon={isPaid ? "plus" : "check"}
             style={styles.button}
-            disabled={loading}
+            disabled={loading || payLoading}
             labelStyle={{ fontSize: 18, lineHeight: 26 }}
             onPress={isPaid ? () => navigation.navigate("Sales") : handleSale}
           >
-            {isPaid ? "Yangi sotuv" : "Sotish"}
+            {isPaid ? "Yangi savdo" : "Sotish"}
           </Button>
           <Button
             mode="outlined"
             icon={isPaid ? "download" : "cancel"}
             style={styles.button}
-            disabled={loading}
+            disabled={loading || payLoading}
             labelStyle={{ fontSize: 18, lineHeight: 26 }}
             onPress={handleDownload}
           >

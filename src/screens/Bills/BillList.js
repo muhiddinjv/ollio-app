@@ -5,7 +5,7 @@ import { useGlobalState } from "../../hooks";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";
 import { formatDate } from "../../utils";
-import { useTheme } from "react-native-paper";
+import { ActivityIndicator, useTheme } from "react-native-paper";
 import { DrawerActions } from "@react-navigation/native";
 
 const BillItem = ({ date, status, navigate, totalPrice, onDelete }) => {
@@ -23,7 +23,9 @@ const BillItem = ({ date, status, navigate, totalPrice, onDelete }) => {
 };
 
 export default function BillList({ navigation }) {
-  const { bills, setBills, deleteBill } = useGlobalState();
+  const { bills, loading, setBills, deleteBill } = useGlobalState();
+  const { colors } = useTheme();
+
   
   const handleDeleteBill = (billId) => {
     deleteBill(billId, setBills);
@@ -40,6 +42,7 @@ export default function BillList({ navigation }) {
         leftBtn
       />
       <View className="p-2 flex">
+        {loading && <ActivityIndicator color={colors.primary} />}
         <FlatList
           data={bills}
           onEndReachedThreshold={2}

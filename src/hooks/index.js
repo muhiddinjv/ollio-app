@@ -175,7 +175,7 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  console.log("GlobalProvider billItem: ", JSON.stringify(billItem));
+  // console.log("GlobalProvider billItem: ", JSON.stringify(billItem));
 
   return (
     <GlobalContext.Provider

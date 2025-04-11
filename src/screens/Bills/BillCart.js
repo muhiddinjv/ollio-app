@@ -44,7 +44,7 @@ export default function BillCart({ navigation }) {
 
   const handleSave = () => {
     saveBill();
-    navigation.goBack();
+    navigation.navigate("Bills")
   };
 
   const handleCharge = () => {

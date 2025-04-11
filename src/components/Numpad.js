@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   button: {
-    width: 90,
-    height: 90,
+    width: 80,
+    height: 80,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,

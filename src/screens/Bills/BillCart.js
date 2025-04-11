@@ -1,4 +1,4 @@
-import { View, ScrollView, Text, Pressable } from "react-native";
+import { View, ScrollView, Text, Pressable, Alert } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import React from "react";
 import Header from "../../components/Header";
@@ -28,20 +28,29 @@ const Item = ({ title, price, quantity, onDelete }) => {
 };
 
 export default function BillCart({ navigation }) {
-  const { bill, setBill, saveBill, openBills } = useGlobalState();
+  const { bill, setBill, saveBill } = useGlobalState();
   const total = calculateTotal(bill.products);
 
   const handleDelete = (productId) => {
-    setBill((prevBill) => ({
-      ...prevBill,
-      products: prevBill.products.filter((item) => item.product_id !== productId),
-    }));
+    try {
+      setBill((prevBill) => ({
+        ...prevBill,
+        products: prevBill.products.filter((item) => item.product_id !== productId),
+      }));
+    } catch (error) {
+      Alert.alert("Error", "Failed to delete product.");
+    }
   };
 
   const handleSave = () => {
     saveBill();
     navigation.goBack();
   };
+
+  const handleCharge = () => {
+    saveBill();
+    navigation.navigate("SaleMade");
+  }
 
   return (
     <View className="flex-1">
@@ -82,7 +91,7 @@ export default function BillCart({ navigation }) {
         <Button
           mode="contained"
           style={{ flex: 1 }} 
-          onPress={() => navigation.navigate("Payment")}
+          onPress={handleCharge}
           disabled={bill.client_id === null || bill.products.length === 0}
         >
           Charge

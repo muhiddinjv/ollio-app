@@ -1,8 +1,8 @@
 import React from "react";
 import { Pressable, ScrollView, View } from "react-native";
 import { Text } from "react-native";
-import Loader from "../../components/Loader";
 import Header from "../../components/Header";
+import { useGlobalState } from "../../hooks";
 
 const Item = ({ name, quantity, price }) => {
   return (
@@ -14,6 +14,9 @@ const Item = ({ name, quantity, price }) => {
   );
 };
 const BillDetails = ({navigation}) => {
+  const { billItem } = useGlobalState();
+  console.log(billItem);
+
   const items = [
     { name: "a74 cola 1.5L (1bl*6ta)", quantity: 1, price: "15,000", id: 0 },
     { name: "a75 cola 1.5L (1bl*6ta)", quantity: 2, price: "32,000", id: 1 },
@@ -51,7 +54,7 @@ const BillDetails = ({navigation}) => {
   ];
 
   return (
-    <ScrollView className="">
+    <ScrollView className="relative">
       <Header title="Bills" navigation={navigation} fontSize={20} backBtn/>
       <View className="p-4">
       <View className="py-4 border-b border-gray-300">

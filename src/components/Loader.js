@@ -4,7 +4,7 @@ import { ActivityIndicator, StyleSheet, View } from 'react-native'
 const Loader = () => {
   return (
     <View className="flex-1 items-center justify-center">
-      <ActivityIndicator size="large" />
+      <ActivityIndicator size="extra-large" />
     </View>
   )
 }

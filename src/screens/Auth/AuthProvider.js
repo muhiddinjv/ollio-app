@@ -50,14 +50,15 @@ export const AuthProvider = ({ children }) => {
         console.log("Signing out...");
         const refreshToken = await getRefreshToken();
         try {
-          const result = await axiosInstance.post("auth/signout", { refreshToken });
-          console.log('Sign out response:', result.data);
-          await removeAccessToken();
           dispatch({ type: "SIGN_OUT" });
           navigation.reset({
             index: 0,
             routes: [{ name: "SignIn" }]
           });
+          const result = await axiosInstance.post("auth/signout", { refreshToken });
+          console.log('Sign out response:', result.data);
+          await removeAccessToken();
+
         } catch (error) {
           console.error("Error during sign out:", error);
         }

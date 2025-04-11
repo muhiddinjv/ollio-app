@@ -10,18 +10,13 @@ import ListItem from "../../components/ListItem";
 import { useInfiniteScroll } from "../../hooks";
 import { useGlobalState } from "../../hooks";
 import Numpad from "../../components/Numpad";
-import axiosInstance from "../Auth/axiostance";
 
 const StyledPicker = styled(Picker);
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
-const calculateTotal = (products) => {
-  return products.reduce((total, item) => total + (item.price * item.quantity), 0);
-};
-
 const SalesList = ({ navigation }) => {
   const { colors } = useTheme();
-  const { bill, setBill, fetchBills, addProductToBill, getTotalQuantity } = useGlobalState();
+  const { bill, saveBill, addProductToBill, getTotalQuantity } = useGlobalState();
   const [selectedValue, setSelectedValue] = useState("option1");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -50,32 +45,6 @@ const SalesList = ({ navigation }) => {
     }
   };
 
-  const saveBill = async () => {
-    const billData = {
-      client_id: bill.client_id,
-      products: bill.products.map(product => ({
-        product_id: product.product_id,
-        quantity: product.quantity,
-      })),
-    };
-    console.log(JSON.stringify(billData));
-
-    try {
-      const response = await axiosInstance.post("/bills", billData);
-      if (response.data.success) {
-        console.log("Bill created successfully:", response.data.billId);
-        console.log(333,response.data);
-        // Optionally, you can reset the bill state after successful creation
-        // setBill({ client_id: null, products: [] });
-        fetchBills()
-      } else {
-        console.error("Failed to create bill:", response.data.message);
-      }
-    } catch (error) {
-      console.error("Error creating bill:", error.response ? error.response.data : error.message);
-    }
-  };
-
   const handlePress = (IsOpenBills) => {
     if (IsOpenBills) {
       navigation.navigate("Bills")
@@ -84,17 +53,12 @@ const SalesList = ({ navigation }) => {
       navigation.navigate("Bills")
     }
   };
-  
-  const createBill = async () => {
-    try {
-      const response = await axiosInstance.post("/bills", bill);
-      console.log("Bill created:", response.data);
-    } catch (error) {
-      console.error("Error making bill:", error.response ? error.response.data : error.message);
-    }
-  };
 
 
+  const handleCharge = () => {
+    saveBill();
+    navigation.navigate("SaleMade");
+  }
 
   return (
     <View className="flex-1 w-full dark:bg-slate-800">
@@ -131,14 +95,14 @@ const SalesList = ({ navigation }) => {
           mode="contained"
           onPress={()=>handlePress(bill.products.length === 0)}
           style={{ flex: 1 }} 
-          // disabled={bill.client_id === null && bill.products.length === 0 && openBills.length === 0}
+          // disabled={bill.client_id === null && bill.products.length === 0}
         >
           {bill.products.length === 0 ? "OPEN BILLS" : "SAVE"}
         </Button>
         <Button
           mode="contained"
           style={{ flex: 1 }} 
-          onPress={() => navigation.navigate("SaleMade")}
+          onPress={handleCharge}
           disabled={bill.client_id === null || bill.products.length === 0}
         >
           SALE
@@ -172,7 +136,6 @@ const SalesList = ({ navigation }) => {
           onEndReachedThreshold={2}
           removeClippedSubviews={true}
           estimatedItemSize={84}
-          LoaderComponent={<Loader />}
           refreshControl={
             <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
           }
@@ -188,6 +151,7 @@ const SalesList = ({ navigation }) => {
               setIsModalVisible={() => handleProductPress(item)}
             />
           )}
+          LoaderComponent={<Loader />}
           ListEmptyComponent={
             <View className="flex items-center">
               <Loader />

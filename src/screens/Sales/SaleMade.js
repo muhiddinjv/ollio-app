@@ -1,45 +1,76 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import Header from "../../components/Header";
+import axiosInstance from "../Auth/axiostance";
+import { useGlobalState } from "../../hooks";
+import {Skeleton} from "react-native-skeletons";
+import { ActivityIndicator } from "react-native";
 
 const SaleMade = ({ navigation }) => {
-  const { colors } = useTheme();
-
-  const totalAmount = "UZS 98,000";
+  const [isPaid, setIsPaid] = useState(false);
+  const [payLoading, setPayLoading] = useState(false); 
+  const { billItem, loading } = useGlobalState();
+  const { colors: {primary, backdrop} } = useTheme();
 
   const handleDownload = () => {
     navigation.navigate("Sales");
   };
 
+  const handleSale = async () => {
+    setPayLoading(true);
+    try {
+      const response = await axiosInstance.post(`/bills/pay/${billItem?._id}`);
+      if (response.data.success) {
+        setIsPaid(true);
+      } else {
+        Alert.alert("Error", "Failed to process sale.");
+      }
+    } catch (error) {
+      Alert.alert("Error", `Error processing sale: ${error.response ? error.response.data : error.message}`);
+    } finally {
+      setPayLoading(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Header title="" fontSize={20} />
+      <Header title="Savdo qilish" fontSize={20} />
       <View style={styles.content}>
         <View style={styles.totalWrapper}>
-            <Text style={styles.totalAmount}>{totalAmount}</Text>
-            <Text style={styles.totalLabel}>Total amount</Text>
+          {loading ? (
+            <Skeleton width={100} height={40} />
+          ) : (
+            <Text style={styles.totalAmount}>{billItem?.total_price}</Text>
+          )}
+          <Text style={styles.totalLabel}>Umumiy summa</Text>
         </View>
-        <MaterialIcons name="check" size={100} color={colors.primary} />
+        {payLoading ? (
+          <ActivityIndicator size={100} color={primary} />
+        ) : (
+          <MaterialIcons name="check-circle" size={120} color={isPaid ? primary : backdrop} />
+        )}
         <View style={styles.buttonContainer}>
           <Button
-            mode="outlined"
-            icon="download"
+            mode="contained"
+            icon={isPaid ? "plus" : "check"}
             style={styles.button}
-            labelStyle={{ fontSize: 20, lineHeight: 26 }}
-            onPress={handleDownload}
+            disabled={loading}
+            labelStyle={{ fontSize: 18, lineHeight: 26 }}
+            onPress={isPaid ? () => navigation.navigate("Sales") : handleSale}
           >
-            Yuklab olish
+            {isPaid ? "Yangi sotuv" : "Sotish"}
           </Button>
           <Button
-            mode="contained"
-            icon="plus"
+            mode="outlined"
+            icon={isPaid ? "download" : "cancel"}
             style={styles.button}
-            labelStyle={{ fontSize: 20, lineHeight: 26 }}
-            onPress={() => navigation.navigate("Sales")}
+            disabled={loading}
+            labelStyle={{ fontSize: 18, lineHeight: 26 }}
+            onPress={handleDownload}
           >
-            Yangi Savdo
+            {isPaid ? "Chek yuklash" : "Bekor qilish"}
           </Button>
         </View>
       </View>
@@ -78,6 +109,12 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: 10,
+  },
+  shimmer: {
+    width: 150,
+    height: 40,
+    borderRadius: 5,
+    marginVertical: 10,
   },
 });
 

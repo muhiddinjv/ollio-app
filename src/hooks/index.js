@@ -23,6 +23,8 @@ export const GlobalProvider = ({ children }) => {
   const [client, setClient] = useState(null);
   const [goodQty, setGoodQty] = useState(0);
   const [goodId, setGoodId] = useState(null);
+  const [loading, setLoading] = useState(false); 
+  const [billItem, setBillItem] = useState(null);
   const [selectedGoods, setSelectedGoods] = useState([]);
   const [openBills, setOpenBills] = useState([]);
   const [bills, setBills] = useState([]);
@@ -37,10 +39,12 @@ export const GlobalProvider = ({ children }) => {
       const storedBill = await AsyncStorage.getItem("bill");
       const storedClient = await AsyncStorage.getItem("client");
       const storedClients = await AsyncStorage.getItem("clients");
+      const storedBillItem = await AsyncStorage.getItem("billItem");
       setUser(storedUser ? JSON.parse(storedUser) : null);
       setBill(storedBill ? JSON.parse(storedBill) : null);
       setClient(storedClient ? JSON.parse(storedClient) : null);
       setClients(storedClients ? JSON.parse(storedClients) : []);
+      setBillItem(storedBillItem ? JSON.parse(storedBillItem) : null);
     };
     loadStorageData();
   }, []);
@@ -50,8 +54,9 @@ export const GlobalProvider = ({ children }) => {
     AsyncStorage.setItem("bill", JSON.stringify(bill));
     AsyncStorage.setItem("client", JSON.stringify(client));
     AsyncStorage.setItem("clients", JSON.stringify(clients));
+    AsyncStorage.setItem("billItem", JSON.stringify(billItem));
     AsyncStorage.setItem("selectedGoods", JSON.stringify(selectedGoods));
-  }, [user, client, clients, selectedGoods, bill, openBills]);
+  }, [user, client, clients, selectedGoods, bill, openBills, billItem]);
 
 
   const fetchBills = async () => {
@@ -80,14 +85,8 @@ export const GlobalProvider = ({ children }) => {
           text: "Delete",
           onPress: async () => {
             try {
-              const response = await axiosInstance.delete(`/bills/${billId}`);
-              if (response.data.success) {
-                console.log("Bill deleted successfully:", response.data);
-                setBills((prevBills) => prevBills.filter((bill) => bill._id !== billId));
-              } else {
-                console.error("Failed to delete bill:", response.data.message);
-                throw new Error(response.data.message);
-              }
+              await axiosInstance.delete(`/bills/${billId}`);
+              setBills((prevBills) => prevBills.filter((bill) => bill._id !== billId));
             } catch (error) {
               console.error("Error deleting bill:", error.response ? error.response.data : error.message);
               throw error;
@@ -136,9 +135,7 @@ export const GlobalProvider = ({ children }) => {
     );
   };
 
-  console.log("GlobalProvider: ", JSON.stringify(bill));
-
-  const saveBill = () => {
+  const saveBill_OLD = () => {
     const currentTime = new Date().toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
@@ -152,6 +149,34 @@ export const GlobalProvider = ({ children }) => {
     setBill({ client_id: null, products: [] });
   };
 
+  const saveBill = async () => {
+    setLoading(true);
+    const billData = {
+      client_id: bill.client_id,
+      products: bill.products.map(product => ({
+        product_id: product.product_id,
+        quantity: product.quantity,
+      })),
+    };
+
+    try {
+      const response = await axiosInstance.post("/bills", billData);
+      if (response.data.success) {
+        setBill({ client_id: null, products: [] });
+        setBillItem(response.data.bill);
+        fetchBills();
+      } else {
+        Alert.alert("Error", `Failed to create bill: ${response.data.message}`);
+      }
+    } catch (error) {
+      Alert.alert("Error", `Error creating bill: ${error.response ? error.response.data : error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  console.log("GlobalProvider billItem: ", JSON.stringify(billItem));
+
   return (
     <GlobalContext.Provider
       value={{
@@ -164,10 +189,12 @@ export const GlobalProvider = ({ children }) => {
         addClientToBill,
         addProductToBill,
         getTotalQuantity,
+        loading, setLoading,
         client, setClient,
         goodId, setGoodId,
         clients, setClients,
         goodQty, setGoodQty,
+        billItem, setBillItem,
         openBills, setOpenBills,
         selectedGoods, setSelectedGoods,
       }}

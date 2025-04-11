@@ -13,7 +13,7 @@ const BillItem = ({ date, status, navigate, totalPrice, onDelete }) => {
   const billPaid = status === "paid"
 
   return (
-    <Pressable onPress={() => navigate("BillDetails")} className="py-2 flex-row items-center border-b border-b-gray-300">
+    <Pressable onPress={() => navigate("BillDetails")} className="p-2 flex-row items-center border-b border-b-gray-300">
       <MaterialIcons name="paid" size={24} color={billPaid ? primary : backdrop} />
       <Text className="ml-2 text-sm">{date}</Text>
       <Text className="ml-auto mr-2">UZS {totalPrice}</Text>

@@ -8,33 +8,11 @@ import { useGlobalState } from "../../hooks";
 import { Skeleton } from "react-native-skeletons";
 import { ActivityIndicator } from "react-native";
 
-import { formattedDate } from "../../utils";
-import * as FileSystem from "expo-file-system";
-import { shareAsync } from "expo-sharing";
-import { getAccessToken } from "../Auth/astorage";
-
 const SaleMade = ({ navigation }) => {
   const [isPaid, setIsPaid] = useState(false);
   const [payLoading, setPayLoading] = useState(false);
   const { billItem, setBillItem, downloadBill, loading, fetchBills } = useGlobalState();
   const {colors: { primary, backdrop }} = useTheme();
-
-  const handleDownload = async () => {
-    try {
-      const accessToken = await getAccessToken();
-      const date = formattedDate(billItem?.created_at);
-      const filename = `bill_${date}.pdf`;
-      const pdfUrl = `https://ollioapi.vercel.app/bills/pdf/${billItem?._id}`;
-
-      const result = await FileSystem.downloadAsync(
-        pdfUrl, FileSystem.documentDirectory + filename,
-        { headers: { Authorization: `Bearer ${accessToken}` } }
-      );
-      await shareAsync(result.uri);
-    } catch (error) {
-      Alert.alert("Error", `Failed to download PDF: ${error.message}`);
-    }
-  };
 
   const handleSale = async () => {
     setPayLoading(true);

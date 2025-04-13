@@ -13,7 +13,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import _ from "lodash";
 import { getAccessToken } from "../screens/Auth/astorage";
 import axiosInstance from "../screens/Auth/axiostance";
-import { calculateTotal } from "../utils";
 
 const GlobalContext = createContext();
 
@@ -133,20 +132,6 @@ export const GlobalProvider = ({ children }) => {
       (total, product) => total + product.quantity,
       0
     );
-  };
-
-  const saveBill_OLD = () => {
-    const currentTime = new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    const billWithTitle = {
-      ...bill,
-      title: `Bill - ${currentTime}`,
-      total_price: calculateTotal(bill.products),
-    };
-    setOpenBills((prevBills) => [...prevBills, billWithTitle]);
-    setBill({ client_id: null, products: [] });
   };
 
   const saveBill = async () => {

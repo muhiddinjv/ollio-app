@@ -1,21 +1,14 @@
 import React from 'react'
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, View } from 'react-native'
+import { useTheme } from 'react-native-paper'
 
 const Loader = () => {
+  const { colors } = useTheme();
   return (
     <View className="flex-1 items-center justify-center">
-      <ActivityIndicator size="extra-large" />
+      <ActivityIndicator size="extra-large" color={colors.primary} />
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
-  },
-});
-
 
 export default Loader

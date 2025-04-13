@@ -61,7 +61,7 @@ export default function BillList({ navigation }) {
           LoaderComponent={<Loader />}
           ListEmptyComponent={
             <View className="flex items-center">
-              <Loader />
+              <Text>You have no bills yet</Text>
             </View>
           }
         />

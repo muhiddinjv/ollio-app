@@ -95,7 +95,6 @@ const SalesList = ({ navigation }) => {
           mode="contained"
           onPress={()=>handlePress(bill.products.length === 0)}
           style={{ flex: 1 }} 
-          // disabled={bill.client_id === null && bill.products.length === 0}
         >
           {bill.products.length === 0 ? "OPEN BILLS" : "SAVE"}
         </Button>
@@ -103,7 +102,7 @@ const SalesList = ({ navigation }) => {
           mode="contained"
           style={{ flex: 1 }} 
           onPress={handleCharge}
-          // disabled={bill.client_id === null || bill.products.length === 0}
+          disabled={bill.client_id === null || bill.products.length === 0}
         >
           SALE
         </Button>

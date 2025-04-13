@@ -6,41 +6,32 @@ import Header from "../../components/Header";
 import Loader from "../../components/Loader";
 import { formatDate } from "../../utils";
 import { ActivityIndicator, useTheme } from "react-native-paper";
-import { DrawerActions } from "@react-navigation/native";
 
-const BillItem = ({ date, status, navigate, totalPrice, onDelete }) => {
+const BillItem = ({ bill, navigate, onDelete }) => {
   const { colors: {primary, backdrop} } = useTheme();
-  const billPaid = status === "paid"
+  const billPaid = bill?.status === "paid"
+  
+  const handleBillPress = () => {
+    navigate("BillDetails", { bill });
+  }
 
   return (
-    <Pressable onPress={() => navigate("BillDetails")} className="p-2 flex-row items-center border-b border-b-gray-300">
+    <Pressable onPress={handleBillPress} className="p-2 flex-row items-center border-b border-b-gray-300">
       <MaterialIcons name="paid" size={24} color={billPaid ? primary : backdrop} />
-      <Text className="ml-2 text-sm">{date}</Text>
-      <Text className="ml-auto mr-2">UZS {totalPrice}</Text>
+      <Text className="ml-2 text-sm">{bill?.created_at}</Text>
+      <Text className="ml-auto mr-2">UZS {bill?.total_price}</Text>
       <MaterialIcons disabled={billPaid} name="delete" size={24} color={billPaid ? backdrop : primary} onPress={onDelete} />
     </Pressable>
   );
 };
 
 export default function BillList({ navigation }) {
-  const { bills, loading, setBills, deleteBill } = useGlobalState();
+  const { bills, loading, deleteBill } = useGlobalState();
   const { colors } = useTheme();
-
-  
-  const handleDeleteBill = (billId) => {
-    deleteBill(billId, setBills);
-  };
 
   return (
     <View>
-      <Header
-        title="Bills"
-        fontSize={20}
-        iconLeft="menu"
-        navigation={navigation}
-        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-        leftBtn
-      />
+      <Header title="Bills" fontSize={20} navigation={navigation} backBtn />
       <View className="p-2 flex">
         {loading && <ActivityIndicator color={colors.primary} />}
         <FlatList
@@ -50,18 +41,19 @@ export default function BillList({ navigation }) {
           estimatedItemSize={84}
           renderItem={({ item }) => (
             <BillItem
+              bill={item}
               date={formatDate(item.created_at)}
               status={item.status}
               navigate={navigation.navigate}
               totalPrice={item.total_price}
-              onDelete={() => handleDeleteBill(item._id)}
+              onDelete={() => deleteBill(item._id)}
             />
           )}
           keyExtractor={(item) => item._id.toString()}
           LoaderComponent={<Loader />}
           ListEmptyComponent={
             <View className="flex items-center">
-              <Text>You have no bills yet</Text>
+              {!loading && <Text>You have no bills yet</Text>}
             </View>
           }
         />

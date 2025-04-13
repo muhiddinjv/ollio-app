@@ -71,7 +71,7 @@ export const GlobalProvider = ({ children }) => {
     fetchBills();
   }, []);
 
-  const deleteBill = async (billId, setBills) => {
+  const deleteBill = async (billId) => {
     Alert.alert(
       "Delete Bill",
       "Are you sure you want to delete this bill?",

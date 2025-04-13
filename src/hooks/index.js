@@ -10,9 +10,12 @@ import { Alert } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as FileSystem from "expo-file-system";
+import { shareAsync } from "expo-sharing";
 import _ from "lodash";
 import { getAccessToken } from "../screens/Auth/astorage";
 import axiosInstance from "../screens/Auth/axiostance";
+import { formattedDate } from "../utils";
 
 const GlobalContext = createContext();
 
@@ -160,7 +163,27 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  console.log("GlobalProvider billItem: ", JSON.stringify(billItem));
+  const downloadBill = async (bill) => {
+    try {
+      if (bill.status === "paid") {
+        const accessToken = await getAccessToken();
+        const date = formattedDate(bill?.created_at);
+        const filename = `bill_${date}.pdf`;
+        const pdfUrl = `https://ollioapi.vercel.app/bills/pdf/${bill?._id}`;
+        const result = await FileSystem.downloadAsync(
+          pdfUrl, FileSystem.documentDirectory + filename,
+          { headers: { Authorization: `Bearer ${accessToken}` } }
+        );
+        await shareAsync(result.uri);
+      } else {
+        Alert.alert("Error", "Bill is not paid");
+      }
+    } catch (error) {
+      Alert.alert("Error", `Failed to download PDF: ${error.message}`);
+    }
+  };
+
+  // console.log("GlobalProvider billItem: ", JSON.stringify(billItem));
 
   return (
     <GlobalContext.Provider
@@ -168,6 +191,7 @@ export const GlobalProvider = ({ children }) => {
         saveBill,
         fetchBills,
         deleteBill,
+        downloadBill,
         user, setUser,
         bill, setBill,
         bills, setBills,

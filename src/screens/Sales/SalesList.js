@@ -60,6 +60,10 @@ const SalesList = ({ navigation }) => {
     navigation.navigate("SaleMade");
   }
 
+  const handleThreeDots = () => {
+    alert("three dots pressed");
+  }
+
   return (
     <View className="flex-1 w-full dark:bg-slate-800">
       <Appbar.Header style={{ backgroundColor: colors.primary }}>
@@ -74,7 +78,7 @@ const SalesList = ({ navigation }) => {
           {getTotalQuantity() || ""}
         </Button>
         <Appbar.Action icon={bill.client_id ? "account-check" : "account-plus"} onPress={() => navigation.navigate("UserList")} color={colors.surface} />
-        <Appbar.Action icon={MORE_ICON} onPress={() => console.log("more")} color={colors.surface} />
+        <Appbar.Action icon={MORE_ICON} onPress={handleThreeDots} color={colors.surface} />
       </Appbar.Header>
       <Numpad
         visible={isModalVisible}

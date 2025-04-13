@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Alert, Platform } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import Header from "../../components/Header";
@@ -7,15 +7,16 @@ import axiosInstance from "../Auth/axiostance";
 import { useGlobalState } from "../../hooks";
 import { Skeleton } from "react-native-skeletons";
 import { ActivityIndicator } from "react-native";
+
+import { formattedDate } from "../../utils";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
 import { getAccessToken } from "../Auth/astorage";
-import { formattedDate } from "../../utils";
 
 const SaleMade = ({ navigation }) => {
   const [isPaid, setIsPaid] = useState(false);
   const [payLoading, setPayLoading] = useState(false);
-  const { billItem, loading, fetchBills } = useGlobalState();
+  const { billItem, setBillItem, downloadBill, loading, fetchBills } = useGlobalState();
   const {colors: { primary, backdrop }} = useTheme();
 
   const handleDownload = async () => {
@@ -40,6 +41,8 @@ const SaleMade = ({ navigation }) => {
     try {
       const response = await axiosInstance.post(`/bills/pay/${billItem?._id}`);
       if (response.data.success) {
+        billItem.status = "paid";
+        setBillItem(billItem);
         setIsPaid(true);
         fetchBills();
       } else {
@@ -95,7 +98,7 @@ const SaleMade = ({ navigation }) => {
             style={styles.button}
             disabled={loading || payLoading}
             labelStyle={{ fontSize: 18, lineHeight: 26 }}
-            onPress={handleDownload}
+            onPress={() => downloadBill(billItem)}
           >
             {isPaid ? "Chek yuklash" : "Bekor qilish"}
           </Button>

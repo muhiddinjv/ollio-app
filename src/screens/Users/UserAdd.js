@@ -51,8 +51,6 @@ const UserAdd = ({ navigation }) => {
       owner_id: user?._id,
     };
 
-    console.log("User Data to be sent:", userData);
-
     try {
       await axiosInstance.post("/users", userData);
       navigation.goBack();

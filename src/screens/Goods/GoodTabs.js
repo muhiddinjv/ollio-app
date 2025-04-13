@@ -29,8 +29,7 @@ const GoodTabs = ({ route }) => {
         fontSize={20}
         iconLeft="menu"
         navigation={navigation}
-        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-        leftBtn
+        onLeftPress={() => navigation.dispatch(DrawerActions.openDrawer())}
       />
       <Tab.Navigator
         initialRouteName={initialIndex === 0 ? "Catalog" : "Dokon"}

@@ -13,8 +13,8 @@ const BillDetails = ({ navigation, route }) => {
     <View className="py-4 my-2 px-4 border-b border-gray-300">
       <Text className="text-4xl text-center font-medium">UZS {bill?.total_price}</Text>
       <Text className="text-gray-600 text-xl text-center mb-4 mt-2">Total</Text>
-      <Text className="text-lg">Sotuvchi: {bill?.owner}</Text>
-      <Text className="text-lg">Haridor: {bill?.client}</Text>
+      <Text className="text-lg">Sotuvchi: {bill?.staff}</Text>
+      <Text className="text-lg">Haridor: {bill?.client || "Haridor topilmadi"}</Text>
     </View>
   );
 
@@ -26,7 +26,7 @@ const BillDetails = ({ navigation, route }) => {
       </View>
       <View className="flex-row items-center justify-between py-2">
         <Text className="text-lg text-gray-500">{formatDate(bill?.created_at)}</Text>
-        <Text className="text-lg text-gray-500">#2-1001</Text>
+        <Text className="text-lg text-gray-500">#{bill?._id.slice(-15)}</Text>
       </View>
     </View>
   );

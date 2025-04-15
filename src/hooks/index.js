@@ -157,7 +157,14 @@ export const GlobalProvider = ({ children }) => {
         Alert.alert("Error", `Failed to create bill: ${response.data.message}`);
       }
     } catch (error) {
-      Alert.alert("Error", `Error creating bill: ${error.response ? error.response.data : error.message}`);
+      if (error.response.data.message) {
+        const errorMessage = JSON.parse(error.response.data.message).map(item => 
+          `Product: ${item.Product}, Requested: ${item.Requested}, Available: ${item.Available}`
+        ).join('\n');
+        Alert.alert("Error", `Error creating bill: ${errorMessage}`);
+      } else {
+        Alert.alert("Error", `Error creating bill: ${error.response.data}`);
+      }
     } finally {
       setLoading(false);
     }

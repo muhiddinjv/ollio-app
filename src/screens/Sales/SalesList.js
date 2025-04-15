@@ -106,7 +106,7 @@ const SalesList = ({ navigation }) => {
           mode="contained"
           style={{ flex: 1 }} 
           onPress={handleCharge}
-          disabled={bill.client_id === null || bill.products.length === 0}
+          disabled={bill.products.length === 0}
         >
           SALE
         </Button>

@@ -84,7 +84,7 @@ export default function BillCart({ navigation }) {
           mode="contained"
           onPress={handleSave}
           style={{ flex: 1 }} 
-          disabled={bill.client_id === null && bill.products.length === 0}
+          disabled={bill.products.length === 0}
         >
           Save Bill
         </Button>
@@ -92,7 +92,7 @@ export default function BillCart({ navigation }) {
           mode="contained"
           style={{ flex: 1 }} 
           onPress={handleCharge}
-          disabled={bill.client_id === null || bill.products.length === 0}
+          disabled={bill.products.length === 0}
         >
           Charge
         </Button>

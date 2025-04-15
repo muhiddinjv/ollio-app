@@ -30,7 +30,7 @@ const SaleMade = ({ navigation }) => {
       Alert.alert(
         "Error",
         `Error processing sale: ${
-          error.response ? error.response.data : error.message
+          error.response ? error.response.data.message : error.message
         }`
       );
     } finally {
@@ -76,7 +76,7 @@ const SaleMade = ({ navigation }) => {
             style={styles.button}
             disabled={loading || payLoading}
             labelStyle={{ fontSize: 18, lineHeight: 26 }}
-            onPress={() => downloadBill(billItem)}
+            onPress={isPaid ? () => downloadBill(billItem) : () => navigation.navigate("Sales")}
           >
             {isPaid ? "Chek yuklash" : "Bekor qilish"}
           </Button>

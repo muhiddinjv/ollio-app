@@ -1,23 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Portal, Dialog, Button, IconButton } from 'react-native-paper';
-import { checkStockQuantity } from '../utils';
 
 const Numpad = ({ visible, onClose, onConfirm, quantity, setQuantity, selectedProduct }) => {
   const handlePress = async (value) => {
     if (value === 'OK') {
       if (quantity) {
-        try {
-          const stockCheckResult = await checkStockQuantity(selectedProduct?._id, quantity);
-          if (!stockCheckResult.success) {
-            alert(stockCheckResult.message);
-          } else {
-            onConfirm(quantity);
-            onClose();
-          }
-        } catch (error) {
-          alert("An error occurred while checking stock.");
-        }
+        onConfirm(quantity);
+        onClose();
       }
     } else if (value === 'DEL') {
       setQuantity((prev) => prev.slice(0, -1));

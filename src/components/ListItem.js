@@ -47,7 +47,7 @@ const ListItem = ({
         left={(props) => (
           <List.Image
             style={props.style}
-            source={require("../../assets/icon.png")}
+            source={require("../../assets/product.png")}
           />
         )}
         right={() => {

@@ -1,12 +1,12 @@
-import { RefreshControl } from "react-native";
-import ListItem from "../../components/ListItem";
 import { useState } from "react";
 import { View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
-import { useInfiniteScroll } from "../../hooks";
-import { FlashList } from "@shopify/flash-list";
-import Loader from "../../components/Loader";
+import { RefreshControl } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { ActivityIndicator } from "react-native-paper";
+import { FlashList } from "@shopify/flash-list";
+import { useInfiniteScroll } from "../../hooks";
+import ListItem from "../../components/ListItem";
+import Loader from "../../components/Loader";
 
 const GoodsList = ({ keyProp }) => {
   const [goodId, setGoodId] = useState([]);
@@ -20,10 +20,9 @@ const GoodsList = ({ keyProp }) => {
       key: ["goods", keyProp],
     });
 
-    const handleItemPress = (id) => {
-      console.log(navigation.getState().routes);
-      navigation.navigate("GoodEdit", { goodId: id });
-    };
+  const handleItemPress = (id) => {
+    navigation.navigate("GoodEdit", { goodId: id });
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -45,7 +44,7 @@ const GoodsList = ({ keyProp }) => {
             description={item.description}
             price={item.price}
             checked={goodId.includes(item._id)}
-            onPress={handleItemPress}
+            onPress={() => handleItemPress(item)}
           />
         )}
         LoaderComponent={<Loader />}

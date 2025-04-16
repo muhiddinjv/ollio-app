@@ -80,8 +80,6 @@ const GoodEdit = ({ navigation }) => {
     }
   };
 
-  console.log("rendered times");
-
   return (
     <>
       <Header

@@ -14,7 +14,6 @@ const ListItem = ({
   price,
   editable,
   onSalesScreen,
-  navigation,
   checked,
   onChange,
   setIsModalVisible,
@@ -39,17 +38,15 @@ const ListItem = ({
           setGoodId(goodId);
           if (editable) {
             onPress();
-            // navigation.navigate("GoodEdit");
           }
           if (onSalesScreen) {
-            // navigate("GoodQty");
             setIsModalVisible(true);
           }
         }}
         left={(props) => (
           <List.Image
             style={props.style}
-            source={require("../../assets/icon.png")}
+            source={require("../../assets/product.png")}
           />
         )}
         right={() => {

@@ -52,8 +52,7 @@ const GoodsAdd = ({ navigation }) => {
       <Header
         title="Add Goods"
         iconLeft="arrow-left"
-        onPress={() => navigation.navigate("Goods", { screen: "Dokon" })}
-        leftBtn
+        onLeftPress={() => navigation.navigate("GoodTabs", { screen: "Dokon" })}
       />
       <View style={{ flex: 1,  backgroundColor: "white", height: height * 0.89 }}>
         <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>

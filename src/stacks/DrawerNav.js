@@ -31,6 +31,8 @@ const Goods = () => {
     <Stack.Navigator initialRouteName="GoodTabs" headerShown={false}>
       <Stack.Screen name="GoodTabs" component={GoodTabs} options={{ headerShown: false }} />
       <Stack.Screen name="GoodEdit" component={GoodEdit} options={{ headerShown: false }} />
+      <Stack.Screen name="GoodQty" component={GoodQty} options={{ headerShown: false }} />
+      <Stack.Screen name="GoodsAdd" component={GoodsAdd} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
 };
@@ -106,9 +108,7 @@ const DrawerNav = ({ navigation }) => {
       <Drawer.Screen name="BillCart" component={BillCart} options={hidden} />
       <Drawer.Screen name="BillDetails" component={BillDetails} options={hidden} />
       <Drawer.Screen name="GoodQty" component={GoodQty} options={hidden} />
-      {/* <Drawer.Screen name="GoodsAdd" component={GoodsAdd} options={hidden}/> */}
-      <Drawer.Screen name="GoodsEdit" component={GoodEdit} options={hidden}/>
-      {/* <Drawer.Screen name="GoodsList" component={GoodsList} options={hidden} /> */}
+      <Drawer.Screen name="GoodsAdd" component={GoodsAdd} options={hidden}/>
       <Drawer.Screen name="SignIn" component={SignIn} options={hidden} />
       <Drawer.Screen name="SignUp" component={SignupScreen} options={hidden} />
       <Drawer.Screen name="UserList" component={UserList} options={hidden} />

@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 import SignIn from "../screens/Auth/SignIn";
 import SignupScreen from "../screens/Auth/SignUp";
 import SalesList from "../screens/Sales/SalesList";
-import GoodsList from "../screens/Goods/GoodsList";
+import SaleMade from "../screens/Sales/SaleMade";
 import UserList from "../screens/Users/UserList";
 import UserAdd from "../screens/Users/UserAdd";
 import UserEdit from "../screens/Users/UserEdit";
@@ -16,11 +16,7 @@ import BillList from "../screens/Bills/BillList";
 import BillDetails from "../screens/Bills/BillDetails";
 import GoodsAdd from "../screens/Goods/GoodsAdd";
 import GoodTabs from "../screens/Goods/GoodTabs";
-import PaidScreen from "../screens/Payment/Paid";
-import GoodQty from "../screens/Goods/GoodQty";
-import SaleMade from "../screens/Sales/SaleMade";
 import GoodEdit from "../screens/Goods/GoodEdit";
-import ListItem from "../components/ListItem";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Drawer = createDrawerNavigator();
@@ -31,7 +27,6 @@ const Goods = () => {
     <Stack.Navigator initialRouteName="GoodTabs" headerShown={false}>
       <Stack.Screen name="GoodTabs" component={GoodTabs} options={{ headerShown: false }} />
       <Stack.Screen name="GoodEdit" component={GoodEdit} options={{ headerShown: false }} />
-      <Stack.Screen name="GoodQty" component={GoodQty} options={{ headerShown: false }} />
       <Stack.Screen name="GoodsAdd" component={GoodsAdd} options={{ headerShown: false }}/>
     </Stack.Navigator>
   );
@@ -90,25 +85,9 @@ const DrawerNav = ({ navigation }) => {
           ),
         }}
       />
-      <Drawer.Screen
-        name="Paid"
-        component={PaidScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: "rgba(103, 80, 164, 1)",
-          },
-          headerTitle: "",
-          headerTintColor: "white",
-          headerLeft: () => null,
-          drawerItemStyle: { display: "none" },
-          headerShown: false,
-        }}
-      />
       <Drawer.Screen name="SaleMade" component={SaleMade} options={hidden} />
       <Drawer.Screen name="BillCart" component={BillCart} options={hidden} />
       <Drawer.Screen name="BillDetails" component={BillDetails} options={hidden} />
-      <Drawer.Screen name="GoodQty" component={GoodQty} options={hidden} />
-      <Drawer.Screen name="GoodsAdd" component={GoodsAdd} options={hidden}/>
       <Drawer.Screen name="SignIn" component={SignIn} options={hidden} />
       <Drawer.Screen name="SignUp" component={SignupScreen} options={hidden} />
       <Drawer.Screen name="UserList" component={UserList} options={hidden} />

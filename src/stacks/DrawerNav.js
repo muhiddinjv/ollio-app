@@ -19,8 +19,21 @@ import GoodTabs from "../screens/Goods/GoodTabs";
 import PaidScreen from "../screens/Payment/Paid";
 import GoodQty from "../screens/Goods/GoodQty";
 import SaleMade from "../screens/Sales/SaleMade";
+import GoodEdit from "../screens/Goods/GoodEdit";
+import ListItem from "../components/ListItem";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+
+const Goods = () => {
+  return (
+    <Stack.Navigator initialRouteName="GoodTabs" headerShown={false}>
+      <Stack.Screen name="GoodTabs" component={GoodTabs} options={{ headerShown: false }} />
+      <Stack.Screen name="GoodEdit" component={GoodEdit} options={{ headerShown: false }} />
+    </Stack.Navigator>
+  );
+};
 
 const DrawerNav = ({ navigation }) => {
   const { colorScheme } = useColorScheme();
@@ -54,7 +67,7 @@ const DrawerNav = ({ navigation }) => {
       />
       <Drawer.Screen
         name="Goods"
-        component={GoodTabs}
+        component={Goods}
         options={{
           drawerIcon: ({ color }) => (
             <IconButton
@@ -90,11 +103,12 @@ const DrawerNav = ({ navigation }) => {
         }}
       />
       <Drawer.Screen name="SaleMade" component={SaleMade} options={hidden} />
-      <Drawer.Screen name="GoodQty" component={GoodQty} options={hidden} />
       <Drawer.Screen name="BillCart" component={BillCart} options={hidden} />
       <Drawer.Screen name="BillDetails" component={BillDetails} options={hidden} />
-      <Drawer.Screen name="GoodsAdd" component={GoodsAdd} options={hidden}/>
-      <Drawer.Screen name="GoodsList" component={GoodsList} options={hidden} />
+      <Drawer.Screen name="GoodQty" component={GoodQty} options={hidden} />
+      {/* <Drawer.Screen name="GoodsAdd" component={GoodsAdd} options={hidden}/> */}
+      <Drawer.Screen name="GoodsEdit" component={GoodEdit} options={hidden}/>
+      {/* <Drawer.Screen name="GoodsList" component={GoodsList} options={hidden} /> */}
       <Drawer.Screen name="SignIn" component={SignIn} options={hidden} />
       <Drawer.Screen name="SignUp" component={SignupScreen} options={hidden} />
       <Drawer.Screen name="UserList" component={UserList} options={hidden} />
@@ -106,9 +120,3 @@ const DrawerNav = ({ navigation }) => {
 };
 
 export default DrawerNav;
-
-/*
-client: 67c04aa89b212873f50d2cee
-67b85cc8ac2e3c40d155f6e3
-67b85cc8ac2e3c40d155f6f2
-*/

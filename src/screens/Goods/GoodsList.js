@@ -5,14 +5,13 @@ import { View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useInfiniteScroll } from "../../hooks";
 import { FlashList } from "@shopify/flash-list";
-import { useNavigation } from "@react-navigation/native";
 import Loader from "../../components/Loader";
+import { useNavigation } from "@react-navigation/native";
 
 const GoodsList = ({ keyProp }) => {
   const [goodId, setGoodId] = useState([]);
   const [filters, setFilters] = useState({ search: "" });
   const navigation = useNavigation();
-
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
     useInfiniteScroll({
       url: "stock",
@@ -20,6 +19,11 @@ const GoodsList = ({ keyProp }) => {
       filters: filters,
       key: ["goods", keyProp],
     });
+
+    const handleItemPress = (id) => {
+      console.log(navigation.getState().routes);
+      navigation.navigate("GoodEdit", { goodId: id });
+    };
 
   return (
     <View style={{ flex: 1 }}>
@@ -34,14 +38,14 @@ const GoodsList = ({ keyProp }) => {
         }
         renderItem={({ item }) => (
           <ListItem
+            editable
             key={item._id}
             goodId={item._id}
             title={item.title}
             description={item.description}
-            editable
-            navigate={navigation}
             price={item.price}
             checked={goodId.includes(item._id)}
+            onPress={handleItemPress}
           />
         )}
         LoaderComponent={<Loader />}

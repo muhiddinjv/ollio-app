@@ -1,13 +1,13 @@
+import { View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
-import { View } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import FABplus from "../../components/FABplus";
+import Header from "../../components/Header";
 import GoodsList from "./GoodsList";
 import Catalog from "./Catalog";
-import Header from "../../components/Header";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -37,20 +37,18 @@ const GoodTabs = ({ route }) => {
           tabBarStyle: { backgroundColor: colors.secondary },
           tabBarIndicatorStyle: { backgroundColor: "white" },
           tabBarLabelStyle: { fontWeight: "bold", color: "white" },
+          headerShown: false,
         }}
         screenListeners={{
           state: (e) => {
             const tabIndex = e.data.state.index;
-            setVisible(tabIndex === 0); // Hide FAB when on "Goods" tab
+            setVisible(tabIndex === 0); // Hide FAB on "Dokon" tab
           },
         }}
       >
         <Tab.Screen name="Catalog" component={Catalog} />
-        <Tab.Screen name="Dokon">
-          {(props) => <GoodsList {...props} navigation={navigation} />}
-        </Tab.Screen>
+        <Tab.Screen name="Dokon" component={GoodsList} />
       </Tab.Navigator>
-
       <FABplus visible={visible} navigate={navigation.navigate} />
     </View>
   );

@@ -14,10 +14,11 @@ const ListItem = ({
   price,
   editable,
   onSalesScreen,
-  navigate,
+  navigation,
   checked,
   onChange,
   setIsModalVisible,
+  onPress,
 }) => {
   const { colorScheme } = useColorScheme();
   const { setGoodId } = useGlobalState();
@@ -37,7 +38,8 @@ const ListItem = ({
         onPress={() => {
           setGoodId(goodId);
           if (editable) {
-            navigate("GoodEdit");
+            onPress();
+            // navigation.navigate("GoodEdit");
           }
           if (onSalesScreen) {
             // navigate("GoodQty");
@@ -47,7 +49,7 @@ const ListItem = ({
         left={(props) => (
           <List.Image
             style={props.style}
-            source={require("../../assets/product.png")}
+            source={require("../../assets/icon.png")}
           />
         )}
         right={() => {

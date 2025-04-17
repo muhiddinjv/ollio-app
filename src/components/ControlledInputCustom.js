@@ -1,7 +1,6 @@
 import React from "react";
 import { Controller } from "react-hook-form";
 import { Text, TextInput, View } from "react-native";
-// import { TextInput } from "react-native-paper";
 
 const ControlledInputCustom = ({
   name,
@@ -11,6 +10,7 @@ const ControlledInputCustom = ({
   error,
   inputLabelClass,
   inputLabel,
+  editable,
   ...props
 }) => {
   return (
@@ -33,6 +33,7 @@ const ControlledInputCustom = ({
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}
+            editable={editable}
             error={error}
             {...props}
           />

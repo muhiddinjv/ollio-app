@@ -183,14 +183,14 @@ export const GlobalProvider = ({ children }) => {
         );
         await shareAsync(result.uri);
       } else {
-        Alert.alert("Error", "Bill is not paid");
+        Alert.alert("Hato", "Chek to'lanmagan");
       }
     } catch (error) {
-      Alert.alert("Error", `Failed to download PDF: ${error.message}`);
+      Alert.alert("Hato", `Failed to download PDF: ${error.message}`);
     }
   };
 
-  // console.log("GlobalProvider billItem: ", JSON.stringify(billItem));
+  console.log("GlobalProvider billItem: ", JSON.stringify(billItem));
 
   return (
     <GlobalContext.Provider

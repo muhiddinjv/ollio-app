@@ -70,10 +70,9 @@ const UserAdd = ({ navigation }) => {
   return (
     <View className="flex-1">
       <Header
-        title="User Add"
+        title="Foydalanuvchi qo'shish"
         iconLeft="arrow-left"
-        onPress={() => navigation.navigate("UserList")}
-        leftBtn
+        onLeftPress={() => navigation.navigate("UserList")}
       />
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>

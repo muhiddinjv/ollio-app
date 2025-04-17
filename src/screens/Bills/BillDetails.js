@@ -21,8 +21,8 @@ const BillDetails = ({ navigation, route }) => {
   const renderFooter = () => (
     <View className="py-4 px-4 mt-4 border-t border-gray-300">
       <View className="flex-row justify-between items-center">
-        <Text className="font-semibold text-lg">Jami:</Text>
-        <Text className="font-semibold text-lg">{bill?.total_price}</Text>
+        <Text className="text-lg">Jami:</Text>
+        <Text className="text-lg">{bill?.total_price}</Text>
       </View>
       <View className="flex-row items-center justify-between py-2">
         <Text className="text-gray-500">{formatDate(bill?.created_at)}</Text>
@@ -54,7 +54,7 @@ const BillDetails = ({ navigation, route }) => {
                 </Text>
               </View>
             </View>
-            <Text className="text-gray-500 text-lg">{item?.total}</Text>
+            <Text className="text-lg">{item?.total}</Text>
           </View>
         )}
         keyExtractor={(item) => item?.product_id}

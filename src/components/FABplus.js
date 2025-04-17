@@ -57,7 +57,7 @@ const FABplus = ({ visible }) => {
           },
           {
             icon: "clipboard-edit-outline",
-            label: "Add checked",
+            label: "Prixod",
             labelTextColor: "white",
             onPress: handleManagePress,
             disabled: selectedGoods.length === 0,

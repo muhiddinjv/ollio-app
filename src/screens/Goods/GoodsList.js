@@ -20,8 +20,8 @@ const GoodsList = ({ keyProp }) => {
       key: ["goods", keyProp],
     });
 
-  const handleItemPress = (id) => {
-    navigation.navigate("GoodEdit", { goodId: id });
+  const handleItemPress = (good) => {
+    navigation.navigate("GoodEdit", { good });
   };
 
   return (

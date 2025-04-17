@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, SafeAreaView } from "react-native";
+import { View, SafeAreaView, Alert } from "react-native";
 import { Switch, Text, IconButton, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { useQueryClient } from "@tanstack/react-query";
@@ -10,14 +10,12 @@ import Wrapper from "../../components/Wrapper";
 import Header from "../../components/Header";
 import { Controller, useForm } from "react-hook-form";
 import ControlledInputCustom from "../../components/ControlledInputCustom";
-import { useGlobalState, useGetGood } from "../../hooks";
 
-
-const GoodEdit = ({ navigation }) => {
+const GoodEdit = ({ navigation, route }) => {
   const queryClient = useQueryClient();
-  const { goodId } = useGlobalState();
   const [category, setCategory] = useState("");
-
+  const { good } = route.params;
+  
   const {
     control,
     formState: { errors },
@@ -26,39 +24,42 @@ const GoodEdit = ({ navigation }) => {
     getValues,
   } = useForm();
 
-  const goodsQuery = useGetGood(goodId);
-
   useEffect(() => {
-    if (goodsQuery?.data) {
+    if (good) {
       reset({
-        cost: String(goodsQuery?.data.cost),
-        quantity: String(goodsQuery?.data.quantity),
-        price: String(goodsQuery?.data.price),
-        title: goodsQuery?.data.title,
-        groupItem: goodsQuery?.data?.groupItem,
-        trackStock: goodsQuery?.data?.trackStock,
+        cost: String(good.cost),
+        quantity: String(good.quantity),
+        price: String(good.price),
+        title: good.title,
+        group: good?.group,
+        available: good?.available,
+        order: String(good?.order),
+        product_id: good?.product_id,
       });
     }
-  }, [goodsQuery?.data, goodId]);
+  }, [good]);
 
-  const saveGood = async (data) => {
+  const saveGood = async (good) => {
     const accessToken = await getAccessToken();
     try {
       await axiosInstance.patch(
-        `stock/${goodId}`,
+        "stock/update",
         {
-          title: data?.title,
-          quantity: data?.quantity,
-          price: parseFloat(data?.price),
-          cost: parseFloat(data?.cost),
-          groupItem: data?.groupItem,
-          trackStock: data?.trackStock,
+          title: good?.title,
+          quantity: Number(good?.quantity),
+          product_id: good?.product_id,
+          price: Number(good?.price),
+          order: Number(good?.order),
+          available: good?.available,
+          group: good?.group,
+          cost: Number(good?.cost),
+          // trackStock: good?.trackStock,
         },
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
       );
-      navigation.navigate("DrawerNav");
+      navigation.navigate("GoodTabs", { screen: "Dokon" });
     } catch (error) {
       console.error("Error updating good:", error);
     } finally {
@@ -66,29 +67,45 @@ const GoodEdit = ({ navigation }) => {
     }
   };
 
-  const deleteGood = async () => {
-    const accessToken = await getAccessToken();
-    try {
-      await axiosInstance.delete(`stock/${goodId}`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-      navigation.navigate("DrawerNav");
-    } catch (error) {
-      console.error("Error deleting good:", error);
-    } finally {
-      queryClient.invalidateQueries(["good", "goods"]);
-    }
+  const deleteGood = () => {
+    Alert.alert(
+      "Delete Good",
+      `Are you sure you want to delete "${good.title}"?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: async () => {
+            const accessToken = await getAccessToken();
+            try {
+              await axiosInstance.delete("stock/delete", {
+                headers: { Authorization: `Bearer ${accessToken}` },
+                data: { product_id: good?.product_id },
+              });
+              navigation.navigate("GoodTabs", { screen: "Dokon" });
+            } catch (error) {
+              console.error("Error deleting good:", error);
+            } finally {
+              queryClient.invalidateQueries(["good", "goods"]);
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
   };
 
   return (
     <>
       <Header
-        title="Edit Good"
+        title="Tovar o'zgartirish"
         iconRight="content-save"
         navigation={navigation}
-        onPress={handleSubmit(saveGood)}
+        onRightPress={handleSubmit(saveGood)}
         backBtn
-        rightBtn
       />
       <Wrapper>
         <SafeAreaView className="flex-1 dark:bg-gray-900">
@@ -96,6 +113,7 @@ const GoodEdit = ({ navigation }) => {
             <ControlledInputCustom
               inputLabel="Title"
               control={control}
+              editable={false}
               name="title"
               className="bg-transparent w-full mb-0 pb-0 border-b-gray-600 border-b"
             />
@@ -104,8 +122,8 @@ const GoodEdit = ({ navigation }) => {
                 <ControlledInputCustom
                   inputLabel="Cost"
                   control={control}
+                  editable={false}
                   name="cost"
-                  label="Cost"
                   className="bg-transparent w-full mb-0 pb-0 border-b-gray-600 border-b"
                 />
               </View>
@@ -114,7 +132,6 @@ const GoodEdit = ({ navigation }) => {
                   inputLabel="Price"
                   control={control}
                   name="price"
-                  label="Cost"
                   className="bg-transparent w-full mb-0 pb-0 border-b-gray-600 border-b"
                 />
               </View>
@@ -124,15 +141,16 @@ const GoodEdit = ({ navigation }) => {
                 <ControlledInputCustom
                   inputLabel="Quantity"
                   control={control}
+                  editable={false}
                   name="quantity"
                   className="bg-transparent flex-grow mb-0 pb-0 border-b-gray-600 border-b"
                 />
               </View>
               <View className="w-1/2">
                 <ControlledInputCustom
-                  inputLabel="SKU"
+                  inputLabel="Order"
                   control={control}
-                  name="sku"
+                  name="order"
                   className="bg-transparent flex-grow mb-0 pb-0 border-b-gray-600 border-b"
                 />
               </View>
@@ -140,6 +158,7 @@ const GoodEdit = ({ navigation }) => {
             <View className="border-b border-slate-400">
               <Picker
                 style={{ marginLeft: -15 }}
+                mode="dropdown"
                 selectedValue={category}
                 onValueChange={(itemValue) => setCategory(itemValue)}
               >
@@ -155,7 +174,7 @@ const GoodEdit = ({ navigation }) => {
                 <Text>Group Item</Text>
                 <Controller
                   control={control}
-                  name="groupItem"
+                  name="group"
                   rules={{ required: "This field is required" }}
                   render={({ field: { onChange, value } }) => (
                     <Switch value={value} onValueChange={onChange} />
@@ -163,18 +182,14 @@ const GoodEdit = ({ navigation }) => {
                 />
               </View>
               <View className="flex-row items-center">
-                <Text>Track Stock</Text>
+                <Text>Available</Text>
                 <Controller
                   control={control}
-                  name="trackStock"
+                  name="available"
                   render={({ field: { onChange, value } }) => (
                     <Switch value={value} onValueChange={onChange} />
                   )}
                 />
-                {/* <Switch
-                  value={trackStock}
-                  onValueChange={() => setTrackStock(!trackStock)}
-                /> */}
               </View>
             </View>
           </CardElevated>
@@ -188,7 +203,7 @@ const GoodEdit = ({ navigation }) => {
               <IconButton
                 icon="plus-circle-outline"
                 size={30}
-                onPress={() => handleAddVariant()}
+                onPress={() => {alert("add variant");}}
               />
               <Text className="buttonText">Add Variants</Text>
             </View>

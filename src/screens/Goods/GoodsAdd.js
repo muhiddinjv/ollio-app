@@ -32,6 +32,7 @@ const GoodsAdd = ({ navigation }) => {
       const formattedGoods = selectedGoods.map((good) => ({
         product_id: good.product_id,
         quantity: Number(good.quantity),
+        order: Number(good.order),
         cost: Number(good.cost),        
         price: Number(good.price)       
       }));
@@ -41,7 +42,7 @@ const GoodsAdd = ({ navigation }) => {
       await AsyncStorage.removeItem("selectedGoods");
       queryClient.invalidateQueries(["goods"]);
       setSelectedGoods([]);
-      navigation.navigate("Goods", { screen: "Dokon" });
+      navigation.navigate("GoodTabs", { screen: "Dokon" });
     } catch (error) {
       Alert.alert("Error", `${error}`);
     }
@@ -50,7 +51,7 @@ const GoodsAdd = ({ navigation }) => {
   return (
     <Wrapper>
       <Header
-        title="Add Goods"
+        title="Prixod"
         iconLeft="arrow-left"
         onLeftPress={() => navigation.navigate("GoodTabs", { screen: "Dokon" })}
       />

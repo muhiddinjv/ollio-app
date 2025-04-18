@@ -54,7 +54,7 @@ const DrawerNav = ({ navigation }) => {
       })}
     >
       <Drawer.Screen
-        name="Sales"
+        name="Savdo"
         component={SalesList}
         options={{
           drawerIcon: ({ color }) => (
@@ -63,7 +63,7 @@ const DrawerNav = ({ navigation }) => {
         }}
       />
       <Drawer.Screen
-        name="Goods"
+        name="Tovarlar"
         component={Goods}
         options={{
           drawerIcon: ({ color }) => (
@@ -77,7 +77,7 @@ const DrawerNav = ({ navigation }) => {
         }}
       />
       <Drawer.Screen
-        name="Bills"
+        name="Cheklar"
         component={BillList}
         options={{
           drawerIcon: ({ color }) => (

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
-import { TextInput, Button, useTheme, HelperText } from "react-native-paper";
+import { TextInput, useTheme } from "react-native-paper";
 import axiosInstance from "../../screens/Auth/axiostance";
 import { Picker } from "@react-native-picker/picker";
 import { useGlobalState } from "../../hooks/index";
@@ -73,6 +73,8 @@ const UserAdd = ({ navigation }) => {
         title="Foydalanuvchi qo'shish"
         iconLeft="arrow-left"
         onLeftPress={() => navigation.navigate("UserList")}
+        onRightPress={handleSave}
+        iconRight="content-save"
       />
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
@@ -156,13 +158,6 @@ const UserAdd = ({ navigation }) => {
               <Picker.Item label="Do'kon" value="retail" />
             </Picker>
           </View>
-          <Button
-            mode="contained"
-            onPress={handleSave}
-            style={styles.saveButton}
-          >
-            SAQLASH
-          </Button>
         </ScrollView>
       </View>
     </View>

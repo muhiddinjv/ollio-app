@@ -47,10 +47,10 @@ const SalesList = ({ navigation }) => {
 
   const handlePress = (IsOpenBills) => {
     if (IsOpenBills) {
-      navigation.navigate("Bills")
+      navigation.navigate("Cheklar")
     } else {
       saveBill();
-      navigation.navigate("Bills")
+      navigation.navigate("Cheklar")
     }
   };
 
@@ -100,7 +100,7 @@ const SalesList = ({ navigation }) => {
           onPress={()=>handlePress(bill.products.length === 0)}
           style={{ flex: 1 }} 
         >
-          {bill.products.length === 0 ? "OPEN BILLS" : "SAVE"}
+          {bill.products.length === 0 ? "CHEKLAR" : "SAQLASH"}
         </Button>
         <Button
           mode="contained"
@@ -108,7 +108,7 @@ const SalesList = ({ navigation }) => {
           onPress={handleCharge}
           disabled={bill.products.length === 0}
         >
-          SALE
+          SAVDO
         </Button>
       </View>
 

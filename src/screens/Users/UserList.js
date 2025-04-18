@@ -10,7 +10,7 @@ const UserList = ({ navigation }) => {
   const { colors } = useTheme();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { clients, setClients, setClient } = useGlobalState();
+  const { clients, setClients, client, setClient } = useGlobalState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +28,7 @@ const UserList = ({ navigation }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [client]);
 
   return (
     <View style={styles.container}>

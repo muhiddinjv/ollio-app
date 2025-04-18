@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { TextInput, Button, useTheme } from "react-native-paper";
+import { TextInput, useTheme } from "react-native-paper";
 import { View, ScrollView, StyleSheet } from "react-native";
 import axiosInstance from "../../screens/Auth/axiostance";
 import { useGlobalState } from "../../hooks/index";
 import { Picker } from "@react-native-picker/picker";
+import Header from "../../components/Header";
 
 const UserEdit = ({ navigation }) => {
   const { client, setClient } = useGlobalState();
@@ -30,14 +31,23 @@ const UserEdit = ({ navigation }) => {
     try {
       const response = await axiosInstance.put(`/users/${client._id}`, updatedUserData);
       setClient(response.data);
-      navigation.goBack();
+      navigation.navigate("UserProfile");
     } catch (error) {
       console.error("Error updating user:", error.response ? error.response.data : error.message);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1">
+      <Header
+        title="Foydalanuvchi yangilash"
+        iconLeft="arrow-left"
+        onLeftPress={() => navigation.navigate("UserList")}
+        onRightPress={handleSave}
+        iconRight="content-save"
+      />
+      <View style={styles.container}>
+
       <ScrollView contentContainerStyle={styles.scrollView}>
         <TextInput
           label="Ism sharifi"
@@ -102,10 +112,8 @@ const UserEdit = ({ navigation }) => {
             <Picker.Item label="Do'kon" value="retail" />
           </Picker>
         </View>
-        <Button mode="contained" onPress={handleSave} style={styles.saveButton}>
-          SAQLASH
-        </Button>
       </ScrollView>
+      </View>
     </View>
   );
 };

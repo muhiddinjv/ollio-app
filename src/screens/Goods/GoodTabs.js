@@ -25,14 +25,14 @@ const GoodTabs = ({ route }) => {
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <Header
-        title="Goods"
+        title="Tovarlar"
         fontSize={20}
         iconLeft="menu"
         navigation={navigation}
         onLeftPress={() => navigation.dispatch(DrawerActions.openDrawer())}
       />
       <Tab.Navigator
-        initialRouteName={initialIndex === 0 ? "Catalog" : "Dokon"}
+        initialRouteName={initialIndex === 0 ? "Katalog" : "Dokon"}
         screenOptions={{
           tabBarStyle: { backgroundColor: colors.secondary },
           tabBarIndicatorStyle: { backgroundColor: "white" },
@@ -46,7 +46,7 @@ const GoodTabs = ({ route }) => {
           },
         }}
       >
-        <Tab.Screen name="Catalog" component={Catalog} />
+        <Tab.Screen name="Katalog" component={Catalog} />
         <Tab.Screen name="Dokon" component={GoodsList} />
       </Tab.Navigator>
       <FABplus visible={visible} navigate={navigation.navigate} />

@@ -13,8 +13,8 @@ const BillDetails = ({ navigation, route }) => {
     <View className="py-4 my-2 px-4 border-b border-gray-300">
       <Text className="text-4xl text-center font-medium">{bill?.total_price}</Text>
       <Text className="text-gray-600 text-xl text-center mb-4">Jami</Text>
-      <Text className="text-lg">Sotuvchi: {bill?.staff}</Text>
-      <Text className="text-lg">Haridor: {bill?.client || "Topilmadi"}</Text>
+      <Text className="text-lg">Hodim: {bill?.staff}</Text>
+      <Text className="text-lg">Mijoz: {bill?.client || "Topilmadi"}</Text>
     </View>
   );
 
@@ -35,12 +35,12 @@ const BillDetails = ({ navigation, route }) => {
     <View className="flex-1">
       <Header 
         fontSize={20} 
-        title="Bill Details" 
+        title="Chek" 
         iconRight="download" 
         iconLeft="arrow-left" 
         navigation={navigation} 
         onRightPress={() => downloadBill(bill)} 
-        onLeftPress={() => navigation.navigate("Bills")} 
+        onLeftPress={() => navigation.navigate("Cheklar")} 
       />
       <FlatList
         data={bill?.products}

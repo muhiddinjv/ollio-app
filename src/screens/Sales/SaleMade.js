@@ -66,7 +66,7 @@ const SaleMade = ({ navigation }) => {
             style={styles.button}
             disabled={loading || payLoading}
             labelStyle={{ fontSize: 18, lineHeight: 26 }}
-            onPress={isPaid ? () => navigation.navigate("Sales") : handleSale}
+            onPress={isPaid ? () => navigation.navigate("Savdo") : handleSale}
           >
             {isPaid ? "Yangi savdo" : "Sotish"}
           </Button>
@@ -76,7 +76,7 @@ const SaleMade = ({ navigation }) => {
             style={styles.button}
             disabled={loading || payLoading}
             labelStyle={{ fontSize: 18, lineHeight: 26 }}
-            onPress={isPaid ? () => downloadBill(billItem) : () => navigation.navigate("Sales")}
+            onPress={isPaid ? () => downloadBill(billItem) : () => navigation.navigate("Savdo")}
           >
             {isPaid ? "Chek yuklash" : "Bekor qilish"}
           </Button>

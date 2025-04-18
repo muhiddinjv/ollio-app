@@ -38,7 +38,7 @@ export default function SignIn({ navigation }) {
     try {
       setErrorMessage("");
       signIn(phone, password);
-      navigation.navigate("Sales");
+      navigation.navigate("Savdo");
     } catch (error) {
       console.log("handleSignIn error", error);
       if (error.response?.data?.message) {

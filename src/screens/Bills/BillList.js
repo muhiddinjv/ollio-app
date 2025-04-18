@@ -31,7 +31,7 @@ export default function BillList({ navigation }) {
 
   return (
     <View>
-      <Header title="Bills" fontSize={20} navigation={navigation} backBtn />
+      <Header title="Cheklar" fontSize={20} navigation={navigation} backBtn />
       {loading && <ActivityIndicator color={colors.primary} />}
       <FlatList
         data={bills}

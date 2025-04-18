@@ -44,7 +44,7 @@ export default function BillCart({ navigation }) {
 
   const handleSave = () => {
     saveBill();
-    navigation.navigate("Bills")
+    navigation.navigate("Cheklar")
   };
 
   const handleCharge = () => {
@@ -55,7 +55,7 @@ export default function BillCart({ navigation }) {
   return (
     <View className="flex-1">
       <Header
-        title="Bill Cart"
+        title="Arava"
         iconRight={bill.client_id ? "account-check" : "account-plus"}
         navigation={navigation}
         onPress={() => navigation.navigate("UserList")} 
@@ -75,7 +75,7 @@ export default function BillCart({ navigation }) {
           ))}
         </View>
         <View className="flex-row justify-between pt-3">
-          <Text className="text-lg font-bold">Total</Text>
+          <Text className="text-lg font-bold">Jami</Text>
           <Text className="text-lg font-bold">UZS {total}</Text>
         </View>
       </ScrollView>

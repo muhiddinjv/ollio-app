@@ -10,7 +10,7 @@ const UserProfile = ({ navigation }) => {
 
   const handleAddToBill = () => {
     addClientToBill(client._id);
-    navigation.navigate("Sales");
+    navigation.navigate("Savdo");
   };
 
   return (
@@ -32,27 +32,27 @@ const UserProfile = ({ navigation }) => {
         <View style={styles.detailsContainer}>
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="account" size={20} color={colors.primary} />
-            <Text style={styles.detailsTitle}>Role: {client?.role}</Text>
+            <Text style={styles.detailsTitle}>Lavozim: {client?.role}</Text>
           </View>
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="store" size={20} color={colors.primary} />
-            <Text style={styles.detailsTitle}>Store Type: {client?.store_type}</Text>
+            <Text style={styles.detailsTitle}>Do'kon turi: {client?.store_type}</Text>
           </View>
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="lock" size={20} color={colors.primary} />
-            <Text style={styles.detailsTitle}>PIN Code: {client?.pin}</Text>
+            <Text style={styles.detailsTitle}>PIN kod: {client?.pin}</Text>
           </View>
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="map-marker" size={20} color={colors.primary} />
-            <Text style={styles.detailsTitle}>Address: {client?.address || 'N/A'}</Text>
+            <Text style={styles.detailsTitle}>Manzil: {client?.address || 'N/A'}</Text>
           </View>
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="note" size={20} color={colors.primary} />
-            <Text style={styles.detailsTitle}>Note: {client?.note || 'N/A'}</Text>
+            <Text style={styles.detailsTitle}>Izoh: {client?.note || 'N/A'}</Text>
           </View>
         </View>
         <Button mode="contained" onPress={handleAddToBill} style={styles.button}>
-          ADD TO BILL
+          CHEKGA QO'SHISH
         </Button>
       </ScrollView>
     </View>

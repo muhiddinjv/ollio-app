@@ -42,7 +42,7 @@ const Catalog = () => {
         <ListItem
           key={item._id}
           title={item.title}
-          description="description was supposed to be here"
+          description="Tovar haqida qisqacha ma'lumot"
           variant="CheckBox"
           checked={selectedGoods.some((p) => p.product_id === item._id)}
           onChange={() => handleToggleItem(item)}

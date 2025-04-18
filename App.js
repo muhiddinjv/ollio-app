@@ -57,20 +57,20 @@ function App() {
   }
 
   return (
-    <GlobalProvider>
-      <PaperProvider>
-        <NavigationContainer
-          initialState={initialState}
-          onStateChange={(state) =>
-            AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))}>
-          <QueryClientProvider client={queryClient} >
-            <AuthProvider>
-              <DrawerNav />
-            </AuthProvider>
-          </QueryClientProvider>
-        </NavigationContainer>
-      </PaperProvider>
-    </GlobalProvider>
+    <QueryClientProvider client={queryClient} >
+      <GlobalProvider>
+        <PaperProvider>
+          <NavigationContainer
+            initialState={initialState}
+            onStateChange={(state) =>
+              AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))}>
+              <AuthProvider>
+                <DrawerNav />
+              </AuthProvider>
+          </NavigationContainer>
+        </PaperProvider>
+      </GlobalProvider>
+    </QueryClientProvider>
   );
 }
 

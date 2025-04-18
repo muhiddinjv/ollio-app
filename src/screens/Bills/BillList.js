@@ -1,7 +1,7 @@
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { View, Text, FlatList, Pressable } from "react-native";
-import { useGlobalState, useInfiniteScroll } from "../../hooks";
+import { useGlobalState } from "../../hooks";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";
 import { formatDate } from "../../utils";
@@ -27,10 +27,8 @@ const BillItem = ({ bill, navigate, onDelete }) => {
 };
 
 export default function BillList({ navigation }) {
-  const { loading, deleteBill } = useGlobalState();
-  const { colors } = useTheme();
-
-  const { data, isRefreshing, onRefresh, isFetchingNextPage } = useInfiniteScroll({url: "bills", limit: 25, key: ["bills"]});
+  const { loading, data, isRefreshing, onRefresh, isFetchingNextPage, deleteBill } = useGlobalState();
+  const { colors } = useTheme(); 
 
   return (
     <View>

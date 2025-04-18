@@ -11,7 +11,7 @@ import { ActivityIndicator } from "react-native";
 const SaleMade = ({ navigation }) => {
   const [isPaid, setIsPaid] = useState(false);
   const [payLoading, setPayLoading] = useState(false);
-  const { billItem, setBillItem, downloadBill, loading, fetchBills } = useGlobalState();
+  const { billItem, setBillItem, downloadBill, loading, refetch } = useGlobalState();
   const {colors: { primary, backdrop }} = useTheme();
 
   const handleSale = async () => {
@@ -22,7 +22,7 @@ const SaleMade = ({ navigation }) => {
         billItem.status = "paid";
         setBillItem(billItem);
         setIsPaid(true);
-        fetchBills();
+        refetch();
       } else {
         Alert.alert("Error", "Failed to process sale.");
       }

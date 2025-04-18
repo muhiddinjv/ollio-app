@@ -1,12 +1,14 @@
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
+import { RefreshControl } from "react-native-gesture-handler";
+import { ActivityIndicator } from "react-native-paper";
+import { FlashList } from "@shopify/flash-list";
 import ListItem from "../../components/ListItem";
-import { MainColors } from "../../theme";
-import { ActivityIndicator, Text } from "react-native-paper";
-import { useGlobalState, useCatalog } from "../../hooks";
+import Loader from "../../components/Loader";
+import { useGlobalState, useInfiniteScroll } from "../../hooks";
 
 const Catalog = () => {
   const { selectedGoods, setSelectedGoods } = useGlobalState();
-  const { data, isLoading, isError } = useCatalog();
+  const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } = useInfiniteScroll({url: "catalog", limit: 25, key: ["catalog"]});
 
   const catalogItems = data || [];
 
@@ -20,35 +22,38 @@ const Catalog = () => {
     });
   };
 
-  if (isLoading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator animating={true} color={MainColors.primary} size="large" />
-      </View>
-    );
-  }
-
-  if (isError) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <Text className="text-xl text-red-500">Error fetching data</Text>
-      </View>
-    );
-  }
-
   return (
-    <ScrollView>
-      {catalogItems?.map((item) => (
-        <ListItem
-          key={item._id}
-          title={item.title}
-          description="Tovar haqida qisqacha ma'lumot"
-          variant="CheckBox"
-          checked={selectedGoods.some((p) => p.product_id === item._id)}
-          onChange={() => handleToggleItem(item)}
-        />
-      ))}
-    </ScrollView>
+    <View style={{ flex: 1 }}>
+      <FlashList
+        data={catalogItems}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={2}
+        removeClippedSubviews={true}
+        estimatedItemSize={84}
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+        }
+        renderItem={({ item }) => (
+          <ListItem
+            key={item._id}
+            title={item.title}
+            description="Tovar haqida qisqacha ma'lumot"
+            variant="CheckBox"
+            checked={selectedGoods.some((p) => p.product_id === item._id)}
+            onChange={() => handleToggleItem(item)}
+          />
+        )}
+        LoaderComponent={<Loader />}
+        ListEmptyComponent={
+          <View className="flex items-center">
+            <Loader />
+          </View>
+        }
+        ListFooterComponent={() => {
+          return isFetchingNextPage ? <ActivityIndicator /> : null;
+        }}
+      />
+    </View>
   );
 };
 export default Catalog;

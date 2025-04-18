@@ -7,12 +7,10 @@ import {
   useContext,
 } from "react";
 import { Alert } from "react-native";
-import { useQuery } from "@tanstack/react-query";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
-import _ from "lodash";
 import { getAccessToken } from "../screens/Auth/astorage";
 import axiosInstance from "../screens/Auth/axiostance";
 import { formattedDate } from "../utils";
@@ -29,7 +27,6 @@ export const GlobalProvider = ({ children }) => {
   const [billItem, setBillItem] = useState(null);
   const [selectedGoods, setSelectedGoods] = useState([]);
   const [openBills, setOpenBills] = useState([]);
-  const [bills, setBills] = useState([]);
   const [bill, setBill] = useState({
     client_id: null,
     products: [],
@@ -59,20 +56,6 @@ export const GlobalProvider = ({ children }) => {
     AsyncStorage.setItem("billItem", JSON.stringify(billItem));
     AsyncStorage.setItem("selectedGoods", JSON.stringify(selectedGoods));
   }, [user, client, clients, selectedGoods, bill, openBills, billItem]);
-
-
-  const fetchBills = async () => {
-    try {
-      const response = await axiosInstance.get("/bills");
-      setBills(response.data);
-    } catch (error) {
-      console.error("Error fetching bills:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchBills();
-  }, []);
 
   const deleteBill = async (billId) => {
     Alert.alert(
@@ -194,12 +177,10 @@ export const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         saveBill,
-        fetchBills,
         deleteBill,
         downloadBill,
         user, setUser,
         bill, setBill,
-        bills, setBills,
         addClientToBill,
         addProductToBill,
         getTotalQuantity,
@@ -231,9 +212,10 @@ export const useGlobalState = () => {
 
 export const useInfiniteScroll = ({ key, url, limit = 100, filters }) => {
   const queryKey = [
-    ...key,
-    ..._.values(_.omitBy(filters || {}, _.isEmpty)),
-  ].filter((c) => Boolean(c) && !_.isEmpty(c));
+    ...key, ...Object.entries(filters || {})
+      .filter(([_, value]) => value) // Keep only entries with truthy values
+      .map(([key]) => key), // Extract the keys
+  ];
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -297,42 +279,4 @@ export const useInfiniteScroll = ({ key, url, limit = 100, filters }) => {
     onRefresh,
     isFetchingNextPage,
   };
-};
-
-export const useGetGood = (goodId) => {
-  const fetchGood = async () => {
-    const accessToken = await getAccessToken();
-    const response = await axiosInstance.get(`stock/${goodId}`, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-    return response.data;
-  };
-
-  return useQuery({
-    queryKey: ["GET_GOOD", goodId],
-    queryFn: fetchGood,
-    enabled: !!goodId, // Only run the query if goodId is provided
-    onError: (error) => {
-      console.error("Error fetching good:", error);
-    },
-  });
-};
-
-export const useCatalog = () => {
-  const fetchCatalog = async () => {
-    const accessToken = await getAccessToken();
-    const response = await axiosInstance.get("catalog", {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-    return response.data;
-  };
-
-  return useQuery({
-    queryKey: ["CATALOG_ITEMS"],
-    queryFn: async () => {
-      return await fetchCatalog()
-        .then((res) => res)
-        .catch((err) => console.log(err));
-    },
-  });
 };

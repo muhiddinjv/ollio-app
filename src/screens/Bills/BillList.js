@@ -30,7 +30,7 @@ export default function BillList({ navigation }) {
   const { loading, deleteBill } = useGlobalState();
   const { colors } = useTheme();
 
-  const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } = useInfiniteScroll({url: "bills", limit: 25, key: ["bills"]});
+  const { data, isRefreshing, onRefresh, isFetchingNextPage } = useInfiniteScroll({url: "bills", limit: 25, key: ["bills"]});
 
   return (
     <View>

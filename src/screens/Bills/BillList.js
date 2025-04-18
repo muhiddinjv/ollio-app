@@ -1,11 +1,12 @@
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { View, Text, FlatList, Pressable } from "react-native";
-import { useGlobalState } from "../../hooks";
+import { useGlobalState, useInfiniteScroll } from "../../hooks";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";
 import { formatDate } from "../../utils";
 import { ActivityIndicator, useTheme } from "react-native-paper";
+import { RefreshControl } from "react-native-gesture-handler";
 
 const BillItem = ({ bill, navigate, onDelete }) => {
   const { colors: {primary, backdrop} } = useTheme();
@@ -26,17 +27,22 @@ const BillItem = ({ bill, navigate, onDelete }) => {
 };
 
 export default function BillList({ navigation }) {
-  const { bills, loading, deleteBill } = useGlobalState();
+  const { loading, deleteBill } = useGlobalState();
   const { colors } = useTheme();
+
+  const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } = useInfiniteScroll({url: "bills", limit: 25, key: ["bills"]});
 
   return (
     <View>
       <Header title="Cheklar" fontSize={20} navigation={navigation} backBtn />
       {loading && <ActivityIndicator color={colors.primary} />}
       <FlatList
-        data={bills}
+        data={data}
         removeClippedSubviews={true}
         estimatedItemSize={84}
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+        }
         renderItem={({ item }) => (
           <BillItem
             bill={item}
@@ -51,6 +57,9 @@ export default function BillList({ navigation }) {
             {!loading && <Text>You have no bills yet</Text>}
           </View>
         }
+        ListFooterComponent={() => {
+          isFetchingNextPage && <ActivityIndicator />;
+        }}
       />
     </View>
   );

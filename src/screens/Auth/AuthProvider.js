@@ -68,7 +68,6 @@ export const AuthProvider = ({ children }) => {
         if (!refreshToken) {
           throw new Error("No refresh token found.");
         }
-      
         const response = await axiosInstance.post("auth/refresh", { refreshToken });
         await setAccessToken(response.data.accessToken);
         await setRefreshToken(response.data.refreshToken);

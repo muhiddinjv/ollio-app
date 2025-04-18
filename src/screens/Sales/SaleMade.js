@@ -72,13 +72,13 @@ const SaleMade = ({ navigation }) => {
           </Button>
           <Button
             mode="outlined"
-            icon={isPaid ? "download" : "cancel"}
+            icon={isPaid ? "download" : "arrow-left"}
             style={styles.button}
             disabled={loading || payLoading}
             labelStyle={{ fontSize: 18, lineHeight: 26 }}
             onPress={isPaid ? () => downloadBill(billItem) : () => navigation.navigate("Savdo")}
           >
-            {isPaid ? "Chek yuklash" : "Bekor qilish"}
+            {isPaid ? "Chek yuklash" : "Qaytish"}
           </Button>
         </View>
       </View>

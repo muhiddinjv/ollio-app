@@ -14,7 +14,7 @@ const BillDetails = ({ navigation, route }) => {
       <Text className="text-4xl text-center font-medium">{bill?.total_price}</Text>
       <Text className="text-gray-600 text-xl text-center mb-4">Jami</Text>
       <Text className="text-lg">Hodim: {bill?.staff}</Text>
-      <Text className="text-lg">Mijoz: {bill?.client || "Topilmadi"}</Text>
+      <Text className="text-lg">Mijoz: {bill?.client || "Nomalum"}</Text>
     </View>
   );
 

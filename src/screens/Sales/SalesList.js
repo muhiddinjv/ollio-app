@@ -61,7 +61,7 @@ const SalesList = ({ navigation }) => {
   }
 
   const handleThreeDots = () => {
-    alert("three dots pressed");
+    alert("uchta nuqta bosildi");
   }
 
   return (

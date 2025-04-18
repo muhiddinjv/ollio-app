@@ -1,18 +1,19 @@
-import { View, ScrollView, Text, Pressable, Alert } from "react-native";
+import { View, ScrollView, Text, Alert } from "react-native";
+import { Button, IconButton, useTheme } from "react-native-paper";
 import { Swipeable } from "react-native-gesture-handler";
 import React from "react";
 import Header from "../../components/Header";
 import { useGlobalState } from "../../hooks";
-import { Button, IconButton } from "react-native-paper";
 import { calculateTotal } from "../../utils";
 
 const Item = ({ title, price, quantity, onDelete }) => {
   const total = calculateTotal([{ price, quantity }]);
+  const { colors } = useTheme();
 
   const renderRightActions = () => {
     return (
       <View className="flex-row items-center justify-center">
-        <IconButton icon="delete" onPress={onDelete} />
+        <IconButton icon="delete" iconColor={colors.primary} onPress={onDelete} />
       </View>
     );
   };
@@ -86,7 +87,7 @@ export default function BillCart({ navigation }) {
           style={{ flex: 1 }} 
           disabled={bill.products.length === 0}
         >
-          Save Bill
+          SAQLASH
         </Button>
         <Button
           mode="contained"
@@ -94,7 +95,7 @@ export default function BillCart({ navigation }) {
           onPress={handleCharge}
           disabled={bill.products.length === 0}
         >
-          Charge
+          SAVDO
         </Button>
       </View>
     </View>

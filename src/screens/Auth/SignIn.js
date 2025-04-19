@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TextInput, Button as RNButton } from "react-native-paper";
-import { AuthProvider, useAuth } from "./AuthProvider";
+import { AuthProvider, useAuth } from "./AuthPro";
 import { useColorScheme } from "nativewind";
 import { MainColors } from "../../theme";
 import { useForm } from "react-hook-form";
@@ -21,11 +21,7 @@ export default function SignIn({ navigation }) {
   const { colorScheme } = useColorScheme();
   const { signIn } = useAuth();
 
-  const {
-    formState: { errors },
-    control,
-    handleSubmit,
-  } = useForm();
+  const { formState: { errors }, control, handleSubmit } = useForm();
 
   React.useEffect(() => {
     if (errorMessage) {
@@ -35,18 +31,7 @@ export default function SignIn({ navigation }) {
   }, [errorMessage]);
 
   const handleSignIn = async ({ phone, password }) => {
-    try {
-      setErrorMessage("");
-      signIn(phone, password);
-      navigation.navigate("Savdo");
-    } catch (error) {
-      console.log("handleSignIn error", error);
-      if (error.response?.data?.message) {
-        setErrorMessage(error.response.data.message);
-      } else {
-        setErrorMessage("Something went wrong. Please try again.");
-      }
-    }
+    signIn({ phone, password });
   };
 
   return (

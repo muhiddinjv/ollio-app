@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextInput, useTheme } from "react-native-paper";
 import { View, ScrollView, StyleSheet } from "react-native";
-import axiosInstance from "../../screens/Auth/axiostance";
+import axiosInstance from "../../api/axiostance";
 import { useGlobalState } from "../../hooks/index";
 import { Picker } from "@react-native-picker/picker";
 import Header from "../../components/Header";

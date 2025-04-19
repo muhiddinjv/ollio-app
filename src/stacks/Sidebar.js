@@ -3,25 +3,22 @@ import { View } from "react-native";
 import { useColorScheme } from "nativewind";
 import { Text, Switch, Button, IconButton, useTheme } from "react-native-paper";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
-import { useAuth } from "../screens/Auth/AuthProvider";
-import { getItem } from "../screens/Auth/astorage";
-import { useGlobalState } from "../hooks";
+import { useAuth } from "../screens/Auth/AuthPro";
+import { jwtDecode } from "jwt-decode";
 
 const Sidebar = (props) => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
-  const { user, setUser } = useGlobalState();
-  const { signOut } = useAuth();
+  const { signOut, userToken } = useAuth();
   const theme = useTheme();
 
-  React.useEffect(() => {
-    const fetchUserData = async () => {
-      const storedUser = await getItem("user");
-      if (storedUser) {
-        setUser(storedUser);
-      }
-    };
-    fetchUserData();
-  }, []);
+  const user = React.useMemo(() => {
+    try {
+      return userToken ? jwtDecode(userToken) : null;
+    } catch (e) {
+      return null;
+    }
+  }, [userToken]);
+
 
   return (
     <View className="flex-1 w-full dark:bg-slate-800">{/* -- REMOVE PADDING DrawerContentScrollView ---*/}

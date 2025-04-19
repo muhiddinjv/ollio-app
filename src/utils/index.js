@@ -1,4 +1,4 @@
-import axiosInstance from '../screens/Auth/axiostance';
+import axiosInstance from '../api/axiostance';
 
 export const checkStockQuantity = async (productId, quantity) => {
   try {

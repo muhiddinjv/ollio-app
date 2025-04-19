@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { View, ScrollView, StyleSheet, Pressable } from "react-native";
 import { Text, TextInput, Button, useTheme, ActivityIndicator } from "react-native-paper";
-import axiosInstance from "../Auth/axiostance";
-import { getAccessToken } from "../Auth/astorage";
-import { useGlobalState } from "../../hooks";
+import axiosInstance from "../../api/axiostance";
+import { getAccessToken } from "../../api/astorage";
+import { useGlobalState, useInfiniteScroll } from "../../hooks";
 import Header from "../../components/Header";
 
 const UserList = ({ navigation }) => {
@@ -11,6 +11,14 @@ const UserList = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { clients, setClients, client, setClient } = useGlobalState();
+
+  const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
+  useInfiniteScroll({
+    url: "users",
+    limit: 25,
+    filters: { role: "client" },
+    key: ["users"],
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +54,7 @@ const UserList = ({ navigation }) => {
         <Text style={styles.recentClientsTitle}>Yangi mijozlar</Text>
       </View>
 
-      <ScrollView>
+      <View>
         <View style={styles.userList}>
           {error && <Text style={{ color: 'red' }}>Error: {error}</Text>}
           {!loading ? clients.map((user) => (
@@ -62,7 +70,7 @@ const UserList = ({ navigation }) => {
             </Pressable>
           )) : <ActivityIndicator size="large" color={colors.primary} />}
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 };

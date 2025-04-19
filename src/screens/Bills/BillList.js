@@ -35,7 +35,7 @@ export default function BillList({ navigation }) {
       <Header title="Cheklar" fontSize={20} navigation={navigation} backBtn />
       {loading && <ActivityIndicator color={colors.primary} />}
       <FlatList
-        data={data}
+        data={data || []}
         removeClippedSubviews={true}
         estimatedItemSize={84}
         refreshControl={
@@ -48,7 +48,7 @@ export default function BillList({ navigation }) {
             onDelete={() => deleteBill(item._id)}
           />
         )}
-        keyExtractor={(item) => item._id.toString()}
+        keyExtractor={(item) => item?._id?.toString()}
         LoaderComponent={<Loader />}
         ListEmptyComponent={
           <View className="flex items-center">

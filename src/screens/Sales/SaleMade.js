@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import Header from "../../components/Header";
-import axiosInstance from "../Auth/axiostance";
+import axiosInstance from "../../api/axiostance";
 import { useGlobalState } from "../../hooks";
 import { Skeleton } from "react-native-skeletons";
 import { ActivityIndicator } from "react-native";

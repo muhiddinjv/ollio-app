@@ -11,8 +11,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
-import { getAccessToken } from "../screens/Auth/astorage";
-import axiosInstance from "../screens/Auth/axiostance";
+import { getAccessToken } from "../api/astorage";
+import axiosInstance from "../api/axiostance";
 import { formattedDate } from "../utils";
 
 export const useInfiniteScroll = ({ key, url, limit = 100, filters }) => {
@@ -99,7 +99,6 @@ export const GlobalProvider = ({ children }) => {
   const [billItem, setBillItem] = useState(null);
   const [selectedGoods, setSelectedGoods] = useState([]);
   const [openBills, setOpenBills] = useState([]);
-  const [bills, setBills] = useState([]);
   const [bill, setBill] = useState({
     client_id: null,
     products: [],
@@ -131,21 +130,6 @@ export const GlobalProvider = ({ children }) => {
   }, [user, client, clients, selectedGoods, bill, openBills, billItem]);
 
   const { data, isRefreshing, onRefresh, isFetchingNextPage, refetch } = useInfiniteScroll({url: "bills", limit: 25, key: ["bills"]});
-
-  const fetchBills = async () => {
-    try {
-      const response = await axiosInstance.get("/bills");
-      setBills(response.data);
-    } catch (error) {
-      console.error("Error fetching bills:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchBills();
-  }, []);
-
-
 
   const addClientToBill = (clientId) => {
     setBill((prevBill) => ({
@@ -271,7 +255,6 @@ export const GlobalProvider = ({ children }) => {
         downloadBill,
         user, setUser,
         bill, setBill,
-        bills, setBills,
         addClientToBill,
         addProductToBill,
         getTotalQuantity,

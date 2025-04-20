@@ -8,11 +8,10 @@ import { useGlobalState, useInfiniteScroll } from "../../hooks";
 
 const Catalog = () => {
   const { selectedGoods, setSelectedGoods } = useGlobalState();
-  const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } = useInfiniteScroll({url: "catalog", limit: 25, key: ["catalog"]});
-
-  const catalogItems = data || [];
+  const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } = useInfiniteScroll({url: "catalog", key: ["catalog"]});
 
   const handleToggleItem = (item) => {
+    console.log("Toggling item:", item);
     setSelectedGoods((prev) => {
       const isSelected = prev.find((p) => p.product_id === item._id);
       if (isSelected) {
@@ -21,11 +20,14 @@ const Catalog = () => {
       return [...prev, { product_id: item._id, title: item.title, price: 0, cost: 0, quantity: 0 }];
     });
   };
+  // console.log('selectedGoods :>> ', selectedGoods);
 
   return (
     <View style={{ flex: 1 }}>
       <FlashList
-        data={catalogItems}
+        data={data}
+        extraData={selectedGoods}
+        keyExtractor={(item) => item._id.toString()} 
         onEndReached={onEndReached}
         onEndReachedThreshold={2}
         removeClippedSubviews={true}
@@ -36,6 +38,7 @@ const Catalog = () => {
         renderItem={({ item }) => (
           <ListItem
             key={item._id}
+            goodId={item._id}
             title={item.title}
             description="Tovar haqida qisqacha ma'lumot"
             variant="CheckBox"

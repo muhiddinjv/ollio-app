@@ -15,13 +15,13 @@ const StyledPicker = styled(Picker);
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
 const SalesList = ({ navigation }) => {
-  const { colors } = useTheme();
-  const { bill, saveBill, addProductToBill, getTotalQuantity } = useGlobalState();
+  const { bill, user, saveBill, addProductToBill, getTotalQuantity } = useGlobalState();
   const [selectedValue, setSelectedValue] = useState("option1");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [filters, setFilters] = useState({ search: "" });
   const [quantity, setQuantity] = useState('');
+  const { colors } = useTheme();
 
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
     useInfiniteScroll({
@@ -54,7 +54,6 @@ const SalesList = ({ navigation }) => {
     }
   };
 
-
   const handleCharge = () => {
     saveBill();
     navigation.navigate("SaleMade");
@@ -77,7 +76,7 @@ const SalesList = ({ navigation }) => {
         >
           {getTotalQuantity() || ""}
         </Button>
-        <Appbar.Action icon={bill.client_id ? "account-check" : "account-plus"} onPress={() => navigation.navigate("UserList")} color={colors.surface} />
+        <Appbar.Action icon={bill.client_id ? "account-check" : "account-plus"} onPress={() => navigation.navigate("UserList")} color={colors.surface} disabled={user?.store_type == "retail"}/>
         <Appbar.Action icon={MORE_ICON} onPress={handleThreeDots} color={colors.surface} />
       </Appbar.Header>
       <Numpad

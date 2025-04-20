@@ -8,16 +8,15 @@ import { useInfiniteScroll } from "../../hooks";
 import ListItem from "../../components/ListItem";
 import Loader from "../../components/Loader";
 
-const GoodsList = ({ keyProp }) => {
+const GoodsList = () => {
   const [goodId, setGoodId] = useState([]);
   const [filters, setFilters] = useState({ search: "" });
   const navigation = useNavigation();
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
     useInfiniteScroll({
       url: "stock",
-      limit: 25,
       filters: filters,
-      key: ["goods", keyProp],
+      key: ["goods"],
     });
 
   const handleItemPress = (good) => {

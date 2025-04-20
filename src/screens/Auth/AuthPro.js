@@ -1,9 +1,10 @@
 import * as React from "react";
-import { useNavigation } from '@react-navigation/native';
-import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
-import { setAccessToken, removeAccessToken, setRefreshToken, setItem } from "../../api/astorage";
-import { signIn as apiSignIn, signOut as apiSignOut, refreshToken as apiRefreshToken } from "../../api";
 import { jwtDecode } from "jwt-decode";
+import { useNavigation } from '@react-navigation/native';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { setAccessToken, removeAccessToken, setRefreshToken, setItem, getAccessToken } from "../../api/astorage";
+import { signIn as apiSignIn, signOut as apiSignOut, refreshToken as apiRefreshToken } from "../../api/requests";
+import { useGlobalState } from "../../hooks";
 
 const AuthContext = React.createContext({
   userToken: null,
@@ -18,16 +19,15 @@ export const AuthRef = React.createRef();
 export const AuthProvider = ({ children }) => {
   const navigation = useNavigation();
   const queryClient = useQueryClient();
-  const [userToken, setUserToken] = React.useState(null);
+  const { setUser } = useGlobalState();
 
   const signInMutation = useMutation(apiSignIn, {
     onSuccess: (data) => {
-      queryClient.clear();
       const user = jwtDecode(data.accessToken);
       setItem("user", user);
       setAccessToken(data.accessToken);
       setRefreshToken(data.refreshToken);
-      setUserToken(data.accessToken);
+      setUser(user);
       navigation.navigate("Savdo");
     },
     onError: (error) => {
@@ -38,15 +38,14 @@ export const AuthProvider = ({ children }) => {
 
   const signOutMutation = useMutation(apiSignOut, {
     onSuccess: () => {
-      queryClient.clear();
-      removeAccessToken();
-      setUserToken(null);
-      setRefreshToken(null);
-      setItem("user", null);
       navigation.reset({
         index: 0,
         routes: [{ name: "SignIn" }],
       });
+      queryClient.clear();
+      removeAccessToken();
+      setItem("user", null);
+      setUser(null);
     },
     onError: (error) => {
       console.error("Error during sign out:", error);
@@ -55,12 +54,13 @@ export const AuthProvider = ({ children }) => {
 
   const refreshTokenMutation = useMutation(apiRefreshToken, {
     onSuccess: (data) => {
-      queryClient.clear();
       setAccessToken(data.accessToken);
       setRefreshToken(data.refreshToken);
     },
     onError: (error) => {
       console.error("Error refreshing token:", error);
+      removeAccessToken();
+      setUser(null);
       navigation.reset({
         index: 0,
         routes: [{ name: "SignIn" }],
@@ -77,8 +77,13 @@ export const AuthProvider = ({ children }) => {
     [navigation]
   );
 
+  React.useEffect(() => {
+    AuthRef.current = authActions;
+  }, [authActions]);
+  
+
   return (
-    <AuthContext.Provider value={{ userToken, ...authActions }}>
+    <AuthContext.Provider value={{ ...authActions }}>
       {children}
     </AuthContext.Provider>
   );

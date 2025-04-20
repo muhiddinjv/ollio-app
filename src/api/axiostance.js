@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import dayjs from "dayjs";
 import { getAccessToken, removeAccessToken, getRefreshToken, setAccessToken, setRefreshToken } from "./astorage";
 const AuthRef = React.createRef();
 
@@ -20,36 +22,40 @@ axiosInstance.interceptors.request.use(async (config) => {
 
 // Response Interceptor: Handle token expiration
 axiosInstance.interceptors.response.use(
-  (response) => response, // Return response if no errors
+  (response) => response,
   async (error) => {
-    if (error.response?.status === 403) {
-      console.log("Token expired. Attempting to refresh...");
+    const originalRequest = error.config;
+    const accessToken = await getAccessToken();
+    const decodedToken = jwtDecode(accessToken);
+    const isTokenExpired = dayjs.unix(decodedToken.exp).isBefore(dayjs());
 
-      const refreshToken = await getRefreshToken(); // Get the refresh token
+    if (isTokenExpired && !originalRequest._retry) {
+      console.log("Token expired. Attempting to refresh...");
+      const refreshToken = await getRefreshToken();
+
       if (refreshToken) {
         try {
-          const response = await axiosInstance.post("auth/refresh", { refreshToken });
-          await setAccessToken(response.data.accessToken); // Update access token
-          await setRefreshToken(response.data.refreshToken); // Update refresh token
+          const response = await axios.post(`${baseURL}auth/refresh`, { refreshToken });
 
-          // Retry the original request with the new access token
-          error.config.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
-          return axiosInstance(error.config);
-        } catch (refreshError) {
-          console.error("Error refreshing token:", refreshError);
-          await removeAccessToken(); // Remove expired token
-          AuthRef.current?.signOut(); // Sign out user
+          await setAccessToken(response.data.accessToken);
+          await setRefreshToken(response.data.refreshToken);
+
+          // Update Authorization header
+          originalRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
+
+          return axiosInstance(originalRequest); // retry
+        } catch (err) {
+          console.error("Error refreshing token:", err);
+          await removeAccessToken();
+          AuthRef.current?.signOut();
           return Promise.reject("Session expired. Please sign in again.");
         }
-      } else {
-        console.log("No refresh token found. Redirecting to SignIn...");
-        await removeAccessToken(); // Remove expired token
-        AuthRef.current?.signOut(); // Sign out user
-        return Promise.reject("Session expired. Please sign in again.");
-      }
+      } 
     }
+
     return Promise.reject(error);
   }
 );
+
 
 export default axiosInstance;

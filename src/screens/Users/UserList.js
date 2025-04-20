@@ -1,42 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { View, ScrollView, StyleSheet, Pressable } from "react-native";
-import { Text, TextInput, Button, useTheme, ActivityIndicator } from "react-native-paper";
-import axiosInstance from "../../api/axiostance";
-import { getAccessToken } from "../../api/astorage";
+import React from "react";
+import { View, StyleSheet, Pressable, FlatList, RefreshControl } from "react-native";
+import { Text, TextInput, Button, ActivityIndicator } from "react-native-paper";
 import { useGlobalState, useInfiniteScroll } from "../../hooks";
 import Header from "../../components/Header";
 
 const UserList = ({ navigation }) => {
-  const { colors } = useTheme();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { clients, setClients, client, setClient } = useGlobalState();
+  const { setClient } = useGlobalState();
 
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
-  useInfiniteScroll({
-    url: "users",
-    limit: 25,
-    filters: { role: "client" },
-    key: ["users"],
-  });
+    useInfiniteScroll({
+      url: "users",
+      filters: { role: "client" },
+      key: ["users"],
+    });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const accessToken = await getAccessToken();
-        const response = await axiosInstance.get("users?role=client", {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        setClients(response.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [client]);
+  const handleItemPress = (user) => {
+    setClient(user);
+    navigation.navigate("UserProfile", { user });
+  };
 
   return (
     <View style={styles.container}>
@@ -51,26 +32,32 @@ const UserList = ({ navigation }) => {
         <Button mode="contained" onPress={() => navigation.navigate("UserAdd")} style={styles.addButton}>
           FOYDALANUVCHI QO'SHISH
         </Button>
-        <Text style={styles.recentClientsTitle}>Yangi mijozlar</Text>
       </View>
 
-      <View>
-        <View style={styles.userList}>
-          {error && <Text style={{ color: 'red' }}>Error: {error}</Text>}
-          {!loading ? clients.map((user) => (
-            <Pressable key={user._id} style={styles.userItem} onPress={() => {
-              setClient(user);
-              navigation.navigate("UserProfile", { user });
-            }}>
-              <View style={styles.avatar} />
-              <View style={styles.userInfo}>
-                <Text style={styles.userName}>{user.name}</Text>
-                <Text style={styles.userDetails}>{user?.role?.toUpperCase()}, {user.phone}</Text>
-              </View>
-            </Pressable>
-          )) : <ActivityIndicator size="large" color={colors.primary} />}
-        </View>
-      </View>
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item._id.toString()}
+        renderItem={({ item }) => (
+          <Pressable style={styles.userItem} onPress={() => handleItemPress(item)}>
+            <View style={styles.avatar} />
+            <View style={styles.userInfo}>
+              <Text style={styles.userName}>{item.name}</Text>
+              <Text style={styles.userDetails}>{item?.role?.toUpperCase()}, {item.phone}</Text>
+            </View>
+          </Pressable>
+        )}
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+        }
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.5}
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>Sizda hozircha foydalanuvchilar yo'q</Text>
+          </View>
+        }
+        ListFooterComponent={isFetchingNextPage ? <ActivityIndicator /> : null}
+      />
     </View>
   );
 };
@@ -88,18 +75,10 @@ const styles = StyleSheet.create({
   addButton: {
     marginBottom: 16,
   },
-  recentClientsTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  userList: {
-    paddingHorizontal: 16,
-  },
   userItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 12,
+    padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
@@ -118,6 +97,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   userDetails: {
+    color: '#666',
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyText: {
+    fontSize: 16,
     color: '#666',
   },
 });

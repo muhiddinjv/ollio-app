@@ -15,30 +15,29 @@ import { getAccessToken } from "../api/astorage";
 import axiosInstance from "../api/axiostance";
 import { formattedDate } from "../utils";
 
-export const useInfiniteScroll = ({ key, url, limit = 100, filters }) => {
+export const useInfiniteScroll = ({ key, url, limit = 25, page = 1, userId = null, filters = {} }) => {
   const queryKey = [
-    ...key, ...Object.entries(filters || {})
+    ...key,
+    userId,
+    ...Object.entries(filters)
       .filter(([_, value]) => value) // Keep only entries with truthy values
       .map(([key]) => key), // Extract the keys
   ];
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const queryFn = async ({ pageParam = 1 }) => {
+  const queryFn = async () => {
     const accessToken = await getAccessToken();
     const { data } = await axiosInstance.get(url, {
       headers: { Authorization: `Bearer ${accessToken}` },
       params: {
-        page: pageParam,
+        page,
         limit,
         ...filters,
       },
     });
 
-    return {
-      data: data,
-      nextPage: pageParam + 1,
-    };
+    return { data, nextPage: page + 1 };
   };
 
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, refetch } =
@@ -129,7 +128,8 @@ export const GlobalProvider = ({ children }) => {
     AsyncStorage.setItem("selectedGoods", JSON.stringify(selectedGoods));
   }, [user, client, clients, selectedGoods, bill, openBills, billItem]);
 
-  const { data, isRefreshing, onRefresh, isFetchingNextPage, refetch } = useInfiniteScroll({url: "bills", limit: 25, key: ["bills"]});
+  const scrollProps = useInfiniteScroll({url: "bills", limit: 25, userId: user?._id, key: ["bills"]});
+
 
   const addClientToBill = (clientId) => {
     setBill((prevBill) => ({
@@ -252,6 +252,7 @@ export const GlobalProvider = ({ children }) => {
       value={{
         saveBill,
         deleteBill,
+        scrollProps,
         downloadBill,
         user, setUser,
         bill, setBill,
@@ -267,7 +268,7 @@ export const GlobalProvider = ({ children }) => {
         openBills, setOpenBills,
         selectedGoods, setSelectedGoods,
         //query client provider stuff below
-        data, isRefreshing, onRefresh, isFetchingNextPage, refetch,
+        // data, isRefreshing, onRefresh, isFetchingNextPage, refetch,
       }}
     >
       {children}

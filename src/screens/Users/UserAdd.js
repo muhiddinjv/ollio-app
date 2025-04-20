@@ -29,8 +29,8 @@ const UserAdd = ({ navigation }) => {
     if (!name) newErrors.name = "Ism sharifi bo'lishi shart.";
     if (!phone) newErrors.phone = "Telefoni bo'lishi shart.";
     if (!address) newErrors.address = "Manzili bo'lishi shart.";
-    if (!store_type) newErrors.store_type = "Store type bo'lishi shart.";
-    if (!role) newErrors.role = "Role bo'lishi shart.";
+    if (!store_type) newErrors.store_type = "Dokon turi bo'lishi shart.";
+    if (!role) newErrors.role = "Rol bo'lishi shart.";
     if (!password) newErrors.password = "Paroli bo'lishi shart.";
     if (!pin) newErrors.pin = "PIN kod bo'lishi shart.";
     if (!note) newErrors.note = "Izoh bo'lishi shart.";

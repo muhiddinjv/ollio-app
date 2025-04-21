@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { RefreshControl } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native-paper";
 import { FlashList } from "@shopify/flash-list";
-import { useInfiniteScroll } from "../../hooks";
+import { useGlobalState, useInfiniteScroll } from "../../hooks";
 import ListItem from "../../components/ListItem";
 import Loader from "../../components/Loader";
 
 const GoodsList = () => {
+  const { selectedGoods } = useGlobalState();
+
   const [goodId, setGoodId] = useState([]);
   const [filters, setFilters] = useState({ search: "" });
   const navigation = useNavigation();
@@ -16,8 +18,9 @@ const GoodsList = () => {
     useInfiniteScroll({
       url: "stock",
       filters: filters,
-      key: ["goods"],
+      key: ["stock"],
     });
+    console.log(data);
 
   const handleItemPress = (good) => {
     navigation.navigate("GoodEdit", { good });
@@ -27,6 +30,7 @@ const GoodsList = () => {
     <View style={{ flex: 1 }}>
       <FlashList
         data={data}
+        extraData={selectedGoods}
         onEndReached={onEndReached}
         onEndReachedThreshold={2}
         removeClippedSubviews={true}
@@ -48,8 +52,10 @@ const GoodsList = () => {
         )}
         LoaderComponent={<Loader />}
         ListEmptyComponent={
-          <View className="flex items-center">
-            <Loader />
+          <View className="flex-1 items-center">
+            <Text className="text-base p-5 text-gray-600">
+              Sizda hozircha maxsulotlar yo'q.
+            </Text>
           </View>
         }
         ListFooterComponent={() => {

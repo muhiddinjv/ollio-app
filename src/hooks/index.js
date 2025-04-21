@@ -7,7 +7,7 @@ import {
   useContext,
 } from "react";
 import { Alert } from "react-native";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
@@ -287,3 +287,19 @@ export const useGlobalState = () => {
   return context;
 };
 
+export const usePostGoods = () => {
+  return useMutation(
+    async (goods) => {
+      const accessToken = await getAccessToken();
+      const response = await axiosInstance.post("/stock/receive", goods, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      return response.data; // Return the response data
+    },
+    {
+      onError: (error) => {
+        console.error("Error during POST request:", error);
+      },
+    }
+  );
+};

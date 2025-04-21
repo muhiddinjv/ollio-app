@@ -3,16 +3,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScrollView, Alert, View, Dimensions } from "react-native";
 import { DataTable, TextInput, Button, Text } from "react-native-paper";
 import { useQueryClient } from "@tanstack/react-query";
-import axiosInstance from "../../api/axiostance";
-import { getAccessToken } from "../../api/astorage";
 import Wrapper from "../../components/Wrapper";
 import { useGlobalState } from "../../hooks";
 import Header from "../../components/Header";
+import { usePostGoods } from "../../hooks";
+
 const { height } = Dimensions.get('window');
 
 const GoodsAdd = ({ navigation }) => {
   const queryClient = useQueryClient();
   const { selectedGoods, setSelectedGoods } = useGlobalState();
+  const { mutate: postGoods, isLoading } = usePostGoods();
 
   const handleChange = (index, field, value) => {
     const updatedGoods = [...selectedGoods];
@@ -27,25 +28,25 @@ const GoodsAdd = ({ navigation }) => {
   };
 
   const submitGoods = async () => {
-    try {
-      const accessToken = await getAccessToken();
-      const formattedGoods = selectedGoods.map((good) => ({
-        product_id: good.product_id,
-        quantity: Number(good.quantity),
-        order: Number(good.order),
-        cost: Number(good.cost),        
-        price: Number(good.price)       
-      }));
-      await axiosInstance.post("/stock/receive", formattedGoods, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-      await AsyncStorage.removeItem("selectedGoods");
-      queryClient.invalidateQueries(["goods"]);
-      setSelectedGoods([]);
-      navigation.navigate("GoodTabs", { screen: "Dokon" });
-    } catch (error) {
-      Alert.alert("Error", `${error}`);
-    }
+    const formattedGoods = selectedGoods.map((good) => ({
+      product_id: good.product_id,
+      quantity: Number(good.quantity),
+      order: Number(good.order),
+      cost: Number(good.cost),        
+      price: Number(good.price)       
+    }));
+
+    postGoods(formattedGoods, {
+      onSuccess: () => {
+        AsyncStorage.removeItem("selectedGoods");
+        queryClient.invalidateQueries(["stock"]);
+        setSelectedGoods([]);
+        navigation.navigate("GoodTabs", { screen: "Dokon" });
+      },
+      onError: (error) => {
+        Alert.alert("Error", `${error}`);
+      },
+    });
   };
 
   return (
@@ -55,7 +56,7 @@ const GoodsAdd = ({ navigation }) => {
         iconLeft="arrow-left"
         onLeftPress={() => navigation.navigate("GoodTabs", { screen: "Dokon" })}
       />
-      <View style={{ flex: 1,  backgroundColor: "white", height: height * 0.89 }}>
+      <View style={{ flex: 1, backgroundColor: "white", height: height * 0.89 }}>
         <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
           <DataTable>
             <DataTable.Header>
@@ -108,11 +109,9 @@ const GoodsAdd = ({ navigation }) => {
             ))}
           </DataTable>
         </ScrollView>
-        <View
-          className="absolute bottom-0 left-0 right-0 p-2 border-t border-gray-300"
-        >
-          <Button mode="contained" onPress={submitGoods} disabled={!validateGoods()}>
-            Add to Goods
+        <View className="absolute bottom-0 left-0 right-0 p-2 border-t border-gray-300">
+          <Button mode="contained" onPress={submitGoods} disabled={!validateGoods() || isLoading}>
+            {isLoading ? "Loading..." : "Add to Goods"}
           </Button>
         </View>
       </View>

@@ -10,6 +10,7 @@ import ListItem from "../../components/ListItem";
 import { useInfiniteScroll } from "../../hooks";
 import { useGlobalState } from "../../hooks";
 import Numpad from "../../components/Numpad";
+import { Text } from "react-native";
 
 const StyledPicker = styled(Picker);
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
@@ -26,9 +27,8 @@ const SalesList = ({ navigation }) => {
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
     useInfiniteScroll({
       url: "stock",
-      limit: 25,
       filters: filters,
-      key: ["goods"],
+      key: ["stock"],
     });
 
   const handleProductPress = (product) => {
@@ -155,8 +155,10 @@ const SalesList = ({ navigation }) => {
           )}
           LoaderComponent={<Loader />}
           ListEmptyComponent={
-            <View className="flex items-center">
-              <Loader />
+            <View className="flex-1 items-center">
+              <Text className="text-base p-5 text-gray-600">
+                Sizda hozircha maxsulotlar yo'q.
+              </Text>
             </View>
           }
           ListFooterComponent={() => {

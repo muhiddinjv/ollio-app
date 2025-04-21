@@ -29,23 +29,25 @@ export const AuthProvider = ({ children }) => {
       setRefreshToken(data.refreshToken);
       setUser(user);
       navigation.navigate("Savdo");
+
+      // Invalidate queries related to stock items
+      queryClient.invalidateQueries(["stock"]);
     },
     onError: (error) => {
-      Alert.alert("Sign in error:", error?.response?.data || error.message)
+      Alert.alert("Sign in error:", error?.response?.data || error.message);
       console.error("Error during sign in:", error);
     },
   });
 
   const signOutMutation = useMutation(apiSignOut, {
     onSuccess: () => {
+      queryClient.clear();
+      removeAccessToken();
+      setUser(null);
       navigation.reset({
         index: 0,
         routes: [{ name: "SignIn" }],
       });
-      queryClient.clear();
-      removeAccessToken();
-      setItem("user", null);
-      setUser(null);
     },
     onError: (error) => {
       console.error("Error during sign out:", error);

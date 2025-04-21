@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 import { ActivityIndicator } from "react-native-paper";
 import { FlashList } from "@shopify/flash-list";
@@ -11,7 +11,6 @@ const Catalog = () => {
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } = useInfiniteScroll({url: "catalog", key: ["catalog"]});
 
   const handleToggleItem = (item) => {
-    console.log("Toggling item:", item);
     setSelectedGoods((prev) => {
       const isSelected = prev.find((p) => p.product_id === item._id);
       if (isSelected) {
@@ -20,7 +19,6 @@ const Catalog = () => {
       return [...prev, { product_id: item._id, title: item.title, price: 0, cost: 0, quantity: 0 }];
     });
   };
-  // console.log('selectedGoods :>> ', selectedGoods);
 
   return (
     <View style={{ flex: 1 }}>
@@ -48,8 +46,10 @@ const Catalog = () => {
         )}
         LoaderComponent={<Loader />}
         ListEmptyComponent={
-          <View className="flex items-center">
-            <Loader />
+          <View className="flex-1 items-center">
+            <Text className="text-base p-5 text-gray-600">
+              Sizda hozircha maxsulotlar yo'q.
+            </Text>
           </View>
         }
         ListFooterComponent={() => {

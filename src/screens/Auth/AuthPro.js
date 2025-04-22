@@ -1,40 +1,54 @@
 import * as React from "react";
 import { jwtDecode } from "jwt-decode";
-import { useNavigation } from '@react-navigation/native';
+import { getAccessToken } from "../../api/astorage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { setAccessToken, removeAccessToken, setRefreshToken, setItem, getAccessToken } from "../../api/astorage";
 import { signIn as apiSignIn, signOut as apiSignOut, refreshToken as apiRefreshToken } from "../../api/requests";
-import { useGlobalState } from "../../hooks";
 
 const AuthContext = React.createContext({
-  userToken: null,
+  user: null,
+  signedIn: false,
+  isLoading: false,
   signIn: () => {},
   signOut: () => {},
   refreshToken: () => {},
 });
 
-// In case you want to use Auth functions outside React tree
-export const AuthRef = React.createRef();
-
 export const AuthProvider = ({ children }) => {
-  const navigation = useNavigation();
+  const [signedIn, setSignedIn] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [user, setUser] = React.useState(null);
   const queryClient = useQueryClient();
-  const { setUser } = useGlobalState();
+
+  const checkAuthStatus = async () => {
+    try {
+      const token = await getAccessToken();
+      if (token) {
+        const decodedUser = jwtDecode(token);
+        console.log('decodedUser :>> ', decodedUser);
+        setUser(decodedUser);
+        setSignedIn(true);
+      } else {
+        setSignedIn(false);
+      }
+    } catch (error) {
+      console.error("Error during authentication check:", error);
+      setSignedIn(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    checkAuthStatus();
+  }, []);
 
   const signInMutation = useMutation(apiSignIn, {
-    onSuccess: (data) => {
-      const user = jwtDecode(data.accessToken);
-      setItem("user", user);
-      setAccessToken(data.accessToken);
-      setRefreshToken(data.refreshToken);
+    onSuccess: (user) => {
       setUser(user);
-      navigation.navigate("Savdo");
-
-      // Invalidate queries related to stock items
+      setSignedIn(true);
       queryClient.invalidateQueries(["stock"]);
     },
     onError: (error) => {
-      Alert.alert("Sign in error:", error?.response?.data || error.message);
       console.error("Error during sign in:", error);
     },
   });
@@ -42,12 +56,8 @@ export const AuthProvider = ({ children }) => {
   const signOutMutation = useMutation(apiSignOut, {
     onSuccess: () => {
       queryClient.clear();
-      removeAccessToken();
       setUser(null);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "SignIn" }],
-      });
+      setSignedIn(false);
     },
     onError: (error) => {
       console.error("Error during sign out:", error);
@@ -55,34 +65,27 @@ export const AuthProvider = ({ children }) => {
   });
 
   const refreshTokenMutation = useMutation(apiRefreshToken, {
-    onSuccess: (data) => {
-      setAccessToken(data.accessToken);
-      setRefreshToken(data.refreshToken);
-    },
     onError: (error) => {
       console.error("Error refreshing token:", error);
-      removeAccessToken();
       setUser(null);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "SignIn" }],
-      });
+      setSignedIn(false);
     },
   });
 
   const authActions = React.useMemo(
     () => ({
+      user,
+      signedIn,
+      isLoading,
       signIn: signInMutation.mutate,
       signOut: signOutMutation.mutate,
       refreshToken: refreshTokenMutation.mutate,
     }),
-    [navigation]
+    [user, signedIn, isLoading]
   );
-
   React.useEffect(() => {
-    AuthRef.current = authActions;
-  }, [authActions]);
-  
+    console.log('AuthProvider signedIn :>> ', signedIn);
+  }, [signedIn]);
 
   return (
     <AuthContext.Provider value={{ ...authActions }}>

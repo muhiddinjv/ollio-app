@@ -1,11 +1,14 @@
-import { removeAccessToken, getRefreshToken, setAccessToken, setRefreshToken, removeRefreshToken } from "./astorage";
+import { jwtDecode } from "jwt-decode";
+import { removeAccessToken, getRefreshToken, setAccessToken, setRefreshToken, setUser } from "./astorage";
 import axiosInstance from "./axiostance";
 
 export const signIn = async ({ phone, password }) => {
     const { data } = await axiosInstance.post("auth/signin", { phone, password });
     await setAccessToken(data.accessToken);
     await setRefreshToken(data.refreshToken);
-    return data;
+    const user = jwtDecode(data.accessToken);
+    await setUser(user);
+    return user;
 };
   
 export const signOut = async () => {

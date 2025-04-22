@@ -1,10 +1,8 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createStackNavigator } from "@react-navigation/stack";
 import { IconButton, useTheme } from "react-native-paper";
 import { useColorScheme } from "nativewind";
-import Sidebar from "./Sidebar";
-import SignIn from "../screens/Auth/SignIn";
-import SignupScreen from "../screens/Auth/SignUp";
 import SalesList from "../screens/Sales/SalesList";
 import SaleMade from "../screens/Sales/SaleMade";
 import UserList from "../screens/Users/UserList";
@@ -17,7 +15,7 @@ import BillDetails from "../screens/Bills/BillDetails";
 import GoodsAdd from "../screens/Goods/GoodsAdd";
 import GoodTabs from "../screens/Goods/GoodTabs";
 import GoodEdit from "../screens/Goods/GoodEdit";
-import { createStackNavigator } from "@react-navigation/stack";
+import Sidebar from "./Sidebar";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -88,8 +86,6 @@ const DrawerNav = ({ navigation }) => {
       <Drawer.Screen name="SaleMade" component={SaleMade} options={hidden} />
       <Drawer.Screen name="BillCart" component={BillCart} options={hidden} />
       <Drawer.Screen name="BillDetails" component={BillDetails} options={hidden} />
-      <Drawer.Screen name="SignIn" component={SignIn} options={hidden} />
-      <Drawer.Screen name="SignUp" component={SignupScreen} options={hidden} />
       <Drawer.Screen name="UserList" component={UserList} options={hidden} />
       <Drawer.Screen name="UserAdd" component={UserAdd} options={hidden} />
       <Drawer.Screen name="UserEdit" component={UserEdit} options={hidden} />

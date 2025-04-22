@@ -4,7 +4,7 @@ import { TextInput, Button } from "react-native-paper";
 import ControlledInput from "../../components/ControlledInput";
 import { useForm } from "react-hook-form";
 
-const SignupScreen = ({ navigation }) => {
+const Signup = ({ navigation }) => {
   const {
     control,
     formState: { errors },
@@ -65,4 +65,4 @@ const SignupScreen = ({ navigation }) => {
   );
 };
 
-export default SignupScreen;
+export default Signup;

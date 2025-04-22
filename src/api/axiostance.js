@@ -1,9 +1,5 @@
-import React from "react";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-import dayjs from "dayjs";
 import { getAccessToken, removeAccessToken, getRefreshToken, setAccessToken, setRefreshToken } from "./astorage";
-const AuthRef = React.createRef();
 
 const baseURL = "https://ollioapi.vercel.app/";
 // const baseURL = "http://localhost:4000/";
@@ -25,11 +21,8 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    const accessToken = await getAccessToken();
-    const decodedToken = jwtDecode(accessToken);
-    const isTokenExpired = dayjs.unix(decodedToken.exp).isBefore(dayjs());
 
-    if (isTokenExpired && !originalRequest._retry) {
+    if (error.response?.status === 403 && !originalRequest._retry) {
       console.log("Token expired. Attempting to refresh...");
       const refreshToken = await getRefreshToken();
 
@@ -40,14 +33,12 @@ axiosInstance.interceptors.response.use(
           await setAccessToken(response.data.accessToken);
           await setRefreshToken(response.data.refreshToken);
 
-          // Update Authorization header
           originalRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
 
           return axiosInstance(originalRequest); // retry
         } catch (err) {
           console.error("Error refreshing token:", err);
           await removeAccessToken();
-          AuthRef.current?.signOut();
           return Promise.reject("Session expired. Please sign in again.");
         }
       } 

@@ -9,10 +9,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TextInput, Button as RNButton } from "react-native-paper";
-import { useAuth } from "./AuthPro";
 import { useColorScheme } from "nativewind";
-import { MainColors } from "../../theme";
 import { useForm } from "react-hook-form";
+import { MainColors } from "../../theme";
+import { useAuth } from "./AuthPro";
 import ControlledInput from "../../components/ControlledInput";
 
 export default function SignIn() {

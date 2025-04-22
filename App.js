@@ -1,11 +1,11 @@
 import "react-native-gesture-handler";
-import { PaperProvider } from 'react-native-paper';
-import { NavigationContainer } from "@react-navigation/native";
+import { PaperProvider } from "react-native-paper";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AuthProvider } from "./src/screens/Auth/AuthPro";
-import { GlobalProvider } from "./src/hooks";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { enableScreens } from "react-native-screens";
-import DrawerNav from "./src/stacks/DrawerNav";
+import AppStack from "./src/stacks/AppStack";
+import { GlobalProvider } from "./src/hooks";
+import { AuthProvider } from "./src/screens/Auth/AuthPro";
 enableScreens();
 
 const queryClient = new QueryClient({
@@ -20,16 +20,16 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient} >
-      <GlobalProvider>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider>
         <PaperProvider>
-          <NavigationContainer>
+          <GlobalProvider>
             <AuthProvider>
-              <DrawerNav />
+              <AppStack />
             </AuthProvider>
-          </NavigationContainer>
+          </GlobalProvider>
         </PaperProvider>
-      </GlobalProvider>
+      </SafeAreaProvider>
     </QueryClientProvider>
   );
 }

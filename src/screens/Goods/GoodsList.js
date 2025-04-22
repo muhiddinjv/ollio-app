@@ -20,7 +20,6 @@ const GoodsList = () => {
       filters: filters,
       key: ["stock"],
     });
-    console.log(data);
 
   const handleItemPress = (good) => {
     navigation.navigate("GoodEdit", { good });

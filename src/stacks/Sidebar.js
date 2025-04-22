@@ -4,24 +4,22 @@ import { useColorScheme } from "nativewind";
 import { Text, Switch, Button, IconButton, useTheme } from "react-native-paper";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import { useAuth } from "../screens/Auth/AuthPro";
-import { useGlobalState } from "../hooks";
 
 const Sidebar = (props) => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
-  const { user } = useGlobalState();
-  const { signOut } = useAuth();
-  const theme = useTheme();
+  const { signOut, user } = useAuth();
+  const {colors} = useTheme();
 
   return (
     <View className="flex-1 w-full dark:bg-slate-800">{/* -- REMOVE PADDING DrawerContentScrollView ---*/}
-      <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: theme.colors.primary}}>
+      <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor: colors.primary}}>
         <View className="flex-row items-center justify-between px-6 pt-10">
           <View>
             <Text className="pt-2 text-2xl text-white font-bold">{user?.name || 'User'}</Text>
             <Text className="pt-2 text-2xl text-white font-bold">{user?.role || 'Role'}</Text>
             <Text className="pt-2 text-lg text-white">{user?.store_type || 'Store'}</Text>
           </View>
-          <IconButton icon="lock" size={35} iconColor={theme.colors.primary} className="bg-white h-12 w-12 rounded-full items-center justify-center" onPress={() => {alert('lock')}} />
+          <IconButton icon="lock" size={35} iconColor={colors.primary} className="bg-white h-12 w-12 rounded-full items-center justify-center" onPress={() => {alert('lock')}} />
         </View>
         <Switch
           color="white"

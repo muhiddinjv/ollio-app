@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Portal, Dialog, Button, IconButton } from 'react-native-paper';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button, Dialog, IconButton, Portal } from 'react-native-paper';
 
-const Numpad = ({ visible, onClose, onConfirm, quantity, setQuantity, selectedProduct }) => {
-  const handlePress = async (value) => {
+function Numpad({ visible, onClose, onConfirm, quantity, setQuantity, selectedProduct }) {
+  const handlePress = async value => {
     if (value === 'OK') {
       if (quantity) {
         onConfirm(quantity);
         onClose();
       }
     } else if (value === 'DEL') {
-      setQuantity((prev) => prev.slice(0, -1));
+      setQuantity(prev => prev.slice(0, -1));
     } else {
       const newQuantity = quantity + value;
       if (parseFloat(newQuantity) <= 9999) {
@@ -33,7 +33,7 @@ const Numpad = ({ visible, onClose, onConfirm, quantity, setQuantity, selectedPr
           </View>
 
           <View style={styles.keyboard}>
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, '.', 0, 'OK'].map((key) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, '.', 0, 'OK'].map(key => (
               <Button
                 key={key}
                 mode="text"
@@ -49,56 +49,55 @@ const Numpad = ({ visible, onClose, onConfirm, quantity, setQuantity, selectedPr
       </Dialog>
     </Portal>
   );
-};
+}
 
 const styles = StyleSheet.create({
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    height: 80,
+    justifyContent: 'center',
+    width: 80,
+  },
+  buttonText: {
+    color: '#333',
+    display: 'flex',
+    fontSize: 42,
+    justifyContent: 'center',
+    lineHeight: 50,
+    textAlign: 'center',
+  },
   dialog: {
     backgroundColor: '#fff',
     borderRadius: 10,
   },
   header: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
   },
-  title: {
-    fontSize: 18,
-    width: '80%',
-    fontWeight: 'bold',
+  keyboard: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    justifyContent: 'space-around',
   },
   quantityDisplay: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 20,
   },
   quantityText: {
+    flex: 1,
     fontSize: 48,
     fontWeight: 'bold',
-    flex: 1,
     textAlign: 'center',
   },
-  keyboard: {
-    gap: 10,
-    // borderWidth: 1,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  button: {
-    width: 80,
-    height: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    backgroundColor: '#f0f0f0',
-  },
-  buttonText: {
-    fontSize: 42,
-    color: '#333',
-    display: 'flex',
-    textAlign: 'center',
-    justifyContent: 'center',
-    lineHeight: 50,
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    width: '80%',
   },
 });
 

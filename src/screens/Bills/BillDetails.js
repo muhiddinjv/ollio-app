@@ -1,26 +1,27 @@
-import React from "react";
-import { View, FlatList, Text } from "react-native";
-import Header from "../../components/Header";
-import Loader from "../../components/Loader";
-import { useGlobalState } from "../../hooks";
-import { formatDate } from "../../utils";
+import React from 'react';
+import { FlatList, Text, View } from 'react-native';
 
-const BillDetails = ({ navigation, route }) => {
+import Header from '../../components/Header';
+import Loader from '../../components/Loader';
+import { useGlobalState } from '../../hooks';
+import { formatDate } from '../../utils';
+
+function BillDetails({ navigation, route }) {
   const { downloadBill } = useGlobalState();
   const { bill } = route.params;
 
   const renderHeader = () => (
-    <View className="py-4 my-2 px-4 border-b border-gray-300">
-      <Text className="text-4xl text-center font-medium">{bill?.total_price}</Text>
-      <Text className="text-gray-600 text-xl text-center mb-4">Jami</Text>
+    <View className="my-2 border-b border-gray-300 p-4">
+      <Text className="text-center text-4xl font-medium">{bill?.total_price}</Text>
+      <Text className="mb-4 text-center text-xl text-gray-600">Jami</Text>
       <Text className="text-lg">Hodim: {bill?.staff}</Text>
-      <Text className="text-lg">Mijoz: {bill?.client || "Topilmadi"}</Text>
+      <Text className="text-lg">Mijoz: {bill?.client || 'Topilmadi'}</Text>
     </View>
   );
 
   const renderFooter = () => (
-    <View className="py-4 px-4 mt-4 border-t border-gray-300">
-      <View className="flex-row justify-between items-center">
+    <View className="mt-4 border-t border-gray-300 p-4">
+      <View className="flex-row items-center justify-between">
         <Text className="text-lg">Jami:</Text>
         <Text className="text-lg">{bill?.total_price}</Text>
       </View>
@@ -33,22 +34,22 @@ const BillDetails = ({ navigation, route }) => {
 
   return (
     <View className="flex-1">
-      <Header 
-        fontSize={20} 
-        title="Chek" 
-        iconRight="download" 
-        iconLeft="arrow-left" 
-        navigation={navigation} 
-        onRightPress={() => downloadBill(bill)} 
-        onLeftPress={() => navigation.navigate("Cheklar")} 
+      <Header
+        fontSize={20}
+        title="Chek"
+        iconRight="download"
+        iconLeft="arrow-left"
+        navigation={navigation}
+        onRightPress={() => downloadBill(bill)}
+        onLeftPress={() => navigation.navigate('Cheklar')}
       />
       <FlatList
         data={bill?.products}
         renderItem={({ item }) => (
-          <View key={item?.product_id} className="flex-row justify-between py-2 px-4 ">
+          <View key={item?.product_id} className="flex-row justify-between px-4 py-2 ">
             <View className="flex-row items-center gap-8">
               <View>
-                <Text className="text-lg max-w-[300px]">{item?.title}</Text>
+                <Text className="max-w-[300px] text-lg">{item?.title}</Text>
                 <Text className="text-gray-500">
                   {item?.quantity} x {item?.price}
                 </Text>
@@ -57,7 +58,7 @@ const BillDetails = ({ navigation, route }) => {
             <Text className="text-lg">{item?.total}</Text>
           </View>
         )}
-        keyExtractor={(item) => item?.product_id}
+        keyExtractor={item => item?.product_id}
         LoaderComponent={<Loader />}
         ListHeaderComponent={renderHeader}
         ListFooterComponent={renderFooter}
@@ -69,6 +70,6 @@ const BillDetails = ({ navigation, route }) => {
       />
     </View>
   );
-};
+}
 
 export default BillDetails;

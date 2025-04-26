@@ -8,7 +8,5 @@
     "allowJs": true,
     "declaration": false
   },
-  "include": [
-    "src/api/generated_api.ts"
-  ]
+  "include": ["src/api/generated_api.ts"]
 }

@@ -1,28 +1,27 @@
-import { useState } from "react";
-import { Text, View } from "react-native";
-import { RefreshControl } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { ActivityIndicator } from "react-native-paper";
-import { FlashList } from "@shopify/flash-list";
-import { useGlobalState, useInfiniteScroll } from "../../hooks";
-import ListItem from "../../components/ListItem";
-import Loader from "../../components/Loader";
+import { useState } from 'react';
+import { RefreshControl, Text, View } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { FlashList } from '@shopify/flash-list';
 
-const GoodsList = () => {
+import ListItem from '../../components/ListItem';
+import Loader from '../../components/Loader';
+import { useGlobalState, useInfiniteScroll } from '../../hooks';
+
+function GoodsList() {
   const { selectedGoods } = useGlobalState();
 
-  const [goodId, setGoodId] = useState([]);
-  const [filters, setFilters] = useState({ search: "" });
+  const [goodId] = useState([]);
+  const [filters] = useState({ search: '' });
   const navigation = useNavigation();
-  const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
-    useInfiniteScroll({
-      url: "stock",
-      filters: filters,
-      key: ["stock"],
-    });
+  const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } = useInfiniteScroll({
+    url: 'stock',
+    filters,
+    key: ['stock'],
+  });
 
-  const handleItemPress = (good) => {
-    navigation.navigate("GoodEdit", { good });
+  const handleItemPress = good => {
+    navigation.navigate('GoodEdit', { good });
   };
 
   return (
@@ -32,11 +31,9 @@ const GoodsList = () => {
         extraData={selectedGoods}
         onEndReached={onEndReached}
         onEndReachedThreshold={2}
-        removeClippedSubviews={true}
+        removeClippedSubviews
         estimatedItemSize={84}
-        refreshControl={
-          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-        }
+        refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
         renderItem={({ item }) => (
           <ListItem
             editable
@@ -52,9 +49,7 @@ const GoodsList = () => {
         LoaderComponent={<Loader />}
         ListEmptyComponent={
           <View className="flex-1 items-center">
-            <Text className="text-base p-5 text-gray-600">
-              Sizda hozircha maxsulotlar yo'q.
-            </Text>
+            <Text className="p-5 text-base text-gray-600">Sizda hozircha maxsulotlar yo&apos;q.</Text>
           </View>
         }
         ListFooterComponent={() => {
@@ -63,6 +58,6 @@ const GoodsList = () => {
       />
     </View>
   );
-};
+}
 
 export default GoodsList;

@@ -1,23 +1,24 @@
-import React, { useState } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
-import { TextInput, useTheme } from "react-native-paper";
-import axiosInstance from "../../api/axiostance";
-import { Picker } from "@react-native-picker/picker";
-import { useGlobalState } from "../../hooks/index";
-import Header from "../../components/Header";
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { TextInput, useTheme } from 'react-native-paper';
+import { Picker } from '@react-native-picker/picker';
 
-const UserAdd = ({ navigation }) => {
+import axiosInstance from '../../api/axiostance';
+import Header from '../../components/Header';
+import { useGlobalState } from '../../hooks/index';
+
+function UserAdd({ navigation }) {
   const { colors } = useTheme();
   const { user } = useGlobalState();
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [store_type, setStoreType] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
-  const [note, setNote] = useState("");
-  const [pin, setPin] = useState("");
-  
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [store_type, setStoreType] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
+  const [note, setNote] = useState('');
+  const [pin, setPin] = useState('');
+
   const [errors, setErrors] = useState({});
 
   const handleSave = async () => {
@@ -52,10 +53,10 @@ const UserAdd = ({ navigation }) => {
     };
 
     try {
-      await axiosInstance.post("/users", userData);
+      await axiosInstance.post('/users', userData);
       navigation.goBack();
     } catch (error) {
-      console.error("Error saving user:", error.response ? error.response.data : error.message);
+      console.error('Error saving user:', error.response ? error.response.data : error.message);
     }
   };
 
@@ -65,14 +66,14 @@ const UserAdd = ({ navigation }) => {
       borderBottomColor: errors.role || errors.store_type ? 'red' : '#aaa',
       marginBottom: 12,
     },
-  }
+  };
 
   return (
     <View className="flex-1">
       <Header
         title="Foydalanuvchi qo'shish"
         iconLeft="arrow-left"
-        onLeftPress={() => navigation.navigate("UserList")}
+        onLeftPress={() => navigation.navigate('UserList')}
         onRightPress={handleSave}
         iconRight="content-save"
       />
@@ -94,7 +95,7 @@ const UserAdd = ({ navigation }) => {
             onChangeText={setPassword}
             style={styles.input}
             left={<TextInput.Icon icon="lock" />}
-            secureTextEntry={true}
+            secureTextEntry
             error={errors.password}
           />
           <TextInput
@@ -139,7 +140,7 @@ const UserAdd = ({ navigation }) => {
             <Picker
               mode="dropdown"
               selectedValue={role}
-              onValueChange={(itemValue) => setRole(itemValue)}
+              onValueChange={itemValue => setRole(itemValue)}
               style={{ backgroundColor: colors.secondaryContainer }}
             >
               <Picker.Item label="Klient" value="client" />
@@ -151,7 +152,7 @@ const UserAdd = ({ navigation }) => {
             <Picker
               mode="dropdown"
               selectedValue={store_type}
-              onValueChange={(itemValue) => setStoreType(itemValue)}
+              onValueChange={itemValue => setStoreType(itemValue)}
               style={{ backgroundColor: colors.secondaryContainer }}
             >
               <Picker.Item label="Optovik" value="wholesale" />
@@ -162,22 +163,22 @@ const UserAdd = ({ navigation }) => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
     flex: 1,
     padding: 16,
-    backgroundColor: "#fff",
-  },
-  scrollView: {
-    paddingBottom: 20,
   },
   input: {
     marginBottom: 12,
   },
-  saveButton: {
-    marginTop: 20,
+  // saveButton: {
+  //   marginTop: 20,
+  // },
+  scrollView: {
+    paddingBottom: 20,
   },
 });
 

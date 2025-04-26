@@ -123,7 +123,7 @@ export interface CatalogItemUpdate {
 }
 
 export type GetUsersParams = {
-role?: string;
+  role?: string;
 };
 
 export type PutUsersId200 = {
@@ -135,7 +135,7 @@ export type DeleteUsersId200 = {
 };
 
 export type GetBillsParams = {
-owner_id: string;
+  owner_id: string;
 };
 
 export type PostBillsBillIdPayBodyUser = {
@@ -162,361 +162,264 @@ export type PostCatalog201 = {
 /**
  * @summary User Authentication
  */
-export const postAuthSignin = (
-    authRequest: AuthRequest,
- ) => {
-      return axiosInstance<AuthResponse>(
-      {url: `/auth/signin`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: authRequest
-    },
-      );
-    }
-  
+export const postAuthSignin = (authRequest: AuthRequest) => {
+  return axiosInstance<AuthResponse>({
+    url: `/auth/signin`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: authRequest,
+  });
+};
+
 /**
  * @summary Get users by role
  */
-export const getUsers = (
-    params?: GetUsersParams,
- ) => {
-      return axiosInstance<User[]>(
-      {url: `/users`, method: 'GET',
-        params
-    },
-      );
-    }
-  
+export const getUsers = (params?: GetUsersParams) => {
+  return axiosInstance<User[]>({ url: `/users`, method: 'GET', params });
+};
+
 /**
  * @summary Create Retailer as Customer
  */
-export const postUsers = (
-    createUser: CreateUser,
- ) => {
-      return axiosInstance<BillResponse>(
-      {url: `/users`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createUser
-    },
-      );
-    }
-  
+export const postUsers = (createUser: CreateUser) => {
+  return axiosInstance<BillResponse>({
+    url: `/users`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: createUser,
+  });
+};
+
 /**
  * @summary Update User
  */
-export const putUsersId = (
-    id: string,
-    updateUser: UpdateUser,
- ) => {
-      return axiosInstance<PutUsersId200>(
-      {url: `/users/${id}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: updateUser
-    },
-      );
-    }
-  
+export const putUsersId = (id: string, updateUser: UpdateUser) => {
+  return axiosInstance<PutUsersId200>({
+    url: `/users/${id}`,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    data: updateUser,
+  });
+};
+
 /**
  * @summary Delete User
  */
-export const deleteUsersId = (
-    id: string,
- ) => {
-      return axiosInstance<DeleteUsersId200>(
-      {url: `/users/${id}`, method: 'DELETE'
-    },
-      );
-    }
-  
+export const deleteUsersId = (id: string) => {
+  return axiosInstance<DeleteUsersId200>({ url: `/users/${id}`, method: 'DELETE' });
+};
+
 /**
  * @summary Get all bills
  */
-export const getBills = (
-    params: GetBillsParams,
- ) => {
-      return axiosInstance<Bill[]>(
-      {url: `/bills`, method: 'GET',
-        params
-    },
-      );
-    }
-  
+export const getBills = (params: GetBillsParams) => {
+  return axiosInstance<Bill[]>({ url: `/bills`, method: 'GET', params });
+};
+
 /**
  * @summary Create a new bill
  */
-export const postBills = (
-    billCreate: BillCreate,
- ) => {
-      return axiosInstance<BillResponse>(
-      {url: `/bills`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: billCreate
-    },
-      );
-    }
-  
+export const postBills = (billCreate: BillCreate) => {
+  return axiosInstance<BillResponse>({
+    url: `/bills`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: billCreate,
+  });
+};
+
 /**
  * @summary Get a bill by ID
  */
-export const getBillsBillId = (
-    billId: string,
- ) => {
-      return axiosInstance<Bill>(
-      {url: `/bills/${billId}`, method: 'GET'
-    },
-      );
-    }
-  
+export const getBillsBillId = (billId: string) => {
+  return axiosInstance<Bill>({ url: `/bills/${billId}`, method: 'GET' });
+};
+
 /**
  * @summary Pay a bill by ID
  */
-export const postBillsBillIdPay = (
-    billId: string,
-    postBillsBillIdPayBody: PostBillsBillIdPayBody,
- ) => {
-      return axiosInstance<void>(
-      {url: `/bills/${billId}/pay`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: postBillsBillIdPayBody
-    },
-      );
-    }
-  
+export const postBillsBillIdPay = (billId: string, postBillsBillIdPayBody: PostBillsBillIdPayBody) => {
+  return axiosInstance<void>({
+    url: `/bills/${billId}/pay`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: postBillsBillIdPayBody,
+  });
+};
+
 /**
  * @summary Generate a PDF for a bill by ID
  */
-export const getBillsBillIdPdf = (
-    billId: string,
- ) => {
-      return axiosInstance<Blob>(
-      {url: `/bills/${billId}/pdf`, method: 'GET',
-        responseType: 'blob'
-    },
-      );
-    }
-  
+export const getBillsBillIdPdf = (billId: string) => {
+  return axiosInstance<Blob>({ url: `/bills/${billId}/pdf`, method: 'GET', responseType: 'blob' });
+};
+
 /**
  * @summary Get cost details by ID
  */
-export const getBillsCostCostId = (
-    costId: string,
- ) => {
-      return axiosInstance<CostDetail>(
-      {url: `/bills/cost/${costId}`, method: 'GET'
-    },
-      );
-    }
-  
+export const getBillsCostCostId = (costId: string) => {
+  return axiosInstance<CostDetail>({ url: `/bills/cost/${costId}`, method: 'GET' });
+};
+
 /**
  * @summary Get all bills for a specific user
  */
-export const getBillsUsersUserId = (
-    userId: string,
- ) => {
-      return axiosInstance<Bill[]>(
-      {url: `/bills/users/${userId}`, method: 'GET'
-    },
-      );
-    }
-  
+export const getBillsUsersUserId = (userId: string) => {
+  return axiosInstance<Bill[]>({ url: `/bills/users/${userId}`, method: 'GET' });
+};
+
 /**
  * @summary Get all invoices for a specific owner
  */
-export const getBillsInvoicesOwnerId = (
-    ownerId: string,
- ) => {
-      return axiosInstance<Invoice[]>(
-      {url: `/bills/invoices/${ownerId}`, method: 'GET'
-    },
-      );
-    }
-  
+export const getBillsInvoicesOwnerId = (ownerId: string) => {
+  return axiosInstance<Invoice[]>({ url: `/bills/invoices/${ownerId}`, method: 'GET' });
+};
+
 /**
  * @summary Update the title of an invoice
  */
-export const patchBillsInvoicesIdTitle = (
-    id: string,
-    invoiceTitleUpdate: InvoiceTitleUpdate,
- ) => {
-      return axiosInstance<void>(
-      {url: `/bills/invoices/${id}/title`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: invoiceTitleUpdate
-    },
-      );
-    }
-  
+export const patchBillsInvoicesIdTitle = (id: string, invoiceTitleUpdate: InvoiceTitleUpdate) => {
+  return axiosInstance<void>({
+    url: `/bills/invoices/${id}/title`,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    data: invoiceTitleUpdate,
+  });
+};
+
 /**
  * @summary Get user stock
  */
-export const getStock = (
-    
- ) => {
-      return axiosInstance<StockItem[]>(
-      {url: `/stock`, method: 'GET'
-    },
-      );
-    }
-  
+export const getStock = () => {
+  return axiosInstance<StockItem[]>({ url: `/stock`, method: 'GET' });
+};
+
 /**
  * @summary Set stock availability
  */
-export const putStock = (
-    stockAvailability: StockAvailability,
- ) => {
-      return axiosInstance<void>(
-      {url: `/stock`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: stockAvailability
-    },
-      );
-    }
-  
+export const putStock = (stockAvailability: StockAvailability) => {
+  return axiosInstance<void>({
+    url: `/stock`,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    data: stockAvailability,
+  });
+};
+
 /**
  * @summary Update stock price
  */
-export const patchStock = (
-    stockPriceUpdate: StockPriceUpdate,
- ) => {
-      return axiosInstance<void>(
-      {url: `/stock`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: stockPriceUpdate
-    },
-      );
-    }
-  
+export const patchStock = (stockPriceUpdate: StockPriceUpdate) => {
+  return axiosInstance<void>({
+    url: `/stock`,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    data: stockPriceUpdate,
+  });
+};
+
 /**
  * @summary Receive stock
  */
-export const postStockReceive = (
-    stockReceive: StockReceive,
- ) => {
-      return axiosInstance<void>(
-      {url: `/stock/receive`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: stockReceive
-    },
-      );
-    }
-  
+export const postStockReceive = (stockReceive: StockReceive) => {
+  return axiosInstance<void>({
+    url: `/stock/receive`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: stockReceive,
+  });
+};
+
 /**
  * @summary Get invoices
  */
-export const getInvoices = (
-    
- ) => {
-      return axiosInstance<Invoice[]>(
-      {url: `/invoices`, method: 'GET'
-    },
-      );
-    }
-  
+export const getInvoices = () => {
+  return axiosInstance<Invoice[]>({ url: `/invoices`, method: 'GET' });
+};
+
 /**
  * @summary Update invoice title
  */
-export const patchInvoices = (
-    patchInvoicesBody: PatchInvoicesBody,
- ) => {
-      return axiosInstance<void>(
-      {url: `/invoices`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: patchInvoicesBody
-    },
-      );
-    }
-  
+export const patchInvoices = (patchInvoicesBody: PatchInvoicesBody) => {
+  return axiosInstance<void>({
+    url: `/invoices`,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    data: patchInvoicesBody,
+  });
+};
+
 /**
  * @summary Get a list of catalog items
  */
-export const getCatalog = (
-    
- ) => {
-      return axiosInstance<CatalogItem[]>(
-      {url: `/catalog`, method: 'GET'
-    },
-      );
-    }
-  
+export const getCatalog = () => {
+  return axiosInstance<CatalogItem[]>({ url: `/catalog`, method: 'GET' });
+};
+
 /**
  * @summary Create a new catalog item
  */
-export const postCatalog = (
-    catalogItemCreate: CatalogItemCreate,
- ) => {
-      return axiosInstance<PostCatalog201>(
-      {url: `/catalog`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: catalogItemCreate
-    },
-      );
-    }
-  
+export const postCatalog = (catalogItemCreate: CatalogItemCreate) => {
+  return axiosInstance<PostCatalog201>({
+    url: `/catalog`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: catalogItemCreate,
+  });
+};
+
 /**
  * @summary Get a catalog item by ID
  */
-export const getCatalogId = (
-    id: string,
- ) => {
-      return axiosInstance<CatalogItem>(
-      {url: `/catalog/${id}`, method: 'GET'
-    },
-      );
-    }
-  
+export const getCatalogId = (id: string) => {
+  return axiosInstance<CatalogItem>({ url: `/catalog/${id}`, method: 'GET' });
+};
+
 /**
  * @summary Update a catalog item by ID
  */
-export const putCatalogId = (
-    id: string,
-    catalogItemUpdate: CatalogItemUpdate,
- ) => {
-      return axiosInstance<void>(
-      {url: `/catalog/${id}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: catalogItemUpdate
-    },
-      );
-    }
-  
+export const putCatalogId = (id: string, catalogItemUpdate: CatalogItemUpdate) => {
+  return axiosInstance<void>({
+    url: `/catalog/${id}`,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    data: catalogItemUpdate,
+  });
+};
+
 /**
  * @summary Delete a catalog item by ID
  */
-export const deleteCatalogId = (
-    id: string,
- ) => {
-      return axiosInstance<void>(
-      {url: `/catalog/${id}`, method: 'DELETE'
-    },
-      );
-    }
-  
+export const deleteCatalogId = (id: string) => {
+  return axiosInstance<void>({ url: `/catalog/${id}`, method: 'DELETE' });
+};
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
-    type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
+type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
 
-export type PostAuthSigninResult = NonNullable<Awaited<ReturnType<typeof postAuthSignin>>>
-export type GetUsersResult = NonNullable<Awaited<ReturnType<typeof getUsers>>>
-export type PostUsersResult = NonNullable<Awaited<ReturnType<typeof postUsers>>>
-export type PutUsersIdResult = NonNullable<Awaited<ReturnType<typeof putUsersId>>>
-export type DeleteUsersIdResult = NonNullable<Awaited<ReturnType<typeof deleteUsersId>>>
-export type GetBillsResult = NonNullable<Awaited<ReturnType<typeof getBills>>>
-export type PostBillsResult = NonNullable<Awaited<ReturnType<typeof postBills>>>
-export type GetBillsBillIdResult = NonNullable<Awaited<ReturnType<typeof getBillsBillId>>>
-export type PostBillsBillIdPayResult = NonNullable<Awaited<ReturnType<typeof postBillsBillIdPay>>>
-export type GetBillsBillIdPdfResult = NonNullable<Awaited<ReturnType<typeof getBillsBillIdPdf>>>
-export type GetBillsCostCostIdResult = NonNullable<Awaited<ReturnType<typeof getBillsCostCostId>>>
-export type GetBillsUsersUserIdResult = NonNullable<Awaited<ReturnType<typeof getBillsUsersUserId>>>
-export type GetBillsInvoicesOwnerIdResult = NonNullable<Awaited<ReturnType<typeof getBillsInvoicesOwnerId>>>
-export type PatchBillsInvoicesIdTitleResult = NonNullable<Awaited<ReturnType<typeof patchBillsInvoicesIdTitle>>>
-export type GetStockResult = NonNullable<Awaited<ReturnType<typeof getStock>>>
-export type PutStockResult = NonNullable<Awaited<ReturnType<typeof putStock>>>
-export type PatchStockResult = NonNullable<Awaited<ReturnType<typeof patchStock>>>
-export type PostStockReceiveResult = NonNullable<Awaited<ReturnType<typeof postStockReceive>>>
-export type GetInvoicesResult = NonNullable<Awaited<ReturnType<typeof getInvoices>>>
-export type PatchInvoicesResult = NonNullable<Awaited<ReturnType<typeof patchInvoices>>>
-export type GetCatalogResult = NonNullable<Awaited<ReturnType<typeof getCatalog>>>
-export type PostCatalogResult = NonNullable<Awaited<ReturnType<typeof postCatalog>>>
-export type GetCatalogIdResult = NonNullable<Awaited<ReturnType<typeof getCatalogId>>>
-export type PutCatalogIdResult = NonNullable<Awaited<ReturnType<typeof putCatalogId>>>
-export type DeleteCatalogIdResult = NonNullable<Awaited<ReturnType<typeof deleteCatalogId>>>
+export type PostAuthSigninResult = NonNullable<Awaited<ReturnType<typeof postAuthSignin>>>;
+export type GetUsersResult = NonNullable<Awaited<ReturnType<typeof getUsers>>>;
+export type PostUsersResult = NonNullable<Awaited<ReturnType<typeof postUsers>>>;
+export type PutUsersIdResult = NonNullable<Awaited<ReturnType<typeof putUsersId>>>;
+export type DeleteUsersIdResult = NonNullable<Awaited<ReturnType<typeof deleteUsersId>>>;
+export type GetBillsResult = NonNullable<Awaited<ReturnType<typeof getBills>>>;
+export type PostBillsResult = NonNullable<Awaited<ReturnType<typeof postBills>>>;
+export type GetBillsBillIdResult = NonNullable<Awaited<ReturnType<typeof getBillsBillId>>>;
+export type PostBillsBillIdPayResult = NonNullable<Awaited<ReturnType<typeof postBillsBillIdPay>>>;
+export type GetBillsBillIdPdfResult = NonNullable<Awaited<ReturnType<typeof getBillsBillIdPdf>>>;
+export type GetBillsCostCostIdResult = NonNullable<Awaited<ReturnType<typeof getBillsCostCostId>>>;
+export type GetBillsUsersUserIdResult = NonNullable<Awaited<ReturnType<typeof getBillsUsersUserId>>>;
+export type GetBillsInvoicesOwnerIdResult = NonNullable<Awaited<ReturnType<typeof getBillsInvoicesOwnerId>>>;
+export type PatchBillsInvoicesIdTitleResult = NonNullable<Awaited<ReturnType<typeof patchBillsInvoicesIdTitle>>>;
+export type GetStockResult = NonNullable<Awaited<ReturnType<typeof getStock>>>;
+export type PutStockResult = NonNullable<Awaited<ReturnType<typeof putStock>>>;
+export type PatchStockResult = NonNullable<Awaited<ReturnType<typeof patchStock>>>;
+export type PostStockReceiveResult = NonNullable<Awaited<ReturnType<typeof postStockReceive>>>;
+export type GetInvoicesResult = NonNullable<Awaited<ReturnType<typeof getInvoices>>>;
+export type PatchInvoicesResult = NonNullable<Awaited<ReturnType<typeof patchInvoices>>>;
+export type GetCatalogResult = NonNullable<Awaited<ReturnType<typeof getCatalog>>>;
+export type PostCatalogResult = NonNullable<Awaited<ReturnType<typeof postCatalog>>>;
+export type GetCatalogIdResult = NonNullable<Awaited<ReturnType<typeof getCatalogId>>>;
+export type PutCatalogIdResult = NonNullable<Awaited<ReturnType<typeof putCatalogId>>>;
+export type DeleteCatalogIdResult = NonNullable<Awaited<ReturnType<typeof deleteCatalogId>>>;

@@ -1,10 +1,10 @@
-import React from "react";
-import { Checkbox, TouchableRipple } from "react-native-paper";
+import React from 'react';
+import { Checkbox, TouchableRipple } from 'react-native-paper';
 
-export const CheckBox = ({ checked, onChange }) => {
+export function CheckBox({ checked, onChange }) {
   return (
     <TouchableRipple onPress={onChange}>
-      <Checkbox status={checked ? "checked" : "unchecked"} />
+      <Checkbox status={checked ? 'checked' : 'unchecked'} />
     </TouchableRipple>
   );
-};
+}

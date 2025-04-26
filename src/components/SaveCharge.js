@@ -1,31 +1,27 @@
-import { Pressable, Text, View } from "react-native";
-import React from "react";
+import React from 'react';
+import { Pressable, Text, View } from 'react-native';
 
-const SaveCharge = ({ saveBill, navigation, isSaved }) => {
+function SaveCharge({ saveBill, navigation, isSaved }) {
   return (
-    <View className="p-2 bg-white dark:bg-slate-800 flex-row gap-2">
+    <View className="flex-row gap-2 bg-white p-2 dark:bg-slate-800">
       <Pressable
-        className="p-2 bg-primary rounded flex-1"
+        className="flex-1 rounded bg-primary p-2"
         onPress={() => {
           if (isSaved) {
-            navigation.navigate("BillList");
+            navigation.navigate('BillList');
           } else {
             saveBill();
-            navigation.navigate("SaveBill");
+            navigation.navigate('SaveBill');
           }
         }}
       >
-        <Text className="text-white text-xl text-center font-medium ">
-          {isSaved ? "Open Bills" : "Save Bill"}
-        </Text>
+        <Text className="text-center text-xl font-medium text-white ">{isSaved ? 'Open Bills' : 'Save Bill'}</Text>
       </Pressable>
-      <Pressable className="p-2 bg-primary rounded flex-1" onPress={() => navigation.navigate("Payment")}>
-        <Text className="text-white text-xl text-center capitalize font-medium">
-          Charge
-        </Text>
+      <Pressable className="flex-1 rounded bg-primary p-2" onPress={() => navigation.navigate('Payment')}>
+        <Text className="text-center text-xl font-medium capitalize text-white">Charge</Text>
       </Pressable>
     </View>
   );
-};
+}
 
 export default SaveCharge;

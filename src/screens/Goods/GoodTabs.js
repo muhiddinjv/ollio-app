@@ -1,17 +1,18 @@
-import { View } from "react-native";
-import React, { useState, useEffect } from "react";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { DrawerActions, useNavigation } from "@react-navigation/native";
-import { useTheme } from "react-native-paper";
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 
-import FABplus from "../../components/FABplus";
-import Header from "../../components/Header";
-import GoodsList from "./GoodsList";
-import Catalog from "./Catalog";
+import FABplus from '../../components/FABplus';
+import Header from '../../components/Header';
+
+import Catalog from './Catalog';
+import GoodsList from './GoodsList';
 
 const Tab = createMaterialTopTabNavigator();
 
-const GoodTabs = ({ route }) => {
+function GoodTabs({ route }) {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(true);
   const { colors } = useTheme();
@@ -32,15 +33,15 @@ const GoodTabs = ({ route }) => {
         onLeftPress={() => navigation.dispatch(DrawerActions.openDrawer())}
       />
       <Tab.Navigator
-        initialRouteName={initialIndex === 0 ? "Katalog" : "Dokon"}
+        initialRouteName={initialIndex === 0 ? 'Katalog' : 'Dokon'}
         screenOptions={{
           tabBarStyle: { backgroundColor: colors.secondary },
-          tabBarIndicatorStyle: { backgroundColor: "white" },
-          tabBarLabelStyle: { fontWeight: "bold", color: "white" },
+          tabBarIndicatorStyle: { backgroundColor: 'white' },
+          tabBarLabelStyle: { fontWeight: 'bold', color: 'white' },
           headerShown: false,
         }}
         screenListeners={{
-          state: (e) => {
+          state: e => {
             const tabIndex = e.data.state.index;
             setVisible(tabIndex === 0); // Hide FAB on "Dokon" tab
           },
@@ -52,6 +53,6 @@ const GoodTabs = ({ route }) => {
       <FABplus visible={visible} navigate={navigation.navigate} />
     </View>
   );
-};
+}
 
 export default GoodTabs;

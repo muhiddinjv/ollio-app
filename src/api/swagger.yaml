@@ -38,24 +38,24 @@ components:
       properties:
         phone:
           type: string
-          example: "998935399093"
+          example: '998935399093'
         password:
           type: string
-          example: "johndoe"
+          example: 'johndoe'
 
     AuthResponse:
       type: object
       properties:
         token:
           type: string
-          example: "eyJhbGciOi..."
+          example: 'eyJhbGciOi...'
 
     User:
       type: object
       properties:
         id:
           type: string
-          example: "60d5ec49f1b2c8b1f8e4e1a1"
+          example: '60d5ec49f1b2c8b1f8e4e1a1'
         name:
           type: string
         role:

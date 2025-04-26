@@ -5,7 +5,7 @@ const baseURL = "https://ollioapi.vercel.app/";
 // const baseURL = "http://localhost:4000/";
 // const baseURL = "http://192.168.0.105:4000/";
 
-const axiosInstance = axios.create({baseURL, headers: { "Content-Type": "application/json" }});
+export const axiosInstance = axios.create({baseURL, headers: { "Content-Type": "application/json" }});
 
 // Request Interceptor: Attach token to requests
 axiosInstance.interceptors.request.use(async (config) => {

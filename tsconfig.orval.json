@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./src/api",
+    "rootDir": "./src/api",
+    "module": "commonjs",
+    "target": "es2019",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "declaration": false
+  },
+  "include": [
+    "src/api/generated_api.ts"
+  ]
+}

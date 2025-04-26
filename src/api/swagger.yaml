@@ -1,0 +1,722 @@
+openapi: 3.0.0
+info:
+  title: Ollio API
+  version: 1.0.0
+  description: API documentation for the Ollio POS mobile app
+servers:
+  - url: http://localhost:3000
+    description: Local Dev Server
+  - url: https://ollioapi.vercel.app
+    description: Prod Server
+security:
+  - bearerAuth: []
+tags:
+  - name: Auth
+    description: Authentication operations
+  - name: Users
+    description: User management
+  - name: Bills
+    description: Billing and invoice operations
+  - name: Stock
+    description: Stock management
+  - name: Invoices
+    description: General invoice operations
+  - name: Catalog
+    description: Product catalog operations
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    AuthRequest:
+      type: object
+      required: [phone, password]
+      properties:
+        phone:
+          type: string
+          example: "998935399093"
+        password:
+          type: string
+          example: "johndoe"
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: "eyJhbGciOi..."
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "60d5ec49f1b2c8b1f8e4e1a1"
+        name:
+          type: string
+        role:
+          type: string
+        phone:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+
+    CreateUser:
+      type: object
+      required: [phone, password, name, role, pin, store_type]
+      properties:
+        phone:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+        pin:
+          type: string
+        store_type:
+          type: string
+
+    UpdateUser:
+      type: object
+      properties:
+        phone:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+        pin:
+          type: string
+        store_type:
+          type: string
+
+    BillProduct:
+      type: object
+      properties:
+        product_id:
+          type: string
+        quantity:
+          type: integer
+
+    BillCreate:
+      type: object
+      required: [client_id, products]
+      properties:
+        client_id:
+          type: string
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillProduct'
+
+    BillResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        billId:
+          type: string
+
+    Bill:
+      type: object
+      properties:
+        _id:
+          type: string
+        total_price:
+          type: number
+        created_at:
+          type: string
+          format: date-time
+
+    CostDetail:
+      type: object
+      properties:
+        _id:
+          type: string
+        cost:
+          type: number
+        product_id:
+          type: string
+
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: string
+        total_price:
+          type: number
+        created_at:
+          type: string
+          format: date-time
+        title:
+          type: string
+
+    InvoiceTitleUpdate:
+      type: object
+      required: [title]
+      properties:
+        title:
+          type: string
+
+    StockItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        quantity:
+          type: integer
+        price:
+          type: number
+
+    StockAvailability:
+      type: object
+      required: [id, available]
+      properties:
+        id:
+          type: string
+        available:
+          type: boolean
+
+    StockPriceUpdate:
+      type: object
+      required: [id, price]
+      properties:
+        id:
+          type: string
+        price:
+          type: number
+
+    StockReceive:
+      type: object
+      required: [product_id, quantity, cost, price]
+      properties:
+        product_id:
+          type: string
+        quantity:
+          type: integer
+        cost:
+          type: number
+        price:
+          type: number
+
+    CatalogItem:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+
+    CatalogItemCreate:
+      type: object
+      required: [title, price, description]
+      properties:
+        title:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+
+    CatalogItemUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+
+paths:
+  /auth/signin:
+    post:
+      tags: [Auth]
+      summary: User Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Wrong credentials
+
+  /users:
+    get:
+      tags: [Users]
+      summary: Get users by role
+      parameters:
+        - in: query
+          name: role
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of users by role
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+    post:
+      tags: [Users]
+      summary: Create Retailer as Customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+      responses:
+        '201':
+          description: Retailer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillResponse'
+
+  /users/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    put:
+      tags: [Users]
+      summary: Update User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '404':
+          description: User not found
+    delete:
+      tags: [Users]
+      summary: Delete User
+      responses:
+        '200':
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '404':
+          description: User not found
+
+  /bills:
+    get:
+      tags: [Bills]
+      summary: Get all bills
+      parameters:
+        - in: query
+          name: owner_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of bills
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bill'
+        '404':
+          description: No bills found
+    post:
+      tags: [Bills]
+      summary: Create a new bill
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillCreate'
+      responses:
+        '201':
+          description: Bill created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillResponse'
+        '400':
+          description: Invalid input
+        '404':
+          description: Client not found
+
+  /bills/{billId}:
+    parameters:
+      - in: path
+        name: billId
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [Bills]
+      summary: Get a bill by ID
+      responses:
+        '200':
+          description: Bill details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+        '404':
+          description: Bill not found
+
+  /bills/{billId}/pay:
+    post:
+      tags: [Bills]
+      summary: Pay a bill by ID
+      parameters:
+        - in: path
+          name: billId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    userId:
+                      type: string
+                    paymentMethod:
+                      type: string
+      responses:
+        '200':
+          description: Bill paid successfully
+        '404':
+          description: Bill not found
+
+  /bills/{billId}/pdf:
+    get:
+      tags: [Bills]
+      summary: Generate a PDF for a bill by ID
+      parameters:
+        - in: path
+          name: billId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: PDF generated successfully
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Bill not found
+
+  /bills/cost/{costId}:
+    get:
+      tags: [Bills]
+      summary: Get cost details by ID
+      parameters:
+        - in: path
+          name: costId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cost details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CostDetail'
+        '404':
+          description: Cost not found
+
+  /bills/users/{userId}:
+    get:
+      tags: [Bills]
+      summary: Get all bills for a specific user
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of bills for the user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bill'
+        '404':
+          description: No bills found for the user
+
+  /bills/invoices/{ownerId}:
+    get:
+      tags: [Bills]
+      summary: Get all invoices for a specific owner
+      parameters:
+        - in: path
+          name: ownerId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of invoices for the owner
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+        '404':
+          description: No invoices found for the owner
+
+  /bills/invoices/{id}/title:
+    patch:
+      tags: [Bills]
+      summary: Update the title of an invoice
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceTitleUpdate'
+      responses:
+        '200':
+          description: Invoice title updated successfully
+        '404':
+          description: Invoice not found
+
+  /stock:
+    get:
+      tags: [Stock]
+      summary: Get user stock
+      responses:
+        '200':
+          description: A list of stock items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StockItem'
+        '404':
+          description: No stock found
+    put:
+      tags: [Stock]
+      summary: Set stock availability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockAvailability'
+      responses:
+        '200':
+          description: Stock availability updated successfully
+        '404':
+          description: Stock item not found
+    patch:
+      tags: [Stock]
+      summary: Update stock price
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockPriceUpdate'
+      responses:
+        '200':
+          description: Stock price updated successfully
+        '404':
+          description: Stock item not found
+
+  /stock/receive:
+    post:
+      tags: [Stock]
+      summary: Receive stock
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockReceive'
+      responses:
+        '200':
+          description: Stock received successfully
+        '404':
+          description: Stock item not found
+
+  /invoices:
+    get:
+      tags: [Invoices]
+      summary: Get invoices
+      responses:
+        '200':
+          description: A list of invoices
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+        '404':
+          description: No invoices found
+    patch:
+      tags: [Invoices]
+      summary: Update invoice title
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/InvoiceTitleUpdate'
+                - type: object
+                  required: [id]
+                  properties:
+                    id:
+                      type: string
+      responses:
+        '200':
+          description: Invoice title updated successfully
+        '404':
+          description: Invoice not found
+
+  /catalog:
+    get:
+      tags: [Catalog]
+      summary: Get a list of catalog items
+      responses:
+        '200':
+          description: A list of catalog items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CatalogItem'
+        '404':
+          description: No catalog items found
+    post:
+      tags: [Catalog]
+      summary: Create a new catalog item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CatalogItemCreate'
+      responses:
+        '201':
+          description: Catalog item created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  itemId:
+                    type: string
+
+  /catalog/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    get:
+      tags: [Catalog]
+      summary: Get a catalog item by ID
+      responses:
+        '200':
+          description: Catalog item details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogItem'
+        '404':
+          description: Catalog item not found
+    put:
+      tags: [Catalog]
+      summary: Update a catalog item by ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CatalogItemUpdate'
+      responses:
+        '200':
+          description: Catalog item updated successfully
+        '404':
+          description: Catalog item not found
+    delete:
+      tags: [Catalog]
+      summary: Delete a catalog item by ID
+      responses:
+        '204':
+          description: Catalog item deleted successfully
+        '404':
+          description: Catalog item not found

@@ -1,0 +1,16 @@
+module.exports = {
+  main: {
+    input: './src/api/swagger.yaml',
+    output: {
+      target: './src/api/generated_api.ts',
+      prettier: true,
+
+      override: {
+        mutator: {
+          path: './src/api/axiostance.js',
+          name: 'axiosInstance',
+        },
+      },
+    },
+  },
+};

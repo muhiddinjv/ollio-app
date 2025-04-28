@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
-import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
-import { Button, useTheme } from 'react-native-paper';
-import { Skeleton } from 'react-native-skeletons';
-import { MaterialIcons } from '@expo/vector-icons';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Alert } from "react-native";
+import { Button, useTheme } from "react-native-paper";
+import { MaterialIcons } from "@expo/vector-icons";
+import Header from "../../components/Header";
+import axiosInstance from "../../api/axiostance";
+import { useGlobalState } from "../../hooks";
+import { Skeleton } from "react-native-skeletons";
+import { ActivityIndicator } from "react-native";
+import { useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "../Auth/AuthPro";
+import { formatError } from "../../utils";
 
 import axiosInstance from '../../api/axiostance';
 import Header from '../../components/Header';
@@ -11,10 +18,10 @@ import { useGlobalState } from '../../hooks';
 function SaleMade({ navigation }) {
   const [isPaid, setIsPaid] = useState(false);
   const [payLoading, setPayLoading] = useState(false);
-  const { billItem, setBillItem, downloadBill, loading, refetch } = useGlobalState();
-  const {
-    colors: { primary, backdrop },
-  } = useTheme();
+  const { billItem, setBillItem, downloadBill, loading } = useGlobalState();
+  const {colors: { primary, backdrop }} = useTheme();
+  const queryClient = useQueryClient();
+  const { setSignedIn } = useAuth();
 
   const handleSale = async () => {
     setPayLoading(true);
@@ -24,12 +31,12 @@ function SaleMade({ navigation }) {
         billItem.status = 'paid';
         setBillItem(billItem);
         setIsPaid(true);
-        refetch();
+        queryClient.invalidateQueries(["bills"]);
       } else {
         Alert.alert('Error', 'Failed to process sale.');
       }
     } catch (error) {
-      Alert.alert('Error', `Error processing sale: ${error.response ? error.response.data.message : error.message}`);
+      Alert.alert("Error",`Error processing sale: ${formatError(error)}`);
     } finally {
       setPayLoading(false);
     }

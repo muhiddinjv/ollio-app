@@ -1,9 +1,15 @@
-import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Alert, SafeAreaView, View } from 'react-native';
-import { Button, IconButton, Switch, Text } from 'react-native-paper';
-import { Picker } from '@react-native-picker/picker';
-import { useQueryClient } from '@tanstack/react-query';
+import { useState, useEffect } from "react";
+import { View, SafeAreaView, Alert } from "react-native";
+import { Switch, Text, IconButton, Button } from "react-native-paper";
+import { Picker } from "@react-native-picker/picker";
+import { useQueryClient } from "@tanstack/react-query";
+import { CardElevated } from "../../components/CardElevated";
+import { getTokens } from "../../api/astorage";
+import axiosInstance from "../../api/axiostance";
+import Wrapper from "../../components/Wrapper";
+import Header from "../../components/Header";
+import { Controller, useForm } from "react-hook-form";
+import ControlledInputCustom from "../../components/ControlledInputCustom";
 
 import { getAccessToken } from '../../api/astorage';
 import { axiosInstance } from '../../api/axiostance';
@@ -34,9 +40,8 @@ function GoodEdit({ navigation, route }) {
     }
   }, [good]);
 
-  // eslint-disable-next-line no-shadow
-  const saveGood = async good => {
-    const accessToken = await getAccessToken();
+  const saveGood = async (good) => {
+    const tokens = await getTokens();
     try {
       await axiosInstance.patch(
         'stock/update',
@@ -49,7 +54,7 @@ function GoodEdit({ navigation, route }) {
           // track: good?.track,
         },
         {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${tokens.access}` },
         }
       );
       navigation.navigate('GoodTabs', { screen: 'Dokon' });
@@ -72,10 +77,10 @@ function GoodEdit({ navigation, route }) {
         {
           text: 'Delete',
           onPress: async () => {
-            const accessToken = await getAccessToken();
+            const tokens = await getTokens();
             try {
-              await axiosInstance.delete('stock/delete', {
-                headers: { Authorization: `Bearer ${accessToken}` },
+              await axiosInstance.delete("stock/delete", {
+                headers: { Authorization: `Bearer ${tokens.access}` },
                 data: { product_id: good?.product_id },
               });
               navigation.navigate('GoodTabs', { screen: 'Dokon' });

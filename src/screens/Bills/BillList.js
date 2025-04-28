@@ -1,9 +1,14 @@
-import React from 'react';
-import { Animated, Pressable, Text, View } from 'react-native';
-import { RefreshControl } from 'react-native-gesture-handler';
-import { ActivityIndicator, useTheme } from 'react-native-paper';
-import { LinearTransition } from 'react-native-reanimated';
-import { MaterialIcons } from '@expo/vector-icons';
+import React from "react";
+import { MaterialIcons } from "@expo/vector-icons";
+import { View, Text, Pressable, Animated } from "react-native";
+import { useGlobalState, useInfiniteScroll } from "../../hooks";
+import Header from "../../components/Header";
+import Loader from "../../components/Loader";
+import { formatDate } from "../../utils";
+import { ActivityIndicator, useTheme } from "react-native-paper";
+import { RefreshControl } from "react-native-gesture-handler";
+import { LinearTransition } from "react-native-reanimated";
+import { useAuth } from "../Auth/AuthPro";
 
 import Header from '../../components/Header';
 import Loader from '../../components/Loader';
@@ -34,25 +39,21 @@ function BillItem({ bill, navigate, onDelete }) {
       />
     </Pressable>
   );
-}
-// 998935399093
-// johndoe
+};
+
 export default function BillList({ navigation }) {
   const { loading, deleteBill } = useGlobalState();
-  const { data, isRefreshing, onRefresh, isFetchingNextPage } = useInfiniteScroll({
-    url: 'bills',
-    limit: 25,
-    key: ['bills'],
-  });
-  const { colors } = useTheme();
-
+  const { data, isRefreshing, onRefresh, isFetchingNextPage } = useInfiniteScroll({url: "bills", key: ["bills"]});
+  const { colors } = useTheme(); 
+  const { user } = useAuth();
   return (
     <View>
       <Header title="Cheklar" fontSize={20} navigation={navigation} backBtn />
       {loading && <ActivityIndicator color={colors.primary} />}
       <Animated.FlatList
         data={data || []}
-        removeClippedSubviews
+        extraData={user}
+        removeClippedSubviews={true}
         estimatedItemSize={84}
         refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
         renderItem={({ item }) => (

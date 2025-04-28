@@ -24,15 +24,17 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <SafeAreaProvider>
-        <PaperProvider>
-          <GlobalProvider>
+      <NavigationContainer>
+        <SafeAreaProvider>
+          <PaperProvider>
             <AuthProvider>
-              <AppStack />
+              <GlobalProvider>
+                <AppStack />
+              </GlobalProvider>
             </AuthProvider>
-          </GlobalProvider>
-        </PaperProvider>
-      </SafeAreaProvider>
+          </PaperProvider>
+        </SafeAreaProvider>
+      </NavigationContainer>
     </QueryClientProvider>
   );
 }

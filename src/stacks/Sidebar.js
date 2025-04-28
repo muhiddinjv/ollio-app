@@ -8,7 +8,7 @@ import { useAuth } from "../screens/Auth/AuthPro";
 const Sidebar = (props) => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
   const { signOut, user } = useAuth();
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
   return (
     <View className="flex-1 w-full dark:bg-slate-800">{/* -- REMOVE PADDING DrawerContentScrollView ---*/}

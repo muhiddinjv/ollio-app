@@ -7,12 +7,17 @@ import axiosInstance from "../../api/axiostance";
 import { useGlobalState } from "../../hooks";
 import { Skeleton } from "react-native-skeletons";
 import { ActivityIndicator } from "react-native";
+import { useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "../Auth/AuthPro";
+import { formatError } from "../../utils";
 
 const SaleMade = ({ navigation }) => {
   const [isPaid, setIsPaid] = useState(false);
   const [payLoading, setPayLoading] = useState(false);
-  const { billItem, setBillItem, downloadBill, loading, refetch } = useGlobalState();
+  const { billItem, setBillItem, downloadBill, loading } = useGlobalState();
   const {colors: { primary, backdrop }} = useTheme();
+  const queryClient = useQueryClient();
+  const { setSignedIn } = useAuth();
 
   const handleSale = async () => {
     setPayLoading(true);
@@ -22,17 +27,12 @@ const SaleMade = ({ navigation }) => {
         billItem.status = "paid";
         setBillItem(billItem);
         setIsPaid(true);
-        refetch();
+        queryClient.invalidateQueries(["bills"]);
       } else {
         Alert.alert("Error", "Failed to process sale.");
       }
     } catch (error) {
-      Alert.alert(
-        "Error",
-        `Error processing sale: ${
-          error.response ? error.response.data.message : error.message
-        }`
-      );
+      Alert.alert("Error",`Error processing sale: ${formatError(error)}`);
     } finally {
       setPayLoading(false);
     }

@@ -1,5 +1,9 @@
 import axios from "axios";
-import { getAccessToken, removeAccessToken, getRefreshToken, setAccessToken, setRefreshToken } from "./astorage";
+import dayjs from "dayjs";
+import { jwtDecode } from "jwt-decode";
+import { getTokens, setTokens } from "./astorage";
+import { Alert } from "react-native";
+import { formatError } from "../utils";
 
 const baseURL = "https://ollioapi.vercel.app/";
 // const baseURL = "http://localhost:4000/";
@@ -7,46 +11,39 @@ const baseURL = "https://ollioapi.vercel.app/";
 
 const axiosInstance = axios.create({baseURL, headers: { "Content-Type": "application/json" }});
 
-// Request Interceptor: Attach token to requests
-axiosInstance.interceptors.request.use(async (config) => {
-  const token = await getAccessToken();
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+// Request Interceptor: Attach token to requests before sending a request
+axiosInstance.interceptors.request.use(async (req) => {
+  const tokens = await getTokens();
+  if (!tokens) return req;
+  const { refresh, access } = tokens;
+
+  req.headers.Authorization = `Bearer ${access}`;
+
+  const user = jwtDecode(access);
+  const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
+
+  if (isExpired) {
+    try {
+      const {data} = await axios.post(`${baseURL}/auth/refresh/`, {refresh});
+      await setTokens(data);
+      req.headers.Authorization = `Bearer ${data.access}`;
+    } catch (error) {
+      Alert.alert("Error refreshing token:", formatError(error));
+      await setTokens(null);
+      throw error;
+    }
   }
-  return config;
+
+  return req;
 });
 
-// Response Interceptor: Handle token expiration
+// Response Interceptor: Handle responses
 axiosInstance.interceptors.response.use(
   (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 403 && !originalRequest._retry) {
-      console.log("Token expired. Attempting to refresh...");
-      const refreshToken = await getRefreshToken();
-
-      if (refreshToken) {
-        try {
-          const response = await axios.post(`${baseURL}auth/refresh`, { refreshToken });
-
-          await setAccessToken(response.data.accessToken);
-          await setRefreshToken(response.data.refreshToken);
-
-          originalRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
-
-          return axiosInstance(originalRequest); // retry
-        } catch (err) {
-          console.error("Error refreshing token:", err);
-          await removeAccessToken();
-          return Promise.reject("Session expired. Please sign in again.");
-        }
-      } 
-    }
-
+  (error) => {
+    // Handle errors globally if needed
     return Promise.reject(error);
   }
 );
-
 
 export default axiosInstance;

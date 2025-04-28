@@ -1,6 +1,6 @@
 import * as React from "react";
 import { jwtDecode } from "jwt-decode";
-import { getAccessToken } from "../../api/astorage";
+import { getTokens } from "../../api/astorage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signIn as apiSignIn, signOut as apiSignOut, refreshToken as apiRefreshToken } from "../../api/requests";
 
@@ -11,6 +11,7 @@ const AuthContext = React.createContext({
   signIn: () => {},
   signOut: () => {},
   refreshToken: () => {},
+  setSignedIn: () => {},
 });
 
 export const AuthProvider = ({ children }) => {
@@ -19,27 +20,20 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = React.useState(null);
   const queryClient = useQueryClient();
 
-  const checkAuthStatus = async () => {
-    try {
-      const token = await getAccessToken();
-      if (token) {
-        const decodedUser = jwtDecode(token);
-        console.log('decodedUser :>> ', decodedUser);
+  React.useEffect(() => {
+    const fetchTokens = async () => {
+      const tokens = await getTokens();
+      if (tokens) {
+        const decodedUser = jwtDecode(tokens.access);
         setUser(decodedUser);
         setSignedIn(true);
       } else {
         setSignedIn(false);
       }
-    } catch (error) {
-      console.error("Error during authentication check:", error);
-      setSignedIn(false);
-    } finally {
       setIsLoading(false);
-    }
-  };
+    };
 
-  React.useEffect(() => {
-    checkAuthStatus();
+    fetchTokens();
   }, []);
 
   const signInMutation = useMutation(apiSignIn, {
@@ -77,6 +71,7 @@ export const AuthProvider = ({ children }) => {
       user,
       signedIn,
       isLoading,
+      setSignedIn,
       signIn: signInMutation.mutate,
       signOut: signOutMutation.mutate,
       refreshToken: refreshTokenMutation.mutate,

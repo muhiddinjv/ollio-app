@@ -66,7 +66,7 @@ const UserAdd = ({ navigation }) => {
       marginBottom: 12,
     },
   }
-
+  
   return (
     <View className="flex-1">
       <Header

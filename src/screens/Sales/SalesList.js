@@ -11,18 +11,20 @@ import { useInfiniteScroll } from "../../hooks";
 import { useGlobalState } from "../../hooks";
 import Numpad from "../../components/Numpad";
 import { Text } from "react-native";
+import { useAuth } from "../Auth/AuthPro";
 
 const StyledPicker = styled(Picker);
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical";
 
 const SalesList = ({ navigation }) => {
-  const { bill, user, saveBill, addProductToBill, getTotalQuantity } = useGlobalState();
+  const { bill, saveBill, addProductToBill, getTotalQuantity } = useGlobalState();
   const [selectedValue, setSelectedValue] = useState("option1");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [filters, setFilters] = useState({ search: "" });
   const [quantity, setQuantity] = useState('');
   const { colors } = useTheme();
+  const { user } = useAuth();
 
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } =
     useInfiniteScroll({

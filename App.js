@@ -6,6 +6,7 @@ import { enableScreens } from "react-native-screens";
 import AppStack from "./src/stacks/AppStack";
 import { GlobalProvider } from "./src/hooks";
 import { AuthProvider } from "./src/screens/Auth/AuthPro";
+import { NavigationContainer } from "@react-navigation/native";
 enableScreens();
 
 const queryClient = new QueryClient({
@@ -21,15 +22,17 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <SafeAreaProvider>
-        <PaperProvider>
-          <GlobalProvider>
+      <NavigationContainer>
+        <SafeAreaProvider>
+          <PaperProvider>
             <AuthProvider>
-              <AppStack />
+              <GlobalProvider>
+                <AppStack />
+              </GlobalProvider>
             </AuthProvider>
-          </GlobalProvider>
-        </PaperProvider>
-      </SafeAreaProvider>
+          </PaperProvider>
+        </SafeAreaProvider>
+      </NavigationContainer>
     </QueryClientProvider>
   );
 }

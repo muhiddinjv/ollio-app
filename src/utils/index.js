@@ -1,18 +1,3 @@
-import axiosInstance from '../api/axiostance';
-
-export const checkStockQuantity = async (productId, quantity) => {
-  try {
-    const response = await axiosInstance.post("stock/checkqty", {
-      _id: productId,
-      quantity,
-    });
-    return response.data; // Return the response data
-  } catch (error) {
-    console.error("Error checking stock quantity:", error);
-    throw error; // Rethrow the error for handling in the calling function
-  }
-};
-
 export const emailValidator = (email) => {
   const re = /\S+@\S+\.\S+/;
 
@@ -62,6 +47,13 @@ export const formattedDate = (date) => {
   const minutes = String(d.getMinutes()).padStart(2, '0');
 
   return `${day}_${month}_${year}_${hours}_${minutes}`;
+};
+
+export const formatError = (error) => {
+  if (error.response) {
+    return error.response.data.message;
+  }
+  return error.message;
 };
 
 

@@ -1,30 +1,27 @@
 import { jwtDecode } from "jwt-decode";
-import { removeAccessToken, getRefreshToken, setAccessToken, setRefreshToken, setUser } from "./astorage";
+import { setTokens, getTokens } from "./astorage";
 import axiosInstance from "./axiostance";
 
 export const signIn = async ({ phone, password }) => {
     const { data } = await axiosInstance.post("auth/signin", { phone, password });
-    await setAccessToken(data.accessToken);
-    await setRefreshToken(data.refreshToken);
-    const user = jwtDecode(data.accessToken);
-    await setUser(user);
+    await setTokens(data);
+    const user = jwtDecode(data.access);
     return user;
 };
   
 export const signOut = async () => {
-  const refreshToken = await getRefreshToken();
-  await axiosInstance.post("auth/signout", { refreshToken });
-  await removeAccessToken();
+  const {refresh} = await getTokens();
+  await axiosInstance.post("auth/signout", { refresh });
+  await setTokens(null);
 };
 
-export const refreshToken = async () => {
-  const refreshToken = await getRefreshToken();
-  if (!refreshToken) {
+export const refresh = async () => {
+  const {refresh} = await getTokens();
+  if (!refresh) {
     throw new Error("No refresh token found.");
   }
-  const { data } = await axiosInstance.post("auth/refresh", { refreshToken });
-  await setAccessToken(data.accessToken);
-  await setRefreshToken(data.refreshToken);
+  const { data } = await axiosInstance.post("auth/refresh", { refresh });
+  await setTokens(data);
   return data;
 };
 

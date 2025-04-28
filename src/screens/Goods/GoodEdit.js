@@ -4,7 +4,7 @@ import { Switch, Text, IconButton, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { useQueryClient } from "@tanstack/react-query";
 import { CardElevated } from "../../components/CardElevated";
-import { getAccessToken } from "../../api/astorage";
+import { getTokens } from "../../api/astorage";
 import axiosInstance from "../../api/axiostance";
 import Wrapper from "../../components/Wrapper";
 import Header from "../../components/Header";
@@ -40,7 +40,7 @@ const GoodEdit = ({ navigation, route }) => {
   }, [good]);
 
   const saveGood = async (good) => {
-    const accessToken = await getAccessToken();
+    const tokens = await getTokens();
     try {
       await axiosInstance.patch(
         "stock/update",
@@ -53,7 +53,7 @@ const GoodEdit = ({ navigation, route }) => {
           // track: good?.track,
         },
         {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${tokens.access}` },
         }
       );
       navigation.navigate("GoodTabs", { screen: "Dokon" });
@@ -76,10 +76,10 @@ const GoodEdit = ({ navigation, route }) => {
         {
           text: "Delete",
           onPress: async () => {
-            const accessToken = await getAccessToken();
+            const tokens = await getTokens();
             try {
               await axiosInstance.delete("stock/delete", {
-                headers: { Authorization: `Bearer ${accessToken}` },
+                headers: { Authorization: `Bearer ${tokens.access}` },
                 data: { product_id: good?.product_id },
               });
               navigation.navigate("GoodTabs", { screen: "Dokon" });

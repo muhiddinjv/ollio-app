@@ -1,8 +1,9 @@
-import * as React from "react";
-import { jwtDecode } from "jwt-decode";
-import { getTokens } from "../../api/astorage";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { signIn as apiSignIn, signOut as apiSignOut, refreshToken as apiRefreshToken } from "../../api/requests";
+import * as React from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { jwtDecode } from 'jwt-decode';
+
+import { getTokens } from '../../api/astorage';
+import { refreshToken as apiRefreshToken, signIn as apiSignIn, signOut as apiSignOut } from '../../api/requests';
 
 const AuthContext = React.createContext({
   user: null,

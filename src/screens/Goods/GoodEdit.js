@@ -1,17 +1,15 @@
-import { useState, useEffect } from "react";
-import { View, SafeAreaView, Alert } from "react-native";
-import { Switch, Text, IconButton, Button } from "react-native-paper";
-import { Picker } from "@react-native-picker/picker";
-import { useQueryClient } from "@tanstack/react-query";
-import { CardElevated } from "../../components/CardElevated";
-import { getTokens } from "../../api/astorage";
-import axiosInstance from "../../api/axiostance";
-import Wrapper from "../../components/Wrapper";
-import Header from "../../components/Header";
-import { Controller, useForm } from "react-hook-form";
-import ControlledInputCustom from "../../components/ControlledInputCustom";
+import { useState, useEffect } from 'react';
+import { View, SafeAreaView, Alert } from 'react-native';
+import { Switch, Text, IconButton, Button } from 'react-native-paper';
+import { Picker } from '@react-native-picker/picker';
+import { useQueryClient } from '@tanstack/react-query';
+import { CardElevated } from '../../components/CardElevated';
+import { getTokens } from '../../api/astorage';
+import axiosInstance from '../../api/axiostance';
+import Wrapper from '../../components/Wrapper';
+import Header from '../../components/Header';
+import { Controller, useForm } from 'react-hook-form';
 
-import { getAccessToken } from '../../api/astorage';
 import { axiosInstance } from '../../api/axiostance';
 import { CardElevated } from '../../components/CardElevated';
 import ControlledInputCustom from '../../components/ControlledInputCustom';
@@ -40,7 +38,7 @@ function GoodEdit({ navigation, route }) {
     }
   }, [good]);
 
-  const saveGood = async (good) => {
+  const saveGood = async good => {
     const tokens = await getTokens();
     try {
       await axiosInstance.patch(
@@ -79,7 +77,7 @@ function GoodEdit({ navigation, route }) {
           onPress: async () => {
             const tokens = await getTokens();
             try {
-              await axiosInstance.delete("stock/delete", {
+              await axiosInstance.delete('stock/delete', {
                 headers: { Authorization: `Bearer ${tokens.access}` },
                 data: { product_id: good?.product_id },
               });

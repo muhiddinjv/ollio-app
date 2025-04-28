@@ -1,20 +1,14 @@
-import {
-  useCallback,
-  useMemo,
-  createContext,
-  useState,
-  useEffect,
-  useContext,
-} from "react";
-import { Alert } from "react-native";
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as FileSystem from "expo-file-system";
-import { shareAsync } from "expo-sharing";
-import { getTokens } from "../api/astorage";
-import axiosInstance from "../api/axiostance";
-import { formatError, formattedDate } from "../utils";
-import { useAuth } from "../screens/Auth/AuthPro";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { Alert } from 'react-native';
+import * as FileSystem from 'expo-file-system';
+import { shareAsync } from 'expo-sharing';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { getTokens } from '../api/astorage';
+import axiosInstance from '../api/axiostance';
+import { useAuth } from '../screens/Auth/AuthPro';
+import { formatError, formattedDate } from '../utils';
 
 export const useInfiniteScroll = ({ key, url, limit = 25, page = 1, userId = null, filters = {} }) => {
   const queryKey = [
@@ -42,7 +36,7 @@ export const useInfiniteScroll = ({ key, url, limit = 25, page = 1, userId = nul
 
       return { data, nextPage: page + 1 };
     } catch (error) {
-      Alert.alert("Error", `Error fetching data: ${error.message}`);
+      Alert.alert('Error', `Error fetching data: ${error.message}`);
       throw error;
     }
   };
@@ -96,7 +90,7 @@ export const useInfiniteScroll = ({ key, url, limit = 25, page = 1, userId = nul
 
 const GlobalContext = createContext();
 
-export const GlobalProvider = ({ children }) => {
+export function GlobalProvider({ children }) {
   const [clients, setClients] = useState([]);
   const [client, setClient] = useState(null);
   const [goodQty, setGoodQty] = useState(0);
@@ -113,10 +107,10 @@ export const GlobalProvider = ({ children }) => {
 
   useEffect(() => {
     const loadStorageData = async () => {
-      const storedBill = await AsyncStorage.getItem("bill");
-      const storedClient = await AsyncStorage.getItem("client");
-      const storedClients = await AsyncStorage.getItem("clients");
-      const storedBillItem = await AsyncStorage.getItem("billItem");
+      const storedBill = await AsyncStorage.getItem('bill');
+      const storedClient = await AsyncStorage.getItem('client');
+      const storedClients = await AsyncStorage.getItem('clients');
+      const storedBillItem = await AsyncStorage.getItem('billItem');
       setBill(storedBill ? JSON.parse(storedBill) : null);
       setClient(storedClient ? JSON.parse(storedClient) : null);
       setClients(storedClients ? JSON.parse(storedClients) : []);
@@ -126,11 +120,11 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    AsyncStorage.setItem("bill", JSON.stringify(bill));
-    AsyncStorage.setItem("client", JSON.stringify(client));
-    AsyncStorage.setItem("clients", JSON.stringify(clients));
-    AsyncStorage.setItem("billItem", JSON.stringify(billItem));
-    AsyncStorage.setItem("selectedGoods", JSON.stringify(selectedGoods));
+    AsyncStorage.setItem('bill', JSON.stringify(bill));
+    AsyncStorage.setItem('client', JSON.stringify(client));
+    AsyncStorage.setItem('clients', JSON.stringify(clients));
+    AsyncStorage.setItem('billItem', JSON.stringify(billItem));
+    AsyncStorage.setItem('selectedGoods', JSON.stringify(selectedGoods));
   }, [client, clients, selectedGoods, bill, openBills, billItem]);
 
   const addClientToBill = clientId => {
@@ -163,13 +157,13 @@ export const GlobalProvider = ({ children }) => {
 
   const checkStockQuantity = async (productId, quantity) => {
     try {
-      const response = await axiosInstance.post("stock/checkqty", {
+      const response = await axiosInstance.post('stock/checkqty', {
         _id: productId,
         quantity,
       });
       return response.data; // Return the response data
     } catch (error) {
-      console.error("Error checking stock quantity:", error);
+      console.error('Error checking stock quantity:', error);
       throw error; // Rethrow the error for handling in the calling function
     }
   };
@@ -185,17 +179,19 @@ export const GlobalProvider = ({ children }) => {
     };
 
     try {
-      const {data: {success, message, bill}} = await axiosInstance.post("/bills", billData);
+      const {
+        data: { success, message, bill },
+      } = await axiosInstance.post('/bills', billData);
       if (success) {
         setBill({ client_id: null, products: [] });
         setBillItem(bill);
-        queryClient.invalidateQueries(["bills"]);
+        queryClient.invalidateQueries(['bills']);
       } else {
-        Alert.alert("Error", `Failed to create bill: ${message}`);
+        Alert.alert('Error', `Failed to create bill: ${message}`);
       }
     } catch (error) {
-      Alert.alert("Error", `Error creating bill: ${formatError(error)}`);
-      // const errorMessage = JSON.parse(error.response.data.message).map(item => 
+      Alert.alert('Error', `Error creating bill: ${formatError(error)}`);
+      // const errorMessage = JSON.parse(error.response.data.message).map(item =>
       //   `Product: ${item.Product}, Requested: ${item.Requested}, Available: ${item.Available}`
       // ).join('\n');
       // Alert.alert("Error", `Error creating bill: ${errorMessage}`);
@@ -207,48 +203,50 @@ export const GlobalProvider = ({ children }) => {
   // eslint-disable-next-line no-shadow
   const downloadBill = async bill => {
     try {
-      if (bill.status === "paid") {
+      if (bill.status === 'paid') {
         const tokens = await getTokens();
         const date = formattedDate(bill?.created_at);
         const filename = `bill_${date}.pdf`;
         const pdfUrl = `https://ollioapi.vercel.app/bills/pdf/${bill?._id}`;
-        const result = await FileSystem.downloadAsync(
-          pdfUrl, FileSystem.documentDirectory + filename,
-          { headers: { Authorization: `Bearer ${tokens.access}` } }
-        );
+        const result = await FileSystem.downloadAsync(pdfUrl, FileSystem.documentDirectory + filename, {
+          headers: { Authorization: `Bearer ${tokens.access}` },
+        });
         await shareAsync(result.uri);
       } else {
         Alert.alert('Hato', "Chek to'lanmagan");
       }
     } catch (error) {
-      Alert.alert("Hato", `Checkni yuklashda xatolik: ${formatError(error)}`);
+      Alert.alert('Hato', `Checkni yuklashda xatolik: ${formatError(error)}`);
     }
   };
 
-  const deleteBill = useCallback((billId) => {
-    Alert.alert(
-      'Delete Bill',
-      'Are you sure you want to delete this bill?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Delete',
-          onPress: async () => {
-            try {
-              await axiosInstance.delete(`/bills/${billId}`);
-              queryClient.invalidateQueries(["bills"]);
-            } catch (error) {
-              Alert.alert("Error deleting bill:", formatError(error));
-            }
+  const deleteBill = useCallback(
+    billId => {
+      Alert.alert(
+        'Delete Bill',
+        'Are you sure you want to delete this bill?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
           },
-        },
-      ],
-      { cancelable: true }
-    );
-  }, [queryClient]);
+          {
+            text: 'Delete',
+            onPress: async () => {
+              try {
+                await axiosInstance.delete(`/bills/${billId}`);
+                queryClient.invalidateQueries(['bills']);
+              } catch (error) {
+                Alert.alert('Error deleting bill:', formatError(error));
+              }
+            },
+          },
+        ],
+        { cancelable: true }
+      );
+    },
+    [queryClient]
+  );
 
   return (
     <GlobalContext.Provider
@@ -256,20 +254,29 @@ export const GlobalProvider = ({ children }) => {
         saveBill,
         deleteBill,
         downloadBill,
-        bill, setBill,
+        bill,
+        setBill,
         addClientToBill,
         addProductToBill,
         getTotalQuantity,
         checkStockQuantity,
-        loading, setLoading,
-        client, setClient,
-        goodId, setGoodId,
-        clients, setClients,
-        goodQty, setGoodQty,
-        billItem, setBillItem,
-        openBills, setOpenBills,
-        selectedGoods, setSelectedGoods,
-        //query client provider stuff below
+        loading,
+        setLoading,
+        client,
+        setClient,
+        goodId,
+        setGoodId,
+        clients,
+        setClients,
+        goodQty,
+        setGoodQty,
+        billItem,
+        setBillItem,
+        openBills,
+        setOpenBills,
+        selectedGoods,
+        setSelectedGoods,
+        // query client provider stuff below
         // data, isRefreshing, onRefresh, isFetchingNextPage, refetch,
       }}
     >
@@ -289,9 +296,9 @@ export const useGlobalState = () => {
 
 export const usePostGoods = () => {
   return useMutation(
-    async (goods) => {
+    async goods => {
       const tokens = await getTokens();
-      const response = await axiosInstance.post("/stock/receive", goods, {
+      const response = await axiosInstance.post('/stock/receive', goods, {
         headers: { Authorization: `Bearer ${tokens.access}` },
       });
       return response.data; // Return the response data

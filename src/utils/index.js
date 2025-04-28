@@ -1,4 +1,4 @@
-export const emailValidator = (email) => {
+export const emailValidator = email => {
   const re = /\S+@\S+\.\S+/;
 
   if (!email || email.length <= 0) return 'Email cannot be empty.';
@@ -49,12 +49,9 @@ export const formattedDate = date => {
   return `${day}_${month}_${year}_${hours}_${minutes}`;
 };
 
-export const formatError = (error) => {
+export const formatError = error => {
   if (error.response) {
     return error.response.data.message;
   }
   return error.message;
 };
-
-
-

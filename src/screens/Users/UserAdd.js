@@ -66,8 +66,8 @@ function UserAdd({ navigation }) {
       borderBottomColor: errors.role || errors.store_type ? 'red' : '#aaa',
       marginBottom: 12,
     },
-  }
-  
+  };
+
   return (
     <View className="flex-1">
       <Header

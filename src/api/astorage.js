@@ -9,5 +9,5 @@ export async function setItem(key, value) {
   return AsyncStorage.setItem(key, JSON.stringify(value));
 }
 
-export const getTokens = () => getItem("tokens")
-export const setTokens = value => setItem("tokens", value)
+export const getTokens = () => getItem('tokens');
+export const setTokens = value => setItem('tokens', value);

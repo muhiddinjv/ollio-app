@@ -1,11 +1,19 @@
-import axios from "axios";
-import dayjs from "dayjs";
-import { jwtDecode } from "jwt-decode";
-import { getTokens, setTokens } from "./astorage";
-import { Alert } from "react-native";
-import { formatError } from "../utils";
+import { Alert } from 'react-native';
+import axios from 'axios';
+import dayjs from 'dayjs';
+import { jwtDecode } from 'jwt-decode';
 
-import { getAccessToken, getRefreshToken, removeAccessToken, setAccessToken, setRefreshToken } from './astorage';
+import { formatError } from '../utils';
+
+import {
+  getAccessToken,
+  getRefreshToken,
+  getTokens,
+  removeAccessToken,
+  setAccessToken,
+  setRefreshToken,
+  setTokens,
+} from './astorage';
 
 const baseURL = 'https://ollioapi.vercel.app/';
 // const baseURL = "http://localhost:4000/";
@@ -14,7 +22,7 @@ const baseURL = 'https://ollioapi.vercel.app/';
 export const axiosInstance = axios.create({ baseURL, headers: { 'Content-Type': 'application/json' } });
 
 // Request Interceptor: Attach token to requests before sending a request
-axiosInstance.interceptors.request.use(async (req) => {
+axiosInstance.interceptors.request.use(async req => {
   const tokens = await getTokens();
   if (!tokens) return req;
   const { refresh, access } = tokens;
@@ -26,11 +34,11 @@ axiosInstance.interceptors.request.use(async (req) => {
 
   if (isExpired) {
     try {
-      const {data} = await axios.post(`${baseURL}/auth/refresh/`, {refresh});
+      const { data } = await axios.post(`${baseURL}/auth/refresh/`, { refresh });
       await setTokens(data);
       req.headers.Authorization = `Bearer ${data.access}`;
     } catch (error) {
-      Alert.alert("Error refreshing token:", formatError(error));
+      Alert.alert('Error refreshing token:', formatError(error));
       await setTokens(null);
       throw error;
     }
@@ -41,8 +49,8 @@ axiosInstance.interceptors.request.use(async (req) => {
 
 // Response Interceptor: Handle responses
 axiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => {
+  response => response,
+  error => {
     // Handle errors globally if needed
     return Promise.reject(error);
   }

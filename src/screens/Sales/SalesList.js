@@ -1,24 +1,23 @@
-import { useState } from "react";
-import { ActivityIndicator, Appbar, Button, IconButton, useTheme } from "react-native-paper";
-import { Platform, RefreshControl, View } from "react-native";
-import { DrawerActions } from "@react-navigation/native";
-import { Picker } from "@react-native-picker/picker";
-import { FlashList } from "@shopify/flash-list";
-import { styled } from "nativewind";
-import Loader from "../../components/Loader";
-import ListItem from "../../components/ListItem";
-import { useInfiniteScroll } from "../../hooks";
-import { useGlobalState } from "../../hooks";
-import Numpad from "../../components/Numpad";
-import { Text } from "react-native";
-import { useAuth } from "../Auth/AuthPro";
+import { useState } from 'react';
+import { Platform, RefreshControl, Text, View } from 'react-native';
+import { ActivityIndicator, Appbar, Button, IconButton, useTheme } from 'react-native-paper';
+import { Picker } from '@react-native-picker/picker';
+import { DrawerActions } from '@react-navigation/native';
+import { FlashList } from '@shopify/flash-list';
+import { styled } from 'nativewind';
+
+import ListItem from '../../components/ListItem';
+import Loader from '../../components/Loader';
+import Numpad from '../../components/Numpad';
+import { useGlobalState, useInfiniteScroll } from '../../hooks';
+import { useAuth } from '../Auth/AuthPro';
 
 const StyledPicker = styled(Picker);
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
-const SalesList = ({ navigation }) => {
+function SalesList({ navigation }) {
   const { bill, saveBill, addProductToBill, getTotalQuantity } = useGlobalState();
-  const [selectedValue, setSelectedValue] = useState("option1");
+  const [selectedValue, setSelectedValue] = useState('option1');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [filters] = useState({ search: '' });

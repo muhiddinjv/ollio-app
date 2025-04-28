@@ -1,39 +1,22 @@
-import React, { useState } from "react"
-import { View, Dimensions, TouchableOpacity, ScrollView } from "react-native"
+import React from 'react';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 
-import ListItem from "../../components/ListItem"
+import ListItem from '../../components/ListItem';
 
-const initialLayout = { width: Dimensions.get("window").width }
-
-const SearchScreen = ({ navigation }) => {
-  const [searchQuery, setSearchQuery] = useState("")
-
-  const onChangeSearch = query => {
-    console.log(query)
-    setSearchQuery(query)
-  }
-
-  const onSearchSubmit = () => {
-    console.log("Search submitted:", searchQuery)
-  }
-
+function SearchScreen({ navigation }) {
   return (
     <View className="flex-1">
       <ScrollView>
-        <TouchableOpacity onPress={() => navigation.navigate("EditItem")}>
-          <ListItem title={"Click this"} description="1 tonna" price={20000} />
+        <TouchableOpacity onPress={() => navigation.navigate('EditItem')}>
+          <ListItem title="Click this" description="1 tonna" price={20000} />
         </TouchableOpacity>
         {[...Array(20)].map((_, index) => (
-          <ListItem
-            key={index}
-            title="Olma"
-            description="1 tonna"
-            price={10000 + index}
-          />
+          // eslint-disable-next-line react/no-array-index-key
+          <ListItem key={index} title="Olma" description="1 tonna" price={10000 + index} />
         ))}
       </ScrollView>
     </View>
-  )
+  );
 }
 
-export default SearchScreen
+export default SearchScreen;

@@ -1,10 +1,10 @@
-import { Card } from "react-native-paper";
+import { Card } from 'react-native-paper';
 
-export const CardElevated = ({ title, children }) => {
-    return (
-      <Card className="px-2 py-4 mb-4 bg-white dark:bg-slate-700 rounded-none">
-        {title && <Card.Title title={title} titleVariant="titleLarge" />}
-        <Card.Content>{children}</Card.Content>
-      </Card>
-    );
-  };
+export function CardElevated({ title, children }) {
+  return (
+    <Card className="mb-4 rounded-none bg-white px-2 py-4 dark:bg-slate-700">
+      {title && <Card.Title title={title} titleVariant="titleLarge" />}
+      <Card.Content>{children}</Card.Content>
+    </Card>
+  );
+}

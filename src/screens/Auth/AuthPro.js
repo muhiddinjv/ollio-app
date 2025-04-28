@@ -1,8 +1,9 @@
-import * as React from "react";
-import { jwtDecode } from "jwt-decode";
-import { getAccessToken } from "../../api/astorage";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { signIn as apiSignIn, signOut as apiSignOut, refreshToken as apiRefreshToken } from "../../api/requests";
+import * as React from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { jwtDecode } from 'jwt-decode';
+
+import { getAccessToken } from '../../api/astorage';
+import { refreshToken as apiRefreshToken, signIn as apiSignIn, signOut as apiSignOut } from '../../api/requests';
 
 const AuthContext = React.createContext({
   user: null,
@@ -13,7 +14,7 @@ const AuthContext = React.createContext({
   refreshToken: () => {},
 });
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [signedIn, setSignedIn] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [user, setUser] = React.useState(null);
@@ -31,7 +32,7 @@ export const AuthProvider = ({ children }) => {
         setSignedIn(false);
       }
     } catch (error) {
-      console.error("Error during authentication check:", error);
+      console.error('Error during authentication check:', error);
       setSignedIn(false);
     } finally {
       setIsLoading(false);
@@ -43,13 +44,13 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signInMutation = useMutation(apiSignIn, {
-    onSuccess: (user) => {
+    onSuccess: () => {
       setUser(user);
       setSignedIn(true);
-      queryClient.invalidateQueries(["stock"]);
+      queryClient.invalidateQueries(['stock']);
     },
-    onError: (error) => {
-      console.error("Error during sign in:", error);
+    onError: error => {
+      console.error('Error during sign in:', error);
     },
   });
 
@@ -59,14 +60,14 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setSignedIn(false);
     },
-    onError: (error) => {
-      console.error("Error during sign out:", error);
+    onError: error => {
+      console.error('Error during sign out:', error);
     },
   });
 
   const refreshTokenMutation = useMutation(apiRefreshToken, {
-    onError: (error) => {
-      console.error("Error refreshing token:", error);
+    onError: error => {
+      console.error('Error refreshing token:', error);
       setUser(null);
       setSignedIn(false);
     },
@@ -87,17 +88,14 @@ export const AuthProvider = ({ children }) => {
     console.log('AuthProvider signedIn :>> ', signedIn);
   }, [signedIn]);
 
-  return (
-    <AuthContext.Provider value={{ ...authActions }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
+  return <AuthContext.Provider value={{ ...authActions }}>{children}</AuthContext.Provider>;
+}
 
 export const useAuth = () => {
   const context = React.useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be inside an AuthProvider with a value");
+    throw new Error('useAuth must be inside an AuthProvider with a value');
   }
   return context;
 };

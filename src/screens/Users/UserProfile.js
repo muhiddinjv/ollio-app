@@ -1,24 +1,29 @@
-import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
-import { Text, Button, useTheme, Appbar } from "react-native-paper";
+import React from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { Appbar, Button, Text, useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
-import { useGlobalState } from "../../hooks";
 
-const UserProfile = ({ navigation }) => {
+import { useGlobalState } from '../../hooks';
+
+function UserProfile({ navigation }) {
   const { colors } = useTheme();
   const { client, addClientToBill } = useGlobalState();
 
   const handleAddToBill = () => {
     addClientToBill(client._id);
-    navigation.navigate("Savdo");
+    navigation.navigate('Savdo');
   };
 
   return (
     <View style={styles.container}>
       <Appbar.Header style={{ backgroundColor: colors.primary }}>
-        <Appbar.BackAction onPress={() => navigation.navigate("UserList")} iconColor={colors.surface} />
+        <Appbar.BackAction onPress={() => navigation.navigate('UserList')} iconColor={colors.surface} />
         <Appbar.Content title="Foydalanuvchi profili" titleStyle={{ color: colors.surface }} />
-        <Appbar.Action icon="account-edit" onPress={() => navigation.navigate("UserEdit", { user: client })} color={colors.surface} />
+        <Appbar.Action
+          icon="account-edit"
+          onPress={() => navigation.navigate('UserEdit', { user: client })}
+          color={colors.surface}
+        />
       </Appbar.Header>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.profileContainer}>
@@ -36,7 +41,7 @@ const UserProfile = ({ navigation }) => {
           </View>
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="store" size={20} color={colors.primary} />
-            <Text style={styles.detailsTitle}>Do'kon turi: {client?.store_type}</Text>
+            <Text style={styles.detailsTitle}>Do&apos;kon turi: {client?.store_type}</Text>
           </View>
           <View style={styles.detailRow}>
             <MaterialCommunityIcons name="lock" size={20} color={colors.primary} />
@@ -52,67 +57,67 @@ const UserProfile = ({ navigation }) => {
           </View>
         </View>
         <Button mode="contained" onPress={handleAddToBill} style={styles.button}>
-          CHEKGA QO'SHISH
+          <Text>CHEKGA QO&lsquo;SHISH</Text>
         </Button>
       </ScrollView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  scrollView: {
-    padding: 16,
-  },
-  profileContainer: {
-    alignItems: "center",
-    marginBottom: 20,
-  },
   avatar: {
-    width: 80,
-    height: 80,
+    alignItems: 'center',
+    backgroundColor: '#ccc',
     borderRadius: 40,
-    backgroundColor: "#ccc",
-    justifyContent: "center",
-    alignItems: "center",
+    height: 80,
+    justifyContent: 'center',
     marginBottom: 10,
+    width: 80,
   },
   avatarText: {
+    color: '#fff',
     fontSize: 24,
-    color: "#fff",
   },
-  name: {
-    fontSize: 20,
-    fontWeight: "bold",
+  button: {
+    marginTop: 20,
   },
-  phone: {
-    fontSize: 16,
-    color: "#666",
+  container: {
+    backgroundColor: '#fff',
+    flex: 1,
   },
   customerId: {
+    color: '#999',
     fontSize: 14,
-    color: "#999",
-  },
-  detailsContainer: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: 'white',
-    borderRadius: 8,
   },
   detailRow: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     marginVertical: 5,
+  },
+  detailsContainer: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    marginTop: 20,
+    padding: 10,
   },
   detailsTitle: {
     fontSize: 16,
     marginLeft: 10, // Space between icon and text
   },
-  button: {
-    marginTop: 20,
+  name: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  phone: {
+    color: '#666',
+    fontSize: 16,
+  },
+  profileContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  scrollView: {
+    padding: 16,
   },
 });
 

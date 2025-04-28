@@ -1,19 +1,19 @@
-import axiosInstance from '../api/axiostance';
+import { axiosInstance } from '../api/axiostance';
 
 export const checkStockQuantity = async (productId, quantity) => {
   try {
-    const response = await axiosInstance.post("stock/checkqty", {
+    const response = await axiosInstance.post('stock/checkqty', {
       _id: productId,
       quantity,
     });
     return response.data; // Return the response data
   } catch (error) {
-    console.error("Error checking stock quantity:", error);
+    console.error('Error checking stock quantity:', error);
     throw error; // Rethrow the error for handling in the calling function
   }
 };
 
-export const emailValidator = (email) => {
+export const emailValidator = email => {
   const re = /\S+@\S+\.\S+/;
 
   if (!email || email.length <= 0) return 'Email cannot be empty.';
@@ -31,17 +31,17 @@ export function phoneValidator(phoneNumber) {
   return regex.test(phoneNumber);
 }
 
-export const passwordValidator = (password) => {
+export const passwordValidator = password => {
   if (!password || password.length <= 0) return 'Password cannot be empty.';
 
   return '';
 };
 
-export const calculateTotal = (products) => {
-  return products.reduce((total, item) => total + (item.price * item.quantity), 0);
+export const calculateTotal = products => {
+  return products.reduce((total, item) => total + item.price * item.quantity, 0);
 };
 
-export const formatDate = (dateString) => {
+export const formatDate = dateString => {
   const date = new Date(dateString);
   const options = {
     hour: '2-digit',
@@ -53,7 +53,7 @@ export const formatDate = (dateString) => {
   return date.toLocaleString('en-GB', options).replace(',', ''); // Format to HH:MM, DD-MM-YYYY
 };
 
-export const formattedDate = (date) => {
+export const formattedDate = date => {
   const d = new Date(date);
   const day = String(d.getDate()).padStart(2, '0');
   const month = d.toLocaleString('default', { month: 'short' });
@@ -63,6 +63,3 @@ export const formattedDate = (date) => {
 
   return `${day}_${month}_${year}_${hours}_${minutes}`;
 };
-
-
-

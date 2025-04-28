@@ -1,7 +1,7 @@
 import React from 'react';
 import { Appbar, useTheme } from 'react-native-paper';
 
-const Header = ({ title, iconLeft, iconRight, onRightPress, onLeftPress, navigation, backBtn, fontSize }) => {
+function Header({ title, iconLeft, iconRight, onRightPress, onLeftPress, navigation, backBtn, fontSize }) {
   const { colors } = useTheme();
   return (
     <Appbar.Header style={{ backgroundColor: colors.primary }} theme={{ mode: 'adaptive' }}>
@@ -11,6 +11,6 @@ const Header = ({ title, iconLeft, iconRight, onRightPress, onLeftPress, navigat
       {onRightPress && <Appbar.Action icon={iconRight} color="white" onPress={onRightPress} />}
     </Appbar.Header>
   );
-};
+}
 
 export default Header;

@@ -1,8 +1,8 @@
-import React from "react";
-import { Controller } from "react-hook-form";
-import { Text, TextInput, View } from "react-native";
+import React from 'react';
+import { Controller } from 'react-hook-form';
+import { Text, TextInput, View } from 'react-native';
 
-const ControlledInputCustom = ({
+function ControlledInputCustom({
   name,
   control,
   rules,
@@ -12,20 +12,15 @@ const ControlledInputCustom = ({
   inputLabel,
   editable,
   ...props
-}) => {
+}) {
   return (
-    <View className="flex-col w-full">
-      {inputLabel ? (
-        <Text className={`text-gray-500 ${inputLabelClass}`}>{inputLabel}</Text>
-      ) : null}
+    <View className="w-full flex-col">
+      {inputLabel ? <Text className={`text-gray-500 ${inputLabelClass}`}>{inputLabel}</Text> : null}
       <Controller
         name={name}
         control={control}
         rules={rules}
-        render={({
-          field: { onChange, onBlur, value },
-          fieldState: { error },
-        }) => (
+        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <TextInput
             className={className}
             mode="outlined"
@@ -39,9 +34,9 @@ const ControlledInputCustom = ({
           />
         )}
       />
-      <Text className="text-red-500">{error ? error : null}</Text>
+      <Text className="text-red-500">{error || null}</Text>
     </View>
   );
-};
+}
 
 export default ControlledInputCustom;

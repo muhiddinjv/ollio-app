@@ -1,11 +1,11 @@
-import React from "react";
-import { Modal, StyleSheet, View } from "react-native";
+import React from 'react';
+import { Modal, StyleSheet, View } from 'react-native';
 
-const BaseModal = ({ visible = false, onClose, children }) => {
+function BaseModal({ visible = false, onClose, children }) {
   return (
     <Modal
       animationType="fade"
-      transparent={true}
+      transparent
       visible={visible}
       onRequestClose={() => {
         onClose();
@@ -16,30 +16,30 @@ const BaseModal = ({ visible = false, onClose, children }) => {
       </View>
     </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   centeredView: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: 'center',
     padding: 20,
   },
   modalView: {
-    backgroundColor: "white",
+    alignItems: 'center',
+    backgroundColor: 'white',
     borderRadius: 20,
+    elevation: 5,
     padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    width: "100%",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    width: '100%',
   },
 });
 

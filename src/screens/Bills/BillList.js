@@ -1,15 +1,14 @@
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { View, Text, Pressable, Animated } from 'react-native';
-import { useGlobalState, useInfiniteScroll } from '../../hooks';
 import { ActivityIndicator, useTheme } from 'react-native-paper';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { LinearTransition } from 'react-native-reanimated';
 import { useAuth } from '../Auth/AuthPro';
 
+import { useGlobalState, useInfiniteScroll } from '../../hooks';
 import Header from '../../components/Header';
 import Loader from '../../components/Loader';
-import { useGlobalState, useInfiniteScroll } from '../../hooks';
 import { formatDate } from '../../utils';
 
 function BillItem({ bill, navigate, onDelete }) {

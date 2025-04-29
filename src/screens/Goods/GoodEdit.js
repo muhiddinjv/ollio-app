@@ -3,13 +3,9 @@ import { View, SafeAreaView, Alert } from 'react-native';
 import { Switch, Text, IconButton, Button } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 import { useQueryClient } from '@tanstack/react-query';
-import { CardElevated } from '../../components/CardElevated';
-import { getTokens } from '../../api/astorage';
-import axiosInstance from '../../api/axiostance';
-import Wrapper from '../../components/Wrapper';
-import Header from '../../components/Header';
 import { Controller, useForm } from 'react-hook-form';
 
+import { getTokens } from '../../api/astorage';
 import { axiosInstance } from '../../api/axiostance';
 import { CardElevated } from '../../components/CardElevated';
 import ControlledInputCustom from '../../components/ControlledInputCustom';

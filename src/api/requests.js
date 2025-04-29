@@ -25,13 +25,3 @@ export const refresh = async () => {
   await setTokens(data);
   return data;
 };
-
-export const fetchList = async (url, page = 1, limit = 25) => {
-  const { data } = await axiosInstance.get(url, { params: { page, limit } });
-  return data;
-};
-
-export const payBill = async billId => {
-  const { data } = await axiosInstance.post(`/bills/pay/${billId}`);
-  return data;
-};

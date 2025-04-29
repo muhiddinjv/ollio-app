@@ -7,7 +7,6 @@ import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-q
 
 import { getTokens } from '../api/astorage';
 import axiosInstance from '../api/axiostance';
-import { useAuth } from '../screens/Auth/AuthPro';
 import { formatError, formattedDate } from '../utils';
 
 export const useInfiniteScroll = ({ key, url, limit = 25, page = 1, userId = null, filters = {} }) => {
@@ -33,10 +32,9 @@ export const useInfiniteScroll = ({ key, url, limit = 25, page = 1, userId = nul
           ...filters,
         },
       });
-
       return { data, nextPage: page + 1 };
     } catch (error) {
-      Alert.alert('Error', `Error fetching data: ${error.message}`);
+      Alert.alert('Error', `Failed to fetch data: ${formatError(error)}`);
       throw error;
     }
   };
@@ -181,7 +179,7 @@ export function GlobalProvider({ children }) {
     try {
       const {
         data: { success, message, bill },
-      } = await axiosInstance.post('/bills', billData);
+      } = await axiosInstance.post('bills', billData);
       if (success) {
         setBill({ client_id: null, products: [] });
         setBillItem(bill);
@@ -234,7 +232,7 @@ export function GlobalProvider({ children }) {
             text: 'Delete',
             onPress: async () => {
               try {
-                await axiosInstance.delete(`/bills/${billId}`);
+                await axiosInstance.delete(`bills/${billId}`);
                 queryClient.invalidateQueries(['bills']);
               } catch (error) {
                 Alert.alert('Error deleting bill:', formatError(error));
@@ -298,7 +296,7 @@ export const usePostGoods = () => {
   return useMutation(
     async goods => {
       const tokens = await getTokens();
-      const response = await axiosInstance.post('/stock/receive', goods, {
+      const response = await axiosInstance.post('stock/receive', goods, {
         headers: { Authorization: `Bearer ${tokens.access}` },
       });
       return response.data; // Return the response data

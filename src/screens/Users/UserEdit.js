@@ -30,7 +30,7 @@ function UserEdit({ navigation }) {
     };
 
     try {
-      const response = await axiosInstance.put(`/users/${client._id}`, updatedUserData);
+      const response = await axiosInstance.put(`users/${client._id}`, updatedUserData);
       setClient(response.data);
       navigation.navigate('UserProfile');
     } catch (error) {

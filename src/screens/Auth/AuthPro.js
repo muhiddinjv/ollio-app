@@ -2,8 +2,9 @@ import * as React from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { jwtDecode } from 'jwt-decode';
 
-import { getTokens } from '../../api/astorage';
-import { refreshToken as apiRefreshToken, signIn as apiSignIn, signOut as apiSignOut } from '../../api/requests';
+import { refresh, signIn, signOut } from '../../api/requests';
+import { getTokens, setTokens } from '../../api/astorage';
+import { authService } from './AuthService';
 
 const AuthContext = React.createContext({
   user: null,
@@ -11,15 +12,23 @@ const AuthContext = React.createContext({
   isLoading: false,
   signIn: () => {},
   signOut: () => {},
-  refreshToken: () => {},
-  setSignedIn: () => {},
+  refresh: () => {},
 });
 
 export function AuthProvider({ children }) {
-  const [signedIn, setSignedIn] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [signedIn, setSignedIn] = React.useState(false);
   const [user, setUser] = React.useState(null);
+  
   const queryClient = useQueryClient();
+
+  React.useEffect(() => {
+    // setTokens(null);
+    authService.setSignOutHandler(async () => {
+      signOutMutation.mutate();
+    });
+  }, []);
+  
 
   React.useEffect(() => {
     const fetchTokens = async () => {
@@ -33,11 +42,10 @@ export function AuthProvider({ children }) {
       }
       setIsLoading(false);
     };
-
     fetchTokens();
   }, []);
 
-  const signInMutation = useMutation(apiSignIn, {
+  const signInMutation = useMutation(signIn, {
     onSuccess: () => {
       setUser(user);
       setSignedIn(true);
@@ -48,7 +56,7 @@ export function AuthProvider({ children }) {
     },
   });
 
-  const signOutMutation = useMutation(apiSignOut, {
+  const signOutMutation = useMutation(signOut, {
     onSuccess: () => {
       queryClient.clear();
       setUser(null);
@@ -59,7 +67,7 @@ export function AuthProvider({ children }) {
     },
   });
 
-  const refreshTokenMutation = useMutation(apiRefreshToken, {
+  const refreshMutation = useMutation(refresh, {
     onError: error => {
       console.error('Error refreshing token:', error);
       setUser(null);
@@ -72,10 +80,9 @@ export function AuthProvider({ children }) {
       user,
       signedIn,
       isLoading,
-      setSignedIn,
       signIn: signInMutation.mutate,
       signOut: signOutMutation.mutate,
-      refreshToken: refreshTokenMutation.mutate,
+      refresh: refreshMutation.mutate,
     }),
     [user, signedIn, isLoading]
   );

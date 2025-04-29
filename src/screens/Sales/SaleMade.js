@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { ActivityIndicator, View, Text, StyleSheet, Alert } from 'react-native';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
-import Header from '../../components/Header';
-import axiosInstance from '../../api/axiostance';
-import { useGlobalState } from '../../hooks';
 import { Skeleton } from 'react-native-skeletons';
-import { ActivityIndicator } from 'react-native';
-import { useQueryClient } from '@tanstack/react-query';
-import { useAuth } from '../Auth/AuthPro';
-import { formatError } from '../../utils';
 
 import axiosInstance from '../../api/axiostance';
 import Header from '../../components/Header';
 import { useGlobalState } from '../../hooks';
+import { useAuth } from '../Auth/AuthPro';
+import { formatError } from '../../utils';
 
 function SaleMade({ navigation }) {
   const [isPaid, setIsPaid] = useState(false);
@@ -23,12 +19,11 @@ function SaleMade({ navigation }) {
     colors: { primary, backdrop },
   } = useTheme();
   const queryClient = useQueryClient();
-  const { setSignedIn } = useAuth();
 
   const handleSale = async () => {
     setPayLoading(true);
     try {
-      const response = await axiosInstance.post(`/bills/pay/${billItem?._id}`);
+      const response = await axiosInstance.post(`bills/pay/${billItem?._id}`);
       if (response.data.success) {
         billItem.status = 'paid';
         setBillItem(billItem);

@@ -10,7 +10,8 @@ const Stack = createStackNavigator();
 
 function AppStack() {
   const { signedIn, isLoading } = useAuth();
-  if (isLoading) return <Splash />;
+  console.log('AppStack signedIn :>> ', signedIn);
+  if (isLoading && !signedIn) return <Splash />;
 
   return (
     <Stack.Navigator headerShown={false}>

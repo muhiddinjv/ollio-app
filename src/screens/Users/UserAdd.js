@@ -53,7 +53,7 @@ function UserAdd({ navigation }) {
     };
 
     try {
-      await axiosInstance.post('/users', userData);
+      await axiosInstance.post('users', userData);
       navigation.goBack();
     } catch (error) {
       console.error('Error saving user:', error.response ? error.response.data : error.message);

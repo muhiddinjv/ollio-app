@@ -61,15 +61,15 @@ function GoodEdit({ navigation, route }) {
 
   const deleteGood = () => {
     Alert.alert(
-      'Delete Good',
-      `Are you sure you want to delete "${good.title}"?`,
+      'Tovar o\'chirish',
+      `Shu tovarni o'chirishni xohlaysizmi? "${good.title}"?`,
       [
         {
-          text: 'Cancel',
+          text: 'Bekor qilish',
           style: 'cancel',
         },
         {
-          text: 'Delete',
+          text: 'O\'chirish',
           onPress: async () => {
             const tokens = await getTokens();
             try {
@@ -79,7 +79,7 @@ function GoodEdit({ navigation, route }) {
               });
               navigation.navigate('GoodTabs', { screen: 'Dokon' });
             } catch (error) {
-              console.error('Error deleting good:', error);
+              console.error('Xatolik:', error);
             } finally {
               queryClient.invalidateQueries(['good', 'goods']);
             }

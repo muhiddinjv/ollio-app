@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FAB, Modal, Portal, Text, useTheme } from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { useColorScheme } from 'nativewind';
 
 import { useGlobalState } from '../hooks';
 import { MainColors } from '../theme';
+import { getItem } from '../api/astorage';
 
 function FABplus({ visible }) {
   const { selectedGoods, setSelectedGoods } = useGlobalState();
@@ -18,7 +18,7 @@ function FABplus({ visible }) {
   const navigation = useNavigation();
 
   const handleManagePress = async () => {
-    const storedGoods = await AsyncStorage.getItem('selectedGoods');
+    const storedGoods = await getItem('selectedGoods');
     const parsedGoods = storedGoods ? JSON.parse(storedGoods) : [];
 
     if (parsedGoods.length === 0) {

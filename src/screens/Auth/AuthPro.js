@@ -25,6 +25,7 @@ export function AuthProvider({ children }) {
   React.useEffect(() => {
     // setTokens(null);
     authService.setSignOutHandler(async () => {
+      console.log('singout mutation');
       signOutMutation.mutate();
     });
   }, []);
@@ -58,6 +59,7 @@ export function AuthProvider({ children }) {
 
   const signOutMutation = useMutation(signOut, {
     onSuccess: () => {
+      console.log('signout mutation success');
       queryClient.clear();
       setUser(null);
       setSignedIn(false);

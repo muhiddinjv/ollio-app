@@ -1,57 +1,53 @@
 import axios from "axios";
-import createAuthRefreshInterceptor from "axios-auth-refresh";
 import { getTokens, setTokens } from "./astorage";
 import { authService } from "../screens/Auth/AuthService";
 
-const axiosInstance = axios.create({
-  baseURL: "https://ollioapi.vercel.app/",
-  headers: { "Content-Type": "application/json" },
+const baseURL = "https://ollioapi.vercel.app/";
+// const baseURL = "http://localhost:4000/";
+// const baseURL = "http://192.168.0.105:4000/";
+
+const axiosInstance = axios.create({baseURL, headers: { "Content-Type": "application/json" }});
+
+// Request Interceptor: Attach token to requests
+axiosInstance.interceptors.request.use(async (config) => {
+  const { access } = await getTokens();
+  if (access) {
+    config.headers.Authorization = `Bearer ${access}`;
+  }
+  return config;
 });
 
-// 1) Refresh-token logic
-const refreshAuthLogic = async (failedRequest) => {
-  const tokens = await getTokens();
-  if (!tokens?.refresh) {
-    await authService.signOut();
-    return Promise.reject("No refresh token");
-  }
+// Response Interceptor: Handle token expiration
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
 
-  try {
-    // NOTE: call the same instance so baseURL, interceptors, etc. are consistent
-    console.log('refreshing tokens...');
-    const { data } = await axiosInstance.post("auth/refresh", { refresh: tokens.refresh });
-    console.log('refreshAuthLogic data :>> ', 111,data);
+    if (error.response?.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true; // <== Mark request as retried
+      console.log("Token expired. Attempting to refresh...");
+      const { refresh } = await getTokens();
 
-    // save the new tokens
-    await setTokens(data);
+      if (refresh) {
+        try {
+          const response = await axios.post(`${baseURL}auth/refresh`, { refresh });
 
-    // update the header on the failed request
-    failedRequest.response.config.headers["Authorization"] = `Bearer ${data.access}`;
+          await setTokens(response.data);
 
-    // tell axios-auth-refresh “go ahead and retry”
-    return Promise.resolve();
-  } catch (err) {
-    // if anything goes wrong, force a sign-out
-    await authService.signOut();
-    return Promise.reject(err);
-  }
-};
+          originalRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
 
-// 2) Attach the refresh interceptor to YOUR instance
-createAuthRefreshInterceptor(axiosInstance, refreshAuthLogic, {
-  statusCodes: [401, 403]
-});
-
-// 3) Regular request interceptor to add the access token
-axiosInstance.interceptors.request.use(
-  async (config) => {
-    const tokens = await getTokens();
-    if (tokens?.access) {
-      config.headers.Authorization = `Bearer ${tokens.access}`;
+          return axiosInstance(originalRequest); // retry
+        } catch (err) {
+          console.error("Error refreshing token:", err);
+          authService.signOut();
+          return Promise.reject("Session expired. Please sign in again.");
+        }
+      } 
     }
-    return config;
-  },
-  (err) => Promise.reject(err)
+
+    return Promise.reject(error);
+  }
 );
+
 
 export default axiosInstance;

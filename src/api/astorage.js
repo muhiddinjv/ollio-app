@@ -9,5 +9,13 @@ export async function setItem(key, value) {
   return AsyncStorage.setItem(key, JSON.stringify(value));
 }
 
-export const getTokens = () => getItem('tokens');
+export async function removeItem(key) {
+  return AsyncStorage.removeItem(key);
+}
+
+export const getTokens = async () => {
+  const tokens = await getItem('tokens');
+  return tokens || {};
+};
 export const setTokens = value => setItem('tokens', value);
+export const clearTokens = () => removeItem('tokens');

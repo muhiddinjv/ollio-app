@@ -1,12 +1,12 @@
 import React from 'react';
 import { Alert, Dimensions, ScrollView, View } from 'react-native';
 import { Button, DataTable, Text, TextInput } from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useQueryClient } from '@tanstack/react-query';
 
 import Header from '../../components/Header';
 import Wrapper from '../../components/Wrapper';
 import { useGlobalState, usePostGoods } from '../../hooks';
+import { removeItem } from '../../api/astorage';
 
 const { height } = Dimensions.get('window');
 
@@ -36,7 +36,7 @@ function GoodsAdd({ navigation }) {
 
     postGoods(formattedGoods, {
       onSuccess: () => {
-        AsyncStorage.removeItem('selectedGoods');
+        removeItem('selectedGoods');
         queryClient.invalidateQueries(['stock']);
         setSelectedGoods([]);
         navigation.navigate('GoodTabs', { screen: 'Dokon' });

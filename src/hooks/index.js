@@ -2,12 +2,11 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { Alert } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import { shareAsync } from 'expo-sharing';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { getTokens } from '../api/astorage';
-import axiosInstance from '../api/axiostance';
+import { getItem, getTokens, setItem } from '../api/astorage';
 import { formatError, formattedDate } from '../utils';
+import axiosInstance from '../api/axiostance';
 
 export const useInfiniteScroll = ({ key, url, limit = 25, page = 1, userId = null, filters = {} }) => {
   const queryKey = [
@@ -23,9 +22,9 @@ export const useInfiniteScroll = ({ key, url, limit = 25, page = 1, userId = nul
 
   const queryFn = async () => {
     try {
-      const tokens = await getTokens();
+      const tokens = (await getTokens()) || {};
       const { data } = await axiosInstance.get(url, {
-        headers: { Authorization: `Bearer ${tokens.access}` },
+        headers: { Authorization: `Bearer ${tokens.access || ''}` },
         params: {
           page,
           limit,
@@ -34,6 +33,7 @@ export const useInfiniteScroll = ({ key, url, limit = 25, page = 1, userId = nul
       });
       return { data, nextPage: page + 1 };
     } catch (error) {
+      console.log('error :>> ', error);
       Alert.alert('Error', `Failed to fetch data: ${formatError(error)}`);
       throw error;
     }
@@ -105,10 +105,10 @@ export function GlobalProvider({ children }) {
 
   useEffect(() => {
     const loadStorageData = async () => {
-      const storedBill = await AsyncStorage.getItem('bill');
-      const storedClient = await AsyncStorage.getItem('client');
-      const storedClients = await AsyncStorage.getItem('clients');
-      const storedBillItem = await AsyncStorage.getItem('billItem');
+      const storedBill = await getItem('bill');
+      const storedClient = await getItem('client');
+      const storedClients = await getItem('clients');
+      const storedBillItem = await getItem('billItem');
       setBill(storedBill ? JSON.parse(storedBill) : null);
       setClient(storedClient ? JSON.parse(storedClient) : null);
       setClients(storedClients ? JSON.parse(storedClients) : []);
@@ -118,11 +118,11 @@ export function GlobalProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    AsyncStorage.setItem('bill', JSON.stringify(bill));
-    AsyncStorage.setItem('client', JSON.stringify(client));
-    AsyncStorage.setItem('clients', JSON.stringify(clients));
-    AsyncStorage.setItem('billItem', JSON.stringify(billItem));
-    AsyncStorage.setItem('selectedGoods', JSON.stringify(selectedGoods));
+    setItem('bill', JSON.stringify(bill));
+    setItem('client', JSON.stringify(client));
+    setItem('clients', JSON.stringify(clients));
+    setItem('billItem', JSON.stringify(billItem));
+    setItem('selectedGoods', JSON.stringify(selectedGoods));
   }, [client, clients, selectedGoods, bill, openBills, billItem]);
 
   const addClientToBill = clientId => {
@@ -221,21 +221,21 @@ export function GlobalProvider({ children }) {
   const deleteBill = useCallback(
     billId => {
       Alert.alert(
-        'Delete Bill',
-        'Are you sure you want to delete this bill?',
+        'Chekni o\'chirish',
+        'Shu chekni o\'chirishni xohlaysizmi?',
         [
           {
-            text: 'Cancel',
+            text: 'Bekor qilish',
             style: 'cancel',
           },
           {
-            text: 'Delete',
+            text: 'O\'chirish',
             onPress: async () => {
               try {
                 await axiosInstance.delete(`bills/${billId}`);
                 queryClient.invalidateQueries(['bills']);
               } catch (error) {
-                Alert.alert('Error deleting bill:', formatError(error));
+                Alert.alert('Xatolik:', formatError(error));
               }
             },
           },

@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { jwtDecode } from 'jwt-decode';
 
 import { refresh, signIn, signOut } from '../../api/requests';
-import { getTokens, setTokens } from '../../api/astorage';
+import { getTokens, removeTokens } from '../../api/astorage';
 import { authService } from './AuthService';
 
 const AuthContext = React.createContext({
@@ -16,14 +16,14 @@ const AuthContext = React.createContext({
 });
 
 export function AuthProvider({ children }) {
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [signedIn, setSignedIn] = React.useState(false);
   const [user, setUser] = React.useState(null);
   
   const queryClient = useQueryClient();
 
   React.useEffect(() => {
-    // setTokens(null);
+    // removeTokens();
     authService.setSignOutHandler(async () => {
       console.log('singout mutation');
       signOutMutation.mutate();
@@ -31,26 +31,26 @@ export function AuthProvider({ children }) {
   }, []);
   
 
-  React.useEffect(() => {
-    const fetchTokens = async () => {
-      const tokens = await getTokens();
-      if (tokens) {
-        const decodedUser = jwtDecode(tokens.access);
-        setUser(decodedUser);
-        setSignedIn(true);
-      } else {
-        setSignedIn(false);
-      }
-      setIsLoading(false);
-    };
-    fetchTokens();
-  }, []);
+  // React.useEffect(() => {
+  //   const fetchTokens = async () => {
+  //     const tokens = await getTokens();
+  //     if (tokens) {
+  //       const decodedUser = jwtDecode(tokens.access);
+  //       setUser(decodedUser);
+  //       setSignedIn(true);
+  //     } else {
+  //       setSignedIn(false);
+  //     }
+  //     setIsLoading(false);
+  //   };
+  //   fetchTokens();
+  // }, []);
 
   const signInMutation = useMutation(signIn, {
-    onSuccess: () => {
-      setUser(user);
+    onSuccess: (data) => {
+      setUser(data);
       setSignedIn(true);
-      queryClient.invalidateQueries(['stock']);
+      // queryClient.invalidateQueries(['stock']);
     },
     onError: error => {
       console.error('Error during sign in:', error);

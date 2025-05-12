@@ -14,8 +14,13 @@ export async function removeItem(key) {
 }
 
 export const getTokens = async () => {
-  const tokens = await getItem('tokens');
-  return tokens || {};
+  try {
+    const tokens = await getItem('tokens');
+    return tokens || {};
+  } catch (error) {
+    console.log('error :>> ', error);
+    return {};
+  }
 };
 export const setTokens = value => setItem('tokens', value);
-export const clearTokens = () => removeItem('tokens');
+export const removeTokens = () => removeItem('tokens');

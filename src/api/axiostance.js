@@ -10,10 +10,11 @@ const axiosInstance = axios.create({baseURL, headers: { "Content-Type": "applica
 
 // Request Interceptor: Attach token to requests
 axiosInstance.interceptors.request.use(async (config) => {
-  const { access } = await getTokens();
-  if (access) {
-    config.headers.Authorization = `Bearer ${access}`;
+  const tokens = await getTokens();
+  if (!tokens) {
+    console.log('No access token available');
   }
+  config.headers.Authorization = `Bearer ${tokens.access}`;
   return config;
 });
 
@@ -34,7 +35,7 @@ axiosInstance.interceptors.response.use(
 
           await setTokens(response.data);
 
-          originalRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
+          originalRequest.headers['Authorization'] = `Bearer ${response.data.access}`;
 
           return axiosInstance(originalRequest); // retry
         } catch (err) {

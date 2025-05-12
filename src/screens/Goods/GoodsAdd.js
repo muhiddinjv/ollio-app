@@ -42,7 +42,7 @@ function GoodsAdd({ navigation }) {
         navigation.navigate('GoodTabs', { screen: 'Dokon' });
       },
       onError: error => {
-        Alert.alert('Error', `${error}`);
+        Alert.alert('Hatolik', `${error}`);
       },
     });
   };

@@ -6,83 +6,76 @@ import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-q
 
 import { getItem, getTokens, setItem } from '../api/astorage';
 import { formatError, formattedDate } from '../utils';
+import { useAuth } from '../screens/Auth/AuthPro';
 import axiosInstance from '../api/axiostance';
 
-export const useInfiniteScroll = ({ key, url, limit = 25, page = 1, userId = null, filters = {} }) => {
-  const queryKey = [
-    ...key,
-    userId,
-    ...Object.entries(filters)
-      .filter(([, value]) => value) // Keep only entries with truthy values
-      // eslint-disable-next-line no-shadow
-      .map(([key]) => key), // Extract the keys
-  ];
+export const useInfiniteScroll = ({
+  key = [],
+  url,
+  limit = 25,
+  userId = null,
+  filters = {},
+}) => {
+  const { signedIn } = useAuth();
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const queryFn = async () => {
-    try {
-      const tokens = (await getTokens()) || {};
-      const { data } = await axiosInstance.get(url, {
-        headers: { Authorization: `Bearer ${tokens.access || ''}` },
-        params: {
-          page,
-          limit,
-          ...filters,
-        },
-      });
-      return { data, nextPage: page + 1 };
-    } catch (error) {
-      console.log('error :>> ', error);
-      Alert.alert('Error', `Failed to fetch data: ${formatError(error)}`);
-      throw error;
-    }
+  const queryKey = useMemo(() => (
+    signedIn ? ['infiniteScroll', ...key, userId, filters] : null
+  ), [key, userId, filters, signedIn]);
+
+  const queryFn = async ({ pageParam = 1 }) => {
+    const { access } = await getTokens();
+    if (!access) console.log('No access token');
+
+    const { data } = await axiosInstance.get(url, {
+      params: { page: pageParam, limit, ...filters },
+      headers: { Authorization: `Bearer ${access}` },
+    });
+
+    return { data, nextPage: pageParam + 1 };
   };
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, refetch } = useInfiniteQuery({
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    refetch,
+    isError,
+    error,
+    isLoading,
+  } = useInfiniteQuery({
     queryKey,
     queryFn,
     initialPageParam: 1,
-    getNextPageParam: (lastPage, __, lastPageParam) => {
-      if (lastPage.data.length < limit) {
-        return undefined;
-      }
-      return lastPageParam + 1;
-    },
-    getPreviousPageParam: (_, __, firstPageParam) => {
-      if (firstPageParam === 1) {
-        return undefined;
-      }
-      return firstPageParam - 1;
-    },
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage?.data?.length < limit ? undefined : allPages.length + 1,
+    enabled: !!signedIn, // 👈 prevent fetch if not signed in
+    retry: false,
   });
-
-  const loadNext = useCallback(() => {
-    // eslint-disable-next-line no-unused-expressions
-    hasNextPage && fetchNextPage();
-  }, [fetchNextPage, hasNextPage]);
 
   const onRefresh = useCallback(() => {
     if (!isRefreshing) {
       setIsRefreshing(true);
-      refetch()
-        .then(() => setIsRefreshing(false))
-        .catch(() => setIsRefreshing(false));
+      refetch().finally(() => setIsRefreshing(false));
     }
   }, [isRefreshing, refetch]);
 
-  const flattenData = useMemo(() => {
-    // eslint-disable-next-line no-shadow
-    return data?.pages.flatMap(page => page.data) || [];
-  }, [data?.pages]);
+  const flattenData = useMemo(() => (
+    data?.pages?.flatMap(page => page?.data || []) || []
+  ), [data]);
 
   return {
-    refetch,
     data: flattenData,
-    onEndReached: loadNext,
+    onEndReached: hasNextPage ? fetchNextPage : () => {},
     isRefreshing,
     onRefresh,
     isFetchingNextPage,
+    isLoading,
+    isError,
+    error,
+    refetch,
   };
 };
 

@@ -5,7 +5,6 @@ import { Picker } from '@react-native-picker/picker';
 import { useQueryClient } from '@tanstack/react-query';
 import { Controller, useForm } from 'react-hook-form';
 
-import { getTokens } from '../../api/astorage';
 import { axiosInstance } from '../../api/axiostance';
 import { CardElevated } from '../../components/CardElevated';
 import ControlledInputCustom from '../../components/ControlledInputCustom';
@@ -35,7 +34,7 @@ function GoodEdit({ navigation, route }) {
   }, [good]);
 
   const saveGood = async good => {
-    const tokens = await getTokens();
+    console.log(111,axiosInstance);
     try {
       await axiosInstance.patch(
         'stock/update',
@@ -46,14 +45,12 @@ function GoodEdit({ navigation, route }) {
           available: good?.available,
           group: good?.group,
           // track: good?.track,
-        },
-        {
-          headers: { Authorization: `Bearer ${tokens.access}` },
         }
       );
       navigation.navigate('GoodTabs', { screen: 'Dokon' });
     } catch (error) {
-      alert(error.response.data.message);
+      console.log('error :>> ', error);
+      alert(error?.response?.data?.message);
     } finally {
       queryClient.invalidateQueries(['good', 'goods']);
     }
@@ -65,16 +62,14 @@ function GoodEdit({ navigation, route }) {
       `Shu tovarni o'chirishni xohlaysizmi? "${good.title}"?`,
       [
         {
-          text: 'Bekor qilish',
+          text: 'Yo\'q',
           style: 'cancel',
         },
         {
-          text: 'O\'chirish',
+          text: 'Ha',
           onPress: async () => {
-            const tokens = await getTokens();
             try {
               await axiosInstance.delete('stock/delete', {
-                headers: { Authorization: `Bearer ${tokens.access}` },
                 data: { product_id: good?.product_id },
               });
               navigation.navigate('GoodTabs', { screen: 'Dokon' });
@@ -195,36 +190,6 @@ function GoodEdit({ navigation, route }) {
               <Text className="buttonText">Variant qo&apos;shish</Text>
             </View>
           </CardElevated>
-
-          {/* <TableCard title="Stores" data={tableData} /> */}
-
-          {/* 
-              <CardElevated title="Modifiers">
-                <View className="flex-row items-center justify-between my-2">
-                  <View>
-                    <Text className="text-lg text-black font-semibold">Addon</Text>
-                    <Text>Available in all stores</Text>
-                  </View>
-
-                  <Switch
-                    value={modifiera}
-                    onValueChange={() => setModifierA(!modifiera)}
-                  />
-                </View>
-                <Divider />
-                <View className="flex-row items-center justify-between my-2">
-                  <View>
-                    <Text className="text-lg text-black font-semibold">Fillers</Text>
-                    <Text>Available in all stores</Text>
-                  </View>
-
-                  <Switch
-                    value={modifierb}
-                    onValueChange={() => setModifierB(!modifierb)}
-                  />
-                </View>
-              </CardElevated> 
-            */}
 
           <CardElevated>
             <Button

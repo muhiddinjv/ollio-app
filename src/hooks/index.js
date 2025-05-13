@@ -25,12 +25,8 @@ export const useInfiniteScroll = ({
   ), [key, userId, filters, signedIn]);
 
   const queryFn = async ({ pageParam = 1 }) => {
-    const { access } = await getTokens();
-    if (!access) console.log('No access token');
-
     const { data } = await axiosInstance.get(url, {
       params: { page: pageParam, limit, ...filters },
-      headers: { Authorization: `Bearer ${access}` },
     });
 
     return { data, nextPage: pageParam + 1 };
@@ -148,10 +144,7 @@ export function GlobalProvider({ children }) {
 
   const checkStockQuantity = async (productId, quantity) => {
     try {
-      const response = await axiosInstance.post('stock/checkqty', {
-        _id: productId,
-        quantity,
-      });
+      const response = await axiosInstance.post('stock/checkqty', { _id: productId, quantity });
       return response.data; // Return the response data
     } catch (error) {
       console.error('Error checking stock quantity:', error);
@@ -288,10 +281,7 @@ export const useGlobalState = () => {
 export const usePostGoods = () => {
   return useMutation(
     async goods => {
-      const tokens = await getTokens();
-      const response = await axiosInstance.post('stock/receive', goods, {
-        headers: { Authorization: `Bearer ${tokens.access}` },
-      });
+      const response = await axiosInstance.post('stock/receive', goods);
       return response.data; // Return the response data
     },
     {

@@ -10,7 +10,6 @@ function Sidebar(props) {
   const { colorScheme, toggleColorScheme } = useColorScheme();
   const { signOut, user } = useAuth();
   const { colors } = useTheme();
-  console.log('user :>> ', user);
 
   return (
     <View className="w-full flex-1 dark:bg-slate-800">

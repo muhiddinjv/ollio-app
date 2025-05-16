@@ -37,7 +37,7 @@ function GoodsAdd({ navigation }) {
     postGoods(formattedGoods, {
       onSuccess: () => {
         removeItem('selectedGoods');
-        queryClient.invalidateQueries(['stock']);
+        queryClient.invalidateQueries('stock');
         setSelectedGoods([]);
         navigation.navigate('GoodTabs', { screen: 'Dokon' });
       },

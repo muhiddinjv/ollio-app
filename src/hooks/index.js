@@ -169,7 +169,7 @@ export function GlobalProvider({ children }) {
       if (success) {
         setBill({ client_id: null, products: [] });
         setBillItem(bill);
-        queryClient.invalidateQueries(['bills']);
+        queryClient.invalidateQueries('bills');
       } else {
         Alert.alert('Error', `Failed to create bill: ${message}`);
       }
@@ -219,7 +219,7 @@ export function GlobalProvider({ children }) {
             onPress: async () => {
               try {
                 await axiosInstance.delete(`bills/${billId}`);
-                queryClient.invalidateQueries(['bills']);
+                queryClient.invalidateQueries('bills');
               } catch (error) {
                 Alert.alert('Xatolik:', formatError(error));
               }

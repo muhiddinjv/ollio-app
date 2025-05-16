@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { View, SafeAreaView, Alert } from 'react-native';
 import { Switch, Text, IconButton, Button } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { Controller, useForm } from 'react-hook-form';
 
-import { axiosInstance } from '../../api/axiostance';
+import { saveGood, deleteGood } from '../../api/requests';
 import { CardElevated } from '../../components/CardElevated';
 import ControlledInputCustom from '../../components/ControlledInputCustom';
 import Header from '../../components/Header';
@@ -33,30 +33,37 @@ function GoodEdit({ navigation, route }) {
     }
   }, [good]);
 
-  const saveGood = async good => {
-    console.log(111,axiosInstance);
-    try {
-      await axiosInstance.patch(
-        'stock/update',
-        {
-          product_id: good?.product_id,
-          price: Number(good?.price),
-          order: Number(good?.order),
-          available: good?.available,
-          group: good?.group,
-          // track: good?.track,
-        }
-      );
+  const saveGoodMutation = useMutation(saveGood, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries('stock');
       navigation.navigate('GoodTabs', { screen: 'Dokon' });
+    },
+    onError: (error) => {
+      console.error('Error saving good:', error);
+      Alert.alert('Error', 'Failed to save good. Please try again.');
+    },
+  });
+
+  const deleteGoodMutation = useMutation(deleteGood, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('stock');
+      navigation.navigate('GoodTabs', { screen: 'Dokon' });
+    },
+    onError: (error) => {
+      console.error('Error deleting good:', error);
+      Alert.alert('Error', 'Failed to delete good. Please try again.');
+    },
+  });
+
+  const onSubmit = async (data) => {
+    try {
+      await saveGoodMutation.mutateAsync(data);
     } catch (error) {
-      console.log('error :>> ', error);
-      alert(error?.response?.data?.message);
-    } finally {
-      queryClient.invalidateQueries(['good', 'goods']);
+      console.error('Error during save:', error);
     }
   };
 
-  const deleteGood = () => {
+  const confirmDeleteGood = () => {
     Alert.alert(
       'Tovar o\'chirish',
       `Shu tovarni o'chirishni xohlaysizmi? "${good.title}"?`,
@@ -69,14 +76,9 @@ function GoodEdit({ navigation, route }) {
           text: 'Ha',
           onPress: async () => {
             try {
-              await axiosInstance.delete('stock/delete', {
-                data: { product_id: good?.product_id },
-              });
-              navigation.navigate('GoodTabs', { screen: 'Dokon' });
+              await deleteGoodMutation.mutateAsync(good.product_id);
             } catch (error) {
-              console.error('Xatolik:', error);
-            } finally {
-              queryClient.invalidateQueries(['good', 'goods']);
+              console.error('Error during delete:', error);
             }
           },
         },
@@ -91,7 +93,7 @@ function GoodEdit({ navigation, route }) {
         title="Tovar yangilash"
         iconRight="content-save"
         navigation={navigation}
-        onRightPress={handleSubmit(saveGood)}
+        onRightPress={handleSubmit(onSubmit)}
         backBtn
       />
       <Wrapper>
@@ -195,7 +197,7 @@ function GoodEdit({ navigation, route }) {
             <Button
               textColor="white"
               icon="trash-can-outline"
-              onPress={deleteGood}
+              onPress={confirmDeleteGood}
               className="rounded bg-red-500 py-2"
               labelStyle={{ fontSize: 20 }}
             >

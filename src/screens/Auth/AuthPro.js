@@ -50,7 +50,7 @@ export function AuthProvider({ children }) {
     onSuccess: (data) => {
       setUser(data);
       setSignedIn(true);
-      // queryClient.invalidateQueries(['stock']);
+      // queryClient.invalidateQueries('stock');
     },
     onError: error => {
       console.error('Error during sign in:', error);

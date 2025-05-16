@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { ActivityIndicator, View, Text, StyleSheet, Alert } from 'react-native';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { Button, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Skeleton } from 'react-native-skeletons';
 
-import axiosInstance from '../../api/axiostance';
+import { processSale } from '../../api/requests';
 import Header from '../../components/Header';
 import { useGlobalState } from '../../hooks';
-import { useAuth } from '../Auth/AuthPro';
 import { formatError } from '../../utils';
 
 function SaleMade({ navigation }) {
@@ -20,22 +19,31 @@ function SaleMade({ navigation }) {
   } = useTheme();
   const queryClient = useQueryClient();
 
-  const handleSale = async () => {
-    setPayLoading(true);
-    try {
-      const response = await axiosInstance.post(`bills/pay/${billItem?._id}`);
-      if (response.data.success) {
+  const saleMutation = useMutation(processSale, {
+    onSuccess: (response) => {
+      if (response.success) {
         billItem.status = 'paid';
         setBillItem(billItem);
         setIsPaid(true);
-        queryClient.invalidateQueries(['bills']);
+        queryClient.invalidateQueries('bills');
       } else {
         Alert.alert('Error', 'Failed to process sale.');
       }
-    } catch (error) {
+    },
+    onError: (error) => {
       Alert.alert('Error', `Error processing sale: ${formatError(error)}`);
-    } finally {
+    },
+    onSettled: () => {
       setPayLoading(false);
+    },
+  });
+
+  const handleSale = async () => {
+    setPayLoading(true);
+    try {
+      await saleMutation.mutateAsync(billItem?._id);
+    } catch (error) {
+      console.error('Error during sale:', error);
     }
   };
 
@@ -102,12 +110,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 50,
   },
-  // shimmer: {
-  //   borderRadius: 5,
-  //   height: 40,
-  //   marginVertical: 10,
-  //   width: 150,
-  // },
   totalAmount: {
     color: '#444',
     fontSize: 48,

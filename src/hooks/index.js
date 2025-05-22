@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { Alert } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import { shareAsync } from 'expo-sharing';
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 
 import { getItem, getTokens, setItem } from '../api/astorage';
 import { formatError, formattedDate } from '../utils';
@@ -276,18 +276,4 @@ export const useGlobalState = () => {
     throw new Error('useGlobalState must be used within a GlobalProvider');
   }
   return context;
-};
-
-export const usePostGoods = () => {
-  return useMutation(
-    async goods => {
-      const response = await axiosInstance.post('stock/receive', goods);
-      return response.data; // Return the response data
-    },
-    {
-      onError: error => {
-        console.error('Error during POST request:', error);
-      },
-    }
-  );
 };

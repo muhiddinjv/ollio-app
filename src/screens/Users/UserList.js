@@ -10,7 +10,7 @@ function UserList({ navigation }) {
 
   const { data, isRefreshing, onRefresh, onEndReached, isFetchingNextPage } = useInfiniteScroll({
     url: 'users',
-    filters: { role: 'client' },
+    // filters: { role: 'client' },
     key: ['users'],
   });
 

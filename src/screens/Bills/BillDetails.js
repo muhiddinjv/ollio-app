@@ -15,7 +15,7 @@ function BillDetails({ navigation, route }) {
       <Text className="text-center text-4xl font-medium">{bill?.total_price}</Text>
       <Text className="mb-4 text-center text-xl text-gray-600">Jami</Text>
       <Text className="text-lg">Hodim: {bill?.staff}</Text>
-      <Text className="text-lg">Mijoz: {bill?.client || 'Topilmadi'}</Text>
+      <Text className="text-lg">Mijoz: {bill?.client || 'Nomalum'}</Text>
     </View>
   );
 

@@ -60,7 +60,7 @@ export default function BillList({ navigation }) {
         LoaderComponent={<Loader />}
         ListEmptyComponent={
           <View className="flex items-center">
-            <Text className="p-2 text-gray-600">Sizda hozircha cheklar yo&apos;q.</Text>
+            <Text className="p-2 text-gray-600">Ayni vaqtda cheklar topilmadi</Text>
           </View>
         }
         ListFooterComponent={() => {

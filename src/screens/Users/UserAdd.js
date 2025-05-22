@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, Alert } from 'react-native';
 import { TextInput, useTheme } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
+import { useMutation } from '@tanstack/react-query';
 
-import axiosInstance from '../../api/axiostance';
+import { userAdd } from '../../api/requests';
 import Header from '../../components/Header';
 import { useGlobalState } from '../../hooks/index';
 
@@ -21,8 +22,18 @@ function UserAdd({ navigation }) {
 
   const [errors, setErrors] = useState({});
 
+  const addUserMutation = useMutation(userAdd, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('users');
+      navigation.goBack();
+    },
+    onError: (error) => {
+      console.error('Error saving user:', error.response ? error.response.data : error.message);
+      Alert.alert('Error', 'Failed to add user. Please try again.');
+    },
+  });
+
   const handleSave = async () => {
-    // Reset errors
     setErrors({});
 
     // Validate inputs
@@ -53,10 +64,9 @@ function UserAdd({ navigation }) {
     };
 
     try {
-      await axiosInstance.post('users', userData);
-      navigation.goBack();
+      await addUserMutation.mutateAsync(userData); // Call the mutation
     } catch (error) {
-      console.error('Error saving user:', error.response ? error.response.data : error.message);
+      console.error('Error during user addition:', error);
     }
   };
 
@@ -174,9 +184,6 @@ const styles = StyleSheet.create({
   input: {
     marginBottom: 12,
   },
-  // saveButton: {
-  //   marginTop: 20,
-  // },
   scrollView: {
     paddingBottom: 20,
   },

@@ -5,7 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { Controller, useForm } from 'react-hook-form';
 
-import { saveGood, deleteGood } from '../../api/requests';
+import { goodEdit, goodDelete } from '../../api/requests';
 import { CardElevated } from '../../components/CardElevated';
 import ControlledInputCustom from '../../components/ControlledInputCustom';
 import Header from '../../components/Header';
@@ -31,9 +31,9 @@ function GoodEdit({ navigation, route }) {
         product_id: good?.product_id,
       });
     }
-  }, [good]);
+  }, [good, reset]);
 
-  const saveGoodMutation = useMutation(saveGood, {
+  const goodEditMutation = useMutation(goodEdit, {
     onSuccess: (data) => {
       queryClient.invalidateQueries('stock');
       navigation.navigate('GoodTabs', { screen: 'Dokon' });
@@ -44,7 +44,7 @@ function GoodEdit({ navigation, route }) {
     },
   });
 
-  const deleteGoodMutation = useMutation(deleteGood, {
+  const goodDeleteMutation = useMutation(goodDelete, {
     onSuccess: () => {
       queryClient.invalidateQueries('stock');
       navigation.navigate('GoodTabs', { screen: 'Dokon' });
@@ -56,14 +56,15 @@ function GoodEdit({ navigation, route }) {
   });
 
   const onSubmit = async (data) => {
+    console.log(222);
     try {
-      await saveGoodMutation.mutateAsync(data);
+      await goodEditMutation.mutateAsync(data);
     } catch (error) {
       console.error('Error during save:', error);
     }
   };
 
-  const confirmDeleteGood = () => {
+  const confirmGoodDelete = () => {
     Alert.alert(
       'Tovar o\'chirish',
       `Shu tovarni o'chirishni xohlaysizmi? "${good.title}"?`,
@@ -76,7 +77,7 @@ function GoodEdit({ navigation, route }) {
           text: 'Ha',
           onPress: async () => {
             try {
-              await deleteGoodMutation.mutateAsync(good.product_id);
+              await goodDeleteMutation.mutateAsync(good.product_id);
             } catch (error) {
               console.error('Error during delete:', error);
             }
@@ -197,7 +198,7 @@ function GoodEdit({ navigation, route }) {
             <Button
               textColor="white"
               icon="trash-can-outline"
-              onPress={confirmDeleteGood}
+              onPress={confirmGoodDelete}
               className="rounded bg-red-500 py-2"
               labelStyle={{ fontSize: 20 }}
             >

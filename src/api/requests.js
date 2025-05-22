@@ -26,8 +26,12 @@ export const refresh = async () => {
   return data;
 };
 
-export const saveGood = async (good) => {
-  console.log(111);
+export const goodsAdd = async (goods) => {
+  const response = await axiosInstance.post('stock/receive', goods);
+  return response.data;
+};
+
+export const goodEdit = async (good) => {
   const response = await axiosInstance.patch('stock/update', {
     product_id: good.product_id,
     price: Number(good.price),
@@ -35,12 +39,10 @@ export const saveGood = async (good) => {
     available: good.available,
     group: good.group,
   });
-  console.log(222);
-  console.log('response :>> ', response.data);
   return response.data;
 };
 
-export const deleteGood = async (productId) => {
+export const goodDelete = async (productId) => {
   const response = await axiosInstance.delete('stock/delete', {
     data: { product_id: productId },
   });
@@ -51,3 +53,10 @@ export const processSale = async (billId) => {
   const response = await axiosInstance.post(`bills/pay/${billId}`);
   return response.data;
 };
+
+export const userAdd = async (user) => {
+  const response = await axiosInstance.post('users', user);
+  return response.data;
+};
+
+

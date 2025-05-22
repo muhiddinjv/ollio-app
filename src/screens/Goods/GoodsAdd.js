@@ -1,19 +1,19 @@
 import React from 'react';
 import { Alert, Dimensions, ScrollView, View } from 'react-native';
 import { Button, DataTable, Text, TextInput } from 'react-native-paper';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import Header from '../../components/Header';
 import Wrapper from '../../components/Wrapper';
-import { useGlobalState, usePostGoods } from '../../hooks';
+import { useGlobalState } from '../../hooks';
 import { removeItem } from '../../api/astorage';
+import { goodsAdd } from '../../api/requests';
 
 const { height } = Dimensions.get('window');
 
 function GoodsAdd({ navigation }) {
   const queryClient = useQueryClient();
   const { selectedGoods, setSelectedGoods } = useGlobalState();
-  const { mutate: postGoods, isLoading } = usePostGoods();
 
   const handleChange = (index, field, value) => {
     const updatedGoods = [...selectedGoods];
@@ -25,6 +25,18 @@ function GoodsAdd({ navigation }) {
     return selectedGoods.every(good => good.cost > 0 && good.price > 0 && good.quantity > 0);
   };
 
+  const addGoodsMutation = useMutation(goodsAdd, {
+    onSuccess: () => {
+      removeItem('selectedGoods');
+      queryClient.invalidateQueries('stock');
+      setSelectedGoods([]);
+      navigation.navigate('GoodTabs', { screen: 'Dokon' });
+    },
+    onError: (error) => {
+      Alert.alert('Hatolik', `${error}`);
+    },
+  });
+
   const submitGoods = async () => {
     const formattedGoods = selectedGoods.map(good => ({
       product_id: good.product_id,
@@ -34,17 +46,11 @@ function GoodsAdd({ navigation }) {
       price: Number(good.price),
     }));
 
-    postGoods(formattedGoods, {
-      onSuccess: () => {
-        removeItem('selectedGoods');
-        queryClient.invalidateQueries('stock');
-        setSelectedGoods([]);
-        navigation.navigate('GoodTabs', { screen: 'Dokon' });
-      },
-      onError: error => {
-        Alert.alert('Hatolik', `${error}`);
-      },
-    });
+    try {
+      await addGoodsMutation.mutateAsync(formattedGoods);
+    } catch (error) {
+      console.error('Error during adding goods:', error);
+    }
   };
 
   return (
@@ -112,8 +118,8 @@ function GoodsAdd({ navigation }) {
           </DataTable>
         </ScrollView>
         <View className="absolute inset-x-0 bottom-0 border-t border-gray-300 p-2">
-          <Button mode="contained" onPress={submitGoods} disabled={!validateGoods() || isLoading}>
-            {isLoading ? 'Loading...' : 'Add to Goods'}
+          <Button mode="contained" onPress={submitGoods} disabled={!validateGoods() || addGoodsMutation.isLoading}>
+            {addGoodsMutation.isLoading ? 'Loading...' : 'Add to Goods'}
           </Button>
         </View>
       </View>

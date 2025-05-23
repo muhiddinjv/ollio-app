@@ -1,9 +1,11 @@
 import React from 'react';
-import { FlatList, Pressable, RefreshControl, StyleSheet, View } from 'react-native';
+import { FlatList, Pressable, RefreshControl, View } from 'react-native';
 import { ActivityIndicator, Button, Text, TextInput } from 'react-native-paper';
 
 import Header from '../../components/Header';
 import { useGlobalState, useInfiniteScroll } from '../../hooks';
+
+//TODO: FIX not listing all the users by ownerId
 
 function UserList({ navigation }) {
   const { setClient } = useGlobalState();
@@ -20,12 +22,12 @@ function UserList({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1">
       <Header title="Foydalanuvchilar" iconRight="content-save" navigation={navigation} backBtn />
-      <View style={styles.searchContainer}>
-        <TextInput label="Izlash" mode="outlined" style={styles.searchInput} />
-        <Button mode="contained" onPress={() => navigation.navigate('UserAdd')} style={styles.addButton}>
-          <Text>FOYDALANUVCHI QO&apos;SHISH</Text>
+      <View className="p-4">
+        <TextInput label="Izlash" mode="outlined" className="mb-4" />
+        <Button mode="contained" onPress={() => navigation.navigate('UserAdd')} className="mb-4">
+          FOYDALANUVCHI QO&apos;SHISH
         </Button>
       </View>
 
@@ -33,11 +35,11 @@ function UserList({ navigation }) {
         data={data}
         keyExtractor={item => item._id.toString()}
         renderItem={({ item }) => (
-          <Pressable style={styles.userItem} onPress={() => handleItemPress(item)}>
-            <View style={styles.avatar} />
-            <View style={styles.userInfo}>
-              <Text style={styles.userName}>{item.name}</Text>
-              <Text style={styles.userDetails}>
+          <Pressable className="flex-row items-center border-b border-gray-300 p-3" onPress={() => handleItemPress(item)}>
+            <View className="bg-gray-300 rounded-full h-10 w-10 mr-3" />
+            <View className="flex-1">
+              <Text className="font-bold text-lg">{item.name}</Text>
+              <Text className="text-gray-600">
                 {item?.role?.toUpperCase()}, {item.phone}
               </Text>
             </View>
@@ -47,8 +49,8 @@ function UserList({ navigation }) {
         onEndReached={onEndReached}
         onEndReachedThreshold={0.5}
         ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>Sizda hozircha foydalanuvchilar yo&apos;q</Text>
+          <View className="flex-1 items-center justify-center">
+            <Text className="text-gray-600 text-lg">Sizda hozircha foydalanuvchilar yo&apos;q</Text>
           </View>
         }
         ListFooterComponent={isFetchingNextPage ? <ActivityIndicator /> : null}
@@ -56,53 +58,5 @@ function UserList({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  addButton: {
-    marginBottom: 16,
-  },
-  avatar: {
-    backgroundColor: '#ccc',
-    borderRadius: 20,
-    height: 40,
-    marginRight: 12,
-    width: 40,
-  },
-  container: {
-    flex: 1,
-  },
-  emptyContainer: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  emptyText: {
-    color: '#666',
-    fontSize: 16,
-  },
-  searchContainer: {
-    padding: 16,
-  },
-  searchInput: {
-    marginBottom: 16,
-  },
-  userDetails: {
-    color: '#666',
-  },
-  userInfo: {
-    flex: 1,
-  },
-  userItem: {
-    alignItems: 'center',
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-    padding: 12,
-  },
-  userName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
 
 export default UserList;

@@ -57,7 +57,7 @@ function UserProfile({ navigation }) {
           </View>
         </View>
         <Button mode="contained" onPress={handleAddToBill} style={styles.button}>
-          <Text>CHEKGA QO&lsquo;SHISH</Text>
+          CHEKGA QO&apos;SHISH
         </Button>
       </ScrollView>
     </View>

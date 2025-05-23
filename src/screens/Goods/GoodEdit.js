@@ -35,6 +35,7 @@ function GoodEdit({ navigation, route }) {
 
   const goodEditMutation = useMutation(goodEdit, {
     onSuccess: (data) => {
+      console.log('data :>> ', data);
       queryClient.invalidateQueries('stock');
       navigation.navigate('GoodTabs', { screen: 'Dokon' });
     },

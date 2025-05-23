@@ -38,7 +38,7 @@ function UserList({ navigation }) {
           <Pressable className="flex-row items-center border-b border-gray-300 p-3" onPress={() => handleItemPress(item)}>
             <View className="bg-gray-300 rounded-full h-10 w-10 mr-3" />
             <View className="flex-1">
-              <Text className="font-bold text-lg">{item.name}</Text>
+              <Text className="text-lg">{item.name}</Text>
               <Text className="text-gray-600">
                 {item?.role?.toUpperCase()}, {item.phone}
               </Text>

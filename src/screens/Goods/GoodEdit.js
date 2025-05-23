@@ -16,8 +16,8 @@ function GoodEdit({ navigation, route }) {
   const [category, setCategory] = useState('');
   const { good } = route.params;
 
-  const { control, handleSubmit, reset } = useForm();
-
+  const { control, handleSubmit, reset, formState: { errors } } = useForm();
+  
   useEffect(() => {
     if (good) {
       reset({
@@ -32,9 +32,10 @@ function GoodEdit({ navigation, route }) {
       });
     }
   }, [good, reset]);
-
+  
   const goodEditMutation = useMutation(goodEdit, {
     onSuccess: (data) => {
+      console.log('errors :>> ', errors);
       console.log('data :>> ', data);
       queryClient.invalidateQueries('stock');
       navigation.navigate('GoodTabs', { screen: 'Dokon' });
@@ -57,7 +58,6 @@ function GoodEdit({ navigation, route }) {
   });
 
   const onSubmit = async (data) => {
-    console.log(222);
     try {
       await goodEditMutation.mutateAsync(data);
     } catch (error) {
@@ -166,7 +166,7 @@ function GoodEdit({ navigation, route }) {
                 <Controller
                   control={control}
                   name="group"
-                  rules={{ required: 'This field is required' }}
+                  // rules={{ required: 'This field is required' }}
                   render={({ field: { onChange, value } }) => <Switch value={value} onValueChange={onChange} />}
                 />
               </View>

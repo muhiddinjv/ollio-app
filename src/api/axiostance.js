@@ -23,8 +23,9 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    const status = error.response?.status
 
-    if (error.response?.status === 403 && !originalRequest._retry) {
+    if ((status === 401 || status === 403) && !originalRequest._retry) {
       originalRequest._retry = true; // <== Mark request as retried
       
       console.log("Token expired. Attempting to refresh...");
@@ -46,7 +47,6 @@ axiosInstance.interceptors.response.use(
         }
       } 
     }
-
     return Promise.reject(error);
   }
 );

@@ -47,10 +47,10 @@ function Sidebar(props) {
             alert('sidebar profile');
           }}
         >
-          <Text>Share</Text>
+          Share
         </Button>
         <Button className="w-min" icon="logout" mode="contained" onPress={signOut}>
-          <Text>Sign Out</Text>
+          Sign Out
         </Button>
       </View>
     </View>

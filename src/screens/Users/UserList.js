@@ -3,9 +3,8 @@ import { FlatList, Pressable, RefreshControl, View } from 'react-native';
 import { ActivityIndicator, Button, Text, TextInput } from 'react-native-paper';
 
 import Header from '../../components/Header';
-import { useGlobalState, useInfiniteScroll } from '../../hooks';
-
-//TODO: FIX not listing all the users by ownerId
+import { useGlobalState } from '../../hooks';
+import { useInfiniteScroll } from '../../api/queries';
 
 function UserList({ navigation }) {
   const { setClient } = useGlobalState();

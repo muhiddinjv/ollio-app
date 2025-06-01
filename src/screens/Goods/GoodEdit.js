@@ -2,21 +2,23 @@ import { useState, useEffect } from 'react';
 import { View, SafeAreaView, Alert } from 'react-native';
 import { Switch, Text, IconButton, Button } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { Controller, useForm } from 'react-hook-form';
 
-import { goodEdit, goodDelete } from '../../api/requests';
 import { CardElevated } from '../../components/CardElevated';
 import ControlledInputCustom from '../../components/ControlledInputCustom';
 import Header from '../../components/Header';
 import Wrapper from '../../components/Wrapper';
+import { useGoodDelete, useGoodEdit } from '../../api/queries';
 
 function GoodEdit({ navigation, route }) {
   const queryClient = useQueryClient();
   const [category, setCategory] = useState('');
   const { good } = route.params;
-
   const { control, handleSubmit, reset, formState: { errors } } = useForm();
+  
+  const { mutate: goodDeleteMutation, isPending: isGoodDeletePending } = useGoodDelete(good.product_id);
+  const { mutate: goodEditMutation, isPending: isGoodEditPending } = useGoodEdit();
   
   useEffect(() => {
     if (good) {
@@ -32,36 +34,14 @@ function GoodEdit({ navigation, route }) {
       });
     }
   }, [good, reset]);
-  
-  const goodEditMutation = useMutation(goodEdit, {
-    onSuccess: (data) => {
-      console.log('errors :>> ', errors);
-      console.log('data :>> ', data);
-      queryClient.invalidateQueries('stock');
-      navigation.navigate('GoodTabs', { screen: 'Dokon' });
-    },
-    onError: (error) => {
-      console.error('Error saving good:', error);
-      Alert.alert('Error', 'Failed to save good. Please try again.');
-    },
-  });
 
-  const goodDeleteMutation = useMutation(goodDelete, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('stock');
-      navigation.navigate('GoodTabs', { screen: 'Dokon' });
-    },
-    onError: (error) => {
-      console.error('Error deleting good:', error);
-      Alert.alert('Error', 'Failed to delete good. Please try again.');
-    },
-  });
-
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     try {
-      await goodEditMutation.mutateAsync(data);
+      goodEditMutation(data);
+      queryClient.invalidateQueries('stock');
+      navigation.navigate('GoodTabs', { screen: 'Dokon' });
     } catch (error) {
-      console.error('Error during save:', error);
+      console.error('Error during edited good save:', error);
     }
   };
 
@@ -76,12 +56,10 @@ function GoodEdit({ navigation, route }) {
         },
         {
           text: 'Ha',
-          onPress: async () => {
-            try {
-              await goodDeleteMutation.mutateAsync(good.product_id);
-            } catch (error) {
-              console.error('Error during delete:', error);
-            }
+          onPress: () => {
+            goodDeleteMutation();
+            queryClient.invalidateQueries('stock');
+            navigation.navigate('GoodTabs', { screen: 'Dokon' });
           },
         },
       ],
@@ -95,6 +73,7 @@ function GoodEdit({ navigation, route }) {
         title="Tovar yangilash"
         iconRight="content-save"
         navigation={navigation}
+        loading={isGoodEditPending}
         onRightPress={handleSubmit(onSubmit)}
         backBtn
       />
@@ -199,11 +178,12 @@ function GoodEdit({ navigation, route }) {
             <Button
               textColor="white"
               icon="trash-can-outline"
+              loading={isGoodDeletePending}
               onPress={confirmGoodDelete}
               className="rounded bg-red-500 py-2"
               labelStyle={{ fontSize: 20 }}
             >
-              <Text>DELETE</Text>
+              DELETE
             </Button>
           </CardElevated>
         </SafeAreaView>

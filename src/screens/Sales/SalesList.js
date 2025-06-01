@@ -9,8 +9,9 @@ import { styled } from 'nativewind';
 import ListItem from '../../components/ListItem';
 import Loader from '../../components/Loader';
 import Numpad from '../../components/Numpad';
-import { useGlobalState, useInfiniteScroll } from '../../hooks';
+import { useGlobalState } from '../../hooks';
 import { useAuth } from '../Auth/AuthPro';
+import { useInfiniteScroll } from '../../api/queries';
 
 const StyledPicker = styled(Picker);
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
@@ -81,7 +82,7 @@ function SalesList({ navigation }) {
           {getTotalQuantity() || ''}
         </Button>
         <Appbar.Action
-          icon={bill.client_id ? 'account-check' : 'account-plus'}
+          icon={bill?.client_id ? 'account-check' : 'account-plus'}
           onPress={() => navigation.navigate('UserList')}
           color={colors.surface}
           disabled={user?.store_type === 'retail'}
@@ -103,10 +104,10 @@ function SalesList({ navigation }) {
         selectedProduct={selectedProduct}
       />
       <View className="flex-row gap-2 bg-white px-2 pb-2 dark:bg-slate-800">
-        <Button mode="contained" onPress={() => handlePress(bill.products.length === 0)} style={{ flex: 1 }}>
-          {bill.products.length === 0 ? 'CHEKLAR' : 'SAQLASH'}
+        <Button mode="contained" onPress={() => handlePress(bill?.products?.length === 0)} style={{ flex: 1 }}>
+          {bill?.products?.length === 0 ? 'CHEKLAR' : 'SAQLASH'}
         </Button>
-        <Button mode="contained" style={{ flex: 1 }} onPress={handleCharge} disabled={bill.products.length === 0}>
+        <Button mode="contained" style={{ flex: 1 }} onPress={handleCharge} disabled={bill?.products?.length === 0}>
           <Text>SAVDO</Text>
         </Button>
       </View>

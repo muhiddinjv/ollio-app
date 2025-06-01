@@ -6,10 +6,11 @@ import { RefreshControl } from 'react-native-gesture-handler';
 import { LinearTransition } from 'react-native-reanimated';
 import { useAuth } from '../Auth/AuthPro';
 
-import { useGlobalState, useInfiniteScroll } from '../../hooks';
+import { useGlobalState } from '../../hooks';
 import Header from '../../components/Header';
 import Loader from '../../components/Loader';
 import { formatDate } from '../../utils';
+import { useInfiniteScroll } from '../../api/queries';
 
 function BillItem({ bill, navigate, onDelete }) {
   const {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View, Alert } from 'react-native';
 import { TextInput, useTheme } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { userAdd } from '../../api/requests';
 import Header from '../../components/Header';
@@ -21,7 +21,8 @@ function UserAdd({ navigation }) {
   const [pin, setPin] = useState('');
 
   const [errors, setErrors] = useState({});
-
+  const queryClient = useQueryClient();
+  
   const addUserMutation = useMutation(userAdd, {
     onSuccess: () => {
       queryClient.invalidateQueries('users');

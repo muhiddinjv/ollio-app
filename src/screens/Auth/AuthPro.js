@@ -13,8 +13,11 @@ const AuthContext = React.createContext({
   refresh: () => {},
 });
 
+// TODO: move all queries to queries.js
+
 export function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
   const [signedIn, setSignedIn] = React.useState(false);
   const [user, setUser] = React.useState(null);
   
@@ -28,6 +31,17 @@ export function AuthProvider({ children }) {
     });
   }, []);
 
+  React.useEffect(() => {
+    let timer;
+    if (errorMessage) {
+      timer = setTimeout(() => setErrorMessage(''), 3000);
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [errorMessage]);
+
   const signInMutation = useMutation(signIn, {
     onSuccess: (data) => {
       queryClient.invalidateQueries('users');
@@ -35,7 +49,8 @@ export function AuthProvider({ children }) {
       setSignedIn(true);
     },
     onError: error => {
-      console.error('Error during sign in:', error);
+      const msg = error?.response?.data?.errors || 'Xatolik yuz berdi. Iltimos qaytadan urining.';
+      setErrorMessage(msg);
     },
   });
 
@@ -64,11 +79,12 @@ export function AuthProvider({ children }) {
       user,
       signedIn,
       isLoading,
+      errorMessage,
       signIn: signInMutation.mutate,
       signOut: signOutMutation.mutate,
       refresh: refreshMutation.mutate,
     }),
-    [user, signedIn, isLoading]
+    [user, signedIn, isLoading, errorMessage]
   );
   React.useEffect(() => {
     console.log('AuthProvider signedIn :>> ', signedIn);

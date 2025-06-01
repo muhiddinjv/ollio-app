@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Keyboard, KeyboardAvoidingView, Platform, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Button as RNButton, TextInput } from 'react-native-paper';
@@ -13,9 +12,8 @@ import { useAuth } from './AuthPro';
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState('');
   const { colorScheme } = useColorScheme();
-  const { signIn } = useAuth();
+  const { signIn, errorMessage } = useAuth();
 
   const {
     formState: { errors },
@@ -23,18 +21,8 @@ export default function SignIn() {
     handleSubmit,
   } = useForm();
 
-  useEffect(() => {
-    let timer;
-    if (errorMessage) {
-      timer = setTimeout(() => setErrorMessage(''), 3000);
-    }
-
-    return () => {
-      if (timer) clearTimeout(timer);
-    };
-  }, [errorMessage]);
-
   const handleSignIn = async ({ phone, password }) => {
+    // if (errors) console.log('errors :>> ', errors);
     signIn({ phone, password });
   };
 

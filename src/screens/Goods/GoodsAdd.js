@@ -10,6 +10,7 @@ import { removeItem } from '../../api/astorage';
 import { goodsAdd } from '../../api/requests';
 
 const { height } = Dimensions.get('window');
+// TODO: fix cost not updating on add goods
 
 function GoodsAdd({ navigation }) {
   const queryClient = useQueryClient();

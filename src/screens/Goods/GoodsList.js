@@ -6,7 +6,8 @@ import { FlashList } from '@shopify/flash-list';
 
 import ListItem from '../../components/ListItem';
 import Loader from '../../components/Loader';
-import { useGlobalState, useInfiniteScroll } from '../../hooks';
+import { useGlobalState } from '../../hooks';
+import { useInfiniteScroll } from '../../api/queries';
 
 function GoodsList() {
   const { selectedGoods } = useGlobalState();

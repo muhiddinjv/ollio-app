@@ -10,7 +10,6 @@ const Stack = createStackNavigator();
 
 function AppStack() {
   const { signedIn, isLoading } = useAuth();
-  console.log('AppStack signedIn, isloading :>> ', signedIn, isLoading);
   if (isLoading) return <Splash />;
 
   return (

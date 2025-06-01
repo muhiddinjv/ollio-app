@@ -18,30 +18,35 @@ function SaleMade({ navigation }) {
     colors: { primary, backdrop },
   } = useTheme();
   const queryClient = useQueryClient();
+  const { mutate: saleMutation } = useSale(setPayLoading);
 
-  const saleMutation = useMutation(processSale, {
-    onSuccess: (response) => {
-      if (response.success) {
-        billItem.status = 'paid';
-        setBillItem(billItem);
-        setIsPaid(true);
-        queryClient.invalidateQueries('bills');
-      } else {
-        Alert.alert('Error', 'Failed to process sale.');
-      }
-    },
-    onError: (error) => {
-      Alert.alert('Error', `Error processing sale: ${formatError(error)}`);
-    },
-    onSettled: () => {
-      setPayLoading(false);
-    },
-  });
+  // const saleMutation = useMutation(processSale, {
+  //   onSuccess: (response) => {
+  //     if (response.success) {
+  //       billItem.status = 'paid';
+  //       setBillItem(billItem);
+  //       setIsPaid(true);
+  //       queryClient.invalidateQueries('bills');
+  //     } else {
+  //       Alert.alert('Error', 'Failed to process sale.');
+  //     }
+  //   },
+  //   onError: (error) => {
+  //     Alert.alert('Error', `Error processing sale: ${formatError(error)}`);
+  //   },
+  //   onSettled: () => {
+  //     setPayLoading(false);
+  //   },
+  // });
 
   const handleSale = async () => {
     setPayLoading(true);
     try {
-      await saleMutation.mutateAsync(billItem?._id);
+      await saleMutation(billItem?._id);
+      billItem.status = 'paid'
+      setBillItem(billItem);
+      setIsPaid(true);
+      queryClient.invalidateQueries('bills');
     } catch (error) {
       console.error('Error during sale:', error);
     }

@@ -3,8 +3,7 @@ import { FlatList, Pressable, RefreshControl, View } from 'react-native';
 import { ActivityIndicator, Button, Text, TextInput } from 'react-native-paper';
 
 import Header from '../../components/Header';
-import { useGlobalState } from '../../hooks';
-import { useInfiniteScroll } from '../../api/queries';
+import { useGlobalState, useInfiniteScroll } from '../../hooks';
 
 function UserList({ navigation }) {
   const { setClient } = useGlobalState();

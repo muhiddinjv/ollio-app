@@ -1,75 +1,14 @@
-import { useCallback, useMemo, useState } from "react";
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { goodDelete, goodEdit, processSale, userAdd } from "./requests";
 
-import { goodDelete, goodEdit, processSale } from "./requests";
-import { useAuth } from "../screens/Auth/AuthPro";
-import axiosInstance from "./axiostance";
-
-export const useInfiniteScroll = ({
-    key = [],
-    url,
-    limit = 25,
-    userId = null,
-    filters = {},
-  }) => {
-    const { signedIn } = useAuth();
-  
-    const [isRefreshing, setIsRefreshing] = useState(false);
-  
-    const queryKey = useMemo(() => (
-      signedIn ? ['infiniteScroll', ...key, userId, filters] : null
-    ), [key, userId, filters, signedIn]);
-  
-    const queryFn = async ({ pageParam = 1 }) => {
-      const { data } = await axiosInstance.get(url, {
-        params: { page: pageParam, limit, ...filters },
-      });
-  
-      return { data, nextPage: pageParam + 1 };
-    };
-  
-    const {
-      data,
-      fetchNextPage,
-      hasNextPage,
-      isFetchingNextPage,
-      refetch,
-      isError,
-      error,
-      isLoading,
-    } = useInfiniteQuery({
-      queryKey,
-      queryFn,
-      initialPageParam: 1,
-      getNextPageParam: (lastPage, allPages) =>
-        lastPage?.data?.length < limit ? undefined : allPages.length + 1,
-      enabled: !!signedIn, // 👈 prevent fetch if not signed in
-      retry: false,
-    });
-  
-    const onRefresh = useCallback(() => {
-      if (!isRefreshing) {
-        setIsRefreshing(true);
-        refetch().finally(() => setIsRefreshing(false));
-      }
-    }, [isRefreshing, refetch]);
-  
-    const flattenData = useMemo(() => (
-      data?.pages?.flatMap(page => page?.data || []) || []
-    ), [data]);
-  
-    return {
-      data: flattenData,
-      onEndReached: hasNextPage ? fetchNextPage : () => {},
-      isRefreshing,
-      onRefresh,
-      isFetchingNextPage,
-      isLoading,
-      isError,
-      error,
-      refetch,
-    };
-  };
+export const useGoodAdd = () => useMutation({
+    mutationFn: (goods) => goodsAdd(goods),
+    meta: {
+        invalidates: ['stock'],
+        onSuccess: 'Tovar qoshildi',
+        onError: 'Tovar qoshishda xatolik yuz berdi',
+      },
+  });
 
 export const useGoodDelete = (productId) => useMutation({
     mutationFn: () => goodDelete(productId),
@@ -98,5 +37,15 @@ export const useSale = (setPayLoading) => useMutation({
         onSettled: () => {
             setPayLoading(false);
         },
+    },
+});
+
+
+export const useUserAdd = () => useMutation({
+    mutationFn: (user) => userAdd(user),
+    meta: {
+      invalidates: ['stock'],
+      onSuccess: 'Tovar saqlandi',
+      onError: 'Tovar saqlashda xatolik yuz berdi',
     },
 });

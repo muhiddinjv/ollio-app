@@ -17,8 +17,8 @@ function GoodEdit({ navigation, route }) {
   const { good } = route.params;
   const { control, handleSubmit, reset, formState: { errors } } = useForm();
   
-  const { mutate: goodDeleteMutation, isPending: isGoodDeletePending } = useGoodDelete(good.product_id);
-  const { mutate: goodEditMutation, isPending: isGoodEditPending } = useGoodEdit();
+  const { mutateAsync: goodDeleteMutation, isPending: isGoodDeletePending } = useGoodDelete(good.product_id);
+  const { mutateAsync: goodEditMutation, isPending: isGoodEditPending } = useGoodEdit();
   
   useEffect(() => {
     if (good) {
@@ -35,9 +35,9 @@ function GoodEdit({ navigation, route }) {
     }
   }, [good, reset]);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     try {
-      goodEditMutation(data);
+      await goodEditMutation(data);
       queryClient.invalidateQueries('stock');
       navigation.navigate('GoodTabs', { screen: 'Dokon' });
     } catch (error) {
@@ -56,8 +56,8 @@ function GoodEdit({ navigation, route }) {
         },
         {
           text: 'Ha',
-          onPress: () => {
-            goodDeleteMutation();
+          onPress: async () => {
+            await goodDeleteMutation();
             queryClient.invalidateQueries('stock');
             navigation.navigate('GoodTabs', { screen: 'Dokon' });
           },

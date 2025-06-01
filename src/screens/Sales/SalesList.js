@@ -9,9 +9,8 @@ import { styled } from 'nativewind';
 import ListItem from '../../components/ListItem';
 import Loader from '../../components/Loader';
 import Numpad from '../../components/Numpad';
-import { useGlobalState } from '../../hooks';
+import { useGlobalState, useInfiniteScroll } from '../../hooks';
 import { useAuth } from '../Auth/AuthPro';
-import { useInfiniteScroll } from '../../api/queries';
 
 const StyledPicker = styled(Picker);
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';

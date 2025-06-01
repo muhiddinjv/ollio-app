@@ -1,43 +1,21 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, View, Text, StyleSheet, Alert } from 'react-native';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Skeleton } from 'react-native-skeletons';
 
-import { processSale } from '../../api/requests';
 import Header from '../../components/Header';
 import { useGlobalState } from '../../hooks';
-import { formatError } from '../../utils';
+import { useSale } from '../../api/queries';
 
 function SaleMade({ navigation }) {
   const [isPaid, setIsPaid] = useState(false);
   const [payLoading, setPayLoading] = useState(false);
   const { billItem, setBillItem, downloadBill, loading } = useGlobalState();
-  const {
-    colors: { primary, backdrop },
-  } = useTheme();
+  const { colors: { primary, backdrop } } = useTheme();
   const queryClient = useQueryClient();
-  const { mutate: saleMutation } = useSale(setPayLoading);
-
-  // const saleMutation = useMutation(processSale, {
-  //   onSuccess: (response) => {
-  //     if (response.success) {
-  //       billItem.status = 'paid';
-  //       setBillItem(billItem);
-  //       setIsPaid(true);
-  //       queryClient.invalidateQueries('bills');
-  //     } else {
-  //       Alert.alert('Error', 'Failed to process sale.');
-  //     }
-  //   },
-  //   onError: (error) => {
-  //     Alert.alert('Error', `Error processing sale: ${formatError(error)}`);
-  //   },
-  //   onSettled: () => {
-  //     setPayLoading(false);
-  //   },
-  // });
+  const { mutateAsync: saleMutation } = useSale(setPayLoading);
 
   const handleSale = async () => {
     setPayLoading(true);
@@ -49,6 +27,8 @@ function SaleMade({ navigation }) {
       queryClient.invalidateQueries('bills');
     } catch (error) {
       console.error('Error during sale:', error);
+    } finally {
+      setPayLoading(false);
     }
   };
 

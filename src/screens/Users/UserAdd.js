@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { userAdd } from '../../api/requests';
 import Header from '../../components/Header';
 import { useGlobalState } from '../../hooks/index';
+import { useUserAdd } from '../../api/queries';
 
 function UserAdd({ navigation }) {
   const { colors } = useTheme();
@@ -22,17 +23,17 @@ function UserAdd({ navigation }) {
 
   const [errors, setErrors] = useState({});
   const queryClient = useQueryClient();
-  
-  const addUserMutation = useMutation(userAdd, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('users');
-      navigation.goBack();
-    },
-    onError: (error) => {
-      console.error('Error saving user:', error.response ? error.response.data : error.message);
-      Alert.alert('Error', 'Failed to add user. Please try again.');
-    },
-  });
+  const { mutateAsync: userAddMutation, isPending: isUserAddPending } = useUserAdd();
+
+  // const onSubmit = async (data) => {
+  //   try {
+  //     await goodEditMutation(data);
+  //     queryClient.invalidateQueries('stock');
+  //     navigation.navigate('GoodTabs', { screen: 'Dokon' });
+  //   } catch (error) {
+  //     console.error('Error during edited good save:', error);
+  //   }
+  // };
 
   const handleSave = async () => {
     setErrors({});
@@ -65,7 +66,9 @@ function UserAdd({ navigation }) {
     };
 
     try {
-      await addUserMutation.mutateAsync(userData); // Call the mutation
+      await userAddMutation(userData);
+      queryClient.invalidateQueries('users');
+      navigation.navigate('UserList');
     } catch (error) {
       console.error('Error during user addition:', error);
     }

@@ -92,6 +92,7 @@ export function GlobalProvider({ children }) {
     products: [],
   });
   const queryClient = useQueryClient();
+  const emptyBill = { client_id: null, products: [] }
 
   useEffect(() => {
     const loadStorageData = async () => {
@@ -99,10 +100,10 @@ export function GlobalProvider({ children }) {
       const storedClient = await getItem('client');
       const storedClients = await getItem('clients');
       const storedBillItem = await getItem('billItem');
-      setBill(storedBill ? JSON.parse(storedBill) : null);
       setClient(storedClient ? JSON.parse(storedClient) : null);
       setClients(storedClients ? JSON.parse(storedClients) : []);
       setBillItem(storedBillItem ? JSON.parse(storedBillItem) : null);
+      setBill(storedBill ? JSON.parse(storedBill) : emptyBill); 
     };
     loadStorageData();
   }, []);
@@ -124,20 +125,23 @@ export function GlobalProvider({ children }) {
 
   const addProductToBill = (productId, quantity, title, price) => {
     setBill(prevBill => {
-      const existingProductIndex = prevBill.products.findIndex(p => p.product_id === productId);
+      const currentBill = prevBill || emptyBill;
+  
+      const existingProductIndex = currentBill.products.findIndex(p => p.product_id === productId);
+  
       if (existingProductIndex > -1) {
-        // If the product already exists, update the quantity
-        const updatedProducts = [...prevBill.products];
+        const updatedProducts = [...currentBill.products];
         updatedProducts[existingProductIndex].quantity += quantity;
-        return { ...prevBill, products: updatedProducts };
+        return { ...currentBill, products: updatedProducts };
       }
-      // If the product does not exist, add it to the list
+  
       return {
-        ...prevBill,
-        products: [...prevBill.products, { product_id: productId, quantity, title, price }],
+        ...currentBill,
+        products: [...currentBill.products, { product_id: productId, quantity, title, price }],
       };
     });
   };
+  
 
   const getTotalQuantity = () => {
     return bill?.products?.reduce((total, product) => total + product.quantity, 0);

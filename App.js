@@ -9,6 +9,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { GlobalProvider } from './src/hooks';
 import { AuthProvider } from './src/screens/Auth/AuthPro';
 import AppStack from './src/stacks/AppStack';
+import { StatusBar } from 'expo-status-bar';
+import { MainColors } from './src/theme';
 
 enableScreens();
 
@@ -29,19 +31,22 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <SafeAreaProvider>
-          <PaperProvider>
-            <AuthProvider>
-              <GlobalProvider>
-                <AppStack />
-              </GlobalProvider>
-            </AuthProvider>
-          </PaperProvider>
-        </SafeAreaProvider>
-      </NavigationContainer>
-    </QueryClientProvider>
+    <>
+      <StatusBar style="light" backgroundColor={MainColors.paperPrimary} />
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer>
+          <SafeAreaProvider>
+            <PaperProvider>
+              <AuthProvider>
+                <GlobalProvider>
+                  <AppStack />
+                </GlobalProvider>
+              </AuthProvider>
+            </PaperProvider>
+          </SafeAreaProvider>
+        </NavigationContainer>
+      </QueryClientProvider>
+    </>
   );
 }
 

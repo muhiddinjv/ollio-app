@@ -46,6 +46,9 @@ function DrawerNav() {
         drawerActiveTintColor: 'white',
         drawerInactiveTintColor: colorScheme === 'dark' ? '#fff' : '#333',
         drawerLabelStyle: { fontSize: 18 },
+        drawerFooterStyle: {
+          borderRadius: 0
+        },
         drawerItemStyle: {
           borderRadius: 5,
           marginHorizontal: 10,

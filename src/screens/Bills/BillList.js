@@ -1,7 +1,7 @@
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { View, Text, Pressable, Animated } from 'react-native';
-import { ActivityIndicator, useTheme } from 'react-native-paper';
+import { ActivityIndicator, Appbar, useTheme } from 'react-native-paper';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { LinearTransition } from 'react-native-reanimated';
 import { useAuth } from '../Auth/AuthPro';
@@ -10,6 +10,7 @@ import { useGlobalState, useInfiniteScroll } from '../../hooks';
 import Header from '../../components/Header';
 import Loader from '../../components/Loader';
 import { formatDate } from '../../utils';
+import { DrawerActions } from '@react-navigation/native';
 
 function BillItem({ bill, navigate, onDelete }) {
   const {
@@ -44,7 +45,13 @@ export default function BillList({ navigation }) {
   const { user } = useAuth();
   return (
     <View>
-      <Header title="Cheklar" fontSize={20} navigation={navigation} backBtn />
+      <Header
+        title="Tovarlar"
+        fontSize={20}
+        iconLeft="menu"
+        navigation={navigation}
+        onLeftPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+      />
       {loading && <ActivityIndicator color={colors.primary} />}
       <Animated.FlatList
         data={data || []}

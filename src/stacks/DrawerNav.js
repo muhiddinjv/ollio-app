@@ -17,6 +17,9 @@ import UserList from '../screens/Users/UserList';
 import UserProfile from '../screens/Users/UserProfile';
 
 import Sidebar from './Sidebar';
+import ReportMain from '../screens/Report/ReportMain';
+import ReportSummary from '../screens/Report/ReportSummary';
+import ReportItems from '../screens/Report/ReportItems';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -83,7 +86,16 @@ function DrawerNav() {
           drawerIcon: ({ color }) => <IconButton className="m-0" icon="cash-fast" iconColor={color} />,
         }}
       />
+      <Drawer.Screen
+        name="Hisobot"
+        component={ReportMain}
+        options={{
+          drawerIcon: ({ color }) => <IconButton className="m-0" icon="chart-bar" iconColor={color} />,
+        }}
+      />
       <Drawer.Screen name="SaleMade" component={SaleMade} options={hidden} />
+      <Drawer.Screen name="ReportSummary" component={ReportSummary} options={hidden} />
+      <Drawer.Screen name="ReportItems" component={ReportItems} options={hidden} />
       <Drawer.Screen name="BillCart" component={BillCart} options={hidden} />
       <Drawer.Screen name="BillDetails" component={BillDetails} options={hidden} />
       <Drawer.Screen name="UserList" component={UserList} options={hidden} />

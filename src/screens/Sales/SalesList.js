@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Platform, RefreshControl, Text, View } from 'react-native';
 import { ActivityIndicator, Appbar, Button, IconButton, useTheme } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';

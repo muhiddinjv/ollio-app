@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ollio",
+    "name": "Ollio",
     "slug": "ollio-expo",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,29 +19,30 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/terminal.png",
-        "monochromeImage": "./assets/terminal.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/logo.png",
+        "monochromeImage": "./assets/logo.png",
+        "backgroundColor": "#ffffff",
+        "resizeMode": "contain"
       },
       "package": "com.muhiddinjv.ollioexpo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      [
-        "expo-splash-screen",
-        {
-          "backgroundColor": "#ffffff",
-          "image": "./assets/splash.png",
-          "dark": {
-            "image": "./assets/splash.png",
-            "backgroundColor": "#000000"
-          },
-          "imageWidth": 200
-        }
-      ]
-    ],
+    // "plugins": [
+    //   [
+    //     "expo-splash-screen",
+    //     {
+    //       "backgroundColor": "#ffffff",
+    //       "image": "./assets/splash.png",
+    //       "dark": {
+    //         "image": "./assets/splash.png",
+    //         "backgroundColor": "#000000"
+    //       },
+    //       "imageWidth": 200
+    //     }
+    //   ]
+    // ],
     "extra": {
       "eas": {
         "projectId": "b3b04c75-97f1-4b2e-8725-8afd16ce4a18"

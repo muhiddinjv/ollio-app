@@ -3,9 +3,7 @@ import {
   ScrollView,
   StyleSheet,
   SafeAreaView,
-  Platform,
   View,
-  Text,
 } from 'react-native';
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
@@ -22,11 +20,9 @@ import {
   useTheme,
   Appbar,
 } from 'react-native-paper';
-import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 
 import ReportSummary from './ReportSummary';
 import ReportItems from './ReportItems';
-import Header from '../../components/Header';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 
 dayjs.extend(weekOfYear);

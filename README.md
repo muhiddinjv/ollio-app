@@ -24,3 +24,4 @@
 
 - **Video:**  
   [video_2025-08-11_11-28-55.mp4](./demo/video_2025-08-11_11-28-55.mp4)
+  Ignore the speech in the video

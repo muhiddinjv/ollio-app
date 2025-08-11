@@ -1,10 +1,16 @@
-https://react.i18next.com/
-https://medium.com/@davidecarizzoni/react-native-infinite-scroll-with-react-query-3e5ef90f3caa
-https://blog.logrocket.com/building-react-native-number-pad/
+## Project Files
 
-### run mongodb locally
-- sudo systemctl start/stop mongod
+- **Android APK:**  
+  [`ollio.v1.0.4.apk`](./demo/ollio.v1.0.4.apk)
 
-### How to Build APK
-1) eas login
-2) eas build -p android --profile preview
+- **Photos:**  
+  ![photo_2025-08-11_11-27-21](./demo/photo_2025-08-11_11-27-21.jpg)  
+  ![photo_2025-08-11_11-27-25](./demo/photo_2025-08-11_11-27-25.jpg)  
+  ![photo_2025-08-11_11-27-27](./demo/photo_2025-08-11_11-27-27.jpg)
+  ![photo_2025-08-11_11-27-21](./demo/photo_2025-08-11_11-33-52.jpg)  
+  ![photo_2025-08-11_11-27-25](./demo/photo_2025-08-11_11-33-54.jpg)  
+  ![photo_2025-08-11_11-27-27](./demo/photo_2025-08-11_11-33-56.jpg)
+  ![photo_2025-08-11_11-27-27](./demo/photo_2025-08-11_11-33-57.jpg)
+
+- **Video:**  
+  [video_2025-08-11_11-28-55.mp4](./demo/video_2025-08-11_11-28-55.mp4)
